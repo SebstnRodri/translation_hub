@@ -8,138 +8,121 @@ The system is designed following a **Layered Architecture** pattern. This separa
 
 The four main layers are:
 
-1.  **Presentation Layer (CLI)**: Handles user interaction.
-2.  **Orchestration Layer**: Coordinates the components to execute the translation workflow.
-3.  **Service Layer**: Manages external services, primarily the translation API.
-4.  **Data Access Layer**: Handles all interactions with the filesystem.
+1.  **Presentation Layer (Frappe UI)**: Handles user interaction through Frappe DocTypes and a custom Desk Page.
+2.  **Application Layer (Frappe Backend)**: Manages the business logic, including DocType controllers, background jobs, and the scheduler.
+3.  **Core Logic Layer**: Contains the domain-specific logic for the translation process. This layer is independent of the Frappe framework.
+4.  **Service & Data Access Layer**: Manages external services (translation API) and filesystem interactions (`.po` files).
 
-## Core Components (Classes)
+## Core Components
+
+### Frappe Components
+
+- **`Translator Settings` (Singleton DocType)**: Stores global configuration like API keys and automation settings. Replaces the old `config.json` file.
+- **`Translation Job` (Standard DocType)**: Represents a single translation task, tracking its status, progress, and logs.
+- **`Translation Workspace` (Desk Page)**: A UI dashboard for creating, managing, and monitoring `Translation Jobs`.
+- **Background Job (`tasks.py`)**: A function that is enqueued by Frappe's scheduler or manually from the UI. It's responsible for running the core translation logic.
+
+### Core Logic Components (Classes)
 
 ```mermaid
 classDiagram
-    class CLIHandler {
-        +run_application(args)
+    direction LR
+    class FrappeUI {
+        <<Frappe DocType>>
+        TranslationJob
+        <<Frappe DocType>>
+        TranslatorSettings
+    }
+
+    class BackgroundJob {
+        +execute_translation_job(job_name)
     }
 
     class Orchestrator {
         -Config config
         -FileHandler file_handler
         -Service service
-        +__init__(config, file_handler, service)
+        -Logger logger
         +run()
-        -split_into_batches(entries: List<dict>, batch_size: int)
+    }
+
+    class Config {
+        +str api_key
+        +str model_name
+        +int batch_size
+        +Logger logger
     }
 
     class FileHandler {
         -Path po_path
-        -Optional<Path> pot_path
-        -polib.POFile pofile
-        +__init__(po_path, pot_path)
-        -load_or_create_pofile()
-        +merge()
-        +get_untranslated_entries() List<dict>
-        +update_entries(translated_entries: List<dict>)
+        -Logger logger
+        +get_untranslated_entries()
+        +update_entries()
         +save()
-        +final_verification()
     }
 
     class Service {
         <<interface>>
-        +translate(entries: List<dict>) List<dict>
+        +translate(entries)
     }
 
     class GeminiService {
         -Config config
-        -genai.GenerativeModel model
-        +__init__(config)
-        -configure_model()
-        +translate(entries: List<dict>) List<dict>
-        -translate_single(entry: dict) dict
-        -build_batch_prompt(entries: List<dict>) str
-        -build_single_prompt(entry: dict) str
-        -clean_json_response(text: str) str
-        -preserve_whitespace(original: str, translated: str) str
+        -Logger logger
+        +translate(entries)
     }
 
-    class Config {
-        +str model_name
-        +int max_batch_retries
-        +int max_single_retries
-        +int retry_wait_seconds
-        +str standardization_guide
-        +int batch_size
-        +Optional<Path> pot_file
-        +Optional<Path> po_file
-        +from_json(config_path) Config
-        +load_standardization_guide(guide_path)
-    }
+    FrappeUI -->> BackgroundJob : enqueues
+    BackgroundJob -->> Orchestrator : instantiates and runs
+    BackgroundJob -->> Config : instantiates
+    BackgroundJob -->> FileHandler : instantiates
+    BackgroundJob -->> GeminiService : instantiates
 
-    CLIHandler --> Orchestrator : instantiates
-    CLIHandler --> FileHandler : instantiates
-    CLIHandler --> GeminiService : instantiates
-    CLIHandler --> Config : uses
+    Orchestrator o-- Config
+    Orchestrator o-- FileHandler
+    Orchestrator o-- Service
 
-    Orchestrator "1" *-- "1" Config : config
-    Orchestrator "1" *-- "1" FileHandler : file_handler
-    Orchestrator "1" *-- "1" Service : service
-
-    GeminiService --|> Service : implements
-    GeminiService "1" *-- "1" Config : config
+    GeminiService --|> Service
 ```
 
-- **`CLIHandler` (`main.py`)**: The application's entry point. Its sole responsibility is to parse command-line arguments, instantiate the necessary components, and trigger the orchestration layer.
-
-- **`Orchestrator`**: The "brain" of the application. It coordinates the entire translation process, including:
-  - Requesting untranslated entries from the `FileHandler`.
-  - Splitting entries into batches.
-  - Sending batches to the `Service`.
-  - Updating the `FileHandler` with the results.
-  - Saving progress.
-
-- **`Service` (Abstract Base Class)**: Defines a common interface for any translation service. This allows for future extensibility (e.g., adding DeepL or Azure Translator).
-
-- **`GeminiService`**: The concrete implementation of `Service` for the Google Gemini API. It handles:
-  - API authentication and model configuration.
-  - Building a detailed prompt that includes not just the text to translate but also its **context** (source file occurrences, developer comments, etc.).
-  - Executing the API call, including retry and fallback logic.
-  - Parsing the JSON response.
-
-- **`FileHandler`**: Encapsulates all logic related to file manipulation using the `polib` library. Its responsibilities include:
-  - Loading and creating `.po` files.
-  - Merging `.pot` templates.
-  - Extracting untranslated/fuzzy entries as dictionaries containing the `msgid` and its `context`.
-  - Saving changes to disk.
-
-- **`Config`**: A data class that holds all configuration parameters, such as API keys, batch sizes, and file paths.
+- **`Orchestrator`**: The "brain" of the application. It coordinates the entire translation process. It is instantiated and run by the background job.
+- **`Service` (Abstract Base Class)**: Defines a common interface for any translation service.
+- **`GeminiService`**: The concrete implementation of `Service` for the Google Gemini API.
+- **`FileHandler`**: Encapsulates all logic related to file manipulation using the `polib` library.
+- **`Config`**: A data class that holds all configuration parameters, populated from the `Translator Settings` DocType.
+- **`DocTypeLogger`**: A custom logger that writes output to the `log` field of a `Translation Job` document.
 
 ## Execution Flow
 
+The process can be triggered manually by a user or automatically by the Frappe scheduler.
+
 ```mermaid
 sequenceDiagram
-    participant CLI as CLIHandler
+    participant User
+    participant Workspace as Translation Workspace
+    participant JobDoc as Translation Job DocType
+    participant BGJob as Background Job (tasks.py)
     participant Orch as Orchestrator
-    participant File as FileHandler
-    participant Service as GeminiService
 
-    CLI->>File: create(pot_path, po_path)
-    CLI->>Service: create(config)
-    CLI->>Orch: create(File, Service, config)
-    CLI->>Orch: run()
-
-    Orch->>File: merge()
-    Orch->>File: get_untranslated_entries()
-    File-->>Orch: untranslated_entries
-
-    alt All entries are already translated
-        Orch->>File: save()
-        Note over Orch: No entries to translate.
-    else Untranslated entries exist
-        loop for each batch in untranslated_entries
-            Orch->>Service: translate(batch_entries)
-            Service-->>Orch: translated_entries
-            Orch->>File: update_entries(translated_entries)
-            Orch->>File: save()
-        end
-        Orch->>File: final_verification()
+    alt Manual Trigger
+        User->>Workspace: Clicks "Start Job"
+        Workspace->>JobDoc: Calls `enqueue_job()`
+    else Automated Trigger
+        participant Scheduler
+        Scheduler->>BGJob: Triggers `run_automated_translations()`
+        BGJob->>JobDoc: Creates new Job & calls `enqueue_job()`
     end
+
+    JobDoc->>BGJob: `frappe.enqueue(execute_translation_job)`
+    
+    BGJob->>JobDoc: Update status to 'In Progress'
+    BGJob->>Orch: create(config, file_handler, service, logger)
+    BGJob->>Orch: run()
+
+    loop For each batch
+        Orch->>BGJob: (via logger) Update progress
+        BGJob->>JobDoc: Save progress
+    end
+
+    BGJob->>JobDoc: Update status to 'Completed'
 ```

@@ -1,7 +1,7 @@
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Any
 
 
 @dataclass
@@ -16,8 +16,16 @@ class TranslationConfig:
     retry_wait_seconds: int = 2
     standardization_guide: str = ""
     batch_size: int = 100
-    pot_file: Optional[Path] = None
-    po_file: Optional[Path] = None
+    pot_file: Optional[Path] = field(default=None, compare=False)
+    po_file: Optional[Path] = field(default=None, compare=False)
+    api_key: Optional[str] = field(default=None, compare=False)
+    logger: Any = field(default=None, compare=False)
+
+    def __post_init__(self):
+        if isinstance(self.pot_file, str):
+            self.pot_file = Path(self.pot_file)
+        if isinstance(self.po_file, str):
+            self.po_file = Path(self.po_file)
 
     @classmethod
     def from_json(cls, config_path: Path | str) -> "TranslationConfig":
@@ -49,10 +57,21 @@ class TranslationConfig:
         try:
             with open(guide_path, "r", encoding="utf-8") as f:
                 self.standardization_guide = f.read()
-            print(f"Loaded standardization guide from: {guide_path}")
+            if self.logger:
+                self.logger.info(f"Loaded standardization guide from: {guide_path}")
+            else:
+                print(f"Loaded standardization guide from: {guide_path}")
         except FileNotFoundError:
-            print(f"Error: Standardization guide file not found at {guide_path}. Proceeding without guide.")
+            error_msg = f"Error: Standardization guide file not found at {guide_path}. Proceeding without guide."
+            if self.logger:
+                self.logger.warning(error_msg)
+            else:
+                print(error_msg)
             self.standardization_guide = ""
         except Exception as e:
-            print(f"Error loading standardization guide from {guide_path}: {e}. Proceeding without guide.")
+            error_msg = f"Error loading standardization guide from {guide_path}: {e}. Proceeding without guide."
+            if self.logger:
+                self.logger.error(error_msg)
+            else:
+                print(error_msg)
             self.standardization_guide = ""

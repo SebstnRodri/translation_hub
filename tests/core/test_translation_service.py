@@ -11,24 +11,32 @@ def mock_config():
     """
     Provides a default TranslationConfig for tests.
     """
-    return TranslationConfig(max_batch_retries=2, max_single_retries=2, retry_wait_seconds=0.1)
+    return TranslationConfig(
+        api_key="test_api_key",
+        max_batch_retries=2,
+        max_single_retries=2,
+        retry_wait_seconds=0.1
+    )
+
+@pytest.fixture
+def mock_logger():
+    """Mocks the logger."""
+    return MagicMock()
 
 
 @patch("translation_hub.core.translation_service.genai.configure")
 @patch("translation_hub.core.translation_service.genai.GenerativeModel")
-@patch("translation_hub.core.translation_service.load_dotenv")
-def test_gemini_service_init(mock_load_dotenv, mock_generative_model, mock_configure, mock_config):
+def test_gemini_service_init(mock_generative_model, mock_configure, mock_config, mock_logger):
     """
     Tests the initialization of the GeminiService.
     """
-    service = GeminiService(config=mock_config)
-    mock_load_dotenv.assert_called_once()
-    mock_configure.assert_called_once()
+    service = GeminiService(config=mock_config, logger=mock_logger)
+    mock_configure.assert_called_once_with(api_key="test_api_key")
     mock_generative_model.assert_called_with(mock_config.model_name)
     assert service.model is not None
 
 
-def test_translate_batch_success(mocker, mock_config):
+def test_translate_batch_success(mocker, mock_config, mock_logger):
     """
     Tests a successful batch translation with the new data structure.
     """
@@ -50,14 +58,14 @@ def test_translate_batch_success(mocker, mock_config):
         return_value=MagicMock(generate_content=MagicMock(return_value=mock_response)),
     )
 
-    service = GeminiService(config=mock_config)
+    service = GeminiService(config=mock_config, logger=mock_logger)
     translations = service.translate(entries_to_translate)
 
     assert translations == expected_translation
     service.model.generate_content.assert_called_once()
 
 
-def test_translate_batch_retry_and_succeed(mocker, mock_config):
+def test_translate_batch_retry_and_succeed(mocker, mock_config, mock_logger):
     """
     Tests the retry mechanism with the new data structure.
     """
@@ -75,14 +83,14 @@ def test_translate_batch_retry_and_succeed(mocker, mock_config):
 
     mocker.patch("translation_hub.core.translation_service.GeminiService._configure_model", return_value=mock_model)
 
-    service = GeminiService(config=mock_config)
+    service = GeminiService(config=mock_config, logger=mock_logger)
     translations = service.translate(entries_to_translate)
 
     assert translations == expected_translation
     assert service.model.generate_content.call_count == 2
 
 
-def test_translate_fallback_to_single_entry(mocker, mock_config):
+def test_translate_fallback_to_single_entry(mocker, mock_config, mock_logger):
     """
     Tests the fallback to single-entry translation with the new data structure.
     """
@@ -100,7 +108,7 @@ def test_translate_fallback_to_single_entry(mocker, mock_config):
 
     mocker.patch("translation_hub.core.translation_service.GeminiService._configure_model", return_value=mock_model)
 
-    service = GeminiService(config=mock_config)
+    service = GeminiService(config=mock_config, logger=mock_logger)
 
     mocker.patch.object(
         service,
@@ -115,9 +123,9 @@ def test_translate_fallback_to_single_entry(mocker, mock_config):
     assert service._translate_single.call_count == len(entries_to_translate)
 
 
-def test_build_batch_prompt_with_context(mocker, mock_config):
+def test_build_batch_prompt_with_context(mocker, mock_config, mock_logger):
     mocker.patch("translation_hub.core.translation_service.GeminiService._configure_model")
-    service = GeminiService(config=mock_config)
+    service = GeminiService(config=mock_config, logger=mock_logger)
     entries = [
         {
             "msgid": "Series Name",
@@ -140,12 +148,12 @@ def test_build_batch_prompt_with_context(mocker, mock_config):
     assert '"comment": "Displayed on the Series setup screen"' in prompt
 
 
-def test_preserve_whitespace(mocker, mock_config):
+def test_preserve_whitespace(mocker, mock_config, mock_logger):
     """
     Tests that leading/trailing whitespace is preserved in the translation.
     """
     mocker.patch("translation_hub.core.translation_service.GeminiService._configure_model")
-    service = GeminiService(config=mock_config)
+    service = GeminiService(config=mock_config, logger=mock_logger)
 
     original = "  Hello World  "
     translated = "Olá Mundo"

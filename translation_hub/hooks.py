@@ -148,13 +148,13 @@ app_license = "mit"
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
 # 	"all": [
 # 		"translation_hub.tasks.all"
 # 	],
-# 	"daily": [
-# 		"translation_hub.tasks.daily"
-# 	],
+	"daily": [
+		"translation_hub.tasks.run_automated_translations"
+	],
 # 	"hourly": [
 # 		"translation_hub.tasks.hourly"
 # 	],
@@ -164,7 +164,7 @@ app_license = "mit"
 # 	"monthly": [
 # 		"translation_hub.tasks.monthly"
 # 	],
-# }
+}
 
 # Testing
 # -------

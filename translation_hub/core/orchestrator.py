@@ -33,6 +33,9 @@ class TranslationOrchestrator:
         try:
             self.file_handler.merge()
             untranslated_entries = self.file_handler.get_untranslated_entries()
+            total_strings = len(untranslated_entries)
+            translated_strings = 0
+            self.logger.update_progress(translated_strings, total_strings)
 
             if not untranslated_entries:
                 self.logger.info("All entries are already translated. Nothing to do.")
@@ -47,6 +50,8 @@ class TranslationOrchestrator:
                 self.logger.info(f"--- Translating batch {i + 1}/{total_batches} ---")
 
                 translated_batch = self.service.translate(batch)
+                translated_strings += len(translated_batch)
+                self.logger.update_progress(translated_strings, total_strings)
 
                 for entry in translated_batch:
                     self.logger.debug(f"  - Original: {entry['msgid']}")

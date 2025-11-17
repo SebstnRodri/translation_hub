@@ -1,0 +1,73 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2025-11-17 10:05:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "api_key",
+  "standardization_guide",
+  "automation_section",
+  "enable_automated_translation",
+  "frequency",
+  "monitored_apps"
+ ],
+ "fields": [
+  {
+   "fieldname": "api_key",
+   "fieldtype": "Password",
+   "label": "API Key"
+  },
+  {
+   "fieldname": "standardization_guide",
+   "fieldtype": "Text Editor",
+   "label": "Standardization Guide"
+  },
+  {
+   "fieldname": "automation_section",
+   "fieldtype": "Section Break",
+   "label": "Automation"
+  },
+  {
+   "fieldname": "enable_automated_translation",
+   "fieldtype": "Check",
+   "label": "Enable Automated Translation"
+  },
+  {
+   "fieldname": "frequency",
+   "fieldtype": "Select",
+   "label": "Frequency",
+   "options": "Daily\nWeekly",
+   "depends_on": "eval:doc.enable_automated_translation"
+  },
+  {
+   "fieldname": "monitored_apps",
+   "fieldtype": "Table",
+   "label": "Monitored Apps",
+   "options": "Monitored App",
+   "depends_on": "eval:doc.enable_automated_translation"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2025-11-17 10:05:00.000000",
+ "modified_by": "Administrator",
+ "module": "Translation Hub",
+ "name": "Translator Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

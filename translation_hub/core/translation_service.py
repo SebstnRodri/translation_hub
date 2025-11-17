@@ -46,12 +46,10 @@ class GeminiService(TranslationService):
         """
         Configures and returns a Google Gemini model instance.
         """
-        load_dotenv()
-        api_key = os.getenv("GOOGLE_API_KEY")
-        if not api_key:
-            raise ValueError("GOOGLE_API_KEY not found in .env file or environment.")
+        if not self.config.api_key:
+            raise ValueError("API key not found in settings.")
 
-        genai.configure(api_key=api_key)
+        genai.configure(api_key=self.config.api_key)
         return genai.GenerativeModel(self.config.model_name)
 
     def translate(self, entries: List[Dict[str, Any]]) -> List[Dict[str, str]]:
