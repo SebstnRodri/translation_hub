@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, MagicMock, ANY
 
-from translation_hub.main import main
+from translation_hub.translation_hub.main import main
 
 
 @pytest.fixture
