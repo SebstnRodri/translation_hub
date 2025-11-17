@@ -1,0 +1,78 @@
+import sys
+import logging
+from typing import Generator, List
+import polib
+
+from translation_hub.core.config import TranslationConfig
+from translation_hub.core.translation_file import TranslationFile
+from translation_hub.core.translation_service import TranslationService
+
+
+class TranslationOrchestrator:
+    """
+    Orchestrates the translation process by coordinating the TranslationFile
+    and a TranslationService.
+    """
+
+    def __init__(
+        self,
+        config: TranslationConfig,
+        file_handler: TranslationFile,
+        service: TranslationService,
+        logger: logging.Logger,
+    ):
+        self.config = config
+        self.file_handler = file_handler
+        self.service = service
+        self.logger = logger
+
+    def run(self):
+        """
+        Executes the main translation workflow.
+        """
+        try:
+            self.file_handler.merge()
+            untranslated_entries = self.file_handler.get_untranslated_entries()
+
+            if not untranslated_entries:
+                self.logger.info("All entries are already translated. Nothing to do.")
+                self.file_handler.save()  # Save to ensure metadata is correct
+                return
+
+            batches = list(self._split_into_batches(untranslated_entries, self.config.batch_size))
+            total_batches = len(batches)
+            self.logger.info(f"Created {total_batches} batches of size {self.config.batch_size}.")
+
+            for i, batch in enumerate(batches):
+                self.logger.info(f"--- Translating batch {i + 1}/{total_batches} ---")
+
+                translated_batch = self.service.translate(batch)
+
+                for entry in translated_batch:
+                    self.logger.debug(f"  - Original: {entry['msgid']}")
+                    self.logger.debug(f"    Translation: {entry['msgstr']}")
+
+                self.file_handler.update_entries(translated_batch)
+                self.file_handler.save()
+                self.logger.info(f"--- Batch {i + 1}/{total_batches} saved ---")
+
+            self.logger.info("\nTranslation complete!")
+            self.file_handler.final_verification()
+
+        except KeyboardInterrupt:
+            self.logger.warning("\n\nProcess interrupted by user.")
+            self.logger.warning(f"Translations completed up to the last batch have been saved in: {self.file_handler.po_path}")
+            self.logger.warning("To continue, simply run the command again.")
+            sys.exit(130)
+
+    @staticmethod
+    def _split_into_batches(
+        entries: List[dict], batch_size: int
+    ) -> Generator[List[dict], None, None]:
+        """
+        Splits a list of entries (dictionaries) into batches of a given size.
+        """
+        if not entries:
+            return
+        for i in range(0, len(entries), batch_size):
+            yield entries[i : i + batch_size]

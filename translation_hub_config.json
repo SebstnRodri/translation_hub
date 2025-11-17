@@ -1,0 +1,9 @@
+{
+  "model_name": "gemini-2.5-flash-preview-09-2025",
+  "max_batch_retries": 3,
+  "max_single_retries": 3,
+  "retry_wait_seconds": 2,
+  "batch_size": 2,
+  "pot_file": "locale/test.pot",
+  "po_file": "locale/pt_BR.po"
+}
