@@ -149,21 +149,19 @@ app_license = "mit"
 # ---------------
 
 scheduler_events = {
-# 	"all": [
-# 		"translation_hub.tasks.all"
-# 	],
-	"daily": [
-		"translation_hub.tasks.run_automated_translations"
-	],
-# 	"hourly": [
-# 		"translation_hub.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"translation_hub.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"translation_hub.tasks.monthly"
-# 	],
+	# 	"all": [
+	# 		"translation_hub.tasks.all"
+	# 	],
+	"daily": ["translation_hub.tasks.run_automated_translations"],
+	# 	"hourly": [
+	# 		"translation_hub.tasks.hourly"
+	# 	],
+	# 	"weekly": [
+	# 		"translation_hub.tasks.weekly"
+	# 	],
+	# 	"monthly": [
+	# 		"translation_hub.tasks.monthly"
+	# 	],
 }
 
 # Testing
@@ -241,4 +239,3 @@ scheduler_events = {
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-
