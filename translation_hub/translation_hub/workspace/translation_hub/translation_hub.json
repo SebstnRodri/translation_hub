@@ -1,0 +1,62 @@
+{
+    "charts": [],
+    "content": "[{\"type\":\"header\",\"data\":{\"text\":\"Translation Hub\",\"level\":4,\"col\":12}},{\"type\":\"card\",\"data\":{\"card_name\":\"Total Apps Tracked\",\"col\":3}},{\"type\":\"card\",\"data\":{\"card_name\":\"Jobs in Progress\",\"col\":3}},{\"type\":\"card\",\"data\":{\"card_name\":\"Jobs Completed (30 Days)\",\"col\":3}},{\"type\":\"card\",\"data\":{\"card_name\":\"Strings Translated\",\"col\":3}},{\"type\":\"section\",\"data\":{\"text\":\"Recent Jobs\",\"col\":12}},{\"type\":\"quick_list\",\"data\":{\"document_type\":\"Translation Job\",\"limit\":5,\"col\":12}}]",
+    "creation": "2025-11-22 18:00:00.000000",
+    "docstatus": 0,
+    "doctype": "Workspace",
+    "icon": "translation",
+    "idx": 0,
+    "indicator_color": "blue",
+    "is_standard": 1,
+    "label": "Translation Hub",
+    "links": [
+        {
+            "label": "Create Translation Job",
+            "link_count": 0,
+            "link_to": "Translation Job",
+            "link_type": "DocType",
+            "onboard": 1,
+            "type": "Link"
+        },
+        {
+            "label": "Translation Jobs",
+            "link_count": 0,
+            "link_to": "Translation Job",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "label": "Translator Settings",
+            "link_count": 0,
+            "link_to": "Translator Settings",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "label": "Monitored Apps",
+            "link_count": 0,
+            "link_to": "App",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        }
+    ],
+    "modified": "2025-11-22 18:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Translation Hub",
+    "name": "Translation Hub",
+    "owner": "Administrator",
+    "public": 1,
+    "roles": [
+        {
+            "role": "System Manager"
+        },
+        {
+            "role": "Translator"
+        }
+    ],
+    "shortcuts": [],
+    "title": "Translation Hub"
+}

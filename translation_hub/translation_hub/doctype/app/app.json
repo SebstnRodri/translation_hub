@@ -1,0 +1,49 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "field:app_name",
+    "creation": "2025-11-22 17:20:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "app_name",
+        "app_title"
+    ],
+    "fields": [
+        {
+            "fieldname": "app_name",
+            "fieldtype": "Data",
+            "label": "App Name",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "app_title",
+            "fieldtype": "Data",
+            "label": "App Title"
+        }
+    ],
+    "links": [],
+    "modified": "2025-11-22 17:20:00.000000",
+    "modified_by": "Administrator",
+    "module": "Translation Hub",
+    "name": "App",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "track_changes": 1
+}
