@@ -13,6 +13,7 @@ class TestFrappeIntegration(FrappeTestCase):
 	def setUp(self):
 		frappe.db.delete("Translation Job", {"title": "Test Job"})
 		frappe.db.delete("Translation Job", {"source_app": "frappe", "target_language": "es"})
+		frappe.db.delete("Translation Job", {"source_app": "frappe", "target_language": "fr"})
 
 		if not frappe.db.exists("App", "frappe"):
 			frappe.get_doc({"doctype": "App", "app_name": "frappe", "app_title": "Frappe Framework"}).insert(

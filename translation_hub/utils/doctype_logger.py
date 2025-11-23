@@ -24,7 +24,9 @@ class DocTypeLogger:
 		pass
 
 	def _log(self, message, level):
-		self.doc.append("log", f"[{level}] {message}\n")
+		if not self.doc.log:
+			self.doc.log = ""
+		self.doc.log += f"[{level}] {message}\n"
 		self.doc.save(ignore_permissions=True)
 		frappe.db.commit()
 
