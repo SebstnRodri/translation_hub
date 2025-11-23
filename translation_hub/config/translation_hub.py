@@ -11,11 +11,7 @@ def get_data():
 					"name": "Translation Job",
 					"description": _("Translation Jobs."),
 				},
-				{
-					"type": "page",
-					"name": "translation-workspace",
-					"description": _("Translation Workspace."),
-				},
+
 				{
 					"type": "doctype",
 					"name": "Translator Settings",
