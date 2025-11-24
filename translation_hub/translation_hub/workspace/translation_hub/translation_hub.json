@@ -1,76 +1,44 @@
 {
  "app": "translation_hub",
  "charts": [],
- "content": "[{\"type\":\"header\",\"data\":{\"text\":\"Translation Hub\",\"level\":4,\"col\":12}},{\"type\":\"card\",\"data\":{\"card_name\":\"Total Apps Tracked\",\"col\":3}},{\"type\":\"card\",\"data\":{\"card_name\":\"Jobs in Progress\",\"col\":3}},{\"type\":\"card\",\"data\":{\"card_name\":\"Jobs Completed (30 Days)\",\"col\":3}},{\"type\":\"card\",\"data\":{\"card_name\":\"Strings Translated\",\"col\":3}},{\"type\":\"section\",\"data\":{\"text\":\"Recent Jobs\",\"col\":12}},{\"type\":\"quick_list\",\"data\":{\"document_type\":\"Translation Job\",\"limit\":5,\"col\":12}}]",
- "creation": "2025-11-22 18:00:00",
+ "content": "[{\"id\":\"dxOyuLz9tZ\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">AI agent for translating Frappe/Erpnext ecosystem</span>\",\"col\":12}},{\"id\":\"4KyBo6vpA8\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Apps Tracked\",\"col\":4}},{\"id\":\"USalkaywWP\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Strings Translated\",\"col\":4}},{\"id\":\"Xtt24WNzge\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Jobs in Progress\",\"col\":4}}]",
+ "creation": "2025-11-24 11:34:10.171421",
  "custom_blocks": [],
  "docstatus": 0,
  "doctype": "Workspace",
+ "for_user": "",
  "hide_custom": 0,
- "icon": "small-message",
+ "icon": "bot-message-square",
  "idx": 0,
- "indicator_color": "blue",
+ "indicator_color": "green",
  "is_hidden": 0,
  "label": "Translation Hub",
- "links": [
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Create Translation Job",
-   "link_count": 0,
-   "link_to": "Translation Job",
-   "link_type": "DocType",
-   "onboard": 1,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Translation Jobs",
-   "link_count": 0,
-   "link_to": "Translation Job",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Translator Settings",
-   "link_count": 0,
-   "link_to": "Translator Settings",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Monitored Apps",
-   "link_count": 0,
-   "link_to": "App",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  }
- ],
- "modified": "2025-11-23 10:49:57.710210",
+ "link_type": "DocType",
+ "links": [],
+ "modified": "2025-11-24 11:47:28.239144",
  "modified_by": "Administrator",
  "module": "Translation Hub",
  "name": "Translation Hub",
- "number_cards": [],
- "owner": "Administrator",
- "public": 1,
- "quick_lists": [],
- "roles": [
+ "number_cards": [
   {
-   "role": "System Manager"
+   "label": "Total Apps Tracked",
+   "number_card_name": "Total Apps Tracked"
   },
   {
-   "role": "Translator"
+   "label": "Strings Translated",
+   "number_card_name": "Strings Translated"
+  },
+  {
+   "label": "Jobs in Progress",
+   "number_card_name": "Jobs in Progress"
   }
  ],
- "sequence_id": 0.0,
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 28.0,
  "shortcuts": [],
  "title": "Translation Hub",
  "type": "Workspace"

@@ -1,0 +1,15 @@
+{
+ "app": "translation_hub",
+ "creation": "2025-11-24 10:05:02.788015",
+ "docstatus": 0,
+ "doctype": "Workspace Sidebar",
+ "header_icon": "small-message",
+ "idx": 0,
+ "items": [],
+ "modified": "2025-11-24 11:32:53.195415",
+ "modified_by": "Administrator",
+ "module": "Translation Hub",
+ "name": "Translation Hub",
+ "owner": "Administrator",
+ "title": "Translation Hub"
+}
