@@ -1,0 +1,51 @@
+[
+ {
+  "app": "translation_hub",
+  "charts": [
+   {
+    "chart_name": "Background Job Activity",
+    "label": "Background Job Activity"
+   }
+  ],
+  "content": "[{\"id\":\"dxOyuLz9tZ\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">AI agent for translating Frappe/Erpnext ecosystem</span>\",\"col\":12}},{\"id\":\"uA35PdJcbS\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Background Job Activity\",\"col\":12}},{\"id\":\"hrX27Ud_Uq\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b></b></span>\",\"col\":12}},{\"id\":\"4KyBo6vpA8\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Apps Tracked\",\"col\":4}},{\"id\":\"USalkaywWP\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Strings Translated\",\"col\":4}},{\"id\":\"Xtt24WNzge\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Jobs in Progress\",\"col\":4}}]",
+  "custom_blocks": [],
+  "docstatus": 0,
+  "doctype": "Workspace",
+  "external_link": null,
+  "for_user": "",
+  "hide_custom": 0,
+  "icon": "bot-message-square",
+  "indicator_color": "green",
+  "is_hidden": 0,
+  "label": "Translation Hub",
+  "link_to": null,
+  "link_type": "DocType",
+  "links": [],
+  "modified": "2025-11-24 14:57:52.707162",
+  "module": "Translation Hub",
+  "name": "Translation Hub",
+  "number_cards": [
+   {
+    "label": "Total Apps Tracked",
+    "number_card_name": "Total Apps Tracked"
+   },
+   {
+    "label": "Strings Translated",
+    "number_card_name": "Strings Translated"
+   },
+   {
+    "label": "Jobs in Progress",
+    "number_card_name": "Jobs in Progress"
+   }
+  ],
+  "parent_page": "",
+  "public": 1,
+  "quick_lists": [],
+  "restrict_to_domain": null,
+  "roles": [],
+  "sequence_id": 28.0,
+  "shortcuts": [],
+  "title": "Translation Hub",
+  "type": "Workspace"
+ }
+]

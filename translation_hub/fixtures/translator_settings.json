@@ -1,0 +1,13 @@
+[
+ {
+  "api_key": null,
+  "docstatus": 0,
+  "doctype": "Translator Settings",
+  "enable_automated_translation": 0,
+  "frequency": "Daily",
+  "modified": "2025-11-24 10:05:02.044969",
+  "monitored_apps": [],
+  "name": "Translator Settings",
+  "standardization_guide": null
+ }
+]

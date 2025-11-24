@@ -145,6 +145,12 @@ app_license = "mit"
 # 	}
 # }
 
+# Fixtures
+fixtures = [
+	"Translator Settings",
+	{"dt": "Workspace", "filters": [["name", "=", "Translation Hub"]]},
+
+]
 # Scheduled Tasks
 # ---------------
 
