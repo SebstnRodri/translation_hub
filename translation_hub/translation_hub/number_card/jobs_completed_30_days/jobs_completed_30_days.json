@@ -6,7 +6,7 @@
     "doctype": "Number Card",
     "document_type": "Translation Job",
     "dynamic_filters_json": "[]",
-    "filters_json": "[[\"Translation Job\",\"status\",\"=\",\"Completed\",false],[\"Translation Job\",\"modified\",\"Timespan\",\"Last 30 Days\",false]]",
+    "filters_json": "[[\"status\",\"=\",\"Completed\"],[\"Translation Job\",\"modified\",\"Timespan\",\"Last 30 Days\"]]",
     "function": "Count",
     "idx": 0,
     "is_public": 1,

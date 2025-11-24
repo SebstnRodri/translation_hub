@@ -5,6 +5,7 @@
     "docstatus": 0,
     "doctype": "Dashboard Chart",
     "document_type": "Translation Job",
+    "based_on": "creation",
     "dynamic_filters_json": "[]",
     "filters_json": "[[\"Translation Job\",\"status\",\"=\",\"Completed\"]]",
     "group_by_type": "Sum",

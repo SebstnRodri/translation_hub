@@ -149,7 +149,8 @@ app_license = "mit"
 fixtures = [
 	"Translator Settings",
 	{"dt": "Workspace", "filters": [["name", "=", "Translation Hub"]]},
-
+    {"dt": "Number Card", "filters": [["module", "=", "Translation Hub"]]},
+    {"dt": "Dashboard Chart", "filters": [["module", "=", "Translation Hub"]]},
 ]
 # Scheduled Tasks
 # ---------------
