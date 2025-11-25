@@ -17,10 +17,50 @@ The four main layers are:
 
 ### Frappe Components
 
-- **`Translator Settings` (Singleton DocType)**: Stores global configuration like API keys and automation settings. Replaces the old `config.json` file.
-- **`Translation Job` (Standard DocType)**: Represents a single translation task, tracking its status, progress, and logs.
-- **`Translation Workspace` (Desk Page)**: A UI dashboard for creating, managing, and monitoring `Translation Jobs`.
-- **Background Job (`tasks.py`)**: A function that is enqueued by Frappe's scheduler or manually from the UI. It's responsible for running the core translation logic.
+#### DocTypes
+
+- **`Translator Settings` (Singleton DocType)**: Stores global configuration like API keys, automation settings, and monitored apps.
+  - Contains child table `Monitored App` for automated translation configuration
+  - Fields: `api_key`, `standardization_guide`, `enable_automated_translation`, `frequency`, `monitored_apps`
+
+- **`Translation Job` (Standard DocType)**: Represents a single translation task, tracking its status, progress, timing, and logs.
+  - Links to `App` (source application) and `Language` (target language)
+  - Tracks progress metrics: `total_strings`, `translated_strings`, `progress_percentage`
+  - Records timing: `start_time`, `end_time`
+  - Maintains execution log for debugging and monitoring
+  - Status values: Pending, Queued, In Progress, Completed, Failed, Cancelled
+
+- **`App` (Standard DocType)**: Represents a Frappe/ERPNext application available for translation.
+  - Stores `app_name` (unique identifier) and `app_title` (display name)
+  - Referenced by `Translation Job` and `Monitored App`
+  - Used to track which applications are being translated
+
+- **`Monitored App` (Child Table)**: Defines app/language combinations to monitor for automated translation.
+  - Part of `Translator Settings.monitored_apps`
+  - Links to `App` (source application) and `Language` (target language)
+  - Used by scheduler to automatically create translation jobs when untranslated strings are detected
+
+#### Workspace & UI Components
+
+- **`Translation Hub` (Workspace)**: A dashboard for creating, managing, and monitoring Translation Jobs.
+  - Displays **Dashboard Chart**: "Translations Over Time" - visualizes translation progress over time
+  - Displays **Number Cards** for key metrics:
+    - **Total Apps Tracked**: Count of apps configured for translation
+    - **Jobs in Progress**: Active translation jobs currently running
+    - **Jobs Completed (30 Days)**: Successfully completed jobs in the last 30 days
+    - **Strings Translated**: Total number of strings translated across all jobs
+
+#### Background Jobs
+
+- **Background Job (`tasks.py`)**: Functions enqueued by Frappe's scheduler or manually from the UI.
+  - **`execute_translation_job(job_name)`**: Runs the translation process for a specific job
+    - Updates job status (Queued → In Progress → Completed/Failed)
+    - Instantiates and runs the `TranslationOrchestrator` with core logic components
+    - Logs progress and errors to the job document
+  - **`run_automated_translations()`**: Checks monitored apps and creates jobs automatically
+    - Triggered by Frappe scheduler based on configured frequency
+    - Scans for untranslated strings in monitored app/language combinations
+    - Creates and enqueues new Translation Jobs when work is detected
 
 ### Core Logic Components (Classes)
 
@@ -30,6 +70,11 @@ classDiagram
     class FrappeUI {
         +TranslationJob
         +TranslatorSettings
+        +App
+        +MonitoredApp
+        +TranslationHub
+        +DashboardChart
+        +NumberCards
     }
 
     class BackgroundJob {
@@ -89,6 +134,51 @@ classDiagram
 
     GeminiService --|> Service
 ```
+
+### DocType Relationships
+
+The following diagram shows how the Frappe DocTypes relate to each other:
+
+```mermaid
+erDiagram
+    TRANSLATOR_SETTINGS ||--o{ MONITORED_APP : "contains"
+    MONITORED_APP }o--|| APP : "references"
+    MONITORED_APP }o--|| LANGUAGE : "references"
+    TRANSLATION_JOB }o--|| APP : "source_app"
+    TRANSLATION_JOB }o--|| LANGUAGE : "target_language"
+    
+    TRANSLATOR_SETTINGS {
+        string api_key
+        text standardization_guide
+        bool enable_automated_translation
+        string frequency
+    }
+    
+    MONITORED_APP {
+        link source_app
+        link target_language
+    }
+    
+    APP {
+        string app_name
+        string app_title
+    }
+    
+    TRANSLATION_JOB {
+        string title
+        string status
+        link source_app
+        link target_language
+        int total_strings
+        int translated_strings
+        float progress_percentage
+        datetime start_time
+        datetime end_time
+        text log
+    }
+```
+
+### Component Descriptions
 
 - **`Orchestrator`**: The "brain" of the application. It coordinates the entire translation process. It is instantiated and run by the background job.
 - **`Service` (Abstract Base Class)**: Defines a common interface for any translation service.
