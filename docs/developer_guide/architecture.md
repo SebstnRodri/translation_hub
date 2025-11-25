@@ -28,10 +28,8 @@ The four main layers are:
 classDiagram
     direction LR
     class FrappeUI {
-        <<Frappe DocType>>
-        TranslationJob
-        <<Frappe DocType>>
-        TranslatorSettings
+        +TranslationJob
+        +TranslatorSettings
     }
 
     class BackgroundJob {
@@ -50,7 +48,15 @@ classDiagram
         +str api_key
         +str model_name
         +int batch_size
+        +int max_batch_retries
+        +int max_single_retries
+        +int retry_wait_seconds
+        +str standardization_guide
+        +Path pot_file
+        +Path po_file
         +Logger logger
+        +from_json(config_path)
+        +load_standardization_guide(guide_path)
     }
 
     class FileHandler {
@@ -62,8 +68,7 @@ classDiagram
     }
 
     class Service {
-        <<interface>>
-        +translate(entries)
+        +translate(entries)*
     }
 
     class GeminiService {
@@ -72,11 +77,11 @@ classDiagram
         +translate(entries)
     }
 
-    FrappeUI -->> BackgroundJob : enqueues
-    BackgroundJob -->> Orchestrator : instantiates and runs
-    BackgroundJob -->> Config : instantiates
-    BackgroundJob -->> FileHandler : instantiates
-    BackgroundJob -->> GeminiService : instantiates
+    FrappeUI ..> BackgroundJob : enqueues
+    BackgroundJob ..> Orchestrator : instantiates and runs
+    BackgroundJob ..> Config : instantiates
+    BackgroundJob ..> FileHandler : instantiates
+    BackgroundJob ..> GeminiService : instantiates
 
     Orchestrator o-- Config
     Orchestrator o-- FileHandler
