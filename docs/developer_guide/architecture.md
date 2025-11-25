@@ -100,6 +100,9 @@ classDiagram
         +Path pot_file
         +Path po_file
         +Logger logger
+        +bool use_database_storage
+        +bool save_to_po_file
+        +bool export_po_on_complete
         +from_json(config_path)
         +load_standardization_guide(guide_path)
     }
@@ -122,6 +125,20 @@ classDiagram
         +translate(entries)
     }
 
+    class MockTranslationService {
+        -Config config
+        -Logger logger
+        +translate(entries)
+    }
+
+    class DatabaseTranslationHandler {
+        -str language
+        -Logger logger
+        +save_translations(entries)
+        +get_all_translations()
+        +export_to_po(po_path)
+    }
+
     FrappeUI ..> BackgroundJob : enqueues
     BackgroundJob ..> Orchestrator : instantiates and runs
     BackgroundJob ..> Config : instantiates
@@ -131,8 +148,11 @@ classDiagram
     Orchestrator o-- Config
     Orchestrator o-- FileHandler
     Orchestrator o-- Service
+    Orchestrator ..> DatabaseTranslationHandler : uses
 
     GeminiService --|> Service
+    MockTranslationService --|> Service
+    BackgroundJob ..> DatabaseTranslationHandler : instantiates
 ```
 
 ### DocType Relationships
@@ -180,12 +200,115 @@ erDiagram
 
 ### Component Descriptions
 
-- **`Orchestrator`**: The "brain" of the application. It coordinates the entire translation process. It is instantiated and run by the background job.
+- **`Orchestrator`**: The "brain" of the application. It coordinates the entire translation process. It is instantiated and run by the background job. Now supports both database and file-based storage.
 - **`Service` (Abstract Base Class)**: Defines a common interface for any translation service.
 - **`GeminiService`**: The concrete implementation of `Service` for the Google Gemini API.
-- **`FileHandler`**: Encapsulates all logic related to file manipulation using the `polib` library.
-- **`Config`**: A data class that holds all configuration parameters, populated from the `Translator Settings` DocType.
+- **`MockTranslationService`**: A test implementation of `Service` that simulates translation without API calls. Automatically used when API key starts with `"test-"`.
+- **`DatabaseTranslationHandler`**: Stores translations in Frappe's Translation DocType (database). Provides highest priority for rendering and Docker-safe persistence.
+- **`FileHandler`**: Encapsulates all logic related to file manipulation using the `polib` library. Now optional, used only when `save_to_po_file=True`.
+- **`Config`**: A data class that holds all configuration parameters, including storage options (`use_database_storage`, `save_to_po_file`, `export_po_on_complete`).
 - **`DocTypeLogger`**: A custom logger that writes output to the `log` field of a `Translation Job` document.
+
+## Storage Strategy
+
+### Database-First Approach
+
+The Translation Hub uses a **database-first storage strategy** for translations, leveraging Frappe's built-in `Translation` DocType.
+
+#### Why Database Storage?
+
+1. **Docker-Safe**: Translations persist in the database, surviving container restarts
+2. **Highest Priority**: Frappe loads translations in this order:
+   - CSV files (legacy) - lowest priority
+   - MO files (compiled .po) - medium priority
+   - **Translation DocType** (database) - **highest priority** ✅
+3. **Real-Time**: Changes apply immediately after cache clear
+4. **Simple**: Uses Frappe's built-in infrastructure
+
+#### Translation Loading Priority
+
+```
+User Opens App
+    ↓
+Frappe Loads Translations
+    ↓
+1. Load CSV Files (legacy)
+    ↓
+2. Load MO Files (.po compiled)
+    ↓
+3. Load Translation DocType (DATABASE) ← WINS!
+    ↓
+Merge All (database overrides files)
+    ↓
+Render in UI
+```
+
+**Result**: Database translations **always override** file-based translations!
+
+### Configuration Options
+
+The system supports three storage strategies via `TranslationConfig`:
+
+#### Option 1: Database Only (Default - Recommended)
+
+```python
+use_database_storage = True   # Save to database
+save_to_po_file = False        # Don't save .po files
+export_po_on_complete = False  # Don't export
+```
+
+**Use Case**: Production deployment, Docker environments
+
+**Benefits**:
+- ✅ Simplest configuration
+- ✅ Docker-safe persistence
+- ✅ Real-time updates
+
+#### Option 2: Database + .po Export
+
+```python
+use_database_storage = True   # Save to database
+save_to_po_file = False        # Don't save during translation
+export_po_on_complete = True   # Export at end
+```
+
+**Use Case**: Development, version control of translations
+
+**Benefits**:
+- ✅ Database persistence
+- ✅ .po files for Git commits
+- ✅ External tool compatibility
+
+#### Option 3: Database + Real-time .po
+
+```python
+use_database_storage = True   # Save to database
+save_to_po_file = True         # Also save .po files
+export_po_on_complete = False  # Already saved
+```
+
+**Use Case**: Using external translation tools (Poedit, Weblate)
+
+**Benefits**:
+- ✅ Database persistence
+- ✅ Real-time .po file updates
+- ✅ Tool compatibility
+
+### File Paths (Frappe v16)
+
+Translations use the `locale/` directory structure:
+
+```
+/apps/{app_name}/{app_name}/
+├── locale/
+│   ├── main.pot          # Template file (always "main.pot")
+│   ├── es.po             # Spanish translations
+│   ├── pt_BR.po          # Portuguese (Brazil)
+│   └── ...
+```
+
+**Note**: Changed from `translations/` (old) to `locale/` (Frappe v16 standard)
+
 
 ## Execution Flow
 
@@ -198,6 +321,10 @@ sequenceDiagram
     participant JobDoc as Translation Job DocType
     participant BGJob as Background Job (tasks.py)
     participant Orch as Orchestrator
+    participant Service as Translation Service
+    participant DBHandler as DatabaseTranslationHandler
+    participant TransDoc as Translation DocType
+    participant FileHandler as FileHandler (optional)
 
     alt Manual Trigger
         User->>Workspace: Clicks "Start Job"
@@ -212,12 +339,57 @@ sequenceDiagram
     
     BGJob->>JobDoc: Update status to 'In Progress'
     BGJob->>Orch: create(config, file_handler, service, logger)
-    BGJob->>Orch: run()
-
-    loop For each batch
-        Orch->>BGJob: (via logger) Update progress
-        BGJob->>JobDoc: Save progress
+    
+    Note over BGJob,Service: Service selection based on API key
+    alt API key starts with "test-"
+        BGJob->>Service: Use MockTranslationService
+    else Real API key
+        BGJob->>Service: Use GeminiService
     end
-
+    
+    BGJob->>Orch: run()
+    
+    Orch->>FileHandler: merge() - merge .pot with .po
+    Orch->>FileHandler: get_untranslated_entries()
+    FileHandler-->>Orch: Return untranslated entries
+    
+    loop For each batch
+        Orch->>Service: translate(batch)
+        Service-->>Orch: Return translated batch
+        
+        Note over Orch,TransDoc: Database Storage (Primary)
+        alt use_database_storage = True (default)
+            Orch->>DBHandler: create(language, logger)
+            Orch->>DBHandler: save_translations(batch)
+            DBHandler->>TransDoc: Save/Update translations
+            DBHandler->>DBHandler: clear_cache()
+            Note over TransDoc: Translations now render in app!
+        end
+        
+        Note over Orch,FileHandler: Optional .po File Storage
+        alt save_to_po_file = True
+            Orch->>FileHandler: update_entries(batch)
+            Orch->>FileHandler: save()
+        end
+        
+        Orch->>BGJob: (via logger) Update progress
+        BGJob->>JobDoc: Save progress & log
+    end
+    
+    Note over Orch,FileHandler: Optional .po Export
+    alt export_po_on_complete = True
+        Orch->>DBHandler: export_to_po(po_path)
+        DBHandler->>TransDoc: get_all_translations()
+        TransDoc-->>DBHandler: Return all translations
+        DBHandler->>FileHandler: Write .po file
+    end
+    
+    Orch-->>BGJob: Translation complete
     BGJob->>JobDoc: Update status to 'Completed'
+    
+    Note over User,TransDoc: Translations Render
+    User->>Workspace: Opens app in target language
+    Workspace->>TransDoc: Load translations (highest priority)
+    TransDoc-->>Workspace: Return database translations
+    Workspace->>User: Display translated UI
 ```
