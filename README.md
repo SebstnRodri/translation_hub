@@ -19,8 +19,14 @@ Translation Hub automates the translation of your Frappe and ERPNext application
 Install the app on your Frappe bench:
 
 ```bash
-bench get-app https://github.com/yourusername/translation_hub
+bench get-app https://github.com/SebstnRodri/translation_hub
 bench install-app translation_hub
+```
+
+**Tip**: Run the setup command to enable common languages (like `pt-BR`, `es-MX`):
+
+```bash
+bench setup-languages
 ```
 
 ### 2. Configuration
