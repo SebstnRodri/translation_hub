@@ -1,73 +1,105 @@
 {
- "actions": [],
- "allow_rename": 0,
- "creation": "2025-11-17 10:05:00.000000",
- "doctype": "DocType",
- "engine": "InnoDB",
- "field_order": [
-  "api_key",
-  "standardization_guide",
-  "automation_section",
-  "enable_automated_translation",
-  "frequency",
-  "monitored_apps"
- ],
- "fields": [
-  {
-   "fieldname": "api_key",
-   "fieldtype": "Password",
-   "label": "API Key"
-  },
-  {
-   "fieldname": "standardization_guide",
-   "fieldtype": "Text Editor",
-   "label": "Standardization Guide"
-  },
-  {
-   "fieldname": "automation_section",
-   "fieldtype": "Section Break",
-   "label": "Automation"
-  },
-  {
-   "fieldname": "enable_automated_translation",
-   "fieldtype": "Check",
-   "label": "Enable Automated Translation"
-  },
-  {
-   "fieldname": "frequency",
-   "fieldtype": "Select",
-   "label": "Frequency",
-   "options": "Daily\nWeekly",
-   "depends_on": "eval:doc.enable_automated_translation"
-  },
-  {
-   "fieldname": "monitored_apps",
-   "fieldtype": "Table",
-   "label": "Monitored Apps",
-   "options": "Monitored App",
-   "depends_on": "eval:doc.enable_automated_translation"
-  }
- ],
- "issingle": 1,
- "links": [],
- "modified": "2025-11-17 10:05:00.000000",
- "modified_by": "Administrator",
- "module": "Translation Hub",
- "name": "Translator Settings",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "print": 1,
-   "read": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "track_changes": 1
+    "actions": [],
+    "allow_rename": 0,
+    "creation": "2025-11-17 10:05:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "api_key",
+        "standardization_guide",
+        "storage_strategy_section",
+        "use_database_storage",
+        "save_to_po_file",
+        "export_po_on_complete",
+        "automation_section",
+        "enable_automated_translation",
+        "frequency",
+        "monitored_apps"
+    ],
+    "fields": [
+        {
+            "fieldname": "api_key",
+            "fieldtype": "Password",
+            "label": "API Key"
+        },
+        {
+            "fieldname": "standardization_guide",
+            "fieldtype": "Text Editor",
+            "label": "Standardization Guide"
+        },
+        {
+            "fieldname": "storage_strategy_section",
+            "fieldtype": "Section Break",
+            "label": "Storage Strategy"
+        },
+        {
+            "default": "1",
+            "fieldname": "use_database_storage",
+            "fieldtype": "Check",
+            "label": "Use Database Storage",
+            "description": "Store translations in Translation DocType (recommended for Docker). Provides highest priority rendering and survives container restarts."
+        },
+        {
+            "default": "0",
+            "fieldname": "save_to_po_file",
+            "fieldtype": "Check",
+            "label": "Save to .po File",
+            "description": "Also save translations to .po files in real-time. Enable if using external translation tools like Poedit.",
+            "depends_on": "eval:doc.use_database_storage"
+        },
+        {
+            "default": "0",
+            "fieldname": "export_po_on_complete",
+            "fieldtype": "Check",
+            "label": "Export .po File on Completion",
+            "description": "Export database translations to .po file when job completes. Useful for version control.",
+            "depends_on": "eval:doc.use_database_storage"
+        },
+        {
+            "fieldname": "automation_section",
+            "fieldtype": "Section Break",
+            "label": "Automation"
+        },
+        {
+            "fieldname": "enable_automated_translation",
+            "fieldtype": "Check",
+            "label": "Enable Automated Translation"
+        },
+        {
+            "fieldname": "frequency",
+            "fieldtype": "Select",
+            "label": "Frequency",
+            "options": "Daily\nWeekly",
+            "depends_on": "eval:doc.enable_automated_translation"
+        },
+        {
+            "fieldname": "monitored_apps",
+            "fieldtype": "Table",
+            "label": "Monitored Apps",
+            "options": "Monitored App",
+            "depends_on": "eval:doc.enable_automated_translation"
+        }
+    ],
+    "issingle": 1,
+    "links": [],
+    "modified": "2025-11-17 10:05:00.000000",
+    "modified_by": "Administrator",
+    "module": "Translation Hub",
+    "name": "Translator Settings",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "print": 1,
+            "read": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "track_changes": 1
 }

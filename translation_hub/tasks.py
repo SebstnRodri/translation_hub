@@ -37,6 +37,9 @@ def execute_translation_job(job_name):
 			logger=logger,
 			po_file=po_path,
 			pot_file=pot_path,
+			use_database_storage=settings.use_database_storage,
+			save_to_po_file=settings.save_to_po_file,
+			export_po_on_complete=settings.export_po_on_complete,
 		)
 
 		file_handler = TranslationFile(po_path=config.po_file, pot_path=config.pot_file, logger=logger)
