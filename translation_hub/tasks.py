@@ -51,6 +51,7 @@ def execute_translation_job(job_name):
 		logger.info(f"Checking API Key for Mock Service: '{api_key}'")
 		if api_key and api_key.startswith("test-"):
 			from translation_hub.core.translation_service import MockTranslationService
+
 			logger.info("Using MockTranslationService (test mode)")
 			service = MockTranslationService(config=config, logger=logger)
 		else:

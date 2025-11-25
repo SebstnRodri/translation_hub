@@ -20,7 +20,7 @@ class TranslationConfig:
 	po_file: Path | None = field(default=None, compare=False)
 	api_key: str | None = field(default=None, compare=False)
 	logger: Any = field(default=None, compare=False)
-	
+
 	# Database storage options
 	use_database_storage: bool = True  # Use Translation DocType (recommended)
 	save_to_po_file: bool = False  # Also save to .po file (optional)

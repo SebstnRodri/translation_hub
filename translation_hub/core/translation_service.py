@@ -49,30 +49,30 @@ class MockTranslationService(TranslationService):
 		Mock translation that adds [ES] prefix to simulate Spanish translation.
 		"""
 		import random
-		
+
 		self.logger.info(f"[MOCK] Translating batch of {len(entries)} entries")
 		time.sleep(self.delay * len(entries))  # Simulate processing time
-		
+
 		translations = []
 		for entry in entries:
 			msgid = entry["msgid"]
-			
+
 			# Simulate occasional failures if fail_rate > 0
 			if random.random() < self.fail_rate:
 				self.logger.warning(f"[MOCK] Simulated failure for: '{msgid}'")
 				translations.append({"msgid": msgid, "msgstr": f"[TRANSLATION_FAILED] {msgid}"})
 				continue
-			
+
 			# Simple mock translation: add [ES] prefix
 			# Preserve placeholders and HTML tags
 			mock_translation = f"[ES] {msgid}"
-			
+
 			# Preserve whitespace
 			preserved = self._preserve_whitespace(msgid, mock_translation)
 			translations.append({"msgid": msgid, "msgstr": preserved})
-			
+
 			self.logger.debug(f"[MOCK] '{msgid}' -> '{preserved}'")
-		
+
 		return translations
 
 	@staticmethod

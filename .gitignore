@@ -5,3 +5,10 @@
 tags
 node_modules
 __pycache__
+.playwright-mcp
+.env
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/

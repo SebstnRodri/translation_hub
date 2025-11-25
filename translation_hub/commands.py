@@ -2,6 +2,7 @@ import click
 import frappe
 from frappe.commands import pass_context
 
+
 @click.command("setup-languages")
 @pass_context
 def setup_languages(context):
@@ -17,15 +18,14 @@ def setup_languages(context):
 			return
 
 		settings.sync_languages()
-		
+
 		# Feedback is now implicit, but we can iterate to show what happened if needed,
 		# or just say "Languages synced successfully."
 		click.echo("Languages synced based on Translator Settings.")
-		
+
 		frappe.db.commit()
 	finally:
 		frappe.destroy()
 
-commands = [
-	setup_languages
-]
+
+commands = [setup_languages]
