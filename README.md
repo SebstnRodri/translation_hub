@@ -12,11 +12,11 @@ Translation Hub automates the translation of your Frappe and ERPNext application
 - **🛠️ Easy Configuration**: Manage API keys and storage preferences directly from the UI.
 - **📊 Progress Monitoring**: Track translation jobs in real-time with detailed logs and status updates.
 
-## 🚀 Quick Start
+## 🚀 Getting Started
 
-### 1. Installation
+### 1. Installation (CLI)
 
-Install the app on your Frappe bench:
+Install the app on your Frappe bench via terminal:
 
 ```bash
 bench get-app https://github.com/SebstnRodri/translation_hub
@@ -29,18 +29,22 @@ bench install-app translation_hub
 bench setup-languages
 ```
 
-### 2. Configuration
+### 2. Configuration (UI)
 
 1. Open **Translator Settings** in your Frappe Desk.
 2. Enter your **Google Gemini API Key**.
 3. Ensure **Use Database Storage** is checked (recommended).
 
-### 3. Translate an App
+### 3. Usage via Desk (UI)
 
-1. Go to **Translation Job** list and click **Add Translation Job**.
-2. Select the **Source App** (e.g., `frappe`, `erpnext`) and **Target Language** (e.g., `pt-BR`, `es`).
-3. Click **Start Job**.
-4. Watch the agent work! The status will update as strings are translated.
+The entire translation process is managed through the Frappe Desk interface:
+
+1. Search for **Translation Job** in the awesome bar.
+2. Click **Add Translation Job**.
+3. Select the **Source App** (e.g., `frappe`, `erpnext`) and **Target Language** (e.g., `pt-BR`, `es`).
+4. Save the document.
+5. Click the **Start Job** button in the top right corner.
+6. Watch the agent work! The status will update as strings are translated.
 
 ## 🧪 Development & Testing
 
