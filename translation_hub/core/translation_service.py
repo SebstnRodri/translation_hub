@@ -32,6 +32,59 @@ class TranslationService(ABC):
 		pass
 
 
+class MockTranslationService(TranslationService):
+	"""
+	A mock implementation of TranslationService for testing without API calls.
+	Simulates translation by adding a language prefix to the original text.
+	"""
+
+	def __init__(self, config: TranslationConfig, logger: logging.Logger | None = None):
+		self.config = config
+		self.logger = logger or logging.getLogger(__name__)
+		self.delay = 0.1  # Simulate API delay (seconds)
+		self.fail_rate = 0.0  # Probability of failure (0.0 to 1.0)
+
+	def translate(self, entries: list[dict[str, Any]]) -> list[dict[str, str]]:
+		"""
+		Mock translation that adds [ES] prefix to simulate Spanish translation.
+		"""
+		import random
+		
+		self.logger.info(f"[MOCK] Translating batch of {len(entries)} entries")
+		time.sleep(self.delay * len(entries))  # Simulate processing time
+		
+		translations = []
+		for entry in entries:
+			msgid = entry["msgid"]
+			
+			# Simulate occasional failures if fail_rate > 0
+			if random.random() < self.fail_rate:
+				self.logger.warning(f"[MOCK] Simulated failure for: '{msgid}'")
+				translations.append({"msgid": msgid, "msgstr": f"[TRANSLATION_FAILED] {msgid}"})
+				continue
+			
+			# Simple mock translation: add [ES] prefix
+			# Preserve placeholders and HTML tags
+			mock_translation = f"[ES] {msgid}"
+			
+			# Preserve whitespace
+			preserved = self._preserve_whitespace(msgid, mock_translation)
+			translations.append({"msgid": msgid, "msgstr": preserved})
+			
+			self.logger.debug(f"[MOCK] '{msgid}' -> '{preserved}'")
+		
+		return translations
+
+	@staticmethod
+	def _preserve_whitespace(original: str, translated: str) -> str:
+		"""Preserve leading and trailing whitespace from original."""
+		if not original:
+			return translated
+		leading_spaces = len(original) - len(original.lstrip(" "))
+		trailing_spaces = len(original) - len(original.rstrip(" "))
+		return (" " * leading_spaces) + translated.strip() + (" " * trailing_spaces)
+
+
 class GeminiService(TranslationService):
 	"""
 	A concrete implementation of TranslationService that uses the Google Gemini API.

@@ -41,7 +41,13 @@ def execute_translation_job(job_name):
 
 		file_handler = TranslationFile(po_path=config.po_file, pot_path=config.pot_file, logger=logger)
 
-		service = GeminiService(config=config, logger=logger)
+		# Use MockTranslationService for testing if API key is a placeholder
+		if settings.api_key and settings.api_key.startswith("test-"):
+			from translation_hub.core.translation_service import MockTranslationService
+			logger.info("Using MockTranslationService (test mode)")
+			service = MockTranslationService(config=config, logger=logger)
+		else:
+			service = GeminiService(config=config, logger=logger)
 
 		orchestrator = TranslationOrchestrator(
 			config=config, file_handler=file_handler, service=service, logger=logger
