@@ -6,8 +6,8 @@
    "label": "Translations Over Time"
   }
  ],
- "content": "[{\"id\":\"dxOyuLz9tZ\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">AI agent for translating Frappe/Erpnext ecosystem</span>\",\"col\":12}},{\"id\":\"hrX27Ud_Uq\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b></b></span>\",\"col\":12}},{\"id\":\"AFZR0X-lhx\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Translations Over Time\",\"col\":12}},{\"id\":\"Ah9qQEYDl2\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"4KyBo6vpA8\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Apps Tracked\",\"col\":5}},{\"id\":\"USalkaywWP\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Strings Translated\",\"col\":7}},{\"id\":\"q7DWQBMf2g\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Jobs Completed (30 Days)\",\"col\":8}},{\"id\":\"Xtt24WNzge\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Jobs in Progress\",\"col\":4}}]",
- "creation": "2025-11-24 18:27:50.469530",
+ "content": "[{\"id\":\"dxOyuLz9tZ\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">AI agent for translating Frappe/Erpnext ecosystem</span>\",\"col\":12}},{\"id\":\"hrX27Ud_Uq\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b></b></span>\",\"col\":12}},{\"id\":\"AFZR0X-lhx\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Translations Over Time\",\"col\":12}},{\"id\":\"Ah9qQEYDl2\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"4KyBo6vpA8\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Apps Tracked\",\"col\":7}},{\"id\":\"USalkaywWP\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Strings Translated\",\"col\":5}},{\"id\":\"q7DWQBMf2g\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Jobs Completed (30 Days)\",\"col\":7}},{\"id\":\"Xtt24WNzge\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Jobs in Progress\",\"col\":5}}]",
+ "creation": "2025-11-24 21:26:56.155353",
  "custom_blocks": [],
  "docstatus": 0,
  "doctype": "Workspace",
@@ -20,7 +20,7 @@
  "label": "Translation Hub",
  "link_type": "DocType",
  "links": [],
- "modified": "2025-11-24 18:35:05.653390",
+ "modified": "2025-11-25 08:18:32.285954",
  "modified_by": "Administrator",
  "module": "Translation Hub",
  "name": "Translation Hub",
