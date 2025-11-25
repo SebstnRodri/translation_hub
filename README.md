@@ -12,47 +12,19 @@ Translation Hub automates the translation of your Frappe and ERPNext application
 - **🛠️ Easy Configuration**: Manage API keys and storage preferences directly from the UI.
 - **📊 Progress Monitoring**: Track translation jobs in real-time with detailed logs and status updates.
 
-## 🚀 Getting Started
 
-### 1. Installation (CLI)
 
-Install the app on your Frappe bench via terminal:
+## 📚 Documentation
 
-```bash
-bench get-app https://github.com/SebstnRodri/translation_hub
-bench install-app translation_hub
-```
+### User Guide
+- [Getting Started](docs/user_guide/getting_started.md): Initial setup and configuration.
+- [Usage Guide](docs/user_guide/usage.md): Detailed instructions on creating translation jobs.
+- [Workspace & Navigation](docs/user_guide/workspace.md): How to use the Translation Hub workspace.
+- [Best Practices](docs/user_guide/best_practices.md): Tips for efficient translation management.
 
-**Tip**: Run the setup command to enable common languages (like `pt-BR`, `es-MX`):
-
-```bash
-bench setup-languages
-```
-
-### 2. Configuration (UI)
-
-1. Open **Translator Settings** in your Frappe Desk.
-2. Enter your **Google Gemini API Key**.
-3. Ensure **Use Database Storage** is checked (recommended).
-
-### 3. Usage via Desk (UI)
-
-The entire translation process is managed through the Frappe Desk interface:
-
-1. Search for **Translation Job** in the awesome bar.
-2. Click **Add Translation Job**.
-3. Select the **Source App** (e.g., `frappe`, `erpnext`) and **Target Language** (e.g., `pt-BR`, `es`).
-4. Save the document.
-5. Click the **Start Job** button in the top right corner.
-6. Watch the agent work! The status will update as strings are translated.
-
-## 🧪 Development & Testing
-
-For developers contributing to this project:
-
-- **Mock Service**: Use an API key starting with `test-` to simulate translations without costs.
-- **Linting**: Run `pre-commit install` to enable code quality checks.
-- **Tests**: Run `bench run-tests --app translation_hub` to execute the test suite.
+### Developer Guide
+- [Architecture](docs/developer_guide/architecture.md): System design and component overview.
+- [Contributing](docs/developer_guide/contributing.md): Guidelines for contributing to the project.
 
 ## License
 
