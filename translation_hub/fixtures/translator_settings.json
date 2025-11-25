@@ -4,10 +4,13 @@
   "docstatus": 0,
   "doctype": "Translator Settings",
   "enable_automated_translation": 0,
+  "export_po_on_complete": 0,
   "frequency": "Daily",
   "modified": "2025-11-24 10:05:02.044969",
   "monitored_apps": [],
   "name": "Translator Settings",
-  "standardization_guide": null
+  "save_to_po_file": 0,
+  "standardization_guide": null,
+  "use_database_storage": 0
  }
 ]

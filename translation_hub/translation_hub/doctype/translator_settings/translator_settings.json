@@ -14,7 +14,9 @@
         "automation_section",
         "enable_automated_translation",
         "frequency",
-        "monitored_apps"
+        "monitored_apps",
+        "language_setup_section",
+        "default_languages"
     ],
     "fields": [
         {
@@ -78,6 +80,18 @@
             "label": "Monitored Apps",
             "options": "Monitored App",
             "depends_on": "eval:doc.enable_automated_translation"
+        },
+        {
+            "fieldname": "language_setup_section",
+            "fieldtype": "Section Break",
+            "label": "Language Setup"
+        },
+        {
+            "fieldname": "default_languages",
+            "fieldtype": "Table",
+            "label": "Default Languages",
+            "options": "Translator Language",
+            "description": "Define languages to be created/enabled by the 'bench setup-languages' command."
         }
     ],
     "issingle": 1,

@@ -1,7 +1,7 @@
 app_name = "translation_hub"
 app_title = "Translation Hub"
 app_publisher = "Sebastian Rodrigues"
-app_description = "AI agent for translating Frappe/Erpnext..."
+app_description = "AI-Powered Translation Agent for Frappe Apps"
 app_email = "sebstn@outlook.com.br"
 app_license = "mit"
 
@@ -149,7 +149,6 @@ app_license = "mit"
 fixtures = [
 	"Translator Settings",
 	{"dt": "Workspace", "filters": [["name", "=", "Translation Hub"]]},
-    {"dt": "Number Card", "filters": [["module", "=", "Translation Hub"]]},
     {"dt": "Dashboard Chart", "filters": [["module", "=", "Translation Hub"]]},
 ]
 # Scheduled Tasks
