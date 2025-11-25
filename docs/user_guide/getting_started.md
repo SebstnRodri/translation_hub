@@ -11,17 +11,17 @@ bench get-app https://github.com/SebstnRodri/translation_hub
 bench install-app translation_hub
 ```
 
-**Tip**: Run the setup command to enable common languages (like `pt-BR`, `es-MX`):
-
-```bash
-bench setup-languages
-```
-
 ## 2. Configuration (UI)
 
 1. Open **Translator Settings** in your Frappe Desk.
 2. Enter your **Google Gemini API Key**.
-3. Ensure **Use Database Storage** is checked (recommended).
+3. **Language Setup**:
+    - Scroll to the "Language Setup" section.
+    - Add the languages you want to use (e.g., `pt-BR`, `es-MX`) in the "Default Languages" table.
+    - Check "Enabled" for each language.
+    - **Save** the settings. The languages will be created/enabled automatically! 
+    *(Alternatively, you can run `bench setup-languages` in the terminal after configuring this).*
+4. Ensure **Use Database Storage** is checked (recommended).
 
 ## 3. Usage via Desk (UI)
 
