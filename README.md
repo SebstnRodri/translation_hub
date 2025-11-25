@@ -17,8 +17,7 @@ Translation Hub automates the translation of your Frappe and ERPNext application
 ## 📚 Documentation
 
 ### User Guide
-- [Getting Started](docs/user_guide/getting_started.md): Initial setup and configuration.
-- [Usage Guide](docs/user_guide/usage.md): Detailed instructions on creating translation jobs.
+- [Getting Started](docs/user_guide/getting_started.md): Initial setup, configuration, and usage.
 - [Workspace & Navigation](docs/user_guide/workspace.md): How to use the Translation Hub workspace.
 - [Best Practices](docs/user_guide/best_practices.md): Tips for efficient translation management.
 
