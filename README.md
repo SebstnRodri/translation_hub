@@ -1,41 +1,49 @@
-### Translation Hub
+# Translation Hub 🌍
 
-AI agent for translating Frappe/Erpnext...
+**AI-Powered Translation Agent for Frappe Apps**
 
-### Installation
+Translation Hub automates the translation of your Frappe and ERPNext applications using advanced AI (Google Gemini). It manages the entire workflow—from extracting strings to generating context-aware translations and saving them securely.
 
-You can install this app using the [bench](https://github.com/frappe/bench) CLI:
+## ✨ Key Features
+
+- **🤖 AI-Powered**: Uses Google Gemini to provide accurate, context-aware translations.
+- **💾 Database Storage**: Translations are stored directly in the database (Docker-safe), ensuring they survive updates and restarts.
+- **⚡ Real-time Updates**: Translations are applied immediately without requiring server restarts.
+- **🛠️ Easy Configuration**: Manage API keys and storage preferences directly from the UI.
+- **📊 Progress Monitoring**: Track translation jobs in real-time with detailed logs and status updates.
+
+## 🚀 Quick Start
+
+### 1. Installation
+
+Install the app on your Frappe bench:
 
 ```bash
-cd $PATH_TO_YOUR_BENCH
-bench get-app $URL_OF_THIS_REPO --branch develop
+bench get-app https://github.com/yourusername/translation_hub
 bench install-app translation_hub
 ```
 
-### Contributing
+### 2. Configuration
 
-This app uses `pre-commit` for code formatting and linting. Please [install pre-commit](https://pre-commit.com/#installation) and enable it for this repository:
+1. Open **Translator Settings** in your Frappe Desk.
+2. Enter your **Google Gemini API Key**.
+3. Ensure **Use Database Storage** is checked (recommended).
 
-```bash
-cd apps/translation_hub
-pre-commit install
-```
+### 3. Translate an App
 
-Pre-commit is configured to use the following tools for checking and formatting your code:
+1. Go to **Translation Job** list and click **Add Translation Job**.
+2. Select the **Source App** (e.g., `frappe`, `erpnext`) and **Target Language** (e.g., `pt-BR`, `es`).
+3. Click **Start Job**.
+4. Watch the agent work! The status will update as strings are translated.
 
-- ruff
-- eslint
-- prettier
-- pyupgrade
+## 🧪 Development & Testing
 
-### CI
+For developers contributing to this project:
 
-This app can use GitHub Actions for CI. The following workflows are configured:
+- **Mock Service**: Use an API key starting with `test-` to simulate translations without costs.
+- **Linting**: Run `pre-commit install` to enable code quality checks.
+- **Tests**: Run `bench run-tests --app translation_hub` to execute the test suite.
 
-- CI: Installs this app and runs unit tests on every push to `develop` branch.
-- Linters: Runs [Frappe Semgrep Rules](https://github.com/frappe/semgrep-rules) and [pip-audit](https://pypi.org/project/pip-audit/) on every pull request.
+## License
 
-
-### License
-
-mit
+MIT
