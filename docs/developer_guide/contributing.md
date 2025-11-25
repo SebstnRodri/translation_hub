@@ -26,6 +26,7 @@ This project and everyone participating in it is governed by the [Code of Conduc
 2.  **Install Dependencies**: This project uses `uv` for package management. Install the project in editable mode with all development dependencies.
 
     ```bash
+    # Ensure your virtual environment is activated (e.g., source ../../env/bin/activate)
     uv pip install -e ".[dev]"
     ```
 
@@ -37,9 +38,10 @@ This project and everyone participating in it is governed by the [Code of Conduc
 
 4.  **Configure API Key**: Create a `.env` file in the root directory and add your API key.
 
-    ```
-    GOOGLE_API_KEY="YOUR_API_KEY"
-    ```
+    **Note**: For development, you can use the **Mock Service** to simulate translations without incurring costs.
+
+    - **Production**: Add your real key: `GOOGLE_API_KEY="YOUR_API_KEY"`
+    - **Development/Testing**: Use a dummy key starting with `test-`: `GOOGLE_API_KEY="test-key"`
 
 ## Running Tests
 
