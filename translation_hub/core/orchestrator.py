@@ -58,11 +58,34 @@ class TranslationOrchestrator:
 					self.logger.debug(f"  - Original: {entry['msgid']}")
 					self.logger.debug(f"    Translation: {entry['msgstr']}")
 
-				self.file_handler.update_entries(translated_batch)
-				self.file_handler.save()
+				# Save to database (PRIMARY STORAGE)
+				if self.config.use_database_storage:
+					from translation_hub.core.database_translation import DatabaseTranslationHandler
+					db_handler = DatabaseTranslationHandler(
+						self.config.po_file.stem if self.config.po_file else "en",
+						self.logger
+					)
+					db_handler.save_translations(translated_batch)
+				
+				# OPTIONAL: Also save to .po file
+				if self.config.save_to_po_file:
+					self.file_handler.update_entries(translated_batch)
+					self.file_handler.save()
+				
 				self.logger.info(f"--- Batch {i + 1}/{total_batches} saved ---")
 
 			self.logger.info("\nTranslation complete!")
+			
+			# OPTIONAL: Export database to .po file at completion
+			if self.config.use_database_storage and self.config.export_po_on_complete:
+				from translation_hub.core.database_translation import DatabaseTranslationHandler
+				db_handler = DatabaseTranslationHandler(
+					self.config.po_file.stem if self.config.po_file else "en",
+					self.logger
+				)
+				db_handler.export_to_po(str(self.config.po_file))
+				self.logger.info(f"Exported database translations to {self.config.po_file}")
+			
 			self.file_handler.final_verification()
 
 		except KeyboardInterrupt:

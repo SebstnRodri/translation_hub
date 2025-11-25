@@ -28,8 +28,8 @@ def execute_translation_job(job_name):
 		settings = frappe.get_single("Translator Settings")
 
 		app_path = get_app_path(job.source_app)
-		po_path = os.path.join(app_path, "translations", f"{job.target_language}.po")
-		pot_path = os.path.join(app_path, "translations", f"{job.source_app}.pot")
+		po_path = os.path.join(app_path, "locale", f"{job.target_language}.po")
+		pot_path = os.path.join(app_path, "locale", "main.pot")
 
 		config = TranslationConfig(
 			api_key=settings.api_key,
