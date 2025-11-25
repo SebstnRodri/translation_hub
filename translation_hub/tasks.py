@@ -31,8 +31,11 @@ def execute_translation_job(job_name):
 		po_path = os.path.join(app_path, "locale", f"{job.target_language}.po")
 		pot_path = os.path.join(app_path, "locale", "main.pot")
 
+		# Get unmasked API key
+		api_key = settings.get_password("api_key")
+
 		config = TranslationConfig(
-			api_key=settings.api_key,
+			api_key=api_key,
 			standardization_guide=settings.standardization_guide,
 			logger=logger,
 			po_file=po_path,
@@ -45,11 +48,13 @@ def execute_translation_job(job_name):
 		file_handler = TranslationFile(po_path=config.po_file, pot_path=config.pot_file, logger=logger)
 
 		# Use MockTranslationService for testing if API key is a placeholder
-		if settings.api_key and settings.api_key.startswith("test-"):
+		logger.info(f"Checking API Key for Mock Service: '{api_key}'")
+		if api_key and api_key.startswith("test-"):
 			from translation_hub.core.translation_service import MockTranslationService
 			logger.info("Using MockTranslationService (test mode)")
 			service = MockTranslationService(config=config, logger=logger)
 		else:
+			logger.info("Using GeminiService (production mode)")
 			service = GeminiService(config=config, logger=logger)
 
 		orchestrator = TranslationOrchestrator(
