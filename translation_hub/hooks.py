@@ -147,6 +147,7 @@ app_license = "mit"
 
 # Fixtures
 fixtures = [
+	"App",
 	"Translator Settings",
 	{"dt": "Workspace", "filters": [["name", "=", "Translation Hub"]]},
 	{"dt": "Dashboard Chart", "filters": [["module", "=", "Translation Hub"]]},

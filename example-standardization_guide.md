@@ -18,7 +18,7 @@ Use **estritamente** as traduções definidas no glossário. Este é a **única 
 - Accounts Receivable → Contas a Receber
 - Against (em contexto de associação) → Associado a / Vinculado a / Referente a / Para (**nunca “Contra”**)
 - Asset → Ativo
-- Child Company → Subsidiária
+- Child Company → Filial
 - Credit → Crédito
 - Customer → Cliente
 - Debit → Débito
