@@ -1,0 +1,20 @@
+{
+    "chart_name": "Monitored Apps Progress",
+    "chart_type": "Bar",
+    "creation": "2025-11-26 07:50:00.000000",
+    "docstatus": 0,
+    "doctype": "Dashboard Chart",
+    "document_type": "",
+    "custom_options": "{\"barOptions\": {\"stacked\": 0}}",
+    "idx": 0,
+    "is_public": 1,
+    "is_custom": 1,
+    "modified": "2025-11-26 07:50:00.000000",
+    "modified_by": "Administrator",
+    "module": "Translation Hub",
+    "name": "Monitored Apps Progress",
+    "owner": "Administrator",
+    "source": "Method",
+    "type": "Custom",
+    "use_report_chart": 0
+}
