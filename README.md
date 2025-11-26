@@ -10,7 +10,7 @@ Translation Hub automates the translation of your Frappe and ERPNext application
 - **💾 Database Storage**: Translations are stored directly in the database (Docker-safe), ensuring they survive updates and restarts.
 - **⚡ Real-time Updates**: Translations are applied immediately without requiring server restarts.
 - **🛠️ Easy Configuration**: Manage API keys and storage preferences directly from the UI.
-- **📊 Progress Monitoring**: Track translation jobs in real-time with detailed logs and status updates.
+- **📊 Visual Dashboards**: Monitor progress with interactive charts and track jobs in real-time with detailed logs.
 
 
 

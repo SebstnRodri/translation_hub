@@ -43,7 +43,9 @@ The four main layers are:
 #### Workspace & UI Components
 
 - **`Translation Hub` (Workspace)**: A dashboard for creating, managing, and monitoring Translation Jobs.
-  - Displays **Dashboard Chart**: "Translations Over Time" - visualizes translation progress over time
+  - Displays **Dashboard Charts**:
+    - **"Translations Over Time"**: Visualizes translation activity over time.
+    - **"Monitored Apps Progress"**: Shows the percentage of translation completion for each monitored app/language.
   - Displays **Number Cards** for key metrics:
     - **Total Apps Tracked**: Count of apps configured for translation
     - **Jobs in Progress**: Active translation jobs currently running

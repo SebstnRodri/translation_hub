@@ -8,7 +8,14 @@ You can access the workspace by searching for "Translation Workspace" in the Awe
 
 ## 2. Dashboard Overview
 
-The workspace dashboard gives you an at-a-glance overview of your translation activities with several key metrics:
+The workspace dashboard gives you an at-a-glance overview of your translation activities with insightful charts and key metrics.
+
+### Charts
+
+-   **Translations Over Time**: A line chart showing the volume of translation jobs and activity over time.
+-   **Monitored Apps Progress**: A bar chart displaying the completion percentage for each app and target language you are monitoring.
+
+### Key Metrics
 
 -   **Total Apps Tracked**: The number of distinct Frappe apps for which translation jobs have been created.
 -   **Jobs In Progress**: The number of translation jobs that are currently running.
