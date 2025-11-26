@@ -85,7 +85,7 @@ classDiagram
         -Config config
         -FileHandler file_handler
         -Service service
-        -Logger logger
+        -DocTypeLogger logger
         +run()
     }
 
@@ -99,7 +99,7 @@ classDiagram
         +str standardization_guide
         +Path pot_file
         +Path po_file
-        +Logger logger
+        +DocTypeLogger logger
         +bool use_database_storage
         +bool save_to_po_file
         +bool export_po_on_complete
@@ -109,7 +109,7 @@ classDiagram
 
     class FileHandler {
         -Path po_path
-        -Logger logger
+        -DocTypeLogger logger
         +get_untranslated_entries()
         +update_entries()
         +save()
@@ -121,22 +121,29 @@ classDiagram
 
     class GeminiService {
         -Config config
-        -Logger logger
+        -DocTypeLogger logger
         +translate(entries)
     }
 
     class MockTranslationService {
         -Config config
-        -Logger logger
+        -DocTypeLogger logger
         +translate(entries)
     }
 
     class DatabaseTranslationHandler {
         -str language
-        -Logger logger
+        -DocTypeLogger logger
         +save_translations(entries)
         +get_all_translations()
         +export_to_po(po_path)
+    }
+
+    class DocTypeLogger {
+        -TranslationJob job_document
+        +info(message)
+        +warning(message)
+        +error(message)
     }
 
     FrappeUI ..> BackgroundJob : enqueues
@@ -144,15 +151,18 @@ classDiagram
     BackgroundJob ..> Config : instantiates
     BackgroundJob ..> FileHandler : instantiates
     BackgroundJob ..> GeminiService : instantiates
+    BackgroundJob ..> DocTypeLogger : instantiates
 
     Orchestrator o-- Config
     Orchestrator o-- FileHandler
     Orchestrator o-- Service
+    Orchestrator o-- DocTypeLogger
     Orchestrator ..> DatabaseTranslationHandler : uses
 
     GeminiService --|> Service
     MockTranslationService --|> Service
     BackgroundJob ..> DatabaseTranslationHandler : instantiates
+    DocTypeLogger ..> FrappeUI : logs to TranslationJob
 ```
 
 ### DocType Relationships
@@ -162,8 +172,9 @@ The following diagram shows how the Frappe DocTypes relate to each other:
 ```mermaid
 erDiagram
     TRANSLATOR_SETTINGS ||--o{ MONITORED_APP : "contains"
-    MONITORED_APP }o--|| APP : "references"
-    MONITORED_APP }o--|| LANGUAGE : "references"
+    TRANSLATOR_SETTINGS ||--o{ TRANSLATOR_LANGUAGE : "contains"
+    MONITORED_APP }o--|| APP : "source_app"
+    MONITORED_APP }o--|| LANGUAGE : "target_language"
     TRANSLATION_JOB }o--|| APP : "source_app"
     TRANSLATION_JOB }o--|| LANGUAGE : "target_language"
     
@@ -172,11 +183,19 @@ erDiagram
         text standardization_guide
         bool enable_automated_translation
         string frequency
+        table monitored_apps
+        table default_languages
     }
     
     MONITORED_APP {
         link source_app
         link target_language
+    }
+    
+    TRANSLATOR_LANGUAGE {
+        string language_code
+        string language_name
+        bool enabled
     }
     
     APP {
@@ -196,6 +215,11 @@ erDiagram
         datetime end_time
         text log
     }
+    
+    LANGUAGE {
+        string language_code
+        string language_name
+    }
 ```
 
 ### Component Descriptions
@@ -208,8 +232,6 @@ erDiagram
 - **`FileHandler`**: Encapsulates all logic related to file manipulation using the `polib` library. Now optional, used only when `save_to_po_file=True`.
 - **`Config`**: A data class that holds all configuration parameters, including storage options (`use_database_storage`, `save_to_po_file`, `export_po_on_complete`).
 - **`DocTypeLogger`**: A custom logger that writes output to the `log` field of a `Translation Job` document.
-
-## Storage Strategy
 
 ### Database-First Approach
 
@@ -393,3 +415,8 @@ sequenceDiagram
     TransDoc-->>Workspace: Return database translations
     Workspace->>User: Display translated UI
 ```
+
+### Concurrency & Multi-Language Support
+
+-   **Concurrency**: The system leverages Frappe's background workers. Multiple translation jobs can be enqueued simultaneously. The actual parallel execution depends on the number of available background workers in the Bench configuration.
+-   **Multi-Language**: A single application can be translated into multiple languages simultaneously. Each App/Language pair is treated as a distinct `Translation Job` and `Monitored App` entry.
