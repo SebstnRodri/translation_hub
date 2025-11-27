@@ -43,6 +43,33 @@ This project and everyone participating in it is governed by the [Code of Conduc
     - **Production**: Add your real key: `GOOGLE_API_KEY="YOUR_API_KEY"`
     - **Development/Testing**: Use a dummy key starting with `test-`: `GOOGLE_API_KEY="test-key"`
 
+> [!IMPORTANT]
+> **Compatibility Note**: This project is developed and tested on **Frappe Framework v16.0.0-dev (version-16-beta)**. Please ensure your environment matches this version.
+
+## Development Guidelines
+
+### Path Handling
+Always use `pathlib.Path` for file system operations instead of string manipulation. This ensures cross-platform compatibility and robustness.
+
+```python
+from pathlib import Path
+# Good
+po_path = Path(app_path) / "locale" / "pt_BR.po"
+# Bad
+po_path = app_path + "/locale/pt_BR.po"
+```
+
+### HTML Preservation
+When handling translations, **never strip HTML tags**. The `Translation` DocType in Frappe automatically sanitizes HTML, so we must rely on direct file manipulation (`save_to_po_file=True`) to preserve rich text.
+
+### Security
+**Never log full API keys**. Always mask sensitive data before logging.
+```python
+# Good
+masked_key = f"{api_key[:4]}..." if api_key else "None"
+logger.info(f"Using key: {masked_key}")
+```
+
 ## Running Tests
 
 To ensure that your changes haven't broken anything, run the full test suite:

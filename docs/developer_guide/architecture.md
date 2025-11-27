@@ -87,6 +87,7 @@ classDiagram
 
     class BackgroundJob {
         +execute_translation_job(job_name)
+        +ensure_pot_file(app_name)
     }
 
     class Orchestrator {
@@ -121,6 +122,7 @@ classDiagram
         +get_untranslated_entries()
         +update_entries()
         +save()
+        +merge()
     }
 
     class Service {
@@ -212,7 +214,7 @@ erDiagram
     }
     
     TRANSLATION_JOB {
-        string title
+        string title "Unique: Automated: {app} - {lang} - {timestamp}"
         string status
         link source_app
         link target_language
@@ -237,11 +239,11 @@ erDiagram
 - **`GeminiService`**: The concrete implementation of `Service` for the Google Gemini API.
 - **`MockTranslationService`**: A test implementation of `Service` that simulates translation without API calls. Automatically used when API key starts with `"test-"`.
 - **`DatabaseTranslationHandler`**: Stores translations in Frappe's Translation DocType (database). Provides highest priority for rendering and Docker-safe persistence.
-- **`FileHandler`**: Encapsulates all logic related to file manipulation using the `polib` library. Now optional, used only when `save_to_po_file=True`.
+- **`FileHandler`**: Encapsulates all logic related to file manipulation using the `polib` library. Handles merging `.pot` templates into `.po` files and saving translations.
 - **`Config`**: A data class that holds all configuration parameters, including storage options (`use_database_storage`, `save_to_po_file`, `export_po_on_complete`).
 - **`DocTypeLogger`**: A custom logger that writes output to the `log` field of a `Translation Job` document.
 
-### Database-First Approach
+### Database-First Approach & HTML Preservation
 
 The Translation Hub uses a **database-first storage strategy** for translations, leveraging Frappe's built-in `Translation` DocType.
 
@@ -254,6 +256,15 @@ The Translation Hub uses a **database-first storage strategy** for translations,
    - **Translation DocType** (database) - **highest priority** ✅
 3. **Real-Time**: Changes apply immediately after cache clear
 4. **Simple**: Uses Frappe's built-in infrastructure
+
+#### HTML Preservation Strategy
+
+> [!IMPORTANT]
+> The `Translation` DocType automatically strips HTML tags from the `source_text` field for security. This can cause data loss if you rely solely on exporting from the database back to `.po` files.
+
+To preserve rich text (HTML) in your translations:
+1.  **Enable `save_to_po_file`**: This saves translations directly to the `.po` file in real-time, bypassing the database's HTML stripping.
+2.  **Disable `export_po_on_complete`**: Prevent the database (which has stripped HTML) from overwriting the correct `.po` file at the end of the job.
 
 #### Translation Loading Priority
 
@@ -302,14 +313,15 @@ save_to_po_file = False        # Don't save during translation
 export_po_on_complete = True   # Export at end
 ```
 
-**Use Case**: Development, version control of translations
+**Use Case**: Development, version control of translations (Plain text only)
 
 **Benefits**:
 - ✅ Database persistence
 - ✅ .po files for Git commits
 - ✅ External tool compatibility
+- ⚠️ **Warning**: HTML tags will be stripped from source text in the exported file.
 
-#### Option 3: Database + Real-time .po
+#### Option 3: Database + Real-time .po (Recommended for Rich Text)
 
 ```python
 use_database_storage = True   # Save to database
@@ -317,12 +329,13 @@ save_to_po_file = True         # Also save .po files
 export_po_on_complete = False  # Already saved
 ```
 
-**Use Case**: Using external translation tools (Poedit, Weblate)
+**Use Case**: Using external translation tools (Poedit, Weblate) or translating HTML content.
 
 **Benefits**:
 - ✅ Database persistence
 - ✅ Real-time .po file updates
 - ✅ Tool compatibility
+- ✅ **Preserves HTML tags**
 
 ### File Paths (Frappe v16)
 
