@@ -40,6 +40,10 @@ def execute_translation_job(job_name):
 		settings = frappe.get_single("Translator Settings")
 
 		app_path = get_app_path(job.source_app)
+		
+		# Ensure POT file exists (auto-generate if missing)
+		ensure_pot_file(job.source_app)
+		
 		po_path = os.path.join(app_path, "locale", f"{job.target_language}.po")
 		pot_path = os.path.join(app_path, "locale", "main.pot")
 
@@ -128,10 +132,13 @@ def run_automated_translations():
 				if lang.enabled:
 					target_languages.append(lang.language_code)
 
+		# Ensure POT file exists (auto-generate if missing)
+		ensure_pot_file(monitored_app.source_app)
+
 		for target_language in target_languages:
 			app_path = get_app_path(monitored_app.source_app)
-			po_path = os.path.join(app_path, "translations", f"{target_language}.po")
-			pot_path = os.path.join(app_path, "translations", f"{monitored_app.source_app}.pot")
+			po_path = os.path.join(app_path, "locale", f"{target_language}.po")
+			pot_path = os.path.join(app_path, "locale", "main.pot")
 
 			# Check for untranslated strings
 			file_handler = TranslationFile(po_path=po_path, pot_path=pot_path)
@@ -160,3 +167,67 @@ def run_automated_translations():
 			job.target_language = target_language
 			job.insert(ignore_permissions=True)
 			job.enqueue_job()
+
+
+def ensure_pot_file(app_name):
+	"""
+	Ensures that the main.pot file exists for the given app.
+	If not, it generates it by extracting messages from the app.
+	"""
+	import polib
+	from frappe.translate import get_messages_for_app
+
+	app_path = get_app_path(app_name)
+	locale_dir = os.path.join(app_path, "locale")
+	pot_path = os.path.join(locale_dir, "main.pot")
+
+	if os.path.exists(pot_path):
+		return
+
+	if not os.path.exists(locale_dir):
+		os.makedirs(locale_dir)
+
+	messages = get_messages_for_app(app_name)
+	pot = polib.POFile()
+	pot.metadata = {
+		"Project-Id-Version": app_name,
+		"Report-Msgid-Bugs-To": "",
+		"POT-Creation-Date": frappe.utils.now(),
+		"PO-Revision-Date": frappe.utils.now(),
+		"Last-Translator": "Translation Hub <ai@translationhub.com>",
+		"Language-Team": "",
+		"MIME-Version": "1.0",
+		"Content-Type": "text/plain; charset=UTF-8",
+		"Content-Transfer-Encoding": "8bit",
+	}
+
+	seen = set()
+	for m in messages:
+		# m is (path, msgid, context, line) or (path, msgid, context) or (path, msgid)
+		if len(m) == 4:
+			path, msgid, context, line = m
+		elif len(m) == 3:
+			path, msgid, context = m
+			line = 0
+		else:
+			path, msgid = m
+			context = None
+			line = 0
+		
+		if not msgid:
+			continue
+
+		key = (msgid, context)
+		if key in seen:
+			continue
+		seen.add(key)
+
+		entry = polib.POEntry(
+			msgid=msgid,
+			msgctxt=context,
+			occurrences=[(path, str(line))] if path else []
+		)
+		pot.append(entry)
+
+	pot.save(pot_path)
+
