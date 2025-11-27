@@ -30,26 +30,36 @@ class TranslationJob(Document):
 			frappe.throw(
 				f"An active Translation Job ({existing_job}) already exists for {self.source_app} ({self.target_language}). "
 				"Please wait for it to complete.",
-				frappe.ValidationError
+				frappe.ValidationError,
 			)
 
 	def validate_configuration(self):
 		"""Ensure this job corresponds to a valid configuration in Translator Settings."""
 		settings = frappe.get_single("Translator Settings")
-		is_configured = False
-
+		# 1. Check if App is monitored
+		is_app_monitored = False
 		for app in settings.monitored_apps:
-			# Check for exact match OR generic app match
 			if app.source_app == self.source_app:
-				if not app.target_language or app.target_language == self.target_language:
-					is_configured = True
-					break
-		
-		if not is_configured:
+				is_app_monitored = True
+				break
+
+		if not is_app_monitored:
 			frappe.throw(
-				f"Translation not configured for App '{self.source_app}' and Language '{self.target_language}'. "
-				"Please add it to Translator Settings first.",
-				frappe.ValidationError
+				f"App '{self.source_app}' is not configured for monitoring. Please add it to Translator Settings.",
+				frappe.ValidationError,
+			)
+
+		# 2. Check if Language is enabled
+		is_language_enabled = False
+		for lang in settings.default_languages:
+			if lang.language_code == self.target_language and lang.enabled:
+				is_language_enabled = True
+				break
+
+		if not is_language_enabled:
+			frappe.throw(
+				f"Language '{self.target_language}' is not enabled in Translator Settings.",
+				frappe.ValidationError,
 			)
 
 	def before_save(self):

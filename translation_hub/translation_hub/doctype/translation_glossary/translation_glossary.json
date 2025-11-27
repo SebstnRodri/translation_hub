@@ -1,0 +1,44 @@
+{
+    "actions": [],
+    "creation": "2025-11-27 12:00:00.000000",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "term",
+        "translation",
+        "description"
+    ],
+    "fields": [
+        {
+            "fieldname": "term",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Term",
+            "reqd": 1
+        },
+        {
+            "fieldname": "translation",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Translation",
+            "reqd": 1
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Data",
+            "label": "Description (Context)"
+        }
+    ],
+    "istable": 1,
+    "links": [],
+    "modified": "2025-11-27 12:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Translation Hub",
+    "name": "Translation Glossary",
+    "owner": "Administrator",
+    "permissions": [],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "track_changes": 1
+}

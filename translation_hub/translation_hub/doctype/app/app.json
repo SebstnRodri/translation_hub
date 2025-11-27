@@ -7,13 +7,21 @@
     "engine": "InnoDB",
     "field_order": [
         "app_name",
-        "app_title"
+        "app_title",
+        "translation_context_section",
+        "domain",
+        "tone",
+        "description",
+        "glossary",
+        "do_not_translate"
     ],
     "fields": [
         {
             "fieldname": "app_name",
-            "fieldtype": "Data",
+            "fieldtype": "Link",
+            "in_list_view": 1,
             "label": "App Name",
+            "options": "Installed App",
             "reqd": 1,
             "unique": 1
         },
@@ -21,6 +29,41 @@
             "fieldname": "app_title",
             "fieldtype": "Data",
             "label": "App Title"
+        },
+        {
+            "fieldname": "translation_context_section",
+            "fieldtype": "Section Break",
+            "label": "Translation Context"
+        },
+        {
+            "fieldname": "domain",
+            "fieldtype": "Data",
+            "label": "Domain",
+            "description": "e.g. Healthcare, Logistics, Education"
+        },
+        {
+            "fieldname": "tone",
+            "fieldtype": "Data",
+            "label": "Tone",
+            "description": "e.g. Formal, Friendly, Professional"
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Small Text",
+            "label": "Description",
+            "description": "Brief description of the app's purpose for the translator."
+        },
+        {
+            "fieldname": "glossary",
+            "fieldtype": "Table",
+            "label": "Glossary",
+            "options": "Translation Glossary"
+        },
+        {
+            "fieldname": "do_not_translate",
+            "fieldtype": "Table",
+            "label": "Do Not Translate",
+            "options": "Translation Exclusion"
         }
     ],
     "links": [],

@@ -15,7 +15,6 @@ from translation_hub.core.translation_file import TranslationFile
 from translation_hub.core.translation_service import GeminiService
 from translation_hub.utils.doctype_logger import DocTypeLogger
 
-
 SYSTEM_PROMPT = """You are an expert software localizer specializing in the Frappe Framework.
 Your mission is to translate user interface strings, messages, and content with high precision.
 
@@ -41,10 +40,10 @@ def execute_translation_job(job_name):
 		settings = frappe.get_single("Translator Settings")
 
 		app_path = get_app_path(job.source_app)
-		
+
 		# Ensure POT file exists (auto-generate if missing)
 		ensure_pot_file(job.source_app)
-		
+
 		po_path = Path(app_path) / "locale" / f"{job.target_language}.po"
 		pot_path = Path(app_path) / "locale" / "main.pot"
 
@@ -57,7 +56,9 @@ def execute_translation_job(job_name):
 		# 2. App-Specific Guide (from Monitored App)
 		# Find the monitored app row that matches source_app and target_language (or is generic)
 		for app_row in settings.monitored_apps:
-			if app_row.source_app == job.source_app and (not app_row.target_language or app_row.target_language == job.target_language):
+			if app_row.source_app == job.source_app and (
+				not app_row.target_language or app_row.target_language == job.target_language
+			):
 				if app_row.standardization_guide:
 					guides.append(f"App-Specific Guide ({job.source_app}):\n{app_row.standardization_guide}")
 				break
@@ -66,9 +67,11 @@ def execute_translation_job(job_name):
 		for lang_row in settings.default_languages:
 			if lang_row.language_code == job.target_language:
 				if lang_row.standardization_guide:
-					guides.append(f"Language-Specific Guide ({job.target_language}):\n{lang_row.standardization_guide}")
+					guides.append(
+						f"Language-Specific Guide ({job.target_language}):\n{lang_row.standardization_guide}"
+					)
 				break
-		
+
 		# Combine all guides
 		standardization_guide = "\n\n".join(guides)
 
@@ -84,7 +87,7 @@ def execute_translation_job(job_name):
 		)
 
 		file_handler = TranslationFile(po_path=config.po_file, pot_path=config.pot_file, logger=logger)
-		file_handler.merge() # Ensure PO is up-to-date with POT
+		file_handler.merge()  # Ensure PO is up-to-date with POT
 
 		# Use MockTranslationService for testing if API key is a placeholder
 		if api_key and api_key.startswith("test-"):
@@ -94,7 +97,7 @@ def execute_translation_job(job_name):
 			service = MockTranslationService(config=config, logger=logger)
 		else:
 			logger.info("Using GeminiService (production mode)")
-			service = GeminiService(config=config, logger=logger)
+			service = GeminiService(config=config, app_name=job.source_app, logger=logger)
 
 		orchestrator = TranslationOrchestrator(
 			config=config, file_handler=file_handler, service=service, logger=logger
@@ -123,16 +126,12 @@ def run_automated_translations():
 		return
 
 	for monitored_app in settings.monitored_apps:
-		# Determine target languages
+		# Determine target languages - NOW ALWAYS ALL ENABLED DEFAULT LANGUAGES
 		target_languages = []
-		if monitored_app.target_language:
-			target_languages.append(monitored_app.target_language)
-		else:
-			# If no specific target language, use all enabled default languages
-			for lang in settings.default_languages:
-				if lang.enabled:
-					target_languages.append(lang.language_code)
-		
+		for lang in settings.default_languages:
+			if lang.enabled:
+				target_languages.append(lang.language_code)
+
 		# Ensure POT file exists (auto-generate if missing)
 		ensure_pot_file(monitored_app.source_app)
 
@@ -143,10 +142,10 @@ def run_automated_translations():
 
 			# Check for untranslated strings
 			file_handler = TranslationFile(po_path=po_path, pot_path=pot_path)
-			
+
 			# Merge POT into PO to ensure we have the latest strings
 			file_handler.merge()
-			
+
 			untranslated_entries = file_handler.get_untranslated_entries()
 
 			if not untranslated_entries:
@@ -218,7 +217,7 @@ def ensure_pot_file(app_name):
 			path, msgid = m
 			context = None
 			line = 0
-		
+
 		if not msgid:
 			continue
 
@@ -227,12 +226,7 @@ def ensure_pot_file(app_name):
 			continue
 		seen.add(key)
 
-		entry = polib.POEntry(
-			msgid=msgid,
-			msgctxt=context,
-			occurrences=[(path, str(line))] if path else []
-		)
+		entry = polib.POEntry(msgid=msgid, msgctxt=context, occurrences=[(path, str(line))] if path else [])
 		pot.append(entry)
 
 	pot.save(pot_path)
-

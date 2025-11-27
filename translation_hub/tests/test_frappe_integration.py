@@ -15,6 +15,16 @@ class TestFrappeIntegration(FrappeTestCase):
 		frappe.db.delete("Translation Job", {"source_app": "frappe", "target_language": "es"})
 		frappe.db.delete("Translation Job", {"source_app": "frappe", "target_language": "fr"})
 
+		# Configure Translator Settings
+		settings = frappe.get_single("Translator Settings")
+		settings.monitored_apps = []
+		settings.default_languages = []
+		settings.append("monitored_apps", {"source_app": "frappe"})
+		settings.append(
+			"default_languages", {"language_code": "es", "language_name": "Spanish", "enabled": 1}
+		)
+		settings.save(ignore_permissions=True)
+
 		if not frappe.db.exists("App", "frappe"):
 			frappe.get_doc({"doctype": "App", "app_name": "frappe", "app_title": "Frappe Framework"}).insert(
 				ignore_permissions=True
@@ -38,6 +48,7 @@ class TestFrappeIntegration(FrappeTestCase):
 		self.assertEqual(self.job.status, "Queued")
 		mock_enqueue.assert_called_with(
 			"translation_hub.tasks.execute_translation_job",
+			queue="long",
 			job_name=self.job.name,
 			is_async=True,
 		)
@@ -68,11 +79,12 @@ class TestFrappeIntegration(FrappeTestCase):
 
 		settings = frappe.get_single("Translator Settings")
 		settings.enable_automated_translation = 1
-		settings.append("monitored_apps", {"source_app": "frappe", "target_language": "fr"})
+		settings.append("monitored_apps", {"source_app": "frappe"})
+		settings.append("default_languages", {"language_code": "fr", "language_name": "French", "enabled": 1})
 		settings.save(ignore_permissions=True)
 
 		run_automated_translations()
 
-		self.assertEqual(mock_enqueue.call_count, 1)
+		self.assertEqual(mock_enqueue.call_count, 2)
 
 		settings.delete(ignore_permissions=True)

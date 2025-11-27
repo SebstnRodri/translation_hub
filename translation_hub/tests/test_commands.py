@@ -25,6 +25,7 @@ class TestCommands(FrappeTestCase):
 		settings.append(
 			"default_languages", {"language_code": "tl-TEST", "language_name": "Test Language", "enabled": 1}
 		)
+		settings.flags.ignore_links = True
 		settings.save()
 
 		# 2. Verify the Language was created automatically on save

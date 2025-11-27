@@ -31,9 +31,19 @@ The four main layers are:
   - Status values: Pending, Queued, In Progress, Completed, Failed, Cancelled
 
 - **`App` (Standard DocType)**: Represents a Frappe/ERPNext application available for translation.
-  - Stores `app_name` (unique identifier) and `app_title` (display name)
+  - Stores `app_name` (Link to `Installed App`) and `app_title` (display name)
+  - **Context Configuration**: Stores application-specific context for the LLM:
+    - `domain` (e.g., Logistics, Healthcare)
+    - `tone` (e.g., Formal, Friendly)
+    - `description` (Brief app description)
+    - `glossary` (Child table of specific terms)
+    - `do_not_translate` (Child table of excluded terms)
+  - **Validation**: Ensures only apps actually installed on the site can be registered.
   - Referenced by `Translation Job` and `Monitored App`
-  - Used to track which applications are being translated
+
+- **`Installed App` (Virtual DocType)**: A virtual resource that dynamically lists all apps installed on the current Frappe site.
+  - Wraps `frappe.get_installed_apps()`
+  - Used as the data source for the `App` DocType's `app_name` field to improve UX and prevent errors.
 
 - **`Monitored App` (Child Table)**: Defines app/language combinations to monitor for automated translation.
   - Part of `Translator Settings.monitored_apps`
@@ -83,6 +93,7 @@ classDiagram
         +TranslationHub
         +DashboardChart
         +NumberCards
+        +InstalledApp
     }
 
     class BackgroundJob {
@@ -209,8 +220,17 @@ erDiagram
     }
     
     APP {
-        string app_name
+        link app_name "Link to Installed App"
         string app_title
+        string domain
+        string tone
+        text description
+        table glossary
+        table do_not_translate
+    }
+
+    INSTALLED_APP {
+        string app_name "Virtual"
     }
     
     TRANSLATION_JOB {
@@ -236,7 +256,7 @@ erDiagram
 
 - **`Orchestrator`**: The "brain" of the application. It coordinates the entire translation process. It is instantiated and run by the background job. Now supports both database and file-based storage.
 - **`Service` (Abstract Base Class)**: Defines a common interface for any translation service.
-- **`GeminiService`**: The concrete implementation of `Service` for the Google Gemini API.
+- **`GeminiService`**: The concrete implementation of `Service` for the Google Gemini API. Handles **Context Injection** by fetching app-specific details (domain, tone, glossary) and embedding them into the LLM prompt.
 - **`MockTranslationService`**: A test implementation of `Service` that simulates translation without API calls. Automatically used when API key starts with `"test-"`.
 - **`DatabaseTranslationHandler`**: Stores translations in Frappe's Translation DocType (database). Provides highest priority for rendering and Docker-safe persistence.
 - **`FileHandler`**: Encapsulates all logic related to file manipulation using the `polib` library. Handles merging `.pot` templates into `.po` files and saving translations.

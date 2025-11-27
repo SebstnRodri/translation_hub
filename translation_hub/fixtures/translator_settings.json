@@ -4,9 +4,15 @@
   "default_languages": [
    {
     "enabled": 1,
-    "language_code": "pt-BR",
-    "language_name": "Portuguese (Brazil)",
-    "standardization_guide": "## Estilo e Gramática\n\n- **Tom**: Profissional, formal e natural no contexto de negócios.\n- **Evite Anglicismos**: Prefira termos consagrados em português (“Estoque”, não “Stock”).\n- **Clareza**: Prefira frases diretas, sem enrolar ou complicar.\n"
+    "language_code": "es",
+    "language_name": "Español",
+    "standardization_guide": null
+   },
+   {
+    "enabled": 1,
+    "language_code": "fr",
+    "language_name": "Français",
+    "standardization_guide": null
    }
   ],
   "docstatus": 0,
@@ -14,17 +20,15 @@
   "enable_automated_translation": 1,
   "export_po_on_complete": 0,
   "frequency": "Daily",
-  "modified": "2025-11-26 20:37:29.394066",
+  "modified": "2025-11-27 18:30:35.245244",
   "monitored_apps": [
    {
-    "source_app": "translation_hub",
-    "standardization_guide": "## Context: Translation Tool & AI\n\n### Specific Glossary\n- **Translation Job** → Translation Job\n- **Monitored App** → Monitored App\n- **Standardization Guide** → Standardization Guide\n- **Source App** → Source App\n- **Target Language** → Target Language\n- **DocType** → DocType (do not translate)\n- **Fixture** → Fixture (do not translate)\n\n### Guidelines\n- Keep technical Frappe terms (DocType, Bench, Site) in English when appropriate.\n- The tone should be technical and instructional, aimed at system administrators and developers.\n",
-    "target_language": "pt-BR"
+    "source_app": "frappe",
+    "standardization_guide": null
    },
    {
     "source_app": "frappe",
-    "standardization_guide": "## Context: Framework & Development\n\n### Technical Glossary\n- **DocType** → DocType (do not translate)\n- **Bench** → Bench (do not translate)\n- **Site** → Site (do not translate)\n- **App** → App / Application\n- **Hook** → Hook (do not translate)\n- **Background Job** → Background Job\n- **Queue** → Queue\n\n### Guidelines\n- **Target Audience**: Developers and Administrators.\n- **English Terms**: Keep class names, methods, and commands in English.\n",
-    "target_language": "pt-BR"
+    "standardization_guide": null
    }
   ],
   "name": "Translator Settings",

@@ -6,8 +6,7 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
-        "source_app",
-        "target_language"
+        "source_app"
     ],
     "fields": [
         {
@@ -17,13 +16,6 @@
             "label": "Source App",
             "options": "App",
             "reqd": 1
-        },
-        {
-            "fieldname": "target_language",
-            "fieldtype": "Link",
-            "in_list_view": 1,
-            "label": "Target Language",
-            "options": "Language"
         },
         {
             "fieldname": "standardization_guide",

@@ -90,10 +90,73 @@ class GeminiService(TranslationService):
 	A concrete implementation of TranslationService that uses the Google Gemini API.
 	"""
 
-	def __init__(self, config: TranslationConfig, logger: logging.Logger | None = None):
+	def __init__(
+		self, config: TranslationConfig, app_name: str | None = None, logger: logging.Logger | None = None
+	):
 		self.config = config
+		self.app_name = app_name
 		self.logger = logger or logging.getLogger(__name__)
 		self.model = self._configure_model()
+		self.context = self._fetch_context()
+
+	def _fetch_context(self) -> dict[str, Any]:
+		"""
+		Fetches translation context for the app.
+		Priority:
+		1. App DocType configuration (UI)
+		2. 'translation_context' hook (Code)
+		3. Default/Empty
+		"""
+		if not self.app_name:
+			return {}
+
+		import frappe
+
+		context = {}
+
+		# 1. Try App DocType
+		try:
+			if frappe.db.exists("App", self.app_name):
+				app_doc = frappe.get_doc("App", self.app_name)
+
+				if app_doc.domain:
+					context["domain"] = app_doc.domain
+				if app_doc.tone:
+					context["tone"] = app_doc.tone
+				if app_doc.description:
+					context["description"] = app_doc.description
+
+				if app_doc.glossary:
+					context["glossary"] = {
+						item.term: item.translation + (f" ({item.description})" if item.description else "")
+						for item in app_doc.glossary
+					}
+
+				if app_doc.do_not_translate:
+					context["do_not_translate"] = [item.term for item in app_doc.do_not_translate]
+		except Exception as e:
+			self.logger.warning(f"Failed to fetch context from App DocType: {e}")
+
+		# 2. Try Hook if UI context is empty (or merge? Design said priority, let's merge with UI winning)
+		# Actually design said: "If fields are set in the App document, use them."
+		# Let's check hooks if we still miss info or just as a fallback for the whole context object?
+		# Let's treat UI as overrides.
+
+		try:
+			hooks = frappe.get_hooks("translation_context", app_name=self.app_name)
+			if hooks:
+				# hooks returns a list of python paths string
+				for hook in hooks:
+					hook_context = frappe.call(hook)
+					if isinstance(hook_context, dict):
+						# Merge hook context, but UI context (already in 'context') takes precedence
+						# So we update hook_context with context, then set context to result
+						hook_context.update(context)
+						context = hook_context
+		except Exception as e:
+			self.logger.warning(f"Failed to fetch context from hook: {e}")
+
+		return context
 
 	def _configure_model(self) -> genai.GenerativeModel:
 		"""
@@ -179,7 +242,28 @@ class GeminiService(TranslationService):
 			"Você é um tradutor especializado em sistemas ERP, traduzindo para o português do Brasil.\n"
 			"Traduza os textos a seguir, considerando o contexto de onde eles aparecem no código (occurrences), "
 			"comentários de desenvolvedores (comment), e outras flags (flags).\n"
-			"Retorne SUA RESPOSTA COMO UM ÚNICO ARRAY JSON de objetos, cada um com a chave 'translated'.\n"
+		)
+
+		if self.context:
+			base_prompt += "\n**Contexto da Aplicação:**\n"
+			if self.context.get("domain"):
+				base_prompt += f"- Domínio: {self.context['domain']}\n"
+			if self.context.get("tone"):
+				base_prompt += f"- Tom de Voz: {self.context['tone']}\n"
+			if self.context.get("description"):
+				base_prompt += f"- Descrição: {self.context['description']}\n"
+
+			if self.context.get("glossary"):
+				base_prompt += "\n**Glossário (Termo -> Tradução):**\n"
+				for term, trans in self.context["glossary"].items():
+					base_prompt += f"- {term}: {trans}\n"
+
+			if self.context.get("do_not_translate"):
+				base_prompt += "\n**NÃO TRADUZIR estes termos:**\n"
+				base_prompt += ", ".join(self.context["do_not_translate"]) + "\n"
+
+		base_prompt += (
+			"\nRetorne SUA RESPOSTA COMO UM ÚNICO ARRAY JSON de objetos, cada um com a chave 'translated'.\n"
 			"O array de saída deve ter exatamente o mesmo número de itens da entrada.\n"
 			"Mantenha placeholders como `{0}` e tags HTML como `<strong>` intactos."
 		)
@@ -200,7 +284,28 @@ class GeminiService(TranslationService):
 			"Você é um tradutor especializado em sistemas ERP, traduzindo para o português do Brasil.\n"
 			"Traduza o texto a seguir, considerando o contexto de onde ele aparece no código (occurrences), "
 			"comentários de desenvolvedores (comment), e outras flags (flags).\n"
-			"Retorne SUA RESPOSTA COMO UM ÚNICO OBJETO JSON com a chave 'translated'.\n"
+		)
+
+		if self.context:
+			base_prompt += "\n**Contexto da Aplicação:**\n"
+			if self.context.get("domain"):
+				base_prompt += f"- Domínio: {self.context['domain']}\n"
+			if self.context.get("tone"):
+				base_prompt += f"- Tom de Voz: {self.context['tone']}\n"
+			if self.context.get("description"):
+				base_prompt += f"- Descrição: {self.context['description']}\n"
+
+			if self.context.get("glossary"):
+				base_prompt += "\n**Glossário (Termo -> Tradução):**\n"
+				for term, trans in self.context["glossary"].items():
+					base_prompt += f"- {term}: {trans}\n"
+
+			if self.context.get("do_not_translate"):
+				base_prompt += "\n**NÃO TRADUZIR estes termos:**\n"
+				base_prompt += ", ".join(self.context["do_not_translate"]) + "\n"
+
+		base_prompt += (
+			"\nRetorne SUA RESPOSTA COMO UM ÚNICO OBJETO JSON com a chave 'translated'.\n"
 			"Mantenha placeholders como `{0}` e tags HTML como `<strong>` intactos."
 		)
 		if self.config.standardization_guide:
