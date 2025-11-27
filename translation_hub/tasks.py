@@ -15,16 +15,28 @@ from translation_hub.core.translation_service import GeminiService
 from translation_hub.utils.doctype_logger import DocTypeLogger
 
 
+SYSTEM_PROMPT = """You are an expert software localizer specializing in the Frappe Framework.
+Your mission is to translate user interface strings, messages, and content with high precision.
+
+Core Principles:
+- **Accuracy**: Convey the exact meaning of the source text.
+- **Consistency**: Adhere to standard software terminology.
+- **Safety**: Strictly preserve all Jinja/Python variables (e.g., `{{ name }}`, `{0}`, `%s`) and HTML tags.
+- **Neutrality**: Maintain a professional and neutral tone unless specified otherwise by the Language Guide.
+
+Follow the specific instructions provided in the App Guide and Language Guide below."""
+
+
 @frappe.whitelist()
 def execute_translation_job(job_name):
 	job = frappe.get_doc("Translation Job", job_name)
+	logger = DocTypeLogger(job)
 	try:
 		job.status = "In Progress"
 		job.start_time = frappe.utils.now_datetime()
 		job.save(ignore_permissions=True)
 		frappe.db.commit()
 
-		logger = DocTypeLogger(job)
 		settings = frappe.get_single("Translator Settings")
 
 		app_path = get_app_path(job.source_app)
@@ -34,9 +46,30 @@ def execute_translation_job(job_name):
 		# Get unmasked API key
 		api_key = settings.get_password("api_key")
 
+		# 1. Global Guide (System Prompt)
+		guides = [f"Global Guide (System Prompt):\n{SYSTEM_PROMPT}"]
+
+		# 2. App-Specific Guide (from Monitored App)
+		# Find the monitored app row that matches source_app and target_language (or is generic)
+		for app_row in settings.monitored_apps:
+			if app_row.source_app == job.source_app and (not app_row.target_language or app_row.target_language == job.target_language):
+				if app_row.standardization_guide:
+					guides.append(f"App-Specific Guide ({job.source_app}):\n{app_row.standardization_guide}")
+				break
+
+		# 3. Language-Specific Guide (from Translator Language)
+		for lang_row in settings.default_languages:
+			if lang_row.language_code == job.target_language:
+				if lang_row.standardization_guide:
+					guides.append(f"Language-Specific Guide ({job.target_language}):\n{lang_row.standardization_guide}")
+				break
+		
+		# Combine all guides
+		standardization_guide = "\n\n".join(guides)
+
 		config = TranslationConfig(
 			api_key=api_key,
-			standardization_guide=settings.standardization_guide,
+			standardization_guide=standardization_guide,
 			logger=logger,
 			po_file=po_path,
 			pot_file=pot_path,
@@ -85,34 +118,45 @@ def run_automated_translations():
 		return
 
 	for monitored_app in settings.monitored_apps:
-		app_path = get_app_path(monitored_app.source_app)
-		po_path = os.path.join(app_path, "translations", f"{monitored_app.target_language}.po")
-		pot_path = os.path.join(app_path, "translations", f"{monitored_app.source_app}.pot")
+		# Determine target languages
+		target_languages = []
+		if monitored_app.target_language:
+			target_languages.append(monitored_app.target_language)
+		else:
+			# If no specific target language, use all enabled default languages
+			for lang in settings.default_languages:
+				if lang.enabled:
+					target_languages.append(lang.language_code)
 
-		# Check for untranslated strings
-		file_handler = TranslationFile(po_path=po_path, pot_path=pot_path)
-		untranslated_entries = file_handler.get_untranslated_entries()
+		for target_language in target_languages:
+			app_path = get_app_path(monitored_app.source_app)
+			po_path = os.path.join(app_path, "translations", f"{target_language}.po")
+			pot_path = os.path.join(app_path, "translations", f"{monitored_app.source_app}.pot")
 
-		if not untranslated_entries:
-			continue
+			# Check for untranslated strings
+			file_handler = TranslationFile(po_path=po_path, pot_path=pot_path)
+			untranslated_entries = file_handler.get_untranslated_entries()
 
-		# Check for active jobs
-		active_job = frappe.db.exists(
-			"Translation Job",
-			{
-				"source_app": monitored_app.source_app,
-				"target_language": monitored_app.target_language,
-				"status": ["in", ["Pending", "Queued", "In Progress"]],
-			},
-		)
+			if not untranslated_entries:
+				continue
 
-		if active_job:
-			continue
+			# Check for active jobs
+			active_job = frappe.db.exists(
+				"Translation Job",
+				{
+					"source_app": monitored_app.source_app,
+					"target_language": target_language,
+					"status": ["in", ["Pending", "Queued", "In Progress"]],
+				},
+			)
 
-		# Create and enqueue a new job
-		job = frappe.new_doc("Translation Job")
-		job.title = f"Automated: {monitored_app.source_app} - {monitored_app.target_language}"
-		job.source_app = monitored_app.source_app
-		job.target_language = monitored_app.target_language
-		job.insert(ignore_permissions=True)
-		job.enqueue_job()
+			if active_job:
+				continue
+
+			# Create and enqueue a new job
+			job = frappe.new_doc("Translation Job")
+			job.title = f"Automated: {monitored_app.source_app} - {target_language}"
+			job.source_app = monitored_app.source_app
+			job.target_language = target_language
+			job.insert(ignore_permissions=True)
+			job.enqueue_job()
