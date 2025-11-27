@@ -87,8 +87,6 @@ def execute_translation_job(job_name):
 		file_handler.merge() # Ensure PO is up-to-date with POT
 
 		# Use MockTranslationService for testing if API key is a placeholder
-		masked_key = f"{api_key[:4]}..." if api_key else "None"
-		logger.info(f"Checking API Key for Mock Service: '{masked_key}'")
 		if api_key and api_key.startswith("test-"):
 			from translation_hub.core.translation_service import MockTranslationService
 
