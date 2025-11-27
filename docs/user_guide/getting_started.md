@@ -21,11 +21,14 @@ bench install-app translation_hub
     - Check "Enabled" for each language.
     - **Save** the settings. The languages will be created/enabled automatically! 
     *(Alternatively, you can run `bench setup-languages` in the terminal after configuring this).*
-4. Ensure **Use Database Storage** is checked (recommended).
+4. **Storage Settings**:
+    - **Use Database Storage**: ✅ Checked (Recommended for Docker/Production)
+    - **Save to .po File**: ✅ Checked (Recommended for preserving HTML/Rich Text)
+    - **Export .po File on Completion**: ❌ Unchecked (Avoids overwriting files with stripped data)
 
 ## 3. Usage via Desk (UI)
 
-The entire translation process is managed through the Frappe Desk interface:
+The entire translation process is managed through the Frappe Desk interface. You **do not** need to manually generate POT files; the system handles this automatically.
 
 1. Search for **Translation Job** in the awesome bar.
 2. Click **Add Translation Job**.
@@ -33,3 +36,15 @@ The entire translation process is managed through the Frappe Desk interface:
 4. Save the document.
 5. Click the **Start Job** button in the top right corner.
 6. Watch the agent work! The status will update as strings are translated.
+
+## 4. Automated Translation (Optional)
+
+Instead of manually creating jobs, you can let the Translation Hub handle it for you:
+
+1. Open **Translator Settings**.
+2. Check **Enable Automated Translation**.
+3. Set the **Frequency** (e.g., `Daily` or `Weekly`).
+4. In the **Monitored Apps** table, add the apps and languages you want to keep updated (e.g., `frappe` -> `pt-BR`).
+5. **Save**.
+
+The system will now periodically check these apps for new untranslated strings and automatically create jobs for them!
