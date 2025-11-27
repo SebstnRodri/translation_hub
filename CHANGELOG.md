@@ -1,0 +1,45 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [v1.0.0-beta] - 2025-11-27
+
+### 🚀 Features
+- **Automated Workflow**:
+    - **Self-Healing**: Automatically generates `main.pot` template files if missing (`ensure_pot_file`).
+    - **Real-Time Sync**: Automatically merges new translations into `.po` files (`TranslationFile.merge`).
+    - **Smart Triggers**: Automated translations run automatically when `Translator Settings` are saved.
+- **Governance**:
+    - **Unique Job Naming**: Jobs now use timestamped names (`Automated: {app} - {lang} - {timestamp}`) to prevent `DuplicateEntryError`.
+    - **Validation**: Enforces that jobs match configured App/Language pairs.
+- **Data Integrity**:
+    - **HTML Preservation**: Disabled destructive database export to protect HTML tags in translations.
+    - **Safe Storage**: Prioritizes real-time file saving (`save_to_po_file`) over database dumps.
+
+### 🐛 Bug Fixes
+- **Security**: Masked API keys in logs to prevent sensitive data exposure.
+- **Path Handling**: Fixed `AttributeError` by ensuring `pathlib.Path` objects are used consistently.
+- **Empty PO Files**: Fixed issue where new PO files were created empty by forcing a merge with the POT template.
+- **Log Noise**: Removed misleading "Checking API Key for Mock Service" log message.
+
+### 📚 Documentation
+- Added compatibility note for **Frappe Framework v16.0.0-dev**.
+
+---
+
+## [v0.2.1] - 2025-11-26
+
+### ⚡ Improvements
+- **Automated POT Generation**: Removed the need for manual `bench generate-pot-file` commands.
+
+---
+
+## [v0.2.0] - 2025-11-26
+
+### ✨ New Features
+- **Multi-Language Support**: Configure a single "Monitored App" to target multiple languages automatically.
+- **Standardization Guides**:
+    - **System Guide**: Global instructions for all translations.
+    - **App Guide**: Specific instructions for each App.
+    - **Language Guide**: Specific instructions for each Language (e.g., "Use formal 'Você'").
+- **Composite Prompting**: The AI now receives a combined guide (System + App + Language) for higher context awareness.

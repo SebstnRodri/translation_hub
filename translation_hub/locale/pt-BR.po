@@ -326,12 +326,14 @@ msgstr "Chave API"
 #. Header text in the Translation Hub Workspace
 #: translation_hub/translation_hub/workspace/translation_hub/translation_hub.json
 msgid "<span class=\"h4\"><b></b></span>"
-msgstr ""
+msgstr "<span class=\"h4\"><b></b></span>"
 
 #. Header text in the Translation Hub Workspace
 #: translation_hub/translation_hub/workspace/translation_hub/translation_hub.json
 msgid "<span class=\"h4\">AI-Powered Translation Agent for Frappe Apps</span>"
 msgstr ""
+"<span class=\"h4\">Agente de Tradução Baseado em IA para Aplicativos "
+"Frappe</span>"
 
 #~ msgid "AI-Powered Translation Agent for Frappe Apps"
 #~ msgstr ""
