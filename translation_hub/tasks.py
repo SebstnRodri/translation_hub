@@ -3,6 +3,7 @@
 
 
 import os
+from pathlib import Path
 
 import frappe
 from frappe import get_app_path
@@ -44,8 +45,8 @@ def execute_translation_job(job_name):
 		# Ensure POT file exists (auto-generate if missing)
 		ensure_pot_file(job.source_app)
 		
-		po_path = os.path.join(app_path, "locale", f"{job.target_language}.po")
-		pot_path = os.path.join(app_path, "locale", "main.pot")
+		po_path = Path(app_path) / "locale" / f"{job.target_language}.po"
+		pot_path = Path(app_path) / "locale" / "main.pot"
 
 		# Get unmasked API key
 		api_key = settings.get_password("api_key")
@@ -83,9 +84,11 @@ def execute_translation_job(job_name):
 		)
 
 		file_handler = TranslationFile(po_path=config.po_file, pot_path=config.pot_file, logger=logger)
+		file_handler.merge() # Ensure PO is up-to-date with POT
 
 		# Use MockTranslationService for testing if API key is a placeholder
-		logger.info(f"Checking API Key for Mock Service: '{api_key}'")
+		masked_key = f"{api_key[:4]}..." if api_key else "None"
+		logger.info(f"Checking API Key for Mock Service: '{masked_key}'")
 		if api_key and api_key.startswith("test-"):
 			from translation_hub.core.translation_service import MockTranslationService
 
@@ -131,17 +134,21 @@ def run_automated_translations():
 			for lang in settings.default_languages:
 				if lang.enabled:
 					target_languages.append(lang.language_code)
-
+		
 		# Ensure POT file exists (auto-generate if missing)
 		ensure_pot_file(monitored_app.source_app)
 
 		for target_language in target_languages:
 			app_path = get_app_path(monitored_app.source_app)
-			po_path = os.path.join(app_path, "locale", f"{target_language}.po")
-			pot_path = os.path.join(app_path, "locale", "main.pot")
+			po_path = Path(app_path) / "locale" / f"{target_language}.po"
+			pot_path = Path(app_path) / "locale" / "main.pot"
 
 			# Check for untranslated strings
 			file_handler = TranslationFile(po_path=po_path, pot_path=pot_path)
+			
+			# Merge POT into PO to ensure we have the latest strings
+			file_handler.merge()
+			
 			untranslated_entries = file_handler.get_untranslated_entries()
 
 			if not untranslated_entries:
@@ -162,7 +169,7 @@ def run_automated_translations():
 
 			# Create and enqueue a new job
 			job = frappe.new_doc("Translation Job")
-			job.title = f"Automated: {monitored_app.source_app} - {target_language}"
+			job.title = f"Automated: {monitored_app.source_app} - {target_language} - {frappe.utils.now()}"
 			job.source_app = monitored_app.source_app
 			job.target_language = target_language
 			job.insert(ignore_permissions=True)

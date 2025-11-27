@@ -65,6 +65,7 @@ class TranslationJob(Document):
 	def enqueue_job(self):
 		frappe.enqueue(
 			"translation_hub.tasks.execute_translation_job",
+			queue="long",
 			job_name=self.name,
 			is_async=True,
 		)

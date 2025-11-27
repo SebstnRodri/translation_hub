@@ -9,6 +9,9 @@ from frappe.model.document import Document
 class TranslatorSettings(Document):
 	def on_update(self):
 		self.sync_languages()
+		# Trigger automated translations if enabled
+		if self.enable_automated_translation:
+			frappe.enqueue("translation_hub.tasks.run_automated_translations", queue="long")
 
 	def sync_languages(self):
 		if not self.default_languages:

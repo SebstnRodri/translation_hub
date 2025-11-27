@@ -2,10 +2,12 @@
 
 **AI-Powered Translation Agent for Frappe Apps**
 
-Translation Hub automates the translation of your Frappe and ERPNext applications using advanced AI (Google Gemini). It manages the entire workflow—from extracting strings to generating context-aware translations and saving them securely.
+Translation Hub is a powerful tool designed to automate the translation of Frappe applications using advanced AI (Google Gemini). It streamlines the localization process, ensuring your apps are ready for a global audience with minimal manual effort.
 
-## ✨ Key Features
+> [!IMPORTANT]
+> **Compatibility Note**: This project is developed and tested on **Frappe Framework v16.0.0-dev (version-16-beta)**. Please ensure your environment matches this version for optimal performance.
 
+## 🚀 Key Features (v1.0.0-beta)
 - **🤖 AI-Powered**: Uses Google Gemini to provide accurate, context-aware translations.
 - **💾 Database Storage**: Translations are stored directly in the database (Docker-safe), ensuring they survive updates and restarts.
 - **⚡ Real-time Updates**: Translations are applied immediately without requiring server restarts.
