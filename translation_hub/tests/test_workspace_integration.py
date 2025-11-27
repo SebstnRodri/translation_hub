@@ -28,8 +28,14 @@ class TestWorkspaceIntegration(FrappeTestCase):
 		workspace = frappe.get_doc("Workspace", "Translation Hub")
 		content = json.loads(workspace.content)
 
-		card_names = [item["data"]["card_name"] for item in content if item["type"] == "card"]
+		# Debugging: Print content types to see what's actually there
+		# print([item.get("type") for item in content])
 
+		card_names = []
+		for item in content:
+			if item.get("type") == "number_card":
+				card_names.append(item.get("data", {}).get("number_card_name"))
+		
 		expected_cards = [
 			"Total Apps Tracked",
 			"Jobs in Progress",

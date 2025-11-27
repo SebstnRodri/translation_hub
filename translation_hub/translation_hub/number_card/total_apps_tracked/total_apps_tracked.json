@@ -4,14 +4,15 @@
     "creation": "2025-11-24 09:40:00.000000",
     "docstatus": 0,
     "doctype": "Number Card",
-    "document_type": "Translation Job",
+    "document_type": "Monitored App",
     "dynamic_filters_json": "[]",
     "filters_json": "[]",
-    "function": "Count",
+    "function": "",
     "idx": 0,
     "is_public": 1,
     "is_standard": 1,
     "label": "Total Apps Tracked",
+    "method": "translation_hub.utils.get_monitored_apps_count",
     "modified": "2025-11-24 09:40:00.000000",
     "modified_by": "Administrator",
     "module": "Translation Hub",
@@ -21,5 +22,5 @@
     "report_function": "Count",
     "show_percentage_stats": 1,
     "stats_time_interval": "Monthly",
-    "type": "Document Type"
+    "type": "Custom"
 }

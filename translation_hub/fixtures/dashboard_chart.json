@@ -18,7 +18,7 @@
   "heatmap_year": null,
   "is_public": 1,
   "is_standard": 0,
-  "last_synced_on": "2025-11-26 07:41:31.551229",
+  "last_synced_on": "2025-11-26 17:14:24.707219",
   "modified": "2025-11-23 12:00:00",
   "module": "Translation Hub",
   "name": "Translations Over Time",
@@ -37,5 +37,53 @@
   "value_based_on": "translated_strings",
   "x_field": null,
   "y_axis": []
+ },
+ {
+  "aggregate_function_based_on": null,
+  "based_on": null,
+  "chart_name": "Monitored Apps Progress",
+  "chart_type": "Report",
+  "color": null,
+  "currency": null,
+  "custom_options": null,
+  "docstatus": 0,
+  "doctype": "Dashboard Chart",
+  "document_type": null,
+  "dynamic_filters_json": null,
+  "filters_json": "{}",
+  "from_date": null,
+  "group_by_based_on": null,
+  "group_by_type": "Count",
+  "heatmap_year": null,
+  "is_public": 1,
+  "is_standard": 0,
+  "last_synced_on": null,
+  "modified": "2025-11-26 16:57:26.073944",
+  "module": "Translation Hub",
+  "name": "Monitored Apps Progress",
+  "number_of_groups": 0,
+  "parent_document_type": null,
+  "report_name": "Monitored Apps Progress Report",
+  "roles": [],
+  "show_values_over_chart": 0,
+  "source": null,
+  "time_interval": "Yearly",
+  "timeseries": 0,
+  "timespan": "Last Year",
+  "to_date": null,
+  "type": "Bar",
+  "use_report_chart": 0,
+  "value_based_on": null,
+  "x_field": "app",
+  "y_axis": [
+   {
+    "color": "#28a745",
+    "y_field": "translated"
+   },
+   {
+    "color": "#dc3545",
+    "y_field": "untranslated"
+   }
+  ]
  }
 ]

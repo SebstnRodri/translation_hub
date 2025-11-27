@@ -52,6 +52,12 @@ The four main layers are:
     - **Jobs Completed (30 Days)**: Successfully completed jobs in the last 30 days
     - **Strings Translated**: Total number of strings translated across all jobs
 
+#### Reports
+
+- **`Monitored Apps Progress Report` (Script Report)**: Calculates the translation progress for monitored apps.
+  - Used as the data source for the "Monitored Apps Progress" dashboard chart.
+  - Logic located in `translation_hub/report/monitored_apps_progress_report/monitored_apps_progress_report.py`.
+
 #### Background Jobs
 
 - **Background Job (`tasks.py`)**: Functions enqueued by Frappe's scheduler or manually from the UI.

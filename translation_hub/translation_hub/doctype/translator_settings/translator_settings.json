@@ -1,12 +1,11 @@
 {
     "actions": [],
-    "allow_rename": 0,
-    "creation": "2025-11-17 10:05:00.000000",
+    "creation": "2025-11-17 10:05:00",
     "doctype": "DocType",
     "engine": "InnoDB",
     "field_order": [
+        "google_gemini_section",
         "api_key",
-        "standardization_guide",
         "storage_strategy_section",
         "use_database_storage",
         "save_to_po_file",
@@ -25,37 +24,32 @@
             "label": "API Key"
         },
         {
-            "fieldname": "standardization_guide",
-            "fieldtype": "Text Editor",
-            "label": "Standardization Guide"
-        },
-        {
             "fieldname": "storage_strategy_section",
             "fieldtype": "Section Break",
             "label": "Storage Strategy"
         },
         {
             "default": "1",
+            "description": "Store translations in Translation DocType (recommended for Docker). Provides highest priority rendering and survives container restarts.",
             "fieldname": "use_database_storage",
             "fieldtype": "Check",
-            "label": "Use Database Storage",
-            "description": "Store translations in Translation DocType (recommended for Docker). Provides highest priority rendering and survives container restarts."
+            "label": "Use Database Storage"
         },
         {
             "default": "0",
+            "depends_on": "eval:doc.use_database_storage",
+            "description": "Also save translations to .po files in real-time. Enable if using external translation tools like Poedit.",
             "fieldname": "save_to_po_file",
             "fieldtype": "Check",
-            "label": "Save to .po File",
-            "description": "Also save translations to .po files in real-time. Enable if using external translation tools like Poedit.",
-            "depends_on": "eval:doc.use_database_storage"
+            "label": "Save to .po File"
         },
         {
             "default": "0",
+            "depends_on": "eval:doc.use_database_storage",
+            "description": "Export database translations to .po file when job completes. Useful for version control.",
             "fieldname": "export_po_on_complete",
             "fieldtype": "Check",
-            "label": "Export .po File on Completion",
-            "description": "Export database translations to .po file when job completes. Useful for version control.",
-            "depends_on": "eval:doc.use_database_storage"
+            "label": "Export .po File on Completion"
         },
         {
             "fieldname": "automation_section",
@@ -63,23 +57,24 @@
             "label": "Automation"
         },
         {
+            "default": "0",
             "fieldname": "enable_automated_translation",
             "fieldtype": "Check",
             "label": "Enable Automated Translation"
         },
         {
+            "depends_on": "eval:doc.enable_automated_translation",
             "fieldname": "frequency",
             "fieldtype": "Select",
             "label": "Frequency",
-            "options": "Daily\nWeekly",
-            "depends_on": "eval:doc.enable_automated_translation"
+            "options": "Daily\nWeekly"
         },
         {
+            "depends_on": "eval:doc.enable_automated_translation",
             "fieldname": "monitored_apps",
             "fieldtype": "Table",
             "label": "Monitored Apps",
-            "options": "Monitored App",
-            "depends_on": "eval:doc.enable_automated_translation"
+            "options": "Monitored App"
         },
         {
             "fieldname": "language_setup_section",
@@ -87,16 +82,21 @@
             "label": "Language Setup"
         },
         {
+            "description": "Define languages to be created/enabled by the 'bench setup-languages' command.",
             "fieldname": "default_languages",
             "fieldtype": "Table",
             "label": "Default Languages",
-            "options": "Translator Language",
-            "description": "Define languages to be created/enabled by the 'bench setup-languages' command."
+            "options": "Translator Language"
+        },
+        {
+            "fieldname": "google_gemini_section",
+            "fieldtype": "Section Break",
+            "label": "Google Gemini"
         }
     ],
     "issingle": 1,
     "links": [],
-    "modified": "2025-11-17 10:05:00.000000",
+    "modified": "2025-11-26 19:17:49.448108",
     "modified_by": "Administrator",
     "module": "Translation Hub",
     "name": "Translator Settings",
@@ -113,7 +113,9 @@
             "write": 1
         }
     ],
+    "row_format": "Dynamic",
     "sort_field": "modified",
     "sort_order": "DESC",
+    "states": [],
     "track_changes": 1
 }

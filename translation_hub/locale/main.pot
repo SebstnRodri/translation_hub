@@ -1,0 +1,327 @@
+# Translations template for Translation Hub.
+# Copyright (C) 2025 Sebastian Rodrigues
+# This file is distributed under the same license as the Translation Hub project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Translation Hub VERSION\n"
+"Report-Msgid-Bugs-To: sebstn@outlook.com.br\n"
+"POT-Creation-Date: 2025-11-26 18:24+0000\n"
+"PO-Revision-Date: 2025-11-26 18:24+0000\n"
+"Last-Translator: sebstn@outlook.com.br\n"
+"Language-Team: sebstn@outlook.com.br\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#. Header text in the Translation Hub Workspace
+#: translation_hub/translation_hub/workspace/translation_hub/translation_hub.json
+msgid "<span class=\"h4\"><b></b></span>"
+msgstr ""
+
+#. Header text in the Translation Hub Workspace
+#: translation_hub/translation_hub/workspace/translation_hub/translation_hub.json
+msgid "<span class=\"h4\">AI-Powered Translation Agent for Frappe Apps</span>"
+msgstr ""
+
+#. Label of the api_key (Password) field in DocType 'Translator Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "API Key"
+msgstr ""
+
+#. Description of the 'Save to .po File' (Check) field in DocType 'Translator
+#. Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Also save translations to .po files in real-time. Enable if using external translation tools like Poedit."
+msgstr ""
+
+#. Name of a DocType
+#: translation_hub/translation_hub/doctype/app/app.json
+msgid "App"
+msgstr ""
+
+#. Label of the app_name (Data) field in DocType 'App'
+#: translation_hub/translation_hub/doctype/app/app.json
+msgid "App Name"
+msgstr ""
+
+#. Label of the app_title (Data) field in DocType 'App'
+#: translation_hub/translation_hub/doctype/app/app.json
+msgid "App Title"
+msgstr ""
+
+#. Label of the automation_section (Section Break) field in DocType 'Translator
+#. Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Automation"
+msgstr ""
+
+#. Option for the 'Status' (Select) field in DocType 'Translation Job'
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "Cancelled"
+msgstr ""
+
+#. Option for the 'Status' (Select) field in DocType 'Translation Job'
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "Completed"
+msgstr ""
+
+#. Option for the 'Frequency' (Select) field in DocType 'Translator Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Daily"
+msgstr ""
+
+#. Label of the default_languages (Table) field in DocType 'Translator
+#. Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Default Languages"
+msgstr ""
+
+#. Description of the 'Default Languages' (Table) field in DocType 'Translator
+#. Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Define languages to be created/enabled by the 'bench setup-languages' command."
+msgstr ""
+
+#. Label of the enable_automated_translation (Check) field in DocType
+#. 'Translator Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Enable Automated Translation"
+msgstr ""
+
+#. Label of the enabled (Check) field in DocType 'Translator Language'
+#: translation_hub/translation_hub/doctype/translator_language/translator_language.json
+msgid "Enabled"
+msgstr ""
+
+#. Label of the end_time (Datetime) field in DocType 'Translation Job'
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "End Time"
+msgstr ""
+
+#. Label of the export_po_on_complete (Check) field in DocType 'Translator
+#. Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Export .po File on Completion"
+msgstr ""
+
+#. Description of the 'Export .po File on Completion' (Check) field in DocType
+#. 'Translator Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Export database translations to .po file when job completes. Useful for version control."
+msgstr ""
+
+#. Option for the 'Status' (Select) field in DocType 'Translation Job'
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "Failed"
+msgstr ""
+
+#. Label of the frequency (Select) field in DocType 'Translator Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Frequency"
+msgstr ""
+
+#. Option for the 'Status' (Select) field in DocType 'Translation Job'
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "In Progress"
+msgstr ""
+
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.js:15
+msgid "Job enqueued successfully"
+msgstr ""
+
+#. Label of a number card in the Translation Hub Workspace
+#: translation_hub/translation_hub/workspace/translation_hub/translation_hub.json
+msgid "Jobs Completed (30 Days)"
+msgstr ""
+
+#. Label of a number card in the Translation Hub Workspace
+#: translation_hub/translation_hub/workspace/translation_hub/translation_hub.json
+msgid "Jobs in Progress"
+msgstr ""
+
+#. Label of the language_code (Data) field in DocType 'Translator Language'
+#: translation_hub/translation_hub/doctype/translator_language/translator_language.json
+msgid "Language Code"
+msgstr ""
+
+#. Label of the language_name (Data) field in DocType 'Translator Language'
+#: translation_hub/translation_hub/doctype/translator_language/translator_language.json
+msgid "Language Name"
+msgstr ""
+
+#. Label of the language_setup_section (Section Break) field in DocType
+#. 'Translator Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Language Setup"
+msgstr ""
+
+#. Label of the log_section (Section Break) field in DocType 'Translation Job'
+#. Label of the log (Text Editor) field in DocType 'Translation Job'
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "Log"
+msgstr ""
+
+#. Name of a DocType
+#: translation_hub/translation_hub/doctype/monitored_app/monitored_app.json
+msgid "Monitored App"
+msgstr ""
+
+#. Label of the monitored_apps (Table) field in DocType 'Translator Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Monitored Apps"
+msgstr ""
+
+#. Label of a chart in the Translation Hub Workspace
+#: translation_hub/translation_hub/workspace/translation_hub/translation_hub.json
+msgid "Monitored Apps Progress"
+msgstr ""
+
+#. Option for the 'Status' (Select) field in DocType 'Translation Job'
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "Pending"
+msgstr ""
+
+#. Label of the progress_section (Section Break) field in DocType 'Translation
+#. Job'
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "Progress"
+msgstr ""
+
+#. Label of the progress_percentage (Float) field in DocType 'Translation Job'
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "Progress Percentage"
+msgstr ""
+
+#. Option for the 'Status' (Select) field in DocType 'Translation Job'
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "Queued"
+msgstr ""
+
+#. Label of the save_to_po_file (Check) field in DocType 'Translator Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Save to .po File"
+msgstr ""
+
+#. Label of the source_app (Link) field in DocType 'Monitored App'
+#. Label of the source_app (Link) field in DocType 'Translation Job'
+#: translation_hub/translation_hub/doctype/monitored_app/monitored_app.json
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "Source App"
+msgstr ""
+
+#. Label of the standardization_guide (Text Editor) field in DocType
+#. 'Translator Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Standardization Guide"
+msgstr ""
+
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.js:11
+msgid "Start Job"
+msgstr ""
+
+#. Label of the start_time (Datetime) field in DocType 'Translation Job'
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "Start Time"
+msgstr ""
+
+#. Label of the status (Select) field in DocType 'Translation Job'
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "Status"
+msgstr ""
+
+#. Label of the storage_strategy_section (Section Break) field in DocType
+#. 'Translator Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Storage Strategy"
+msgstr ""
+
+#. Description of the 'Use Database Storage' (Check) field in DocType
+#. 'Translator Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Store translations in Translation DocType (recommended for Docker). Provides highest priority rendering and survives container restarts."
+msgstr ""
+
+#. Label of a number card in the Translation Hub Workspace
+#: translation_hub/translation_hub/workspace/translation_hub/translation_hub.json
+msgid "Strings Translated"
+msgstr ""
+
+#. Name of a role
+#: translation_hub/translation_hub/doctype/app/app.json
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "System Manager"
+msgstr ""
+
+#. Label of the target_language (Link) field in DocType 'Monitored App'
+#. Label of the target_language (Link) field in DocType 'Translation Job'
+#: translation_hub/translation_hub/doctype/monitored_app/monitored_app.json
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "Target Language"
+msgstr ""
+
+#. Label of the timing_section (Section Break) field in DocType 'Translation
+#. Job'
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "Timing"
+msgstr ""
+
+#. Label of the title (Data) field in DocType 'Translation Job'
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "Title"
+msgstr ""
+
+#. Label of a number card in the Translation Hub Workspace
+#: translation_hub/translation_hub/workspace/translation_hub/translation_hub.json
+msgid "Total Apps Tracked"
+msgstr ""
+
+#. Label of the total_strings (Int) field in DocType 'Translation Job'
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "Total Strings"
+msgstr ""
+
+#. Label of the translated_strings (Int) field in DocType 'Translation Job'
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "Translated Strings"
+msgstr ""
+
+#. Name of a Workspace
+#: translation_hub/translation_hub/workspace/translation_hub/translation_hub.json
+msgid "Translation Hub"
+msgstr ""
+
+#. Name of a DocType
+#: translation_hub/translation_hub/doctype/translation_job/translation_job.json
+msgid "Translation Job"
+msgstr ""
+
+#. Label of a chart in the Translation Hub Workspace
+#: translation_hub/translation_hub/workspace/translation_hub/translation_hub.json
+msgid "Translations Over Time"
+msgstr ""
+
+#. Name of a DocType
+#: translation_hub/translation_hub/doctype/translator_language/translator_language.json
+msgid "Translator Language"
+msgstr ""
+
+#. Name of a DocType
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Translator Settings"
+msgstr ""
+
+#. Label of the use_database_storage (Check) field in DocType 'Translator
+#. Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Use Database Storage"
+msgstr ""
+
+#. Option for the 'Frequency' (Select) field in DocType 'Translator Settings'
+#: translation_hub/translation_hub/doctype/translator_settings/translator_settings.json
+msgid "Weekly"
+msgstr ""
+

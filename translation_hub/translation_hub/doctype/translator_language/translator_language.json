@@ -8,22 +8,32 @@
     "field_order": [
         "language_code",
         "language_name",
+        "standardization_guide",
         "enabled"
     ],
     "fields": [
         {
             "fieldname": "language_code",
-            "fieldtype": "Data",
+            "fieldtype": "Link",
             "in_list_view": 1,
             "label": "Language Code",
+            "options": "Language",
             "reqd": 1
         },
         {
+            "fetch_from": "language_code.language_name",
             "fieldname": "language_name",
             "fieldtype": "Data",
             "in_list_view": 1,
             "label": "Language Name",
+            "read_only": 1,
             "reqd": 1
+        },
+        {
+            "fieldname": "standardization_guide",
+            "fieldtype": "Small Text",
+            "label": "Standardization Guide",
+            "description": "Specific guide for this language (e.g. 'Use formal tone'). Overrides global guide."
         },
         {
             "default": "1",

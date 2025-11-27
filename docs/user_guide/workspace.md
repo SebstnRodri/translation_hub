@@ -13,13 +13,13 @@ The workspace dashboard gives you an at-a-glance overview of your translation ac
 ### Charts
 
 -   **Translations Over Time**: A line chart showing the volume of translation jobs and activity over time.
--   **Monitored Apps Progress**: A bar chart displaying the completion percentage for each app and target language you are monitoring.
+-   **Monitored Apps Progress**: A stacked bar chart displaying the count of **Translated** (Green) vs **Untranslated** (Red) strings for each monitored app.
 
 ### Key Metrics
 
 -   **Total Apps Tracked**: The number of distinct Frappe apps for which translation jobs have been created.
 -   **Jobs In Progress**: The number of translation jobs that are currently running.
--   **Jobs Completed (Last 30 Days)**: The count of successful jobs completed within the last month.
+-   **Jobs Completed**: The count of successful jobs completed.
 -   **Strings Translated (All Time)**: The total number of individual strings translated across all completed jobs.
 
 ### Recent Translation Jobs

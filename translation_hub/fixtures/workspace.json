@@ -5,9 +5,13 @@
    {
     "chart_name": "Translations Over Time",
     "label": "Translations Over Time"
+   },
+   {
+    "chart_name": "Monitored Apps Progress",
+    "label": "Monitored Apps Progress"
    }
   ],
-  "content": "[{\"id\":\"dxOyuLz9tZ\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">AI-Powered Translation Agent for Frappe Apps</span>\",\"col\":12}},{\"id\":\"hrX27Ud_Uq\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b></b></span>\",\"col\":12}},{\"id\":\"AFZR0X-lhx\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Translations Over Time\",\"col\":12}},{\"id\":\"Ah9qQEYDl2\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"4KyBo6vpA8\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Apps Tracked\",\"col\":5}},{\"id\":\"USalkaywWP\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Strings Translated\",\"col\":7}},{\"id\":\"q7DWQBMf2g\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Jobs Completed (30 Days)\",\"col\":8}},{\"id\":\"Xtt24WNzge\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Jobs in Progress\",\"col\":4}}]",
+  "content": "[{\"id\":\"dxOyuLz9tZ\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">AI-Powered Translation Agent for Frappe Apps</span>\",\"col\":12}},{\"id\":\"hrX27Ud_Uq\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b></b></span>\",\"col\":12}},{\"id\":\"AFZR0X-lhx\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Translations Over Time\",\"col\":12}},{\"id\":\"MonitoredProgress\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Monitored Apps Progress\",\"col\":12}},{\"id\":\"Ah9qQEYDl2\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"4KyBo6vpA8\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Apps Tracked\",\"col\":3}},{\"id\":\"USalkaywWP\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Strings Translated\",\"col\":3}},{\"id\":\"Xtt24WNzge\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Jobs in Progress\",\"col\":3}},{\"id\":\"JobsCompleted\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Jobs Completed (30 Days)\",\"col\":3}}]",
   "custom_blocks": [],
   "docstatus": 0,
   "doctype": "Workspace",
@@ -21,17 +25,13 @@
   "link_to": null,
   "link_type": "DocType",
   "links": [],
-  "modified": "2025-11-25 16:15:13.237544",
+  "modified": "2025-11-26 16:37:23.035984",
   "module": "Translation Hub",
   "name": "Translation Hub",
   "number_cards": [
    {
     "label": "Total Apps Tracked",
     "number_card_name": "Total Apps Tracked"
-   },
-   {
-    "label": "Jobs Completed (30 Days)",
-    "number_card_name": "Jobs Completed (30 Days)"
    },
    {
     "label": "Strings Translated",
