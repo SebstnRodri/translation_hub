@@ -202,12 +202,17 @@ erDiagram
     MONITORED_APP }o--|| LANGUAGE : "target_language"
     TRANSLATION_JOB }o--|| APP : "source_app"
     TRANSLATION_JOB }o--|| LANGUAGE : "target_language"
+    APP_GLOSSARY }o--|| APP : "app"
+    APP_GLOSSARY }o--|| LANGUAGE : "language"
+    APP_GLOSSARY ||--o{ GLOSSARY_ITEM : "contains"
     
     TRANSLATOR_SETTINGS {
         string api_key
-        text standardization_guide
         bool enable_automated_translation
         string frequency
+        bool use_database_storage
+        bool save_to_po_file
+        bool export_po_on_complete
         table monitored_apps
         table default_languages
     }
@@ -229,8 +234,19 @@ erDiagram
         string domain
         string tone
         text description
-        table glossary
         table do_not_translate
+    }
+
+    APP_GLOSSARY {
+        link app
+        link language
+        table glossary_items
+    }
+
+    GLOSSARY_ITEM {
+        string term
+        string translation
+        string description
     }
 
     INSTALLED_APP {
