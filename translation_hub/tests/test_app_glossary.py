@@ -20,6 +20,9 @@ class TestAppGlossary(FrappeTestCase):
 				{"doctype": "Language", "language_code": "pt-BR", "language_name": "Portuguese (Brazil)"}
 			).insert(ignore_permissions=True)
 
+		# Clean up existing jobs
+		frappe.db.delete("Translation Job", {"source_app": "translation_hub", "target_language": "pt-BR"})
+
 		# Clean up existing glossaries for test isolation
 		existing_glossaries = frappe.get_all(
 			"App Glossary", filters={"app": "translation_hub", "language": "pt-BR"}

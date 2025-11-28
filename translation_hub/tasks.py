@@ -44,7 +44,7 @@ def execute_translation_job(job_name):
 		# Ensure POT file exists (auto-generate if missing)
 		ensure_pot_file(job.source_app)
 
-		po_path = Path(app_path) / "locale" / f"{job.target_language}.po"
+		po_path = Path(app_path) / "locale" / f"{job.target_language.replace('-', '_')}.po"
 		pot_path = Path(app_path) / "locale" / "main.pot"
 
 		# Get unmasked API key
@@ -153,7 +153,7 @@ def run_automated_translations():
 
 		for target_language in target_languages:
 			app_path = get_app_path(monitored_app.source_app)
-			po_path = Path(app_path) / "locale" / f"{target_language}.po"
+			po_path = Path(app_path) / "locale" / f"{target_language.replace('-', '_')}.po"
 			pot_path = Path(app_path) / "locale" / "main.pot"
 
 			# Check for untranslated strings
