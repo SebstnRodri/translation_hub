@@ -1,38 +1,26 @@
 [
- {
-  "app_name": "erpnext",
-  "app_title": "ERPNext",
-  "description": null,
-  "do_not_translate": [],
-  "docstatus": 0,
-  "doctype": "App",
-  "domain": "ERP, Business, Logistics, Customers",
-  "modified": "2025-11-28 09:22:55.414644",
-  "name": "erpnext",
-  "tone": "Professional"
- },
- {
-  "app_name": "frappe",
-  "app_title": "Frappe Framework",
-  "description": null,
-  "do_not_translate": [],
-  "docstatus": 0,
-  "doctype": "App",
-  "domain": null,
-  "modified": "2025-11-25 08:27:43.404596",
-  "name": "frappe",
-  "tone": null
- },
- {
-  "app_name": "translation_hub",
-  "app_title": "Translation Hub",
-  "description": null,
-  "do_not_translate": [],
-  "docstatus": 0,
-  "doctype": "App",
-  "domain": null,
-  "modified": "2025-11-25 10:40:46.643531",
-  "name": "translation_hub",
-  "tone": null
- }
+    {
+        "app_name": "frappe",
+        "app_title": "Frappe Framework",
+        "description": null,
+        "do_not_translate": [],
+        "docstatus": 0,
+        "doctype": "App",
+        "domain": null,
+        "modified": "2025-11-25 08:27:43.404596",
+        "name": "frappe",
+        "tone": null
+    },
+    {
+        "app_name": "translation_hub",
+        "app_title": "Translation Hub",
+        "description": null,
+        "do_not_translate": [],
+        "docstatus": 0,
+        "doctype": "App",
+        "domain": null,
+        "modified": "2025-11-25 10:40:46.643531",
+        "name": "translation_hub",
+        "tone": null
+    }
 ]
