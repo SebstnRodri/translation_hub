@@ -6,7 +6,7 @@
     "enabled": 1,
     "language_code": "es",
     "language_name": "Español",
-    "standardization_guide": null
+    "standardization_guide": "Use neutral Spanish. Address the user as 'Usted'. Avoid regional slang."
    },
    {
     "enabled": 1,
@@ -18,7 +18,7 @@
     "enabled": 1,
     "language_code": "pt-BR",
     "language_name": "Portuguese (Brazil)",
-    "standardization_guide": null
+    "standardization_guide": "Use formal tone. Address the user as 'Você'. Avoid using 'Tu'."
    }
   ],
   "docstatus": 0,
@@ -26,7 +26,7 @@
   "enable_automated_translation": 1,
   "export_po_on_complete": 0,
   "frequency": "Daily",
-  "modified": "2025-11-27 19:34:24.290829",
+  "modified": "2025-11-28 11:36:22.700649",
   "monitored_apps": [
    {
     "source_app": "frappe",
@@ -34,6 +34,10 @@
    },
    {
     "source_app": "translation_hub",
+    "standardization_guide": null
+   },
+   {
+    "source_app": "erpnext",
     "standardization_guide": null
    }
   ],

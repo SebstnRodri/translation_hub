@@ -1,0 +1,59 @@
+{
+    "actions": [],
+    "creation": "2025-11-28 12:30:00.000000",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "app",
+        "language",
+        "glossary_items"
+    ],
+    "fields": [
+        {
+            "fieldname": "app",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "App",
+            "options": "App",
+            "reqd": 1
+        },
+        {
+            "fieldname": "language",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Language",
+            "options": "Language",
+            "reqd": 1
+        },
+        {
+            "fieldname": "glossary_items",
+            "fieldtype": "Table",
+            "label": "Glossary Items",
+            "options": "Translation Glossary"
+        }
+    ],
+    "links": [],
+    "modified": "2025-11-28 12:30:00.000000",
+    "modified_by": "Administrator",
+    "module": "Translation Hub",
+    "name": "App Glossary",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "track_changes": 1
+}

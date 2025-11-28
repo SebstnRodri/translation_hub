@@ -1,0 +1,72 @@
+[
+ {
+  "app": "translation_hub",
+  "docstatus": 0,
+  "doctype": "App Glossary",
+  "glossary_items": [
+   {
+    "description": "DocType representing a translation task",
+    "term": "Translation Job",
+    "translation": "Trabalho de Tradução"
+   },
+   {
+    "description": "Configuration for automated translation",
+    "term": "Monitored App",
+    "translation": "App Monitorado"
+   },
+   {
+    "description": "Global settings",
+    "term": "Translator Settings",
+    "translation": "Configurações do Tradutor"
+   },
+   {
+    "description": "Context provided to the AI",
+    "term": "Standardization Guide",
+    "translation": "Guia de Padronização"
+   },
+   {
+    "description": "Core logic component",
+    "term": "Orchestrator",
+    "translation": "Orquestrador"
+   }
+  ],
+  "language": "pt-BR",
+  "modified": "2025-11-28 11:36:22.652244",
+  "name": "0g2etc8f85"
+ },
+ {
+  "app": "translation_hub",
+  "docstatus": 0,
+  "doctype": "App Glossary",
+  "glossary_items": [
+   {
+    "description": "DocType representing a translation task",
+    "term": "Translation Job",
+    "translation": "Trabajo de Traducción"
+   },
+   {
+    "description": "Configuration for automated translation",
+    "term": "Monitored App",
+    "translation": "Aplicación Monitoreada"
+   },
+   {
+    "description": "Global settings",
+    "term": "Translator Settings",
+    "translation": "Configuración del Traductor"
+   },
+   {
+    "description": "Context provided to the AI",
+    "term": "Standardization Guide",
+    "translation": "Guía de Estandarización"
+   },
+   {
+    "description": "Core logic component",
+    "term": "Orchestrator",
+    "translation": "Orquestador"
+   }
+  ],
+  "language": "es",
+  "modified": "2025-11-28 11:36:22.677135",
+  "name": "0g2bioll6i"
+ }
+]

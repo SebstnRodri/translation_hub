@@ -12,7 +12,6 @@
         "domain",
         "tone",
         "description",
-        "glossary",
         "do_not_translate"
     ],
     "fields": [
@@ -52,12 +51,6 @@
             "fieldtype": "Small Text",
             "label": "Description",
             "description": "Brief description of the app's purpose for the translator."
-        },
-        {
-            "fieldname": "glossary",
-            "fieldtype": "Table",
-            "label": "Glossary",
-            "options": "Translation Glossary"
         },
         {
             "fieldname": "do_not_translate",

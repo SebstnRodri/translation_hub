@@ -37,7 +37,23 @@ The entire translation process is managed through the Frappe Desk interface. You
 5. Click the **Start Job** button in the top right corner.
 6. Watch the agent work! The status will update as strings are translated.
 
-## 4. Automated Translation (Optional)
+## 4. Managing Glossaries
+
+To ensure consistent terminology for specific apps and languages (e.g., translating "File" as "Arquivo" in Portuguese for a specific app), use the **App Glossary**.
+
+1. Open the **App** you want to configure (e.g., `translation_hub`).
+2. Click on the **App Glossary** link in the dashboard.
+3. Click **Add App Glossary**.
+4. Select the **Language** (e.g., `pt-BR`).
+5. In the **Glossary Items** table, add your terms:
+    - **Term**: The original English term (e.g., "File").
+    - **Translation**: The desired translation (e.g., "Arquivo").
+    - **Description**: Optional context (e.g., "Menu item").
+6. **Save**.
+
+These terms will now be automatically included in the context for any translation job matching this App and Language.
+
+## 5. Automated Translation (Optional)
 
 Instead of manually creating jobs, you can let the Translation Hub handle it for you:
 

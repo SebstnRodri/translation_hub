@@ -72,6 +72,22 @@ def execute_translation_job(job_name):
 					)
 				break
 
+		# 4. App Glossary (App + Language)
+		# Find App Glossary for this App and Language
+		app_glossary_name = frappe.db.exists(
+			"App Glossary", {"app": job.source_app, "language": job.target_language}
+		)
+		if app_glossary_name:
+			app_glossary = frappe.get_doc("App Glossary", app_glossary_name)
+			if app_glossary.glossary_items:
+				glossary_text = "Glossary Terms:\n"
+				for item in app_glossary.glossary_items:
+					term_line = f"- {item.term}: {item.translation}"
+					if item.description:
+						term_line += f" ({item.description})"
+					glossary_text += term_line + "\n"
+				guides.append(glossary_text)
+
 		# Combine all guides
 		standardization_guide = "\n\n".join(guides)
 

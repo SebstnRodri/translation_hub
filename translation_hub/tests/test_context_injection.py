@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 import frappe
 from frappe.tests.utils import FrappeTestCase
@@ -11,7 +11,14 @@ class TestContextInjection(FrappeTestCase):
 	def setUp(self):
 		super().setUp()
 		# Create a mock App with context
-		self.app_name = "translation_hub"
+		self.app_name = "test_app_injection"
+		# Mock installed apps to pass validation
+		self.installed_apps_patcher = patch(
+			"frappe.get_installed_apps",
+			return_value=["frappe", "translation_hub", "test_app_injection", "erpnext"],
+		)
+		self.installed_apps_patcher.start()
+
 		if not frappe.db.exists("App", self.app_name):
 			self.app = frappe.get_doc(
 				{
@@ -21,10 +28,6 @@ class TestContextInjection(FrappeTestCase):
 					"domain": "Logistics",
 					"tone": "Formal",
 					"description": "An ERP system for logistics.",
-					"glossary": [
-						{"term": "Patient", "translation": "Paciente", "description": "Sick person"},
-						{"term": "Doctor", "translation": "Médico"},
-					],
 					"do_not_translate": [{"term": "HIMS"}],
 				}
 			).insert(ignore_permissions=True)
@@ -33,13 +36,7 @@ class TestContextInjection(FrappeTestCase):
 			self.app.domain = "Logistics"
 			self.app.tone = "Formal"
 			self.app.description = "An ERP system for logistics."
-			self.app.set(
-				"glossary",
-				[
-					{"term": "Patient", "translation": "Paciente", "description": "Sick person"},
-					{"term": "Doctor", "translation": "Médico"},
-				],
-			)
+
 			self.app.set("do_not_translate", [{"term": "HIMS"}])
 			self.app.save(ignore_permissions=True)
 
@@ -54,6 +51,8 @@ class TestContextInjection(FrappeTestCase):
 
 		if frappe.db.exists("App", self.app_name):
 			frappe.delete_doc("App", self.app_name)
+
+		self.installed_apps_patcher.stop()
 		super().tearDown()
 
 	def test_fetch_context(self):
@@ -65,9 +64,7 @@ class TestContextInjection(FrappeTestCase):
 		self.assertEqual(context.get("domain"), "Logistics")
 		self.assertEqual(context.get("tone"), "Formal")
 		self.assertEqual(context.get("description"), "An ERP system for logistics.")
-		self.assertIn("Patient", context.get("glossary"))
-		self.assertEqual(context["glossary"]["Patient"], "Paciente (Sick person)")
-		self.assertEqual(context["glossary"]["Doctor"], "Médico")
+
 		self.assertIn("HIMS", context.get("do_not_translate"))
 
 	def test_prompt_injection(self):

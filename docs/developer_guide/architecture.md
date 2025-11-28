@@ -36,10 +36,14 @@ The four main layers are:
     - `domain` (e.g., Logistics, Healthcare)
     - `tone` (e.g., Formal, Friendly)
     - `description` (Brief app description)
-    - `glossary` (Child table of specific terms)
     - `do_not_translate` (Child table of excluded terms)
   - **Validation**: Ensures only apps actually installed on the site can be registered.
   - Referenced by `Translation Job` and `Monitored App`
+
+- **`App Glossary` (Standard DocType)**: Stores language-specific glossary terms for a specific App.
+  - Links to `App` and `Language`
+  - Contains child table `Glossary Items` (Term, Translation, Description)
+  - Used to inject specific terminology into the translation context.
 
 - **`Installed App` (Virtual DocType)**: A virtual resource that dynamically lists all apps installed on the current Frappe site.
   - Wraps `frappe.get_installed_apps()`
@@ -457,7 +461,51 @@ sequenceDiagram
     Workspace->>User: Display translated UI
 ```
 
-### Concurrency & Multi-Language Support
-
--   **Concurrency**: The system leverages Frappe's background workers. Multiple translation jobs can be enqueued simultaneously. The actual parallel execution depends on the number of available background workers in the Bench configuration.
 -   **Multi-Language**: A single application can be translated into multiple languages simultaneously. Each App/Language pair is treated as a distinct `Translation Job` and `Monitored App` entry.
+
+## Context Generation Zoom-in
+
+The quality of translation depends heavily on the context provided to the LLM. The system aggregates context from multiple sources to create a comprehensive `Standardization Guide`.
+
+```mermaid
+sequenceDiagram
+    participant Job as Translation Job
+    participant Task as execute_translation_job
+    participant Settings as Translator Settings
+    participant AppRow as Monitored App (Settings)
+    participant LangRow as Translator Language (Settings)
+    participant AppGlossary as App Glossary
+    participant Config as TranslationConfig
+
+    Job->>Task: Start Job (Source App, Target Lang)
+    
+    Note over Task: 1. Global Context
+    Task->>Task: Load SYSTEM_PROMPT (Global Guide)
+    
+    Note over Task: 2. App-Specific Context
+    Task->>Settings: Fetch Monitored App settings
+    Settings-->>Task: Return App Settings
+    opt If App Guide exists
+        Task->>Task: Append App Standardization Guide
+    end
+    
+    Note over Task: 3. Language-Specific Context
+    Task->>Settings: Fetch Default Languages
+    Settings-->>Task: Return Language Settings
+    opt If Language Guide exists
+        Task->>Task: Append Language Standardization Guide
+    end
+    
+    Note over Task: 4. Glossary Context
+    Task->>AppGlossary: Fetch Glossary for (App, Lang)
+    AppGlossary-->>Task: Return Glossary Items
+    loop For each term
+        Task->>Task: Append "Term: Translation (Context)"
+    end
+    
+    Note over Task: 5. Final Assembly
+    Task->>Config: Create Config with combined Guide
+    
+    Note right of Config: The combined guide is now\nready to be sent to the LLM\nwith every translation request.
+```
+

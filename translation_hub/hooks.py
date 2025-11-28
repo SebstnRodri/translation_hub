@@ -151,6 +151,7 @@ fixtures = [
 	"Translator Settings",
 	{"dt": "Workspace", "filters": [["name", "=", "Translation Hub"]]},
 	{"dt": "Dashboard Chart", "filters": [["module", "=", "Translation Hub"]]},
+	{"dt": "App Glossary", "filters": [["app", "=", "translation_hub"]]},
 ]
 # Scheduled Tasks
 # ---------------

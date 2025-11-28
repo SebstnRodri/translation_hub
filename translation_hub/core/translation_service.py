@@ -126,12 +126,6 @@ class GeminiService(TranslationService):
 				if app_doc.description:
 					context["description"] = app_doc.description
 
-				if app_doc.glossary:
-					context["glossary"] = {
-						item.term: item.translation + (f" ({item.description})" if item.description else "")
-						for item in app_doc.glossary
-					}
-
 				if app_doc.do_not_translate:
 					context["do_not_translate"] = [item.term for item in app_doc.do_not_translate]
 		except Exception as e:
