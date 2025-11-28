@@ -1,18 +1,5 @@
 [
  {
-  "app_name": "erpnext",
-  "app_title": "ERPNext",
-  "description": null,
-  "do_not_translate": [],
-  "docstatus": 0,
-  "doctype": "App",
-  "domain": null,
-  "glossary": [],
-  "modified": "2025-11-27 14:17:57.517237",
-  "name": "erpnext",
-  "tone": null
- },
- {
   "app_name": "frappe",
   "app_title": "Frappe Framework",
   "description": null,

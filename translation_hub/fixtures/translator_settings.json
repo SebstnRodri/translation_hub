@@ -13,6 +13,12 @@
     "language_code": "fr",
     "language_name": "Français",
     "standardization_guide": null
+   },
+   {
+    "enabled": 1,
+    "language_code": "pt-BR",
+    "language_name": "Portuguese (Brazil)",
+    "standardization_guide": null
    }
   ],
   "docstatus": 0,
@@ -20,19 +26,19 @@
   "enable_automated_translation": 1,
   "export_po_on_complete": 0,
   "frequency": "Daily",
-  "modified": "2025-11-27 18:30:35.245244",
+  "modified": "2025-11-27 19:34:24.290829",
   "monitored_apps": [
    {
     "source_app": "frappe",
     "standardization_guide": null
    },
    {
-    "source_app": "frappe",
+    "source_app": "translation_hub",
     "standardization_guide": null
    }
   ],
   "name": "Translator Settings",
-  "save_to_po_file": 0,
+  "save_to_po_file": 1,
   "use_database_storage": 1
  }
 ]
