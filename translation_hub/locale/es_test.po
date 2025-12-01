@@ -13,376 +13,388 @@ msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "API Key"
-msgstr ""
+msgstr "[ES] API Key"
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "About"
-msgstr ""
+msgstr "[ES] About"
 
 #: DocType: Translator Settings:0
 msgid ""
 "Also save translations to .po files in real-time. Enable if using external "
 "translation tools like Poedit."
 msgstr ""
+"[ES] Also save translations to .po files in real-time. Enable if using "
+"external translation tools like Poedit."
 
 #: DocType: App:0
 msgid "App"
-msgstr ""
+msgstr "[ES] App"
 
 #: DocType: App Glossary:0
 msgid "App Glossary"
-msgstr ""
+msgstr "[ES] App Glossary"
 
 #: DocType: App:0
 msgid "App Name"
-msgstr ""
+msgstr "[ES] App Name"
 
 #: DocType: App:0
 msgid "App Title"
-msgstr ""
+msgstr "[ES] App Title"
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Apps"
-msgstr ""
+msgstr "[ES] Apps"
 
 #: DocType: Translator Settings:0
 msgid "Automation"
-msgstr ""
+msgstr "[ES] Automation"
 
 #: DocType: App:0
 msgid "Brief description of the app's purpose for the translator."
-msgstr ""
+msgstr "[ES] Brief description of the app's purpose for the translator."
 
 #: DocType: Translation Job:0
 msgid "Cancelled"
-msgstr ""
+msgstr "[ES] Cancelled"
 
 #: DocType: Translation Job:0
 msgid "Completed"
-msgstr ""
+msgstr "[ES] Completed"
 
 #: DocType: Translator Settings:0
 msgid "Daily"
-msgstr ""
+msgstr "[ES] Daily"
 
 #: DocType: Translator Settings:0
 msgid "Default Languages"
-msgstr ""
+msgstr "[ES] Default Languages"
 
 #: DocType: Translator Settings:0
 msgid ""
 "Define languages to be created/enabled by the 'bench setup-languages' "
 "command."
 msgstr ""
+"[ES] Define languages to be created/enabled by the 'bench setup-languages' "
+"command."
 
 #: DocType: App:0
 msgid "Description"
-msgstr ""
+msgstr "[ES] Description"
 
 #: DocType: Translation Glossary:0
 msgid "Description (Context)"
-msgstr ""
+msgstr "[ES] Description (Context)"
 
 #: DocType: App:0
 msgid "Do Not Translate"
-msgstr ""
+msgstr "[ES] Do Not Translate"
 
 #: DocType: App:0
 msgid "Domain"
-msgstr ""
+msgstr "[ES] Domain"
 
 #: DocType: Translator Settings:0
 msgid "Enable Automated Translation"
-msgstr ""
+msgstr "[ES] Enable Automated Translation"
 
 #: DocType: Translator Language:0
 msgid "Enabled"
-msgstr ""
+msgstr "[ES] Enabled"
 
 #: DocType: Translation Job:0
 msgid "End Time"
-msgstr ""
+msgstr "[ES] End Time"
 
 #: DocType: Translator Settings:0
 msgid "Export .po File on Completion"
-msgstr ""
+msgstr "[ES] Export .po File on Completion"
 
 #: DocType: Translator Settings:0
 msgid ""
 "Export database translations to .po file when job completes. Useful for "
 "version control."
 msgstr ""
+"[ES] Export database translations to .po file when job completes. Useful for"
+" version control."
 
 #: DocType: Translation Job:0
 msgid "Failed"
-msgstr ""
+msgstr "[ES] Failed"
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Frappe Support"
-msgstr ""
+msgstr "[ES] Frappe Support"
 
 #: DocType: Translator Settings:0
 msgid "Frequency"
-msgstr ""
+msgstr "[ES] Frequency"
 
 #: DocType: App Glossary:0
 msgid "Glossary Items"
-msgstr ""
+msgstr "[ES] Glossary Items"
 
 #: DocType: Translator Settings:0
 msgid "Google Gemini"
-msgstr ""
+msgstr "[ES] Google Gemini"
 
 #: DocType: Translation Job:0
 msgid "In Progress"
-msgstr ""
+msgstr "[ES] In Progress"
 
 #: DocType: Installed App:0
 msgid "Installed App"
-msgstr ""
+msgstr "[ES] Installed App"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_job/translation_job.js:15
 msgid "Job enqueued successfully"
-msgstr ""
+msgstr "[ES] Job enqueued successfully"
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "[ES] Keyboard Shortcuts"
 
 #: DocType: App Glossary:0
 msgid "Language"
-msgstr ""
+msgstr "[ES] Language"
 
 #: DocType: Translator Language:0
 msgid "Language Code"
-msgstr ""
+msgstr "[ES] Language Code"
 
 #: DocType: Translator Language:0
 msgid "Language Name"
-msgstr ""
+msgstr "[ES] Language Name"
 
 #: DocType: Translator Settings:0
 msgid "Language Setup"
-msgstr ""
+msgstr "[ES] Language Setup"
 
 #: DocType: Translation Job:0
 msgid "Log"
-msgstr ""
+msgstr "[ES] Log"
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Log out"
-msgstr ""
+msgstr "[ES] Log out"
 
 #: DocType: Monitored App:0
 msgid "Monitored App"
-msgstr ""
+msgstr "[ES] Monitored App"
 
 #: DocType: Translator Settings:0
 msgid "Monitored Apps"
-msgstr ""
+msgstr "[ES] Monitored Apps"
 
 msgid "Monitored Apps Progress Report"
-msgstr ""
+msgstr "[ES] Monitored Apps Progress Report"
 
 #: DocType: Translation Job:0
 msgid "Pending"
-msgstr ""
+msgstr "[ES] Pending"
 
 #: apps/translation_hub/translation_hub/translation_hub/report/monitored_apps_progress_report/monitored_apps_progress_report.py:35
 msgid "Please install polib library to view translation progress."
-msgstr ""
+msgstr "[ES] Please install polib library to view translation progress."
 
 #: DocType: Translation Job:0
 msgid "Progress"
-msgstr ""
+msgstr "[ES] Progress"
 
 #: apps/translation_hub/translation_hub/translation_hub/report/monitored_apps_progress_report/monitored_apps_progress_report.py:21
 msgid "Progress (%)"
-msgstr ""
+msgstr "[ES] Progress (%)"
 
 #: DocType: Translation Job:0
 msgid "Progress Percentage"
-msgstr ""
+msgstr "[ES] Progress Percentage"
 
 #: DocType: Translation Job:0
 msgid "Queued"
-msgstr ""
+msgstr "[ES] Queued"
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Reload"
-msgstr ""
+msgstr "[ES] Reload"
 
 #: DocType: Translator Settings:0
 msgid "Save to .po File"
-msgstr ""
+msgstr "[ES] Save to .po File"
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Session Defaults"
-msgstr ""
+msgstr "[ES] Session Defaults"
 
 #: DocType: Monitored App:0
 msgid "Source App"
-msgstr ""
+msgstr "[ES] Source App"
 
 #: DocType: Monitored App:0
 msgid ""
 "Specific guide for this App (e.g. 'Use Vendas for Sales'). Combined with "
 "Global and Language guides."
 msgstr ""
+"[ES] Specific guide for this App (e.g. 'Use Vendas for Sales'). Combined "
+"with Global and Language guides."
 
 #: DocType: Translator Language:0
 msgid ""
 "Specific guide for this language (e.g. 'Use formal tone'). Overrides global "
 "guide."
 msgstr ""
+"[ES] Specific guide for this language (e.g. 'Use formal tone'). Overrides "
+"global guide."
 
 #: DocType: Monitored App:0
 msgid "Standardization Guide"
-msgstr ""
+msgstr "[ES] Standardization Guide"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_job/translation_job.js:11
 msgid "Start Job"
-msgstr ""
+msgstr "[ES] Start Job"
 
 #: DocType: Translation Job:0
 msgid "Start Time"
-msgstr ""
+msgstr "[ES] Start Time"
 
 #: DocType: Translation Job:0
 msgid "Status"
-msgstr ""
+msgstr "[ES] Status"
 
 #: DocType: Translator Settings:0
 msgid "Storage Strategy"
-msgstr ""
+msgstr "[ES] Storage Strategy"
 
 #: DocType: Translator Settings:0
 msgid ""
 "Store translations in Translation DocType (recommended for Docker). Provides"
 " highest priority rendering and survives container restarts."
 msgstr ""
+"[ES] Store translations in Translation DocType (recommended for Docker). "
+"Provides highest priority rendering and survives container restarts."
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "System Health"
-msgstr ""
+msgstr "[ES] System Health"
 
 #: DocType: App:0
 msgid "System Manager"
-msgstr ""
+msgstr "[ES] System Manager"
 
 #: DocType: Translation Job:0
 msgid "Target Language"
-msgstr ""
+msgstr "[ES] Target Language"
 
 #: DocType: Translation Exclusion:0
 msgid "Term"
-msgstr ""
+msgstr "[ES] Term"
 
 #: DocType: Translation Job:0
 msgid "Timing"
-msgstr ""
+msgstr "[ES] Timing"
 
 #: DocType: Translation Job:0
 msgid "Title"
-msgstr ""
+msgstr "[ES] Title"
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Toggle Full Width"
-msgstr ""
+msgstr "[ES] Toggle Full Width"
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Toggle Theme"
-msgstr ""
+msgstr "[ES] Toggle Theme"
 
 #: DocType: App:0
 msgid "Tone"
-msgstr ""
+msgstr "[ES] Tone"
 
 #: DocType: Translation Job:0
 msgid "Total Strings"
-msgstr ""
+msgstr "[ES] Total Strings"
 
 #: apps/translation_hub/translation_hub/translation_hub/report/monitored_apps_progress_report/monitored_apps_progress_report.py:19
 msgid "Translated"
-msgstr ""
+msgstr "[ES] Translated"
 
 #: DocType: Translation Job:0
 msgid "Translated Strings"
-msgstr ""
+msgstr "[ES] Translated Strings"
 
 #: DocType: Translation Glossary:0
 msgid "Translation"
-msgstr ""
+msgstr "[ES] Translation"
 
 #: DocType: App:0
 msgid "Translation Context"
-msgstr ""
+msgstr "[ES] Translation Context"
 
 #: DocType: Translation Exclusion:0
 msgid "Translation Exclusion"
-msgstr ""
+msgstr "[ES] Translation Exclusion"
 
 #: DocType: Translation Glossary:0
 msgid "Translation Glossary"
-msgstr ""
+msgstr "[ES] Translation Glossary"
 
 #: DocType: App:0
 msgid "Translation Hub"
-msgstr ""
+msgstr "[ES] Translation Hub"
 
 #: DocType: Translation Job:0
 msgid "Translation Job"
-msgstr ""
+msgstr "[ES] Translation Job"
 
 #: DocType: Translator Language:0
 msgid "Translator Language"
-msgstr ""
+msgstr "[ES] Translator Language"
 
 #: DocType: Translator Settings:0
 msgid "Translator Settings"
-msgstr ""
+msgstr "[ES] Translator Settings"
 
 #: apps/translation_hub/translation_hub/translation_hub/report/monitored_apps_progress_report/monitored_apps_progress_report.py:20
 msgid "Untranslated"
-msgstr ""
+msgstr "[ES] Untranslated"
 
 #: DocType: Translator Settings:0
 msgid "Use Database Storage"
-msgstr ""
+msgstr "[ES] Use Database Storage"
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "User Settings"
-msgstr ""
+msgstr "[ES] User Settings"
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "View Website"
-msgstr ""
+msgstr "[ES] View Website"
 
 #: DocType: Translator Settings:0
 msgid "Weekly"
-msgstr ""
+msgstr "[ES] Weekly"
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Workspace Settings"
-msgstr ""
+msgstr "[ES] Workspace Settings"
 
 #: DocType: App:0
 msgid "e.g. Formal, Friendly, Professional"
-msgstr ""
+msgstr "[ES] e.g. Formal, Friendly, Professional"
 
 #: DocType: App:0
 msgid "e.g. Healthcare, Logistics, Education"
-msgstr ""
+msgstr "[ES] e.g. Healthcare, Logistics, Education"
