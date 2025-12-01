@@ -81,7 +81,7 @@ class TestContextInjection(FrappeTestCase):
 
 		prompt = service._build_batch_prompt([{"msgid": "Hello"}])
 
-		self.assertIn("Domínio: Healthcare", prompt)
-		self.assertIn("Tom de Voz: Formal", prompt)
+		self.assertIn("Domain: Healthcare", prompt)
+		self.assertIn("Tone of Voice: Formal", prompt)
 		self.assertIn("Patient: Paciente", prompt)
 		self.assertIn("HIMS", prompt)

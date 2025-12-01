@@ -234,85 +234,85 @@ class GeminiService(TranslationService):
 
 	def _build_batch_prompt(self, entries: list[dict[str, Any]]) -> str:
 		base_prompt = (
-			"Você é um tradutor especializado em sistemas ERP, traduzindo para o português do Brasil.\n"
-			"Traduza os textos a seguir, considerando o contexto de onde eles aparecem no código (occurrences), "
-			"comentários de desenvolvedores (comment), e outras flags (flags).\n"
+			f"You are a translator specialized in ERP systems, translating to the language '{self.config.language_code}'.\n"
+			"Translate the following texts, considering the context where they appear in the code (occurrences), "
+			"developer comments (comment), and other flags (flags).\n"
 		)
 
 		if self.context:
-			base_prompt += "\n**Contexto da Aplicação:**\n"
+			base_prompt += "\n**Application Context:**\n"
 			if self.context.get("domain"):
-				base_prompt += f"- Domínio: {self.context['domain']}\n"
+				base_prompt += f"- Domain: {self.context['domain']}\n"
 			if self.context.get("tone"):
-				base_prompt += f"- Tom de Voz: {self.context['tone']}\n"
+				base_prompt += f"- Tone of Voice: {self.context['tone']}\n"
 			if self.context.get("description"):
-				base_prompt += f"- Descrição: {self.context['description']}\n"
+				base_prompt += f"- Description: {self.context['description']}\n"
 
 			if self.context.get("glossary"):
-				base_prompt += "\n**Glossário (Termo -> Tradução):**\n"
+				base_prompt += "\n**Glossary (Term -> Translation):**\n"
 				for term, trans in self.context["glossary"].items():
 					base_prompt += f"- {term}: {trans}\n"
 
 			if self.context.get("do_not_translate"):
-				base_prompt += "\n**NÃO TRADUZIR estes termos:**\n"
+				base_prompt += "\n**DO NOT TRANSLATE these terms:**\n"
 				base_prompt += ", ".join(self.context["do_not_translate"]) + "\n"
 
 		base_prompt += (
-			"\nRetorne SUA RESPOSTA COMO UM ÚNICO ARRAY JSON de objetos, cada um com a chave 'translated'.\n"
-			"O array de saída deve ter exatamente o mesmo número de itens da entrada.\n"
-			"Mantenha placeholders como `{0}` e tags HTML como `<strong>` intactos."
+			"\nReturn YOUR RESPONSE AS A SINGLE JSON ARRAY of objects, each with the key 'translated'.\n"
+			"The output array must have exactly the same number of items as the input.\n"
+			"Keep placeholders like `{0}` and HTML tags like `<strong>` intact."
 		)
 		if self.config.standardization_guide:
-			base_prompt += f"\n\n**Guia de Padronização:**\n{self.config.standardization_guide}\nSiga este guia rigorosamente."
+			base_prompt += f"\n\n**Standardization Guide:**\n{self.config.standardization_guide}\nFollow this guide strictly."
 
 		items_to_translate = json.dumps(entries, indent=2, ensure_ascii=False)
 
 		return (
 			f"{base_prompt}\n\n"
-			"Itens a traduzir:\n"
+			"Items to translate:\n"
 			f"{items_to_translate}\n\n"
-			"Array JSON de saída (apenas o array de objetos 'translated'):\n"
+			"Output JSON Array (only the array of 'translated' objects):\n"
 		)
 
 	def _build_single_prompt(self, entry: dict[str, Any]) -> str:
 		base_prompt = (
-			"Você é um tradutor especializado em sistemas ERP, traduzindo para o português do Brasil.\n"
-			"Traduza o texto a seguir, considerando o contexto de onde ele aparece no código (occurrences), "
-			"comentários de desenvolvedores (comment), e outras flags (flags).\n"
+			f"You are a translator specialized in ERP systems, translating to the language '{self.config.language_code}'.\n"
+			"Translate the text below, considering the context where it appears in the code (occurrences), "
+			"developer comments (comment), and other flags (flags).\n"
 		)
 
 		if self.context:
-			base_prompt += "\n**Contexto da Aplicação:**\n"
+			base_prompt += "\n**Application Context:**\n"
 			if self.context.get("domain"):
-				base_prompt += f"- Domínio: {self.context['domain']}\n"
+				base_prompt += f"- Domain: {self.context['domain']}\n"
 			if self.context.get("tone"):
-				base_prompt += f"- Tom de Voz: {self.context['tone']}\n"
+				base_prompt += f"- Tone of Voice: {self.context['tone']}\n"
 			if self.context.get("description"):
-				base_prompt += f"- Descrição: {self.context['description']}\n"
+				base_prompt += f"- Description: {self.context['description']}\n"
 
 			if self.context.get("glossary"):
-				base_prompt += "\n**Glossário (Termo -> Tradução):**\n"
+				base_prompt += "\n**Glossary (Term -> Translation):**\n"
 				for term, trans in self.context["glossary"].items():
 					base_prompt += f"- {term}: {trans}\n"
 
 			if self.context.get("do_not_translate"):
-				base_prompt += "\n**NÃO TRADUZIR estes termos:**\n"
+				base_prompt += "\n**DO NOT TRANSLATE these terms:**\n"
 				base_prompt += ", ".join(self.context["do_not_translate"]) + "\n"
 
 		base_prompt += (
-			"\nRetorne SUA RESPOSTA COMO UM ÚNICO OBJETO JSON com a chave 'translated'.\n"
-			"Mantenha placeholders como `{0}` e tags HTML como `<strong>` intactos."
+			"\nReturn YOUR RESPONSE AS A SINGLE JSON OBJECT with the key 'translated'.\n"
+			"Keep placeholders like `{0}` and HTML tags like `<strong>` intact."
 		)
 		if self.config.standardization_guide:
-			base_prompt += f"\n\n**Guia de Padronização:**\n{self.config.standardization_guide}\nSiga este guia rigorosamente."
+			base_prompt += f"\n\n**Standardization Guide:**\n{self.config.standardization_guide}\nFollow this guide strictly."
 
 		item_to_translate = json.dumps(entry, indent=2, ensure_ascii=False)
 
 		return (
 			f"{base_prompt}\n\n"
-			"Item a traduzir:\n"
+			"Item to translate:\n"
 			f"{item_to_translate}\n\n"
-			"Objeto JSON de saída (apenas o objeto 'translated'):\n"
+			"Output JSON Object (only the 'translated' object):\n"
 		)
 
 	@staticmethod
