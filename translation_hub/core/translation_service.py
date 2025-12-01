@@ -63,9 +63,10 @@ class MockTranslationService(TranslationService):
 				translations.append({"msgid": msgid, "msgstr": f"[TRANSLATION_FAILED] {msgid}"})
 				continue
 
-			# Simple mock translation: add [ES] prefix
+			# Simple mock translation: add language prefix
 			# Preserve placeholders and HTML tags
-			mock_translation = f"[ES] {msgid}"
+			lang_code = self.config.language_code.upper() if self.config.language_code else "MOCK"
+			mock_translation = f"[{lang_code}] {msgid}"
 
 			# Preserve whitespace
 			preserved = self._preserve_whitespace(msgid, mock_translation)

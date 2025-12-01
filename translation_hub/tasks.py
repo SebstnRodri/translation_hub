@@ -100,6 +100,7 @@ def execute_translation_job(translation_job_name):
 			use_database_storage=settings.use_database_storage,
 			save_to_po_file=settings.save_to_po_file,
 			export_po_on_complete=settings.export_po_on_complete,
+			language_code=job.target_language,
 		)
 
 		file_handler = TranslationFile(po_path=config.po_file, pot_path=config.pot_file, logger=logger)

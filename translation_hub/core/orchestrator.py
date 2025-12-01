@@ -62,9 +62,7 @@ class TranslationOrchestrator:
 				if self.config.use_database_storage:
 					from translation_hub.core.database_translation import DatabaseTranslationHandler
 
-					db_handler = DatabaseTranslationHandler(
-						self.config.po_file.stem if self.config.po_file else "en", self.logger
-					)
+					db_handler = DatabaseTranslationHandler(self.config.language_code, self.logger)
 					db_handler.save_translations(translated_batch)
 
 				# OPTIONAL: Also save to .po file
@@ -80,9 +78,7 @@ class TranslationOrchestrator:
 			if self.config.use_database_storage and self.config.export_po_on_complete:
 				from translation_hub.core.database_translation import DatabaseTranslationHandler
 
-				db_handler = DatabaseTranslationHandler(
-					self.config.po_file.stem if self.config.po_file else "en", self.logger
-				)
+				db_handler = DatabaseTranslationHandler(self.config.language_code, self.logger)
 				db_handler.export_to_po(str(self.config.po_file))
 				self.logger.info(f"Exported database translations to {self.config.po_file}")
 
