@@ -77,6 +77,7 @@ class TranslationJob(Document):
 			"translation_hub.tasks.execute_translation_job",
 			queue="long",
 			job_name=self.name,
+			translation_job_name=self.name,
 			is_async=True,
 		)
 		self.status = "Queued"

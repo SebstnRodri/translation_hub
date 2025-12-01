@@ -50,6 +50,7 @@ class TestFrappeIntegration(FrappeTestCase):
 			"translation_hub.tasks.execute_translation_job",
 			queue="long",
 			job_name=self.job.name,
+			translation_job_name=self.job.name,
 			is_async=True,
 		)
 

@@ -28,8 +28,8 @@ Follow the specific instructions provided in the App Guide and Language Guide be
 
 
 @frappe.whitelist()
-def execute_translation_job(job_name):
-	job = frappe.get_doc("Translation Job", job_name)
+def execute_translation_job(translation_job_name):
+	job = frappe.get_doc("Translation Job", translation_job_name)
 	logger = DocTypeLogger(job)
 	try:
 		job.status = "In Progress"
