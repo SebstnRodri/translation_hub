@@ -10,12 +10,6 @@
             },
             {
                 "enabled": 1,
-                "language_code": "fr",
-                "language_name": "Français",
-                "standardization_guide": null
-            },
-            {
-                "enabled": 1,
                 "language_code": "pt-BR",
                 "language_name": "Portuguese (Brazil)",
                 "standardization_guide": "Use formal tone. Address the user as 'Você'. Avoid using 'Tu'."
@@ -28,10 +22,6 @@
         "frequency": "Daily",
         "modified": "2025-11-28 11:36:22.700649",
         "monitored_apps": [
-            {
-                "source_app": "frappe",
-                "standardization_guide": null
-            },
             {
                 "source_app": "translation_hub",
                 "standardization_guide": null
