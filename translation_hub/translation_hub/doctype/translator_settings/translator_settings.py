@@ -7,6 +7,30 @@ from frappe.model.document import Document
 
 
 class TranslatorSettings(Document):
+	def validate(self):
+		self.remove_duplicates()
+
+	def remove_duplicates(self):
+		# Remove duplicate Monitored Apps
+		unique_apps = set()
+		unique_app_rows = []
+		if self.monitored_apps:
+			for row in self.monitored_apps:
+				if row.source_app not in unique_apps:
+					unique_apps.add(row.source_app)
+					unique_app_rows.append(row)
+			self.monitored_apps = unique_app_rows
+
+		# Remove duplicate Default Languages
+		unique_langs = set()
+		unique_lang_rows = []
+		if self.default_languages:
+			for row in self.default_languages:
+				if row.language_code not in unique_langs:
+					unique_langs.add(row.language_code)
+					unique_lang_rows.append(row)
+			self.default_languages = unique_lang_rows
+
 	def on_update(self):
 		self.sync_languages()
 		# Trigger automated translations if enabled

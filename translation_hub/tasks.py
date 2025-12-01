@@ -255,3 +255,33 @@ def ensure_pot_file(app_name):
 		pot.append(entry)
 
 	pot.save(pot_path)
+
+
+@frappe.whitelist()
+def backup_translations():
+	"""
+	Backs up translations to the configured Git repository.
+	"""
+	from translation_hub.core.git_sync_service import GitSyncService
+
+	settings = frappe.get_single("Translator Settings")
+	if not settings.backup_repo_url:
+		frappe.throw("Backup Repository URL is not configured in Translator Settings.")
+
+	service = GitSyncService(settings)
+	service.backup()
+
+
+@frappe.whitelist()
+def restore_translations():
+	"""
+	Restores translations from the configured Git repository.
+	"""
+	from translation_hub.core.git_sync_service import GitSyncService
+
+	settings = frappe.get_single("Translator Settings")
+	if not settings.backup_repo_url:
+		frappe.throw("Backup Repository URL is not configured in Translator Settings.")
+
+	service = GitSyncService(settings)
+	service.restore()

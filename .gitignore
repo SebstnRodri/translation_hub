@@ -12,3 +12,6 @@ venv/
 .ruff_cache/
 .coverage
 htmlcov/
+
+# Test translation files
+translation_hub/locale/*_test.po

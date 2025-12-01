@@ -1,4 +1,4 @@
-exclude: 'node_modules|.git'
+exclude: 'node_modules|.git|.*_test\.po$'
 default_stages: [pre-commit]
 fail_fast: false
 
@@ -14,13 +14,6 @@ repos:
       always_run: true
       pass_filenames: false
       verbose: true
-
-    - id: cleanup-test-files
-      name: Cleanup Test Translation Files
-      entry: python3 translation_hub/utils/cleanup_test_files.py
-      language: system
-      pass_filenames: false
-      always_run: true
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
