@@ -56,9 +56,7 @@ def execute_translation_job(translation_job_name):
 		# 2. App-Specific Guide (from Monitored App)
 		# Find the monitored app row that matches source_app and target_language (or is generic)
 		for app_row in settings.monitored_apps:
-			if app_row.source_app == job.source_app and (
-				not app_row.target_language or app_row.target_language == job.target_language
-			):
+			if app_row.source_app == job.source_app:
 				if app_row.standardization_guide:
 					guides.append(f"App-Specific Guide ({job.source_app}):\n{app_row.standardization_guide}")
 				break
@@ -90,6 +88,16 @@ def execute_translation_job(translation_job_name):
 
 		# Combine all guides
 		standardization_guide = "\n\n".join(guides)
+
+		# Detect Test Mode
+		is_test_mode = api_key and api_key.startswith("test-")
+		if is_test_mode:
+			logger.info("TEST MODE DETECTED: Disabling database storage and redirecting PO output.")
+			# Isolate test output
+			po_path = Path(app_path) / "locale" / f"{job.target_language.replace('-', '_')}_test.po"
+			settings.use_database_storage = False
+			settings.save_to_po_file = True  # Force save to file so we can verify output
+			settings.export_po_on_complete = False
 
 		config = TranslationConfig(
 			api_key=api_key,

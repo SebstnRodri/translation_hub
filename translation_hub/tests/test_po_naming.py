@@ -13,23 +13,27 @@ class TestPONaming(FrappeTestCase):
 	def setUp(self):
 		self.app_name = "translation_hub"
 		self.lang_code = "pt-BR"
-		self.expected_po_filename = "pt_BR.po"
+		self.expected_po_filename = "pt_BR_test.po"
+		self.production_po_filename = "pt_BR.po"
 
 		# Ensure clean state
 		self.app_path = frappe.get_app_path(self.app_name)
 		self.locale_dir = Path(self.app_path) / "locale"
 		self.po_path = self.locale_dir / self.expected_po_filename
+		self.production_po_path = self.locale_dir / self.production_po_filename
 		self.wrong_po_path = self.locale_dir / "pt-BR.po"
 
 		if self.po_path.exists():
 			os.remove(self.po_path)
+		if self.production_po_path.exists():
+			os.remove(self.production_po_path)
 		if self.wrong_po_path.exists():
 			os.remove(self.wrong_po_path)
 
 		# Mock settings
 		settings = frappe.get_single("Translator Settings")
 		settings.api_key = "test-key"
-		settings.append("monitored_apps", {"source_app": self.app_name, "target_language": self.lang_code})
+		settings.append("monitored_apps", {"source_app": self.app_name})
 		settings.append(
 			"default_languages",
 			{"language_code": self.lang_code, "language_name": "Portuguese (Brazil)", "enabled": 1},
@@ -49,6 +53,8 @@ class TestPONaming(FrappeTestCase):
 	def tearDown(self):
 		if self.po_path.exists():
 			os.remove(self.po_path)
+		if self.production_po_path.exists():
+			os.remove(self.production_po_path)
 		if self.wrong_po_path.exists():
 			os.remove(self.wrong_po_path)
 		self.job.delete(ignore_permissions=True)
@@ -67,5 +73,9 @@ class TestPONaming(FrappeTestCase):
 		# Let's check if the file was created?
 		# TranslationFile.__init__ creates the file if it doesn't exist.
 
-		self.assertTrue(self.po_path.exists(), f"PO file {self.po_path} should exist")
+		self.assertTrue(self.po_path.exists(), f"Test PO file {self.po_path} should exist")
+		self.assertFalse(
+			self.production_po_path.exists(),
+			f"Production PO file {self.production_po_path} should NOT exist in test mode",
+		)
 		self.assertFalse(self.wrong_po_path.exists(), f"PO file {self.wrong_po_path} should NOT exist")
