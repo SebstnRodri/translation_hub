@@ -10,7 +10,7 @@ class GitSyncService:
 		self.settings = settings
 		self.repo_url = settings.backup_repo_url
 		self.branch = settings.backup_branch or "main"
-		self.token = settings.get_password("auth_token")
+		self.token = settings.get_password("auth_token", raise_exception=False)
 		self.repo_dir = Path(frappe.get_site_path("private", "translation_backup_repo"))
 
 	def _get_auth_url(self):
