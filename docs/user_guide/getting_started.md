@@ -64,3 +64,40 @@ Instead of manually creating jobs, you can let the Translation Hub handle it for
 5. **Save**.
 
 The system will now periodically check these apps for new untranslated strings and automatically create jobs for them!
+
+## 6. Backup & Restore Translations
+
+To persist translations across instances or create backups, configure Git-based backup:
+
+### Setup Backup Repository
+
+1. Create a Git repository (GitHub, GitLab, Bitbucket, etc.)
+2. Generate a **Personal Access Token** (PAT) with write permissions
+3. Open **Translator Settings**
+4. Scroll to **Backup Configuration** section
+5. Configure:
+   - **Backup Repository URL**: `https://github.com/your-user/translations-backup.git`
+   - **Backup Branch**: `main` (or your preferred branch)
+   - **Auth Token (PAT)**: Paste your Personal Access Token
+   - **Backup Frequency**: Choose `None`, `Daily`, or `Weekly`
+6. **Save**
+
+### Manual Backup
+
+Click the **Backup Translations** button in Translator Settings. This will:
+- Collect all `.po` files from monitored apps
+- Organize them by app (`app_name/locale/*.po`)
+- Commit and push to your repository
+
+### Manual Restore
+
+Click the **Restore Translations** button in Translator Settings. This will:
+- Pull latest changes from the repository
+- Distribute `.po` files back to their respective apps
+- Preserve translations across new instances
+
+### Automated Backup
+
+Set **Backup Frequency** to `Daily` or `Weekly` for automatic backups.
+
+> **Note**: Backups are stored in `sites/[site_name]/private/translation_backup_repo`

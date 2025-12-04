@@ -18,6 +18,8 @@ Translation Hub is a powerful tool designed to automate the translation of Frapp
 -   **✨ Enhanced UX**: Smart app selection using Virtual DocTypes ensures you only configure installed apps, preventing errors.
 -   **📏 Standardization Guides**: Define context-aware guides (Global, App-Specific, Language-Specific) to ensure terminology consistency.
 -   **🛡️ Governance & Validation**: Prevents duplicate jobs and ensures all translations strictly follow defined configurations.
+-   **🔄 Git-Based Backup**: Automatically backup and restore translations to/from Git repositories for disaster recovery and multi-instance sync.
+
 
 
 
