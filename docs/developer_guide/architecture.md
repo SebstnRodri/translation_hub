@@ -171,12 +171,26 @@ classDiagram
         +error(message)
     }
 
+    class GitSyncService {
+        -TranslatorSettings settings
+        -str repo_url
+        -str branch
+        -str token
+        -Path repo_dir
+        +setup_repo()
+        +collect_translations()
+        +distribute_translations()
+        +backup()
+        +restore()
+    }
+
     FrappeUI ..> BackgroundJob : enqueues
     BackgroundJob ..> Orchestrator : instantiates and runs
     BackgroundJob ..> Config : instantiates
     BackgroundJob ..> FileHandler : instantiates
     BackgroundJob ..> GeminiService : instantiates
     BackgroundJob ..> DocTypeLogger : instantiates
+    BackgroundJob ..> GitSyncService : uses for backup/restore
 
     Orchestrator o-- Config
     Orchestrator o-- FileHandler
@@ -188,6 +202,7 @@ classDiagram
     MockTranslationService --|> Service
     BackgroundJob ..> DatabaseTranslationHandler : instantiates
     DocTypeLogger ..> FrappeUI : logs to TranslationJob
+    GitSyncService ..> FrappeUI : reads TranslatorSettings
 ```
 
 ### DocType Relationships
@@ -282,6 +297,52 @@ erDiagram
 - **`FileHandler`**: Encapsulates all logic related to file manipulation using the `polib` library. Handles merging `.pot` templates into `.po` files and saving translations.
 - **`Config`**: A data class that holds all configuration parameters, including storage options (`use_database_storage`, `save_to_po_file`, `export_po_on_complete`).
 - **`DocTypeLogger`**: A custom logger that writes output to the `log` field of a `Translation Job` document.
+- **`GitSyncService`**: Manages Git-based backup and restore of translation files. Handles repository cloning, file synchronization, commits, and pushes to remote repositories.
+
+### Translation Backup & Restore
+
+The Translation Hub includes a Git-based backup system to persist translations across instances and facilitate disaster recovery.
+
+#### GitSyncService
+
+The `GitSyncService` class provides automated backup and restore functionality:
+
+**Features:**
+- **Repository Management**: Clones and syncs with remote Git repositories
+- **File Collection**: Gathers `.po` files from all monitored apps
+- **Directory Structure**: Organizes backups by app (`app_name/locale/*.po`)
+- **Authentication**: Supports Personal Access Tokens (PAT) for private repositories
+- **Automatic Commits**: Creates timestamped commits with `[skip ci]` tag
+
+**Configuration** (in Translator Settings):
+- `backup_repo_url`: HTTPS URL of the Git repository
+- `backup_branch`: Branch to use (default: `main`)
+- `auth_token`: Personal Access Token for authentication
+- `backup_frequency`: Automated backup schedule (None/Daily/Weekly)
+
+**Storage Location**: `sites/[site_name]/private/translation_backup_repo`
+
+**Repository Structure:**
+```
+translation-backup-repo/
+├── frappe/
+│   └── locale/
+│       ├── pt_BR.po
+│       ├── es.po
+│       └── fr.po
+├── erpnext/
+│   └── locale/
+│       └── pt_BR.po
+└── custom_app/
+    └── locale/
+        └── pt_BR.po
+```
+
+**Usage:**
+- **Manual Backup**: Click "Backup Translations" button in Translator Settings
+- **Manual Restore**: Click "Restore Translations" button in Translator Settings
+- **Automated**: Configure `backup_frequency` for scheduled backups
+
 
 ### Database-First Approach & HTML Preservation
 

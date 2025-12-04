@@ -127,23 +127,46 @@ class DatabaseTranslationHandler:
 		Args:
 			po_path: Path to save the .po file
 		"""
+		import os
+
 		import polib
 
-		po = polib.POFile()
-		po.metadata = {
-			"Project-Id-Version": "1.0",
-			"Language": self.language,
-			"MIME-Version": "1.0",
-			"Content-Type": "text/plain; charset=utf-8",
-		}
+		if os.path.exists(po_path):
+			self.logger.info(f"Loading existing PO file for export: {po_path}")
+			po = polib.pofile(po_path, encoding="utf-8")
+		else:
+			self.logger.info(f"Creating new PO file for export: {po_path}")
+			po = polib.POFile()
+			po.metadata = {
+				"Project-Id-Version": "1.0",
+				"Language": self.language,
+				"MIME-Version": "1.0",
+				"Content-Type": "text/plain; charset=utf-8",
+			}
 
 		translations = self.get_all_translations()
+		updated_count = 0
 
 		for t in translations:
-			entry = polib.POEntry(msgid=t["source_text"], msgstr=t["translated_text"])
-			if t.get("context"):
-				entry.msgctxt = t["context"]
-			po.append(entry)
+			msgid = t["source_text"]
+			msgstr = t["translated_text"]
+			context = t.get("context")
+
+			entry = po.find(msgid, msgctxt=context)
+			if entry:
+				if entry.msgstr != msgstr:
+					entry.msgstr = msgstr
+					if "fuzzy" in entry.flags:
+						entry.flags.remove("fuzzy")
+					updated_count += 1
+			else:
+				# Only add new entry if it doesn't exist (less common for export, usually we update)
+				# But if we are creating a new file, we add everything.
+				entry = polib.POEntry(msgid=msgid, msgstr=msgstr)
+				if context:
+					entry.msgctxt = context
+				po.append(entry)
+				updated_count += 1
 
 		po.save(po_path)
-		self.logger.info(f"Exported {len(translations)} translations to {po_path}")
+		self.logger.info(f"Exported/Updated {updated_count} translations to {po_path}")

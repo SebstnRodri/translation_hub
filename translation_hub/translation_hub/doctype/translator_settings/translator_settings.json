@@ -15,7 +15,12 @@
         "frequency",
         "monitored_apps",
         "language_setup_section",
-        "default_languages"
+        "default_languages",
+        "backup_section",
+        "backup_repo_url",
+        "backup_branch",
+        "auth_token",
+        "backup_frequency"
     ],
     "fields": [
         {
@@ -87,6 +92,36 @@
             "fieldtype": "Table",
             "label": "Default Languages",
             "options": "Translator Language"
+        },
+        {
+            "fieldname": "backup_section",
+            "fieldtype": "Section Break",
+            "label": "Backup Configuration"
+        },
+        {
+            "fieldname": "backup_repo_url",
+            "fieldtype": "Data",
+            "label": "Backup Repository URL",
+            "description": "HTTPS URL of the Git repository (e.g., https://github.com/user/repo.git)"
+        },
+        {
+            "default": "main",
+            "fieldname": "backup_branch",
+            "fieldtype": "Data",
+            "label": "Backup Branch"
+        },
+        {
+            "fieldname": "auth_token",
+            "fieldtype": "Password",
+            "label": "Auth Token (PAT)",
+            "description": "Personal Access Token for authentication"
+        },
+        {
+            "fieldname": "backup_frequency",
+            "fieldtype": "Select",
+            "label": "Backup Frequency",
+            "options": "None\nDaily\nWeekly",
+            "default": "None"
         },
         {
             "fieldname": "google_gemini_section",

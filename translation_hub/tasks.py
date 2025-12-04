@@ -28,8 +28,8 @@ Follow the specific instructions provided in the App Guide and Language Guide be
 
 
 @frappe.whitelist()
-def execute_translation_job(job_name):
-	job = frappe.get_doc("Translation Job", job_name)
+def execute_translation_job(translation_job_name):
+	job = frappe.get_doc("Translation Job", translation_job_name)
 	logger = DocTypeLogger(job)
 	try:
 		job.status = "In Progress"
@@ -56,9 +56,7 @@ def execute_translation_job(job_name):
 		# 2. App-Specific Guide (from Monitored App)
 		# Find the monitored app row that matches source_app and target_language (or is generic)
 		for app_row in settings.monitored_apps:
-			if app_row.source_app == job.source_app and (
-				not app_row.target_language or app_row.target_language == job.target_language
-			):
+			if app_row.source_app == job.source_app:
 				if app_row.standardization_guide:
 					guides.append(f"App-Specific Guide ({job.source_app}):\n{app_row.standardization_guide}")
 				break
@@ -91,6 +89,16 @@ def execute_translation_job(job_name):
 		# Combine all guides
 		standardization_guide = "\n\n".join(guides)
 
+		# Detect Test Mode
+		is_test_mode = api_key and api_key.startswith("test-")
+		if is_test_mode:
+			logger.info("TEST MODE DETECTED: Disabling database storage and redirecting PO output.")
+			# Isolate test output
+			po_path = Path(app_path) / "locale" / f"{job.target_language.replace('-', '_')}_test.po"
+			settings.use_database_storage = False
+			settings.save_to_po_file = True  # Force save to file so we can verify output
+			settings.export_po_on_complete = False
+
 		config = TranslationConfig(
 			api_key=api_key,
 			standardization_guide=standardization_guide,
@@ -100,6 +108,7 @@ def execute_translation_job(job_name):
 			use_database_storage=settings.use_database_storage,
 			save_to_po_file=settings.save_to_po_file,
 			export_po_on_complete=settings.export_po_on_complete,
+			language_code=job.target_language,
 		)
 
 		file_handler = TranslationFile(po_path=config.po_file, pot_path=config.pot_file, logger=logger)
@@ -246,3 +255,33 @@ def ensure_pot_file(app_name):
 		pot.append(entry)
 
 	pot.save(pot_path)
+
+
+@frappe.whitelist()
+def backup_translations():
+	"""
+	Backs up translations to the configured Git repository.
+	"""
+	from translation_hub.core.git_sync_service import GitSyncService
+
+	settings = frappe.get_single("Translator Settings")
+	if not settings.backup_repo_url:
+		frappe.throw("Backup Repository URL is not configured in Translator Settings.")
+
+	service = GitSyncService(settings)
+	service.backup()
+
+
+@frappe.whitelist()
+def restore_translations():
+	"""
+	Restores translations from the configured Git repository.
+	"""
+	from translation_hub.core.git_sync_service import GitSyncService
+
+	settings = frappe.get_single("Translator Settings")
+	if not settings.backup_repo_url:
+		frappe.throw("Backup Repository URL is not configured in Translator Settings.")
+
+	service = GitSyncService(settings)
+	service.restore()
