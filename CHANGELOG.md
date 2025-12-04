@@ -2,7 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.1.1-beta] - 2025-12-04
+
+### 🛠️ Improvements
+- **Release Automation**:
+    - Added automated release script (`scripts/release.sh`) to ensure version consistency
+    - Created comprehensive release process documentation
+    - Prevents version file mismatches in future releases
+
+---
+
 ## [v1.1.0-beta] - 2025-12-04
+
 
 ### 🚀 Features
 - **Git-Based Backup & Restore**:
