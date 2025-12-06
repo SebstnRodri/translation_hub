@@ -39,6 +39,17 @@ def execute_translation_job(translation_job_name):
 
 		settings = frappe.get_single("Translator Settings")
 
+		# Sync remote translations if configured
+		if getattr(settings, "sync_before_translate", False) and settings.backup_repo_url:
+			try:
+				from translation_hub.core.git_sync_service import GitSyncService
+
+				git_service = GitSyncService(settings)
+				if git_service.sync():
+					logger.info("Synced remote translations before translating.")
+			except Exception as e:
+				logger.warning(f"Failed to sync remote translations: {e}")
+
 		app_path = get_app_path(job.source_app)
 
 		# Ensure POT file exists (auto-generate if missing)

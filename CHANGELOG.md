@@ -4,10 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [v1.1.2-beta] - 2025-12-06
 
+### 🚀 Features
+- **Workspace**: Redesigned Translation Hub workspace with "Setup & Configuration" section for improved navigation.
+- **Sync Before Translate**: Automatically pull existing translations from the remote Git repository before starting a new translation job. Ensures previously translated strings are preserved.
+
 ### 🐛 Bug Fixes
 - **Bench Update**: Fixed `ValueError: unconverted data remains` during `bench update` by removing microseconds from `POT-Creation-Date` and `PO-Revision-Date` headers in PO files and generation logic.
 
 ---
+
 
 ## [v1.1.1-beta] - 2025-12-04
 

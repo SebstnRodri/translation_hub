@@ -137,3 +137,20 @@ class GitSyncService:
 		self.setup_repo()
 		self.distribute_translations()
 		frappe.msgprint("Restore completed successfully.")
+
+	def sync(self):
+		"""Syncs remote translations to local apps before translating.
+		
+		Returns:
+			bool: True if sync succeeded, False if no repo configured.
+		"""
+		if not self.repo_url:
+			return False
+		
+		try:
+			self.setup_repo()
+			self.distribute_translations()
+			return True
+		except Exception as e:
+			frappe.log_error(f"Failed to sync translations: {e}", "Git Sync Service")
+			return False

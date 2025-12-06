@@ -20,7 +20,8 @@
         "backup_repo_url",
         "backup_branch",
         "auth_token",
-        "backup_frequency"
+        "backup_frequency",
+        "sync_before_translate"
     ],
     "fields": [
         {
@@ -122,6 +123,14 @@
             "label": "Backup Frequency",
             "options": "None\nDaily\nWeekly",
             "default": "None"
+        },
+        {
+            "default": "1",
+            "depends_on": "eval:doc.backup_repo_url",
+            "description": "Pull existing translations from the backup repository before starting a new translation job.",
+            "fieldname": "sync_before_translate",
+            "fieldtype": "Check",
+            "label": "Sync Remote Translations Before Translating"
         },
         {
             "fieldname": "google_gemini_section",
