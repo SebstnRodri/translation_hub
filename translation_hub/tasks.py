@@ -218,16 +218,18 @@ def ensure_pot_file(app_name):
 
 	messages = get_messages_for_app(app_name)
 	pot = polib.POFile()
+	now_str = frappe.utils.now_datetime().strftime("%Y-%m-%d %H:%M")
 	pot.metadata = {
-		"Project-Id-Version": app_name,
+		"Project-Id-Version": "1.0",
 		"Report-Msgid-Bugs-To": "",
-		"POT-Creation-Date": frappe.utils.now(),
-		"PO-Revision-Date": frappe.utils.now(),
+		"POT-Creation-Date": now_str,
+		"PO-Revision-Date": now_str,
 		"Last-Translator": "Translation Hub <ai@translationhub.com>",
 		"Language-Team": "",
 		"MIME-Version": "1.0",
-		"Content-Type": "text/plain; charset=UTF-8",
+		"Content-Type": "text/plain; charset=utf-8",
 		"Content-Transfer-Encoding": "8bit",
+		"X-Generator": "Frappe Translation Hub",
 	}
 
 	seen = set()

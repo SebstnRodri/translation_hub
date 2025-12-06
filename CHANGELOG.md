@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.1.2-beta] - 2025-12-06
+
+### 🐛 Bug Fixes
+- **Bench Update**: Fixed `ValueError: unconverted data remains` during `bench update` by removing microseconds from `POT-Creation-Date` and `PO-Revision-Date` headers in PO files and generation logic.
+
+---
+
 ## [v1.1.1-beta] - 2025-12-04
+
 
 ### 🛠️ Improvements
 - **Release Automation**:
