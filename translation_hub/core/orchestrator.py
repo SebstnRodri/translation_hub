@@ -51,6 +51,8 @@ class TranslationOrchestrator:
 				self.logger.info(f"--- Translating batch {i + 1}/{total_batches} ---")
 
 				translated_batch = self.service.translate(batch)
+				# Filter out None results (failed translations are skipped)
+				translated_batch = [entry for entry in translated_batch if entry is not None]
 				translated_strings += len(translated_batch)
 				self.logger.update_progress(translated_strings, total_strings)
 

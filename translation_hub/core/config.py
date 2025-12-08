@@ -15,7 +15,7 @@ class TranslationConfig:
 	max_single_retries: int = 3
 	retry_wait_seconds: int = 2
 	standardization_guide: str = ""
-	batch_size: int = 100
+	batch_size: int = 15  # Reduced to avoid rate limits on free tier APIs
 	pot_file: Path | None = field(default=None, compare=False)
 	po_file: Path | None = field(default=None, compare=False)
 	api_key: str | None = field(default=None, compare=False)

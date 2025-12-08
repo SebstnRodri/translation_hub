@@ -157,6 +157,13 @@ classDiagram
         +translate(entries)
     }
 
+    class OpenRouterService {
+        -Config config
+        -DocTypeLogger logger
+        -OpenAI client
+        +translate(entries)
+    }
+
     class MockTranslationService {
         -Config config
         -DocTypeLogger logger

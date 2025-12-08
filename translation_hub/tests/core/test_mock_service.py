@@ -70,4 +70,5 @@ def test_mock_service_failure_simulation():
 
 	translations = service.translate(entries)
 
-	assert translations[0]["msgstr"] == "[TRANSLATION_FAILED] Test"
+	# Failed translations return None (skipped)
+	assert translations[0] is None

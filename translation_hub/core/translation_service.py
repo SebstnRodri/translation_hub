@@ -60,7 +60,8 @@ class MockTranslationService(TranslationService):
 			# Simulate occasional failures if fail_rate > 0
 			if random.random() < self.fail_rate:
 				self.logger.warning(f"[MOCK] Simulated failure for: '{msgid}'")
-				translations.append({"msgid": msgid, "msgstr": f"[TRANSLATION_FAILED] {msgid}"})
+				# Return None to skip this entry (don't write failed translations)
+				translations.append(None)
 				continue
 
 			# Simple mock translation: add language prefix
@@ -230,7 +231,8 @@ class GeminiService(TranslationService):
 		self.logger.error(
 			f"    [Error] Failed to translate '{msgid}' after {self.config.max_single_retries} attempts."
 		)
-		return {"msgid": msgid, "msgstr": f"[TRANSLATION_FAILED] {msgid}"}
+		# Return None to skip this entry (don't write failed translations)
+		return None
 
 	def _build_batch_prompt(self, entries: list[dict[str, Any]]) -> str:
 		base_prompt = (
@@ -518,7 +520,8 @@ class GroqService(TranslationService):
 		self.logger.error(
 			f"    [Error] Failed to translate '{msgid}' after {self.config.max_single_retries} attempts."
 		)
-		return {"msgid": msgid, "msgstr": f"[TRANSLATION_FAILED] {msgid}"}
+		# Return None to skip this entry (don't write failed translations)
+		return None
 
 	def _build_batch_prompt(self, entries: list[dict[str, Any]]) -> str:
 		base_prompt = (
@@ -782,7 +785,8 @@ class OpenRouterService(TranslationService):
 		self.logger.error(
 			f"[Error] Failed to translate '{original_msgid[:50]}...' after {self.config.max_single_retries} attempts."
 		)
-		return {"msgid": original_msgid, "msgstr": ""}
+		# Return None to skip this entry (don't write failed translations)
+		return None
 
 	def _build_batch_prompt(self, entries: list[dict]) -> str:
 		"""Builds a prompt for batch translation."""

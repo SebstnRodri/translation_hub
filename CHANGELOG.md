@@ -5,17 +5,25 @@ All notable changes to this project will be documented in this file.
 ## [v1.2.0] - 2025-12-08
 
 ### 🚀 Features
-- **Multiple LLM Providers**: Added support for **Groq** as an alternative to Google Gemini.
-    - **GroqService**: New translation service using Groq's fast inference API (OpenAI-compatible).
-    - **UI Configuration**: Select LLM provider (Gemini/Groq) in Translator Settings.
-    - **Groq Models**: Default model `llama-3.3-70b-versatile`, also supports Mixtral and other models.
-- **OpenAI SDK Integration**: Added `openai>=1.0.0` dependency for Groq API compatibility.
+- **Multiple LLM Providers**: Added support for **Groq** and **OpenRouter** as alternatives to Google Gemini.
+    - **GroqService**: Translation service using Groq's fast inference API.
+    - **OpenRouterService**: Access to 500+ models via OpenRouter API.
+    - **UI Configuration**: Select LLM provider (Gemini/Groq/OpenRouter) in Translator Settings.
+    - **Groq Models**: Default `llama-3.3-70b-versatile`, supports Mixtral and others.
+    - **OpenRouter Models**: Many free and paid models available.
+- **Test API Connection Button**: Verify LLM provider setup directly from Translator Settings.
+- **OpenAI SDK Integration**: Added `openai>=1.0.0` dependency for Groq/OpenRouter compatibility.
+
+### ⚡ Improvements
+- **Reduced Batch Size**: Default batch size reduced from 100 to 15 to avoid rate limits on free tier APIs.
+- **Skip Failed Translations**: Failed translations are now skipped (no `[TRANSLATION_FAILED]` marker written). Entries can be retried on next run.
+- **Test Mode Detection Fix**: Now correctly checks the active provider's API key for test mode detection.
 
 ### 🧪 Testing
 - **GroqService Tests**: 5 unit tests covering initialization, batch translation, whitespace preservation, JSON cleanup, and fallback behavior.
 
 ### 📚 Documentation
-- Updated `architecture.md` with GroqService class diagram and component description.
+- Updated `architecture.md` with GroqService and OpenRouterService class diagrams.
 - Updated `getting_started.md` with LLM provider configuration instructions.
 - Updated README.md with multiple LLM providers feature.
 
