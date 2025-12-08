@@ -15,6 +15,9 @@ class TestStandardizationGuide(FrappeTestCase):
 		settings.use_database_storage = 1
 		settings.save_to_po_file = 0
 		settings.export_po_on_complete = 0
+		settings.llm_provider = "Gemini"  # New required field
+		settings.backup_repo_url = None  # Skip git sync
+		settings.sync_before_translate = False
 
 		# Mock monitored app row
 		app_row = MagicMock()
@@ -39,20 +42,39 @@ class TestStandardizationGuide(FrappeTestCase):
 		with (
 			patch("frappe.get_doc", return_value=job),
 			patch("frappe.get_single", return_value=settings),
+			patch("frappe.db.commit"),
+			patch("frappe.db.exists", return_value=None),
+			patch("translation_hub.tasks.ensure_pot_file"),
 			patch("translation_hub.tasks.TranslationConfig") as MockConfig,
-			patch("translation_hub.tasks.TranslationOrchestrator"),
+			patch("translation_hub.tasks.TranslationOrchestrator") as MockOrchestrator,
 			patch("translation_hub.tasks.TranslationFile"),
 			patch("translation_hub.tasks.DocTypeLogger"),
-			patch("translation_hub.tasks.get_app_path", return_value="/tmp"),
-			patch("os.path.join", return_value="/tmp/file"),
+			patch("translation_hub.tasks.GeminiService"),
+			patch("translation_hub.tasks.get_app_path", return_value="/tmp/test_app"),
+			patch("translation_hub.tasks.Path") as MockPath,
 			patch("frappe.utils.now_datetime", return_value="2025-01-01 12:00:00"),
 		):
+			# Configure Path mock
+			mock_path_instance = MagicMock()
+			mock_path_instance.__truediv__ = MagicMock(return_value=mock_path_instance)
+			MockPath.return_value = mock_path_instance
+
+			# Configure orchestrator to not raise
+			MockOrchestrator.return_value.run = MagicMock()
+
+			# Configure config mock to track call
+			mock_config_instance = MagicMock()
+			MockConfig.return_value = mock_config_instance
+
 			try:
 				execute_translation_job("Test Job")
 			except Exception as e:
-				print(f"Caught exception: {e}")
+				self.fail(f"execute_translation_job raised an exception: {e}")
 
-			# Verify Config was initialized with Composite Guide
+			# Verify Config was called
+			self.assertTrue(MockConfig.called, "TranslationConfig was not called")
+
+			# Get the call arguments
 			args, kwargs = MockConfig.call_args
 			guide = kwargs.get("standardization_guide")
 

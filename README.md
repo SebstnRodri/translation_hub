@@ -2,13 +2,14 @@
 
 **AI-Powered Translation Agent for Frappe Apps**
 
-Translation Hub is a powerful tool designed to automate the translation of Frappe applications using advanced AI (Google Gemini). It streamlines the localization process, ensuring your apps are ready for a global audience with minimal manual effort.
+Translation Hub is a powerful tool designed to automate the translation of Frappe applications using advanced AI (Google Gemini or Groq). It streamlines the localization process, ensuring your apps are ready for a global audience with minimal manual effort.
 
 > [!NOTE]
 > **Compatibility**: This project is compatible with **Frappe Framework v15** and **v16**.
 
-## 🚀 Key Features (v1.1.2-beta)
-- **🤖 AI-Powered**: Uses Google Gemini to provide accurate, context-aware translations.
+## 🚀 Key Features (v1.2.0)
+- **🤖 AI-Powered**: Uses Google Gemini or **Groq** to provide accurate, context-aware translations.
+- **⚡ Multiple LLM Providers**: Choose between Gemini and Groq (Llama, Mixtral) for translation.
 - **🖥️ Enhanced Workspace**: Improved navigation with dedicated Configuration section for easy access to Settings, Jobs, and Apps.
 - **🛡️ Git-Based Backup & Restore**: Automatically backup your translation files to a Git repository and restore them when needed.
 - **🔄 Sync Before Translate**: Pull existing translations from remote before starting new jobs – ensures no work is lost.

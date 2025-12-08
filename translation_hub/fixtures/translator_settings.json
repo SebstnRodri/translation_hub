@@ -20,7 +20,10 @@
         "enable_automated_translation": 1,
         "export_po_on_complete": 0,
         "frequency": "Daily",
-        "modified": "2025-11-28 11:36:22.700649",
+        "llm_provider": "Gemini",
+        "groq_api_key": null,
+        "groq_model": "llama-3.3-70b-versatile",
+        "modified": "2025-12-08 13:30:00.000000",
         "monitored_apps": [
             {
                 "source_app": "translation_hub",

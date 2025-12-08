@@ -4,8 +4,12 @@
     "doctype": "DocType",
     "engine": "InnoDB",
     "field_order": [
-        "google_gemini_section",
+        "llm_configuration_section",
+        "llm_provider",
+        "column_break_llm",
         "api_key",
+        "groq_api_key",
+        "groq_model",
         "storage_strategy_section",
         "use_database_storage",
         "save_to_po_file",
@@ -25,9 +29,42 @@
     ],
     "fields": [
         {
+            "fieldname": "llm_configuration_section",
+            "fieldtype": "Section Break",
+            "label": "LLM Configuration"
+        },
+        {
+            "default": "Gemini",
+            "description": "Select the LLM provider for translations",
+            "fieldname": "llm_provider",
+            "fieldtype": "Select",
+            "label": "LLM Provider",
+            "options": "Gemini\nGroq",
+            "reqd": 1
+        },
+        {
+            "fieldname": "column_break_llm",
+            "fieldtype": "Column Break"
+        },
+        {
+            "depends_on": "eval:doc.llm_provider === 'Gemini'",
             "fieldname": "api_key",
             "fieldtype": "Password",
-            "label": "API Key"
+            "label": "Gemini API Key"
+        },
+        {
+            "depends_on": "eval:doc.llm_provider === 'Groq'",
+            "fieldname": "groq_api_key",
+            "fieldtype": "Password",
+            "label": "Groq API Key"
+        },
+        {
+            "default": "llama-3.3-70b-versatile",
+            "depends_on": "eval:doc.llm_provider === 'Groq'",
+            "description": "Groq model to use (e.g., llama-3.3-70b-versatile, mixtral-8x7b-32768)",
+            "fieldname": "groq_model",
+            "fieldtype": "Data",
+            "label": "Groq Model"
         },
         {
             "fieldname": "storage_strategy_section",
@@ -131,11 +168,6 @@
             "fieldname": "sync_before_translate",
             "fieldtype": "Check",
             "label": "Sync Remote Translations Before Translating"
-        },
-        {
-            "fieldname": "google_gemini_section",
-            "fieldtype": "Section Break",
-            "label": "Google Gemini"
         }
     ],
     "issingle": 1,

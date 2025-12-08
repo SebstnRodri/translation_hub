@@ -132,8 +132,29 @@ def execute_translation_job(translation_job_name):
 			logger.info("Using MockTranslationService (test mode)")
 			service = MockTranslationService(config=config, logger=logger)
 		else:
-			logger.info("Using GeminiService (production mode)")
-			service = GeminiService(config=config, app_name=job.source_app, logger=logger)
+			# Select service based on LLM provider setting
+			llm_provider = getattr(settings, "llm_provider", "Gemini")
+
+			if llm_provider == "Groq":
+				from translation_hub.core.translation_service import GroqService
+
+				# Get Groq-specific settings
+				groq_api_key = settings.get_password("groq_api_key")
+				if not groq_api_key:
+					raise ValueError("Groq API key is not configured in Translator Settings.")
+
+				groq_model = getattr(settings, "groq_model", None) or "llama-3.3-70b-versatile"
+
+				# Update config with Groq settings
+				config.api_key = groq_api_key
+				config.model_name = groq_model
+
+				logger.info(f"Using GroqService (model: {groq_model})")
+				service = GroqService(config=config, app_name=job.source_app, logger=logger)
+			else:
+				# Default to Gemini
+				logger.info("Using GeminiService (production mode)")
+				service = GeminiService(config=config, app_name=job.source_app, logger=logger)
 
 		orchestrator = TranslationOrchestrator(
 			config=config, file_handler=file_handler, service=service, logger=logger

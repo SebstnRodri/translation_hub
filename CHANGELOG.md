@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.0] - 2025-12-08
+
+### 🚀 Features
+- **Multiple LLM Providers**: Added support for **Groq** as an alternative to Google Gemini.
+    - **GroqService**: New translation service using Groq's fast inference API (OpenAI-compatible).
+    - **UI Configuration**: Select LLM provider (Gemini/Groq) in Translator Settings.
+    - **Groq Models**: Default model `llama-3.3-70b-versatile`, also supports Mixtral and other models.
+- **OpenAI SDK Integration**: Added `openai>=1.0.0` dependency for Groq API compatibility.
+
+### 🧪 Testing
+- **GroqService Tests**: 5 unit tests covering initialization, batch translation, whitespace preservation, JSON cleanup, and fallback behavior.
+
+### 📚 Documentation
+- Updated `architecture.md` with GroqService class diagram and component description.
+- Updated `getting_started.md` with LLM provider configuration instructions.
+- Updated README.md with multiple LLM providers feature.
+
+---
+
 ## [v1.1.2-beta] - 2025-12-06
 
 ### 🚀 Features

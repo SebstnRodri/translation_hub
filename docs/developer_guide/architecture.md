@@ -150,6 +150,13 @@ classDiagram
         +translate(entries)
     }
 
+    class GroqService {
+        -Config config
+        -DocTypeLogger logger
+        -OpenAI client
+        +translate(entries)
+    }
+
     class MockTranslationService {
         -Config config
         -DocTypeLogger logger
@@ -199,8 +206,10 @@ classDiagram
     Orchestrator ..> DatabaseTranslationHandler : uses
 
     GeminiService --|> Service
+    GroqService --|> Service
     MockTranslationService --|> Service
     BackgroundJob ..> DatabaseTranslationHandler : instantiates
+    BackgroundJob ..> GroqService : instantiates (if Groq provider)
     DocTypeLogger ..> FrappeUI : logs to TranslationJob
     GitSyncService ..> FrappeUI : reads TranslatorSettings
 ```
@@ -292,6 +301,7 @@ erDiagram
 - **`Orchestrator`**: The "brain" of the application. It coordinates the entire translation process. It is instantiated and run by the background job. Now supports both database and file-based storage.
 - **`Service` (Abstract Base Class)**: Defines a common interface for any translation service.
 - **`GeminiService`**: The concrete implementation of `Service` for the Google Gemini API. Handles **Context Injection** by fetching app-specific details (domain, tone, glossary) and embedding them into the LLM prompt.
+- **`GroqService`**: An alternative implementation of `Service` that uses Groq's fast inference API. Uses the OpenAI-compatible SDK to call Groq endpoints. Supports models like `llama-3.3-70b-versatile` and `mixtral-8x7b-32768`. Selected via the `llm_provider` setting in Translator Settings.
 - **`MockTranslationService`**: A test implementation of `Service` that simulates translation without API calls. Automatically used when API key starts with `"test-"`.
 - **`DatabaseTranslationHandler`**: Stores translations in Frappe's Translation DocType (database). Provides highest priority for rendering and Docker-safe persistence.
 - **`FileHandler`**: Encapsulates all logic related to file manipulation using the `polib` library. Handles merging `.pot` templates into `.po` files and saving translations.

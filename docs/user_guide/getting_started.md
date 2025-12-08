@@ -14,14 +14,19 @@ bench install-app translation_hub
 ## 2. Configuration (UI)
 
 1. Open **Translator Settings** in your Frappe Desk.
-2. Enter your **Google Gemini API Key**.
-3. **Language Setup**:
+2. **Select LLM Provider**:
+    - **Gemini** (default): Uses Google Gemini API
+    - **Groq**: Uses Groq's fast inference API (Llama, Mixtral models)
+3. Enter your API Key for the selected provider:
+    - For Gemini: Enter **Gemini API Key**
+    - For Groq: Enter **Groq API Key** and optionally change the model (default: `llama-3.3-70b-versatile`)
+4. **Language Setup**:
     - Scroll to the "Language Setup" section.
     - Add the languages you want to use (e.g., `pt-BR`, `es-MX`) in the "Default Languages" table.
     - Check "Enabled" for each language.
     - **Save** the settings. The languages will be created/enabled automatically! 
     *(Alternatively, you can run `bench setup-languages` in the terminal after configuring this).*
-4. **Storage Settings**:
+5. **Storage Settings**:
     - **Use Database Storage**: ✅ Checked (Recommended for Docker/Production)
     - **Save to .po File**: ✅ Checked (Recommended for preserving HTML/Rich Text)
     - **Export .po File on Completion**: ❌ Unchecked (Avoids overwriting files with stripped data)
