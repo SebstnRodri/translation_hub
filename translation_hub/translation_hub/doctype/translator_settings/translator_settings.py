@@ -56,3 +56,75 @@ class TranslatorSettings(Document):
 				if not doc.enabled:
 					doc.enabled = 1
 					doc.save(ignore_permissions=True)
+
+
+@frappe.whitelist()
+def test_api_connection():
+	"""
+	Tests the API connection for the selected LLM provider.
+	Returns a success message or error details.
+	"""
+	settings = frappe.get_single("Translator Settings")
+	llm_provider = settings.llm_provider or "Gemini"
+
+	try:
+		if llm_provider == "Gemini":
+			api_key = settings.get_password("api_key")
+			if not api_key:
+				return {"success": False, "message": "Gemini API key is not configured."}
+
+			import google.generativeai as genai
+
+			genai.configure(api_key=api_key)
+			model = genai.GenerativeModel("gemini-2.0-flash")
+			response = model.generate_content("Say 'Connection successful!' in one line.")
+			return {
+				"success": True,
+				"message": f"✅ Gemini connected! Response: {response.text.strip()[:100]}",
+			}
+
+		elif llm_provider == "Groq":
+			api_key = settings.get_password("groq_api_key")
+			if not api_key:
+				return {"success": False, "message": "Groq API key is not configured."}
+
+			from openai import OpenAI
+
+			client = OpenAI(api_key=api_key, base_url="https://api.groq.com/openai/v1")
+			model_name = settings.groq_model or "llama-3.3-70b-versatile"
+
+			response = client.chat.completions.create(
+				model=model_name,
+				messages=[{"role": "user", "content": "Say 'Connection successful!' in one line."}],
+				max_tokens=50,
+			)
+			return {
+				"success": True,
+				"message": f"✅ Groq connected! Model: {model_name}. Response: {response.choices[0].message.content.strip()[:100]}",
+			}
+
+		elif llm_provider == "OpenRouter":
+			api_key = settings.get_password("openrouter_api_key")
+			if not api_key:
+				return {"success": False, "message": "OpenRouter API key is not configured."}
+
+			from openai import OpenAI
+
+			client = OpenAI(api_key=api_key, base_url="https://openrouter.ai/api/v1")
+			model_name = settings.openrouter_model or "deepseek/deepseek-chat-v3-0324:free"
+
+			response = client.chat.completions.create(
+				model=model_name,
+				messages=[{"role": "user", "content": "Say 'Connection successful!' in one line."}],
+				max_tokens=50,
+			)
+			return {
+				"success": True,
+				"message": f"✅ OpenRouter connected! Model: {model_name}. Response: {response.choices[0].message.content.strip()[:100]}",
+			}
+
+		else:
+			return {"success": False, "message": f"Unknown LLM provider: {llm_provider}"}
+
+	except Exception as e:
+		return {"success": False, "message": f"❌ Connection failed: {str(e)[:200]}"}

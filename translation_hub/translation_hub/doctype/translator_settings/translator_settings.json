@@ -10,6 +10,9 @@
         "api_key",
         "groq_api_key",
         "groq_model",
+        "openrouter_api_key",
+        "openrouter_model",
+        "test_connection",
         "storage_strategy_section",
         "use_database_storage",
         "save_to_po_file",
@@ -39,7 +42,7 @@
             "fieldname": "llm_provider",
             "fieldtype": "Select",
             "label": "LLM Provider",
-            "options": "Gemini\nGroq",
+            "options": "Gemini\nGroq\nOpenRouter",
             "reqd": 1
         },
         {
@@ -65,6 +68,25 @@
             "fieldname": "groq_model",
             "fieldtype": "Data",
             "label": "Groq Model"
+        },
+        {
+            "depends_on": "eval:doc.llm_provider === 'OpenRouter'",
+            "fieldname": "openrouter_api_key",
+            "fieldtype": "Password",
+            "label": "OpenRouter API Key"
+        },
+        {
+            "default": "deepseek/deepseek-chat-v3-0324:free",
+            "depends_on": "eval:doc.llm_provider === 'OpenRouter'",
+            "description": "OpenRouter model (e.g., deepseek/deepseek-chat-v3-0324:free, meta-llama/llama-3.3-70b-instruct:free)",
+            "fieldname": "openrouter_model",
+            "fieldtype": "Data",
+            "label": "OpenRouter Model"
+        },
+        {
+            "fieldname": "test_connection",
+            "fieldtype": "Button",
+            "label": "Test API Connection"
         },
         {
             "fieldname": "storage_strategy_section",

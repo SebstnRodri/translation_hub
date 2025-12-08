@@ -100,8 +100,18 @@ def execute_translation_job(translation_job_name):
 		# Combine all guides
 		standardization_guide = "\n\n".join(guides)
 
-		# Detect Test Mode
-		is_test_mode = api_key and api_key.startswith("test-")
+		# Determine which API key to use based on LLM provider
+		llm_provider = getattr(settings, "llm_provider", "Gemini")
+
+		if llm_provider == "Groq":
+			active_api_key = settings.get_password("groq_api_key")
+		elif llm_provider == "OpenRouter":
+			active_api_key = settings.get_password("openrouter_api_key")
+		else:
+			active_api_key = api_key  # Gemini API key
+
+		# Detect Test Mode based on the active provider's API key
+		is_test_mode = active_api_key and active_api_key.startswith("test-")
 		if is_test_mode:
 			logger.info("TEST MODE DETECTED: Disabling database storage and redirecting PO output.")
 			# Isolate test output
@@ -111,7 +121,7 @@ def execute_translation_job(translation_job_name):
 			settings.export_po_on_complete = False
 
 		config = TranslationConfig(
-			api_key=api_key,
+			api_key=active_api_key,
 			standardization_guide=standardization_guide,
 			logger=logger,
 			po_file=po_path,
@@ -126,31 +136,37 @@ def execute_translation_job(translation_job_name):
 		file_handler.merge()  # Ensure PO is up-to-date with POT
 
 		# Use MockTranslationService for testing if API key is a placeholder
-		if api_key and api_key.startswith("test-"):
+		if is_test_mode:
 			from translation_hub.core.translation_service import MockTranslationService
 
 			logger.info("Using MockTranslationService (test mode)")
 			service = MockTranslationService(config=config, logger=logger)
 		else:
 			# Select service based on LLM provider setting
-			llm_provider = getattr(settings, "llm_provider", "Gemini")
-
 			if llm_provider == "Groq":
 				from translation_hub.core.translation_service import GroqService
 
-				# Get Groq-specific settings
-				groq_api_key = settings.get_password("groq_api_key")
-				if not groq_api_key:
+				if not active_api_key:
 					raise ValueError("Groq API key is not configured in Translator Settings.")
 
 				groq_model = getattr(settings, "groq_model", None) or "llama-3.3-70b-versatile"
-
-				# Update config with Groq settings
-				config.api_key = groq_api_key
 				config.model_name = groq_model
 
 				logger.info(f"Using GroqService (model: {groq_model})")
 				service = GroqService(config=config, app_name=job.source_app, logger=logger)
+			elif llm_provider == "OpenRouter":
+				from translation_hub.core.translation_service import OpenRouterService
+
+				if not active_api_key:
+					raise ValueError("OpenRouter API key is not configured in Translator Settings.")
+
+				openrouter_model = (
+					getattr(settings, "openrouter_model", None) or "deepseek/deepseek-chat-v3-0324:free"
+				)
+				config.model_name = openrouter_model
+
+				logger.info(f"Using OpenRouterService (model: {openrouter_model})")
+				service = OpenRouterService(config=config, app_name=job.source_app, logger=logger)
 			else:
 				# Default to Gemini
 				logger.info("Using GeminiService (production mode)")

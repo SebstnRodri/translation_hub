@@ -634,3 +634,230 @@ class GroqService(TranslationService):
 		leading_spaces = len(original) - len(original.lstrip(" "))
 		trailing_spaces = len(original) - len(original.rstrip(" "))
 		return (" " * leading_spaces) + translated.strip() + (" " * trailing_spaces)
+
+
+class OpenRouterService(TranslationService):
+	"""
+	A concrete implementation of TranslationService that uses the OpenRouter API.
+	OpenRouter provides access to 500+ models via OpenAI-compatible endpoints.
+	"""
+
+	def __init__(
+		self, config: TranslationConfig, app_name: str | None = None, logger: logging.Logger | None = None
+	):
+		self.config = config
+		self.app_name = app_name
+		self.logger = logger or logging.getLogger(__name__)
+		self.client = self._configure_client()
+		self.context = self._fetch_context()
+
+	def _configure_client(self):
+		"""
+		Configures and returns an OpenAI client pointing to OpenRouter's API.
+		"""
+		try:
+			from openai import OpenAI
+		except ImportError:
+			raise ImportError(
+				"The 'openai' package is required for OpenRouter support. "
+				"Install it with: pip install openai"
+			)
+
+		if not self.config.api_key:
+			raise ValueError("OpenRouter API key not found in settings.")
+
+		return OpenAI(api_key=self.config.api_key, base_url="https://openrouter.ai/api/v1")
+
+	def _fetch_context(self) -> dict:
+		"""
+		Fetches context for the app being translated.
+		"""
+		context = {}
+		if not self.app_name:
+			return context
+		try:
+			import frappe
+
+			hooks = frappe.get_hooks("translation_context", app_name=self.app_name)
+			if hooks:
+				for hook in hooks:
+					context.update(frappe.get_attr(hook)())
+		except Exception as e:
+			self.logger.warning(f"Failed to fetch context from hook: {e}")
+		return context
+
+	def translate(self, entries: list[dict[str, Any]]) -> list[dict[str, str]]:
+		"""
+		Translates a list of entries using the OpenRouter API.
+		"""
+		if not entries:
+			return []
+
+		# Try batch translation first
+		for attempt in range(1, self.config.max_batch_retries + 1):
+			try:
+				self.logger.info(
+					f"[API Call] Translating batch of {len(entries)} entries via OpenRouter (Attempt {attempt}/{self.config.max_batch_retries})"
+				)
+				prompt = self._build_batch_prompt(entries)
+
+				response = self.client.chat.completions.create(
+					model=self.config.model_name,
+					messages=[
+						{
+							"role": "system",
+							"content": "You are a professional translator. Always respond with valid JSON only.",
+						},
+						{"role": "user", "content": prompt},
+					],
+					temperature=0.3,
+				)
+
+				raw_content = response.choices[0].message.content
+				cleaned_content = self._clean_json_response(raw_content)
+				translations_list = json.loads(cleaned_content)
+
+				if len(translations_list) != len(entries):
+					raise ValueError(f"Expected {len(entries)} translations, got {len(translations_list)}")
+
+				results = []
+				for entry, translation in zip(entries, translations_list, strict=False):
+					original_msgid = entry["msgid"]
+					translated_text = translation.get("translated", "")
+					final_text = self._preserve_whitespace(original_msgid, translated_text)
+					results.append({"msgid": original_msgid, "msgstr": final_text})
+
+				return results
+
+			except Exception as e:
+				self.logger.warning(
+					f"[Warning] Batch attempt {attempt}/{self.config.max_batch_retries} failed: {e}"
+				)
+				if attempt < self.config.max_batch_retries:
+					time.sleep(self.config.retry_wait_seconds)
+
+		# Fallback to single-entry translation
+		self.logger.warning("[Warning] Batch translation failed. Falling back to single-entry mode.")
+		return [self._translate_single(entry) for entry in entries]
+
+	def _translate_single(self, entry: dict) -> dict[str, str]:
+		"""
+		Translates a single entry, with retries.
+		"""
+		original_msgid = entry["msgid"]
+
+		for attempt in range(1, self.config.max_single_retries + 1):
+			try:
+				self.logger.info(
+					f"[API Call] Translating single entry via OpenRouter: '{original_msgid[:50]}...' (Attempt {attempt}/{self.config.max_single_retries})"
+				)
+				prompt = self._build_single_prompt(entry)
+
+				response = self.client.chat.completions.create(
+					model=self.config.model_name,
+					messages=[
+						{
+							"role": "system",
+							"content": "You are a professional translator. Always respond with valid JSON only.",
+						},
+						{"role": "user", "content": prompt},
+					],
+					temperature=0.3,
+				)
+
+				raw_content = response.choices[0].message.content
+				cleaned_content = self._clean_json_response(raw_content)
+				translation_obj = json.loads(cleaned_content)
+				translated_text = translation_obj.get("translated", "")
+				final_text = self._preserve_whitespace(original_msgid, translated_text)
+				return {"msgid": original_msgid, "msgstr": final_text}
+
+			except Exception as e:
+				self.logger.warning(
+					f"[Warning] Single-entry attempt {attempt}/{self.config.max_single_retries} failed for '{original_msgid[:50]}...': {e}"
+				)
+				if attempt < self.config.max_single_retries:
+					time.sleep(self.config.retry_wait_seconds)
+
+		self.logger.error(
+			f"[Error] Failed to translate '{original_msgid[:50]}...' after {self.config.max_single_retries} attempts."
+		)
+		return {"msgid": original_msgid, "msgstr": ""}
+
+	def _build_batch_prompt(self, entries: list[dict]) -> str:
+		"""Builds a prompt for batch translation."""
+		guide = self.config.standardization_guide or ""
+		lang = self.config.language_code or "the target language"
+
+		items = [{"msgid": e["msgid"], "context": e.get("context", {})} for e in entries]
+
+		prompt = f"""You are a translator specialized in ERP systems, translating to the language '{lang}'.
+Translate the following texts, considering the context where they appear in the code (occurrences), developer comments (comment), and other flags (flags).
+
+{guide}
+
+Return YOUR RESPONSE AS A SINGLE JSON ARRAY of objects, each with the key 'translated'.
+The output array must have exactly the same number of items as the input.
+Keep placeholders like `{{0}}` and HTML tags like `<strong>` intact.
+
+Items to translate:
+{json.dumps(items, indent=2, ensure_ascii=False)}
+
+Output JSON Array (only the array of 'translated' objects):
+"""
+		return prompt
+
+	def _build_single_prompt(self, entry: dict) -> str:
+		"""Builds a prompt for single-entry translation."""
+		guide = self.config.standardization_guide or ""
+		lang = self.config.language_code or "the target language"
+		msgid = entry["msgid"]
+		context = entry.get("context", {})
+
+		prompt = f"""You are a translator specialized in ERP systems, translating to the language '{lang}'.
+Translate the following text, considering its context.
+
+{guide}
+
+Text to translate: "{msgid}"
+Context: {json.dumps(context, ensure_ascii=False)}
+
+Return ONLY a JSON object with the key 'translated':
+{{"translated": "your translation here"}}
+"""
+		return prompt
+
+	@staticmethod
+	def _clean_json_response(response_text: str) -> str:
+		"""Cleans markdown or extra text from the LLM response."""
+		cleaned = response_text.strip()
+
+		if cleaned.startswith("```json"):
+			cleaned = cleaned[7:]
+		if cleaned.startswith("```"):
+			cleaned = cleaned[3:]
+		if cleaned.endswith("```"):
+			cleaned = cleaned[:-3]
+
+		cleaned = cleaned.strip()
+
+		json_start = cleaned.find("[")
+		if json_start == -1:
+			json_start = cleaned.find("{")
+
+		json_end = cleaned.rfind("]")
+		if json_end == -1:
+			json_end = cleaned.rfind("}")
+
+		if json_start != -1 and json_end != -1:
+			return cleaned[json_start : json_end + 1]
+
+		return cleaned
+
+	@staticmethod
+	def _preserve_whitespace(original: str, translated: str) -> str:
+		if not original:
+			return translated
+		leading_spaces = len(original) - len(original.lstrip(" "))
+		trailing_spaces = len(original) - len(original.rstrip(" "))
+		return (" " * leading_spaces) + translated.strip() + (" " * trailing_spaces)
