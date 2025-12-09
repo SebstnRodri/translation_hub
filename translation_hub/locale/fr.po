@@ -11,10 +11,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: DocType: Translator Settings:0
-msgid "API Key"
-msgstr ""
-
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "About"
@@ -130,10 +126,6 @@ msgstr ""
 
 #: DocType: App Glossary:0
 msgid "Glossary Items"
-msgstr ""
-
-#: DocType: Translator Settings:0
-msgid "Google Gemini"
 msgstr ""
 
 #: DocType: Translation Job:0
@@ -386,3 +378,194 @@ msgstr ""
 #: DocType: App:0
 msgid "e.g. Healthcare, Logistics, Education"
 msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:21
+msgid "Are you sure you want to backup translations to the remote repository?"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:43
+msgid ""
+"Are you sure you want to restore translations from the remote repository? "
+"This will overwrite local files."
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Auth Token (PAT)"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:26
+msgid "Backing up translations..."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:36
+msgid "Backup / Restore"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Backup Branch"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Backup Configuration"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Backup Frequency"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Backup Repository URL"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:18
+msgid "Backup Translations"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:29
+msgid "Backup initiated successfully."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:145
+msgid "Connection Test"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:82
+msgid "Fetching available models..."
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Gemini"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Gemini API Key"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Groq"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Groq API Key"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Groq Model"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Groq model to use (e.g., llama-3.3-70b-versatile, mixtral-8x7b-32768)"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid ""
+"HTTPS URL of the Git repository (e.g., https://github.com/user/repo.git)"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:12
+msgid "LLM"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "LLM Configuration"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "LLM Provider"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:125
+msgid "No Models Found"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:127
+msgid ""
+"No models were returned. Please check that your API key is configured "
+"correctly."
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "None"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "OpenRouter"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "OpenRouter API Key"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "OpenRouter Model"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid ""
+"OpenRouter model (e.g., deepseek/deepseek-chat-v3-0324:free, meta-"
+"llama/llama-3.3-70b-instruct:free)"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Personal Access Token for authentication"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid ""
+"Pull existing translations from the backup repository before starting a new "
+"translation job."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:8
+msgid "Refresh Models"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:40
+msgid "Restore Translations"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:53
+msgid "Restore initiated successfully."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:50
+msgid "Restoring translations..."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:121
+msgid "Select"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:93
+msgid "Select Model"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Select the LLM provider for translations"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:120
+msgid "Select {0} Model"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:106
+msgid "Selected model: {0}. Note: Gemini model is set in code."
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Sync Remote Translations Before Translating"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Test API Connection"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:140
+msgid "Testing API connection..."
+msgstr ""
+
+#~ msgid "API Key"
+#~ msgstr ""
+
+#~ msgid "Google Gemini"
+#~ msgstr ""
