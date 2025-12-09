@@ -122,7 +122,8 @@ class DatabaseTranslationHandler:
 	def export_to_po(self, po_path: str):
 		"""
 		Export database translations to .po file.
-		Optional - only needed for external tools or version control.
+		IMPORTANT: Only updates entries that already exist in the PO file.
+		This prevents translations from other apps from leaking into this app's PO file.
 
 		Args:
 			po_path: Path to save the .po file
@@ -131,42 +132,28 @@ class DatabaseTranslationHandler:
 
 		import polib
 
-		if os.path.exists(po_path):
-			self.logger.info(f"Loading existing PO file for export: {po_path}")
-			po = polib.pofile(po_path, encoding="utf-8")
-		else:
-			self.logger.info(f"Creating new PO file for export: {po_path}")
-			po = polib.POFile()
-			po.metadata = {
-				"Project-Id-Version": "1.0",
-				"Language": self.language,
-				"MIME-Version": "1.0",
-				"Content-Type": "text/plain; charset=utf-8",
-			}
+		if not os.path.exists(po_path):
+			self.logger.warning(f"PO file does not exist: {po_path}. Cannot export without existing PO file.")
+			return
 
+		self.logger.info(f"Loading existing PO file for export: {po_path}")
+		po = polib.pofile(po_path, encoding="utf-8")
+
+		# Get all translations from database for this language
 		translations = self.get_all_translations()
+		translation_map = {t["source_text"]: t["translated_text"] for t in translations}
+
 		updated_count = 0
 
-		for t in translations:
-			msgid = t["source_text"]
-			msgstr = t["translated_text"]
-			context = t.get("context")
-
-			entry = po.find(msgid, msgctxt=context)
-			if entry:
-				if entry.msgstr != msgstr:
-					entry.msgstr = msgstr
+		# Only iterate over existing entries in the PO file - don't add new ones
+		for entry in po:
+			if entry.msgid in translation_map:
+				db_translation = translation_map[entry.msgid]
+				if entry.msgstr != db_translation and db_translation:
+					entry.msgstr = db_translation
 					if "fuzzy" in entry.flags:
 						entry.flags.remove("fuzzy")
 					updated_count += 1
-			else:
-				# Only add new entry if it doesn't exist (less common for export, usually we update)
-				# But if we are creating a new file, we add everything.
-				entry = polib.POEntry(msgid=msgid, msgstr=msgstr)
-				if context:
-					entry.msgctxt = context
-				po.append(entry)
-				updated_count += 1
 
 		po.save(po_path)
-		self.logger.info(f"Exported/Updated {updated_count} translations to {po_path}")
+		self.logger.info(f"Updated {updated_count} translations in {po_path} (only existing entries)")
