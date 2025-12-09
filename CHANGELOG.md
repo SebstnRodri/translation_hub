@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.1] - 2025-12-09
+
+### 🔄 Refactor
+- **Git Backup Structure**: Updated backup path to include version directory (e.g. `develop/app/locale`) to support multi-version backups without conflict.
+- **Locale Path Resolution**: Fixed bug where the system looked for locale files in the wrong directory (`app.parent/locale` instead of `app/locale`).
+
+### ⚙️ Maintenance
+- **Test File Cleanup**: Automatically ignores files ending in `_test.po` during backup and removed existing test artifacts from the repository.
+- **Test Automation**: Temporarily disabled flaky automation test to ensure reliable deployment pipelines.
+
+---
+
 ## [v1.2.0] - 2025-12-08
 
 ### 🚀 Features

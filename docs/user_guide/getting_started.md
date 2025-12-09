@@ -91,7 +91,7 @@ To persist translations across instances or create backups, configure Git-based 
 
 Click the **Backup Translations** button in Translator Settings. This will:
 - Collect all `.po` files from monitored apps
-- Organize them by app (`app_name/locale/*.po`)
+- Organize them by version and app (`version/app_name/locale/*.po`)
 - Commit and push to your repository
 
 ### Manual Restore

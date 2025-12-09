@@ -327,7 +327,7 @@ The `GitSyncService` class provides automated backup and restore functionality:
 **Features:**
 - **Repository Management**: Clones and syncs with remote Git repositories
 - **File Collection**: Gathers `.po` files from all monitored apps
-- **Directory Structure**: Organizes backups by app (`app_name/locale/*.po`)
+- **Directory Structure**: Organizes backups by version and app (`version/app_name/locale/*.po`)
 - **Authentication**: Supports Personal Access Tokens (PAT) for private repositories
 - **Automatic Commits**: Creates timestamped commits with `[skip ci]` tag
 
@@ -342,17 +342,18 @@ The `GitSyncService` class provides automated backup and restore functionality:
 **Repository Structure:**
 ```
 translation-backup-repo/
-├── frappe/
-│   └── locale/
-│       ├── pt_BR.po
-│       ├── es.po
-│       └── fr.po
-├── erpnext/
-│   └── locale/
-│       └── pt_BR.po
-└── custom_app/
-    └── locale/
-        └── pt_BR.po
+├── develop/ (or version-15/)
+│   ├── frappe/
+│   │   └── locale/
+│   │       ├── pt_BR.po
+│   │       ├── es.po
+│   │       └── fr.po
+│   ├── erpnext/
+│   │   └── locale/
+│   │       └── pt_BR.po
+│   └── custom_app/
+│       └── locale/
+│           └── pt_BR.po
 ```
 
 **Usage:**
