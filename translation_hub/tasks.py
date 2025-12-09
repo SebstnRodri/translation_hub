@@ -248,8 +248,8 @@ def run_automated_translations():
 
 def ensure_pot_file(app_name):
 	"""
-	Ensures that the main.pot file exists for the given app.
-	If not, it generates it by extracting messages from the app.
+	Generates or regenerates the main.pot file for the given app.
+	Always extracts fresh messages to ensure new strings are included.
 	"""
 	import polib
 	from frappe.translate import get_messages_for_app
@@ -258,8 +258,7 @@ def ensure_pot_file(app_name):
 	locale_dir = os.path.join(app_path, "locale")
 	pot_path = os.path.join(locale_dir, "main.pot")
 
-	if os.path.exists(pot_path):
-		return
+	# Always regenerate to capture new strings (important for development)
 
 	if not os.path.exists(locale_dir):
 		os.makedirs(locale_dir)
