@@ -3,6 +3,15 @@
 
 frappe.ui.form.on("Translator Settings", {
 	refresh(frm) {
+		// Add Refresh Models button
+		frm.add_custom_button(
+			__("Refresh Models"),
+			function () {
+				frm.trigger("fetch_models");
+			},
+			__("LLM")
+		);
+
 		if (!frm.doc.backup_repo_url) return;
 
 		frm.add_custom_button(
@@ -50,6 +59,78 @@ frappe.ui.form.on("Translator Settings", {
 			},
 			__("Backup / Restore")
 		);
+	},
+
+	llm_provider(frm) {
+		// Clear current model selection when provider changes
+		if (frm.doc.llm_provider === "Gemini") {
+			// Keep existing value or clear
+		} else if (frm.doc.llm_provider === "Groq") {
+			frm.set_value("groq_model", "");
+		} else if (frm.doc.llm_provider === "OpenRouter") {
+			frm.set_value("openrouter_model", "");
+		}
+	},
+
+	fetch_models(frm) {
+		const provider = frm.doc.llm_provider || "Gemini";
+
+		frappe.call({
+			method: "translation_hub.translation_hub.doctype.translator_settings.translator_settings.fetch_available_models",
+			args: { provider: provider },
+			freeze: true,
+			freeze_message: __("Fetching available models..."),
+			callback: function (r) {
+				if (r.message && r.message.length > 0) {
+					// Show model selection dialog
+					let models = r.message;
+					let options = models.map((m) => m.label);
+
+					frappe.prompt(
+						[
+							{
+								fieldname: "model",
+								label: __("Select Model"),
+								fieldtype: "Autocomplete",
+								options: options,
+								reqd: 1,
+							},
+						],
+						function (values) {
+							// Find the selected model's value
+							let selected = models.find((m) => m.label === values.model);
+							if (selected) {
+								if (provider === "Gemini") {
+									frm.set_value("api_key", frm.doc.api_key); // Keep as is
+									frappe.msgprint(
+										__(
+											"Selected model: {0}. Note: Gemini model is set in code.",
+											[selected.value]
+										)
+									);
+								} else if (provider === "Groq") {
+									frm.set_value("groq_model", selected.value);
+									frm.save();
+								} else if (provider === "OpenRouter") {
+									frm.set_value("openrouter_model", selected.value);
+									frm.save();
+								}
+							}
+						},
+						__("Select {0} Model", [provider]),
+						__("Select")
+					);
+				} else {
+					frappe.msgprint({
+						title: __("No Models Found"),
+						indicator: "orange",
+						message: __(
+							"No models were returned. Please check that your API key is configured correctly."
+						),
+					});
+				}
+			},
+		});
 	},
 
 	test_connection(frm) {

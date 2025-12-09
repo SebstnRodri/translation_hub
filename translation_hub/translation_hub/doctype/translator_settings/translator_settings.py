@@ -128,3 +128,88 @@ def test_api_connection():
 
 	except Exception as e:
 		return {"success": False, "message": f"❌ Connection failed: {str(e)[:200]}"}
+
+
+@frappe.whitelist()
+def fetch_available_models(provider=None):
+	"""
+	Fetches available models from the selected LLM provider's API.
+	Returns a list of model options for the dropdown.
+	"""
+	settings = frappe.get_single("Translator Settings")
+	llm_provider = provider or settings.llm_provider or "Gemini"
+
+	try:
+		if llm_provider == "Gemini":
+			api_key = settings.get_password("api_key")
+			if not api_key:
+				return []
+
+			import google.generativeai as genai
+
+			genai.configure(api_key=api_key)
+			models = []
+			for model in genai.list_models():
+				# Filter to only include models that support generateContent
+				if "generateContent" in model.supported_generation_methods:
+					models.append(
+						{
+							"value": model.name.replace("models/", ""),
+							"label": f"{model.display_name} ({model.name.replace('models/', '')})",
+						}
+					)
+			return sorted(models, key=lambda x: x["label"])
+
+		elif llm_provider == "Groq":
+			api_key = settings.get_password("groq_api_key")
+			if not api_key:
+				return []
+
+			from openai import OpenAI
+
+			client = OpenAI(api_key=api_key, base_url="https://api.groq.com/openai/v1")
+			response = client.models.list()
+
+			models = []
+			for model in response.data:
+				models.append(
+					{
+						"value": model.id,
+						"label": model.id,
+					}
+				)
+			return sorted(models, key=lambda x: x["label"])
+
+		elif llm_provider == "OpenRouter":
+			api_key = settings.get_password("openrouter_api_key")
+			if not api_key:
+				return []
+
+			import requests
+
+			headers = {"Authorization": f"Bearer {api_key}"}
+			response = requests.get("https://openrouter.ai/api/v1/models", headers=headers, timeout=30)
+			response.raise_for_status()
+			data = response.json()
+
+			models = []
+			for model in data.get("data", []):
+				model_id = model.get("id", "")
+				# Highlight free models
+				is_free = ":free" in model_id
+				label = f"🆓 {model_id}" if is_free else model_id
+				models.append(
+					{
+						"value": model_id,
+						"label": label,
+					}
+				)
+			# Sort with free models first
+			return sorted(models, key=lambda x: (0 if "🆓" in x["label"] else 1, x["label"]))
+
+		else:
+			return []
+
+	except Exception as e:
+		frappe.log_error(f"Failed to fetch models for {llm_provider}: {e}")
+		return []
