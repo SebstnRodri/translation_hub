@@ -98,6 +98,8 @@ class GitSyncService:
 
 				# Copy PO files
 				for po_file in locale_dir.glob("*.po"):
+					if po_file.name.endswith("_test.po"):
+						continue
 					shutil.copy2(po_file, repo_app_dir / po_file.name)
 
 			except Exception as e:
