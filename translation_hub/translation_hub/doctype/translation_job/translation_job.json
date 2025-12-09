@@ -1,132 +1,132 @@
 {
- "actions": [],
- "allow_rename": 1,
- "autoname": "field:title",
- "creation": "2025-11-17 10:10:00.000000",
- "doctype": "DocType",
- "engine": "InnoDB",
- "field_order": [
-  "title",
-  "status",
-  "source_app",
-  "target_language",
-  "progress_section",
-  "total_strings",
-  "translated_strings",
-  "progress_percentage",
-  "timing_section",
-  "start_time",
-  "end_time",
-  "log_section",
-  "log"
- ],
- "fields": [
-  {
-   "fieldname": "title",
-   "fieldtype": "Data",
-   "label": "Title",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "Pending\nQueued\nIn Progress\nCompleted\nFailed\nCancelled",
-   "default": "Pending",
-   "in_list_view": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "source_app",
-   "fieldtype": "Link",
-   "label": "Source App",
-   "options": "App",
-   "in_list_view": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "target_language",
-   "fieldtype": "Link",
-   "label": "Target Language",
-   "options": "Language",
-   "in_list_view": 1,
-   "reqd": 1
-  },
-  {
-   "fieldname": "progress_section",
-   "fieldtype": "Section Break",
-   "label": "Progress"
-  },
-  {
-   "fieldname": "total_strings",
-   "fieldtype": "Int",
-   "label": "Total Strings",
-   "read_only": 1
-  },
-  {
-   "fieldname": "translated_strings",
-   "fieldtype": "Int",
-   "label": "Translated Strings",
-   "read_only": 1
-  },
-  {
-   "fieldname": "progress_percentage",
-   "fieldtype": "Float",
-   "label": "Progress Percentage",
-   "read_only": 1
-  },
-  {
-   "fieldname": "timing_section",
-   "fieldtype": "Section Break",
-   "label": "Timing"
-  },
-  {
-   "fieldname": "start_time",
-   "fieldtype": "Datetime",
-   "label": "Start Time",
-   "read_only": 1
-  },
-  {
-   "fieldname": "end_time",
-   "fieldtype": "Datetime",
-   "label": "End Time",
-   "read_only": 1
-  },
-  {
-   "fieldname": "log_section",
-   "fieldtype": "Section Break",
-   "label": "Log"
-  },
-  {
-   "fieldname": "log",
-   "fieldtype": "Text Editor",
-   "label": "Log",
-   "read_only": 1
-  }
- ],
- "links": [],
- "modified": "2025-11-17 10:10:00.000000",
- "modified_by": "Administrator",
- "module": "Translation Hub",
- "name": "Translation Job",
- "naming_rule": "By fieldname",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  }
- ],
- "sort_field": "modified",
- "sort_order": "DESC",
- "track_changes": 1
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "field:title",
+    "creation": "2025-11-17 10:10:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "title",
+        "status",
+        "source_app",
+        "target_language",
+        "progress_section",
+        "total_strings",
+        "translated_strings",
+        "progress_percentage",
+        "timing_section",
+        "start_time",
+        "end_time",
+        "log_section",
+        "log"
+    ],
+    "fields": [
+        {
+            "fieldname": "title",
+            "fieldtype": "Data",
+            "label": "Title",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "label": "Status",
+            "options": "Pending\nQueued\nIn Progress\nCompleted\nFailed\nCancelled",
+            "default": "Pending",
+            "in_list_view": 1,
+            "reqd": 1
+        },
+        {
+            "fieldname": "source_app",
+            "fieldtype": "Link",
+            "label": "Source App",
+            "options": "App",
+            "in_list_view": 1,
+            "reqd": 1
+        },
+        {
+            "fieldname": "target_language",
+            "fieldtype": "Link",
+            "label": "Target Language",
+            "options": "Language",
+            "in_list_view": 1,
+            "reqd": 1
+        },
+        {
+            "fieldname": "progress_section",
+            "fieldtype": "Section Break",
+            "label": "Progress"
+        },
+        {
+            "fieldname": "total_strings",
+            "fieldtype": "Int",
+            "label": "Total Strings",
+            "read_only": 1
+        },
+        {
+            "fieldname": "translated_strings",
+            "fieldtype": "Int",
+            "label": "Translated Strings",
+            "read_only": 1
+        },
+        {
+            "fieldname": "progress_percentage",
+            "fieldtype": "Percent",
+            "label": "Progress Percentage",
+            "read_only": 1
+        },
+        {
+            "fieldname": "timing_section",
+            "fieldtype": "Section Break",
+            "label": "Timing"
+        },
+        {
+            "fieldname": "start_time",
+            "fieldtype": "Datetime",
+            "label": "Start Time",
+            "read_only": 1
+        },
+        {
+            "fieldname": "end_time",
+            "fieldtype": "Datetime",
+            "label": "End Time",
+            "read_only": 1
+        },
+        {
+            "fieldname": "log_section",
+            "fieldtype": "Section Break",
+            "label": "Log"
+        },
+        {
+            "fieldname": "log",
+            "fieldtype": "Text Editor",
+            "label": "Log",
+            "read_only": 1
+        }
+    ],
+    "links": [],
+    "modified": "2025-11-17 10:10:00.000000",
+    "modified_by": "Administrator",
+    "module": "Translation Hub",
+    "name": "Translation Job",
+    "naming_rule": "By fieldname",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "track_changes": 1
 }
