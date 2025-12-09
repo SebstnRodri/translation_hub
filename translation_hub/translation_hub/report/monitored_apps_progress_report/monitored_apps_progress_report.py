@@ -44,7 +44,9 @@ def get_data() -> list[dict]:
 		for lang_code in enabled_languages:
 			try:
 				app_path = get_app_path(monitored_app.source_app)
-				po_path = os.path.join(app_path, "locale", f"{lang_code}.po")
+				# Normalize language code: pt-BR -> pt_BR for file paths
+				file_lang_code = lang_code.replace("-", "_")
+				po_path = os.path.join(app_path, "locale", f"{file_lang_code}.po")
 				pot_path = os.path.join(app_path, "locale", "main.pot")
 
 				# Check if POT file exists
