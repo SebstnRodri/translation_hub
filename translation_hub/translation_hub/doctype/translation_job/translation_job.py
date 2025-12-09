@@ -92,6 +92,7 @@ def check_existing_translations(source_app, target_language):
 	Check for existing translations in PO file and database.
 	Returns counts and warnings for UI validation before save.
 	"""
+	frappe.only_for("System Manager")
 	import os
 
 	import polib

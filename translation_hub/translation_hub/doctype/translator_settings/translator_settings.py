@@ -64,6 +64,7 @@ def test_api_connection():
 	Tests the API connection for the selected LLM provider.
 	Returns a success message or error details.
 	"""
+	frappe.only_for("System Manager")
 	settings = frappe.get_single("Translator Settings")
 	llm_provider = settings.llm_provider or "Gemini"
 
@@ -126,8 +127,9 @@ def test_api_connection():
 		else:
 			return {"success": False, "message": f"Unknown LLM provider: {llm_provider}"}
 
-	except Exception as e:
-		return {"success": False, "message": f"❌ Connection failed: {str(e)[:200]}"}
+	except Exception:
+		frappe.log_error(f"Connection failed for {llm_provider}", "Translation Hub Connection Test")
+		return {"success": False, "message": "❌ Connection failed. Check Error Log for details."}
 
 
 @frappe.whitelist()
@@ -136,6 +138,7 @@ def fetch_available_models(provider=None):
 	Fetches available models from the selected LLM provider's API.
 	Returns a list of model options for the dropdown.
 	"""
+	frappe.only_for("System Manager")
 	settings = frappe.get_single("Translator Settings")
 	llm_provider = provider or settings.llm_provider or "Gemini"
 
@@ -210,6 +213,6 @@ def fetch_available_models(provider=None):
 		else:
 			return []
 
-	except Exception as e:
-		frappe.log_error(f"Failed to fetch models for {llm_provider}: {e}")
+	except Exception:
+		frappe.log_error(f"Failed to fetch models for {llm_provider}", "Translation Hub Model Fetch Error")
 		return []

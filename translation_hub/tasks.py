@@ -29,6 +29,7 @@ Follow the specific instructions provided in the App Guide and Language Guide be
 
 @frappe.whitelist()
 def execute_translation_job(translation_job_name):
+	frappe.only_for("System Manager")
 	job = frappe.get_doc("Translation Job", translation_job_name)
 	logger = DocTypeLogger(job)
 	try:
@@ -264,12 +265,24 @@ def ensure_pot_file(app_name):
 		os.makedirs(locale_dir)
 
 	messages = get_messages_for_app(app_name)
+	
+	existing_metadata = {}
+	if os.path.exists(pot_path):
+		try:
+			existing_pot = polib.pofile(pot_path)
+			existing_metadata = existing_pot.metadata
+		except Exception:
+			pass
+
 	pot = polib.POFile()
 	now_str = frappe.utils.now_datetime().strftime("%Y-%m-%d %H:%M")
+	
+	creation_date = existing_metadata.get("POT-Creation-Date", now_str)
+	
 	pot.metadata = {
 		"Project-Id-Version": "1.0",
 		"Report-Msgid-Bugs-To": "",
-		"POT-Creation-Date": now_str,
+		"POT-Creation-Date": creation_date,
 		"PO-Revision-Date": now_str,
 		"Last-Translator": "Translation Hub <ai@translationhub.com>",
 		"Language-Team": "",
@@ -311,6 +324,7 @@ def backup_translations():
 	"""
 	Backs up translations to the configured Git repository.
 	"""
+	frappe.only_for("System Manager")
 	from translation_hub.core.git_sync_service import GitSyncService
 
 	settings = frappe.get_single("Translator Settings")
@@ -326,6 +340,7 @@ def restore_translations():
 	"""
 	Restores translations from the configured Git repository.
 	"""
+	frappe.only_for("System Manager")
 	from translation_hub.core.git_sync_service import GitSyncService
 
 	settings = frappe.get_single("Translator Settings")
