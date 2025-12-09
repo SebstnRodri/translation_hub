@@ -11,10 +11,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: DocType: Translator Settings:0
-msgid "API Key"
-msgstr "[FR] API Key"
-
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "About"
@@ -137,10 +133,6 @@ msgstr "[FR] Frequency"
 #: DocType: App Glossary:0
 msgid "Glossary Items"
 msgstr "[FR] Glossary Items"
-
-#: DocType: Translator Settings:0
-msgid "Google Gemini"
-msgstr "[FR] Google Gemini"
 
 #: DocType: Translation Job:0
 msgid "In Progress"
@@ -398,3 +390,206 @@ msgstr "[FR] e.g. Formal, Friendly, Professional"
 #: DocType: App:0
 msgid "e.g. Healthcare, Logistics, Education"
 msgstr "[FR] e.g. Healthcare, Logistics, Education"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:21
+msgid "Are you sure you want to backup translations to the remote repository?"
+msgstr ""
+"[FR] Are you sure you want to backup translations to the remote repository?"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:43
+msgid ""
+"Are you sure you want to restore translations from the remote repository? "
+"This will overwrite local files."
+msgstr ""
+"[FR] Are you sure you want to restore translations from the remote "
+"repository? This will overwrite local files."
+
+#: DocType: Translator Settings:0
+msgid "Auth Token (PAT)"
+msgstr "[FR] Auth Token (PAT)"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:26
+msgid "Backing up translations..."
+msgstr "[FR] Backing up translations..."
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:36
+msgid "Backup / Restore"
+msgstr "[FR] Backup / Restore"
+
+#: DocType: Translator Settings:0
+msgid "Backup Branch"
+msgstr "[FR] Backup Branch"
+
+#: DocType: Translator Settings:0
+msgid "Backup Configuration"
+msgstr "[FR] Backup Configuration"
+
+#: DocType: Translator Settings:0
+msgid "Backup Frequency"
+msgstr "[FR] Backup Frequency"
+
+#: DocType: Translator Settings:0
+msgid "Backup Repository URL"
+msgstr "[FR] Backup Repository URL"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:18
+msgid "Backup Translations"
+msgstr "[FR] Backup Translations"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:29
+msgid "Backup initiated successfully."
+msgstr "[FR] Backup initiated successfully."
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:145
+msgid "Connection Test"
+msgstr "[FR] Connection Test"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:82
+msgid "Fetching available models..."
+msgstr "[FR] Fetching available models..."
+
+#: DocType: Translator Settings:0
+msgid "Gemini"
+msgstr "[FR] Gemini"
+
+#: DocType: Translator Settings:0
+msgid "Gemini API Key"
+msgstr "[FR] Gemini API Key"
+
+#: DocType: Translator Settings:0
+msgid "Groq"
+msgstr "[FR] Groq"
+
+#: DocType: Translator Settings:0
+msgid "Groq API Key"
+msgstr "[FR] Groq API Key"
+
+#: DocType: Translator Settings:0
+msgid "Groq Model"
+msgstr "[FR] Groq Model"
+
+#: DocType: Translator Settings:0
+msgid "Groq model to use (e.g., llama-3.3-70b-versatile, mixtral-8x7b-32768)"
+msgstr ""
+"[FR] Groq model to use (e.g., llama-3.3-70b-versatile, mixtral-8x7b-32768)"
+
+#: DocType: Translator Settings:0
+msgid ""
+"HTTPS URL of the Git repository (e.g., https://github.com/user/repo.git)"
+msgstr ""
+"[FR] HTTPS URL of the Git repository (e.g., "
+"https://github.com/user/repo.git)"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:12
+msgid "LLM"
+msgstr "[FR] LLM"
+
+#: DocType: Translator Settings:0
+msgid "LLM Configuration"
+msgstr "[FR] LLM Configuration"
+
+#: DocType: Translator Settings:0
+msgid "LLM Provider"
+msgstr "[FR] LLM Provider"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:125
+msgid "No Models Found"
+msgstr "[FR] No Models Found"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:127
+msgid ""
+"No models were returned. Please check that your API key is configured "
+"correctly."
+msgstr ""
+"[FR] No models were returned. Please check that your API key is configured "
+"correctly."
+
+#: DocType: Translator Settings:0
+msgid "None"
+msgstr "[FR] None"
+
+#: DocType: Translator Settings:0
+msgid "OpenRouter"
+msgstr "[FR] OpenRouter"
+
+#: DocType: Translator Settings:0
+msgid "OpenRouter API Key"
+msgstr "[FR] OpenRouter API Key"
+
+#: DocType: Translator Settings:0
+msgid "OpenRouter Model"
+msgstr "[FR] OpenRouter Model"
+
+#: DocType: Translator Settings:0
+msgid ""
+"OpenRouter model (e.g., deepseek/deepseek-chat-v3-0324:free, meta-"
+"llama/llama-3.3-70b-instruct:free)"
+msgstr ""
+"[FR] OpenRouter model (e.g., deepseek/deepseek-chat-v3-0324:free, meta-"
+"llama/llama-3.3-70b-instruct:free)"
+
+#: DocType: Translator Settings:0
+msgid "Personal Access Token for authentication"
+msgstr "[FR] Personal Access Token for authentication"
+
+#: DocType: Translator Settings:0
+msgid ""
+"Pull existing translations from the backup repository before starting a new "
+"translation job."
+msgstr ""
+"[FR] Pull existing translations from the backup repository before starting a"
+" new translation job."
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:8
+msgid "Refresh Models"
+msgstr "[FR] Refresh Models"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:40
+msgid "Restore Translations"
+msgstr "[FR] Restore Translations"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:53
+msgid "Restore initiated successfully."
+msgstr "[FR] Restore initiated successfully."
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:50
+msgid "Restoring translations..."
+msgstr "[FR] Restoring translations..."
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:121
+msgid "Select"
+msgstr "[FR] Select"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:93
+msgid "Select Model"
+msgstr "[FR] Select Model"
+
+#: DocType: Translator Settings:0
+msgid "Select the LLM provider for translations"
+msgstr "[FR] Select the LLM provider for translations"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:120
+msgid "Select {0} Model"
+msgstr "[FR] Select {0} Model"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:106
+msgid "Selected model: {0}. Note: Gemini model is set in code."
+msgstr "[FR] Selected model: {0}. Note: Gemini model is set in code."
+
+#: DocType: Translator Settings:0
+msgid "Sync Remote Translations Before Translating"
+msgstr "[FR] Sync Remote Translations Before Translating"
+
+#: DocType: Translator Settings:0
+msgid "Test API Connection"
+msgstr "[FR] Test API Connection"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:140
+msgid "Testing API connection..."
+msgstr "[FR] Testing API connection..."
+
+#~ msgid "API Key"
+#~ msgstr "[FR] API Key"
+
+#~ msgid "Google Gemini"
+#~ msgstr "[FR] Google Gemini"
