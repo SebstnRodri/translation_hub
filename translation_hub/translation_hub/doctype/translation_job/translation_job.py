@@ -84,3 +84,72 @@ class TranslationJob(Document):
 		self.save(ignore_permissions=True)
 		frappe.db.commit()
 		return self.status
+
+
+@frappe.whitelist()
+def check_existing_translations(source_app, target_language):
+	"""
+	Check for existing translations in PO file and database.
+	Returns counts and warnings for UI validation before save.
+	"""
+	import os
+
+	import polib
+	from frappe import get_app_path
+
+	result = {
+		"po_file_count": 0,
+		"database_count": 0,
+		"total_in_pot": 0,
+		"has_existing": False,
+		"message": "",
+	}
+
+	try:
+		app_path = get_app_path(source_app)
+		locale_dir = os.path.join(app_path, "locale")
+		
+		# Normalize language code for file path (pt-BR -> pt_BR)
+		file_lang_code = target_language.replace("-", "_")
+		po_path = os.path.join(locale_dir, f"{file_lang_code}.po")
+		pot_path = os.path.join(locale_dir, "main.pot")
+
+		# Count entries in POT file
+		if os.path.exists(pot_path):
+			pot = polib.pofile(pot_path)
+			result["total_in_pot"] = len([e for e in pot if not e.obsolete])
+
+		# Count translated entries in PO file
+		if os.path.exists(po_path):
+			po = polib.pofile(po_path)
+			translated = [e for e in po if e.translated() and not e.obsolete]
+			result["po_file_count"] = len(translated)
+
+		# Count translations in database
+		# First try exact match, then try with underscore
+		db_count = frappe.db.count("Translation", {"language": target_language})
+		if db_count == 0:
+			db_count = frappe.db.count("Translation", {"language": file_lang_code})
+		result["database_count"] = db_count
+
+		# Determine if there are existing translations
+		total_existing = result["po_file_count"] + result["database_count"]
+		result["has_existing"] = total_existing > 0
+
+		if result["has_existing"]:
+			parts = []
+			if result["po_file_count"] > 0:
+				parts.append(f"{result['po_file_count']} in .po file")
+			if result["database_count"] > 0:
+				parts.append(f"{result['database_count']} in database")
+			
+			result["message"] = (
+				f"⚠️ Translations already exist for {source_app} ({target_language}):\n"
+				f"{', '.join(parts)}.\n\n"
+				f"Continue? Only untranslated strings will be processed."
+			)
+
+	except Exception as e:
+		result["message"] = f"Error checking translations: {e}"
+
+	return result
