@@ -5,27 +5,30 @@ All notable changes to this project will be documented in this file.
 ## [v1.2.0] - 2025-12-08
 
 ### 🚀 Features
-- **Multiple LLM Providers**: Added support for **Groq** and **OpenRouter** as alternatives to Google Gemini.
-    - **GroqService**: Translation service using Groq's fast inference API.
+- **Multiple LLM Providers**: Support for **Gemini**, **Groq**, and **OpenRouter**.
     - **OpenRouterService**: Access to 500+ models via OpenRouter API.
-    - **UI Configuration**: Select LLM provider (Gemini/Groq/OpenRouter) in Translator Settings.
-    - **Groq Models**: Default `llama-3.3-70b-versatile`, supports Mixtral and others.
-    - **OpenRouter Models**: Many free and paid models available.
-- **Test API Connection Button**: Verify LLM provider setup directly from Translator Settings.
-- **OpenAI SDK Integration**: Added `openai>=1.0.0` dependency for Groq/OpenRouter compatibility.
+    - **UI Configuration**: Select LLM provider in Translator Settings.
+- **Dynamic Model Selection**: Fetch available models from provider APIs.
+    - "Refresh Models" button to populate model dropdown dynamically.
+    - Free OpenRouter models highlighted with 🆓 emoji.
+- **Test API Connection Button**: Verify provider setup directly from settings.
 
 ### ⚡ Improvements
-- **Reduced Batch Size**: Default batch size reduced from 100 to 15 to avoid rate limits on free tier APIs.
-- **Skip Failed Translations**: Failed translations are now skipped (no `[TRANSLATION_FAILED]` marker written). Entries can be retried on next run.
-- **Test Mode Detection Fix**: Now correctly checks the active provider's API key for test mode detection.
+- **Reduced Batch Size**: Default 100 → 15 to avoid rate limits.
+- **Skip Failed Translations**: No more `[TRANSLATION_FAILED]` markers; entries silently skipped.
+- **Always Regenerate POT**: Captures new strings during development.
+
+### 🐛 Bug Fixes
+- **Export App Leakage**: `export_to_po` now only updates existing entries (prevents cross-app contamination).
+- **Language Code Paths**: Normalizes `pt-BR` → `pt_BR` for file paths in reports.
+- **Progress Percentage Display**: Changed to Percent field type (shows "68.18%" not "68.182").
 
 ### 🧪 Testing
-- **GroqService Tests**: 5 unit tests covering initialization, batch translation, whitespace preservation, JSON cleanup, and fallback behavior.
+- GroqService tests covering initialization, batch translation, and fallback.
 
 ### 📚 Documentation
-- Updated `architecture.md` with GroqService and OpenRouterService class diagrams.
-- Updated `getting_started.md` with LLM provider configuration instructions.
-- Updated README.md with multiple LLM providers feature.
+- Updated `architecture.md` with GroqService and OpenRouterService.
+- README.md now bilingual (English/Portuguese) with language toggle.
 
 ---
 
