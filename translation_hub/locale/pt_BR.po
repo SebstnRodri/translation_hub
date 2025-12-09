@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-09 12:33\n"
-"PO-Revision-Date: 2025-12-09 12:33\n"
+"POT-Creation-Date: 2025-12-09 12:39\n"
+"PO-Revision-Date: 2025-12-09 17:37\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,577 +15,552 @@ msgstr ""
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "About"
-msgstr "Sobre"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid ""
 "Also save translations to .po files in real-time. Enable if using external "
 "translation tools like Poedit."
 msgstr ""
-"Também salve traduções em arquivos .po em tempo real. Ative se estiver "
-"usando ferramentas de tradução externas como Poedit."
 
 #: DocType: App:0
 msgid "App"
-msgstr "Aplicativo"
+msgstr ""
 
 #: DocType: App Glossary:0
 msgid "App Glossary"
-msgstr "Glossário do Aplicativo"
+msgstr ""
 
 #: DocType: App:0
 msgid "App Name"
-msgstr "Nome do Aplicativo"
+msgstr ""
 
 #: DocType: App:0
 msgid "App Title"
-msgstr "Título do Aplicativo"
+msgstr ""
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Apps"
-msgstr "Aplicativos"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:21
 msgid "Are you sure you want to backup translations to the remote repository?"
 msgstr ""
-"Tem certeza de que deseja fazer backup das traduções no repositório remoto?"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:43
 msgid ""
 "Are you sure you want to restore translations from the remote repository? "
 "This will overwrite local files."
 msgstr ""
-"Tem certeza de que deseja restaurar as traduções do repositório remoto? Isso"
-" sobrescreverá os arquivos locais."
 
 #: DocType: Translator Settings:0
 msgid "Auth Token (PAT)"
-msgstr "Token de Autenticação (PAT)"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Automation"
-msgstr "Automação"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:26
 msgid "Backing up translations..."
-msgstr "Fazendo backup das traduções..."
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:36
 msgid "Backup / Restore"
-msgstr "Backup / Restauração"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Backup Branch"
-msgstr "Branch de Backup"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Backup Configuration"
-msgstr "Configuração de Backup"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Backup Frequency"
-msgstr "Frequência de Backup"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Backup Repository URL"
-msgstr "URL do Repositório de Backup"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:18
 msgid "Backup Translations"
-msgstr "Backup de Traduções"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:29
 msgid "Backup initiated successfully."
-msgstr "Backup iniciado com sucesso."
+msgstr ""
 
 #: DocType: App:0
 msgid "Brief description of the app's purpose for the translator."
-msgstr "Breve descrição do propósito do aplicativo para o tradutor."
+msgstr ""
 
 #: DocType: Translation Job:0
 msgid "Cancelled"
-msgstr "Cancelado"
+msgstr ""
 
 #: DocType: Translation Job:0
 msgid "Completed"
-msgstr "Concluído"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:145
 msgid "Connection Test"
-msgstr "Teste de Conexão"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Daily"
-msgstr "Diário"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Default Languages"
-msgstr "Idiomas Padrão"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid ""
 "Define languages to be created/enabled by the 'bench setup-languages' "
 "command."
 msgstr ""
-"Defina os idiomas a serem criados/habilitados pelo comando 'bench setup-"
-"languages'."
 
 #: DocType: App:0
 msgid "Description"
-msgstr "Descrição"
+msgstr ""
 
 #: DocType: Translation Glossary:0
 msgid "Description (Context)"
-msgstr "Descrição (Contexto)"
+msgstr ""
 
 #: DocType: App:0
 msgid "Do Not Translate"
-msgstr "Não Traduzir"
+msgstr ""
 
 #: DocType: App:0
 msgid "Domain"
-msgstr "Domínio"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Enable Automated Translation"
-msgstr "Habilitar Tradução Automatizada"
+msgstr ""
 
 #: DocType: Translator Language:0
 msgid "Enabled"
-msgstr "Habilitado"
+msgstr ""
 
 #: DocType: Translation Job:0
 msgid "End Time"
-msgstr "Hora de Término"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Export .po File on Completion"
-msgstr "Exportar Arquivo .po ao Concluir"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid ""
 "Export database translations to .po file when job completes. Useful for "
 "version control."
 msgstr ""
-"Exportar traduções de banco de dados para arquivo .po quando o trabalho for "
-"concluído. Útil para controle de versão."
 
 #: DocType: Translation Job:0
 msgid "Failed"
-msgstr "Falha"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:82
 msgid "Fetching available models..."
-msgstr "Buscando modelos disponíveis..."
+msgstr ""
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Frappe Support"
-msgstr "Suporte Frappe"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Frequency"
-msgstr "Frequência"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Gemini"
-msgstr "Gemini"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Gemini API Key"
-msgstr "Chave de API do Gemini"
+msgstr ""
 
 #: DocType: App Glossary:0
 msgid "Glossary Items"
-msgstr "Itens de Glossário"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Groq"
-msgstr "Groq"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Groq API Key"
-msgstr "Chave de API do Groq"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Groq Model"
-msgstr "Modelo do Groq"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Groq model to use (e.g., llama-3.3-70b-versatile, mixtral-8x7b-32768)"
 msgstr ""
-"Modelo Groq a ser usado (e.g., llama-3.3-70b-versatile, mixtral-8x7b-32768)"
 
 #: DocType: Translator Settings:0
 msgid ""
 "HTTPS URL of the Git repository (e.g., https://github.com/user/repo.git)"
-msgstr "URL HTTPS do repositório Git (e.g., https://github.com/user/repo.git)"
+msgstr ""
 
 #: DocType: Translation Job:0
 msgid "In Progress"
-msgstr "Em Progresso"
+msgstr ""
 
 #: DocType: Installed App:0
 msgid "Installed App"
-msgstr "Aplicativo Instalado"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_job/translation_job.js:15
 msgid "Job enqueued successfully"
-msgstr "Trabalho enfileirado com sucesso"
+msgstr ""
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Keyboard Shortcuts"
-msgstr "Atalhos de Teclado"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:12
 msgid "LLM"
-msgstr "LLM"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "LLM Configuration"
-msgstr "Configuração LLM"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "LLM Provider"
-msgstr "Fornecedor LLM"
+msgstr ""
 
 #: DocType: App Glossary:0
 msgid "Language"
-msgstr "Idioma"
+msgstr ""
 
 #: DocType: Translator Language:0
 msgid "Language Code"
-msgstr "Código de Idioma"
+msgstr ""
 
 #: DocType: Translator Language:0
 msgid "Language Name"
-msgstr "Nome do Idioma"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Language Setup"
-msgstr "Configuração de Idioma"
+msgstr ""
 
 #: DocType: Translation Job:0
 msgid "Log"
-msgstr "Registro"
+msgstr ""
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Log out"
-msgstr "Sair"
+msgstr ""
 
 #: DocType: Monitored App:0
 msgid "Monitored App"
-msgstr "Aplicativo Monitorado"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Monitored Apps"
-msgstr "Aplicativos Monitorados"
+msgstr ""
 
 msgid "Monitored Apps Progress Report"
-msgstr "Relatório de Progresso dos Aplicativos Monitorados"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:125
 msgid "No Models Found"
-msgstr "Nenhum Modelo Encontrado"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:127
 msgid ""
 "No models were returned. Please check that your API key is configured "
 "correctly."
 msgstr ""
-"Nenhum modelo foi retornado. Por favor, verifique se sua chave de API está "
-"configurada corretamente."
 
 #: DocType: Translator Settings:0
 msgid "None"
-msgstr "Nenhum"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "OpenRouter"
-msgstr "OpenRouter"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "OpenRouter API Key"
-msgstr "Chave de API do OpenRouter"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "OpenRouter Model"
-msgstr "Modelo do OpenRouter"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid ""
 "OpenRouter model (e.g., deepseek/deepseek-chat-v3-0324:free, meta-"
 "llama/llama-3.3-70b-instruct:free)"
 msgstr ""
-"Modelo do OpenRouter (por exemplo, deepseek/deepseek-chat-v3-0324:free, "
-"meta-llama/llama-3.3-70b-instruct:free)"
 
 #: DocType: Translation Job:0
 msgid "Pending"
-msgstr "Pendente"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Personal Access Token for authentication"
-msgstr "Token de Acesso Pessoal para autenticação"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/report/monitored_apps_progress_report/monitored_apps_progress_report.py:35
 msgid "Please install polib library to view translation progress."
 msgstr ""
-"Por favor, instale a biblioteca polib para visualizar o progresso da "
-"tradução."
 
 #: DocType: Translation Job:0
 msgid "Progress"
-msgstr "Progresso"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/report/monitored_apps_progress_report/monitored_apps_progress_report.py:21
 msgid "Progress (%)"
-msgstr "Progresso (%)"
+msgstr ""
 
 #: DocType: Translation Job:0
 msgid "Progress Percentage"
-msgstr "Porcentagem de Progresso"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid ""
 "Pull existing translations from the backup repository before starting a new "
 "translation job."
 msgstr ""
-"Puxe as traduções existentes do repositório de backup antes de iniciar um "
-"novo trabalho de tradução."
 
 #: DocType: Translation Job:0
 msgid "Queued"
-msgstr "Em fila"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:8
 msgid "Refresh Models"
-msgstr "Atualizar Modelos"
+msgstr ""
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Reload"
-msgstr "Recarregar"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:40
 msgid "Restore Translations"
-msgstr "Restaurar Traduções"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:53
 msgid "Restore initiated successfully."
-msgstr "Restauração iniciada com sucesso."
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:50
 msgid "Restoring translations..."
-msgstr "Restaurando traduções..."
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Save to .po File"
-msgstr "Salvar em arquivo .po"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:121
 msgid "Select"
-msgstr "Selecionar"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:93
 msgid "Select Model"
-msgstr "Selecionar Modelo"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Select the LLM provider for translations"
-msgstr "Selecione o provedor de LLM para traduções"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:120
 msgid "Select {0} Model"
-msgstr "Selecione o Modelo {0}"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:106
 msgid "Selected model: {0}. Note: Gemini model is set in code."
-msgstr "Modelo selecionado: {0}. Nota: O modelo Gemini é definido no código."
+msgstr ""
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Session Defaults"
-msgstr "Padrões de Sessão"
+msgstr ""
 
 #: DocType: Monitored App:0
 msgid "Source App"
-msgstr "Aplicativo de Origem"
+msgstr ""
 
 #: DocType: Monitored App:0
 msgid ""
 "Specific guide for this App (e.g. 'Use Vendas for Sales'). Combined with "
 "Global and Language guides."
 msgstr ""
-"Guia específica para este Aplicativo (ex.: 'Use Vendas para Vendas'). "
-"Combinada com as Guias Global e de Linguagem."
 
 #: DocType: Translator Language:0
 msgid ""
 "Specific guide for this language (e.g. 'Use formal tone'). Overrides global "
 "guide."
 msgstr ""
-"Guia específica para este idioma (ex.: 'Use tom formal'). Sobrescreve a guia"
-" global."
 
 #: DocType: Monitored App:0
 msgid "Standardization Guide"
-msgstr "Guia de Padronização"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_job/translation_job.js:11
 msgid "Start Job"
-msgstr "Iniciar Trabalho"
+msgstr ""
 
 #: DocType: Translation Job:0
 msgid "Start Time"
-msgstr "Hora de Início"
+msgstr ""
 
 #: DocType: Translation Job:0
 msgid "Status"
-msgstr "Status"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Storage Strategy"
-msgstr "Estratégia de Armazenamento"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid ""
 "Store translations in Translation DocType (recommended for Docker). Provides"
 " highest priority rendering and survives container restarts."
 msgstr ""
-"Armazene traduções no DocType de Tradução (recomendado para Docker). Fornece"
-" a renderização de prioridade mais alta e sobrevive à reinicialização do "
-"contêiner."
 
 #: DocType: Translator Settings:0
 msgid "Sync Remote Translations Before Translating"
-msgstr "Sincronizar Traduções Remotas Antes de Traduzir"
+msgstr ""
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "System Health"
-msgstr "Saúde do Sistema"
+msgstr ""
 
 #: DocType: App:0
 msgid "System Manager"
-msgstr "Gerente do Sistema"
+msgstr ""
 
 #: DocType: Translation Job:0
 msgid "Target Language"
-msgstr "Idioma de Destino"
+msgstr ""
 
 #: DocType: Translation Exclusion:0
 msgid "Term"
-msgstr "Termo"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Test API Connection"
-msgstr "Testar Conexão de API"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:140
 msgid "Testing API connection..."
-msgstr "Testando conexão da API..."
+msgstr ""
 
 #: DocType: Translation Job:0
 msgid "Timing"
-msgstr "Cronometragem"
+msgstr ""
 
 #: DocType: Translation Job:0
 msgid "Title"
-msgstr "Título"
+msgstr ""
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Toggle Full Width"
-msgstr "Alternar largura total"
+msgstr ""
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Toggle Theme"
-msgstr "Alternar tema"
+msgstr ""
 
 #: DocType: App:0
 msgid "Tone"
-msgstr "Tom"
+msgstr ""
 
 #: DocType: Translation Job:0
 msgid "Total Strings"
-msgstr "Total de strings"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/report/monitored_apps_progress_report/monitored_apps_progress_report.py:19
 msgid "Translated"
-msgstr "Traduzido"
+msgstr ""
 
 #: DocType: Translation Job:0
 msgid "Translated Strings"
-msgstr "Strings traduzidas"
+msgstr ""
 
 #: DocType: Translation Glossary:0
 msgid "Translation"
-msgstr "Tradução"
+msgstr ""
 
 #: DocType: App:0
 msgid "Translation Context"
-msgstr "Contexto de tradução"
+msgstr ""
 
 #: DocType: Translation Exclusion:0
 msgid "Translation Exclusion"
-msgstr "Exclusão de tradução"
+msgstr ""
 
 #: DocType: Translation Glossary:0
 msgid "Translation Glossary"
-msgstr "Glossário de tradução"
+msgstr ""
 
 #: DocType: App:0
 msgid "Translation Hub"
-msgstr "Translation Hub"
+msgstr ""
 
 #: DocType: Translation Job:0
 msgid "Translation Job"
-msgstr "Trabalho de tradução"
+msgstr ""
 
 #: DocType: Translator Language:0
 msgid "Translator Language"
-msgstr "Idioma do Tradutor"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Translator Settings"
-msgstr "Configurações do Tradutor"
+msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/report/monitored_apps_progress_report/monitored_apps_progress_report.py:20
 msgid "Untranslated"
-msgstr "Não Traduzido"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Use Database Storage"
-msgstr "Usar Armazenamento de Banco de Dados"
+msgstr ""
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "User Settings"
-msgstr "Configurações do Usuário"
+msgstr ""
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "View Website"
-msgstr "Visualizar Site"
+msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Weekly"
-msgstr "Semanal"
+msgstr ""
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Workspace Settings"
-msgstr "Configurações do Ambiente de Trabalho"
+msgstr ""
 
 #: DocType: App:0
 msgid "e.g. Formal, Friendly, Professional"
-msgstr "ex. Formal, Amigável, Profissional"
+msgstr ""
 
 #: DocType: App:0
 msgid "e.g. Healthcare, Logistics, Education"
-msgstr "ex. Saúde, Logística, Educação"
+msgstr ""

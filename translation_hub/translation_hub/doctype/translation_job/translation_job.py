@@ -109,7 +109,7 @@ def check_existing_translations(source_app, target_language):
 	try:
 		app_path = get_app_path(source_app)
 		locale_dir = os.path.join(app_path, "locale")
-		
+
 		# Normalize language code for file path (pt-BR -> pt_BR)
 		file_lang_code = target_language.replace("-", "_")
 		po_path = os.path.join(locale_dir, f"{file_lang_code}.po")
@@ -143,7 +143,7 @@ def check_existing_translations(source_app, target_language):
 				parts.append(f"{result['po_file_count']} in .po file")
 			if result["database_count"] > 0:
 				parts.append(f"{result['database_count']} in database")
-			
+
 			result["message"] = (
 				f"⚠️ Translations already exist for {source_app} ({target_language}):\n"
 				f"{', '.join(parts)}.\n\n"

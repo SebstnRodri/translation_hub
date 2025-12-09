@@ -265,7 +265,7 @@ def ensure_pot_file(app_name):
 		os.makedirs(locale_dir)
 
 	messages = get_messages_for_app(app_name)
-	
+
 	existing_metadata = {}
 	if os.path.exists(pot_path):
 		try:
@@ -276,9 +276,9 @@ def ensure_pot_file(app_name):
 
 	pot = polib.POFile()
 	now_str = frappe.utils.now_datetime().strftime("%Y-%m-%d %H:%M")
-	
+
 	creation_date = existing_metadata.get("POT-Creation-Date", now_str)
-	
+
 	pot.metadata = {
 		"Project-Id-Version": "1.0",
 		"Report-Msgid-Bugs-To": "",

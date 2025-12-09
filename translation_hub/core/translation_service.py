@@ -373,7 +373,7 @@ class GroqService(TranslationService):
 			from openai import OpenAI
 		except ImportError:
 			raise ImportError(
-				"The 'openai' package is required for Groq support. " "Install it with: pip install openai"
+				"The 'openai' package is required for Groq support. Install it with: pip install openai"
 			)
 
 		if not self.config.api_key:
@@ -662,8 +662,7 @@ class OpenRouterService(TranslationService):
 			from openai import OpenAI
 		except ImportError:
 			raise ImportError(
-				"The 'openai' package is required for OpenRouter support. "
-				"Install it with: pip install openai"
+				"The 'openai' package is required for OpenRouter support. Install it with: pip install openai"
 			)
 
 		if not self.config.api_key:

@@ -75,7 +75,7 @@ class TestStandardizationGuide(FrappeTestCase):
 			self.assertTrue(MockConfig.called, "TranslationConfig was not called")
 
 			# Get the call arguments
-			args, kwargs = MockConfig.call_args
+			_args, kwargs = MockConfig.call_args
 			guide = kwargs.get("standardization_guide")
 
 			# Verify all parts are present
