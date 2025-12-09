@@ -564,3 +564,18 @@ msgstr ""
 #: DocType: App:0
 msgid "e.g. Healthcare, Logistics, Education"
 msgstr ""
+
+msgid "Translations Over Time"
+msgstr ""
+
+msgid "Monitored Apps Progress"
+msgstr ""
+
+msgid "Total Apps Tracked"
+msgstr ""
+
+msgid "Strings Translated"
+msgstr ""
+
+msgid "Jobs in Progress"
+msgstr ""

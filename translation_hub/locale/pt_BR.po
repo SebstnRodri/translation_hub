@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-09 17:37\n"
+"PO-Revision-Date: 2025-12-09 18:42\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -564,3 +564,18 @@ msgstr ""
 #: DocType: App:0
 msgid "e.g. Healthcare, Logistics, Education"
 msgstr ""
+
+msgid "Translations Over Time"
+msgstr "Traduções ao Longo do Tempo"
+
+msgid "Monitored Apps Progress"
+msgstr "Progresso dos Apps Monitorados"
+
+msgid "Total Apps Tracked"
+msgstr "Total de Apps Rastreados"
+
+msgid "Strings Translated"
+msgstr "Strings Traduzidas"
+
+msgid "Jobs in Progress"
+msgstr "Trabalhos em Andamento"

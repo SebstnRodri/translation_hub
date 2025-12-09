@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.2] - 2025-12-09
+
+### 🐛 Bug Fixes
+- **Dashboard Translations**: Added missing translations for Dashboard Charts and Number Cards (e.g. "Translations Over Time", "Jobs in Progress") which were displaying in English.
+
+---
+
 ## [v1.2.1] - 2025-12-09
 
 ### 🔄 Refactor
