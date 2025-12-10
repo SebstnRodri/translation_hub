@@ -320,32 +320,39 @@ def ensure_pot_file(app_name):
 
 
 @frappe.whitelist()
-def backup_translations():
+@frappe.whitelist()
+def backup_translations(apps=None):
 	"""
 	Backs up translations to the configured Git repository.
 	"""
 	frappe.only_for("System Manager")
 	from translation_hub.core.git_sync_service import GitSyncService
 
+	if isinstance(apps, str):
+		apps = frappe.parse_json(apps)
+
 	settings = frappe.get_single("Translator Settings")
 	if not settings.backup_repo_url:
 		frappe.throw("Backup Repository URL is not configured in Translator Settings.")
 
 	service = GitSyncService(settings)
-	service.backup()
+	service.backup(apps=apps)
 
 
 @frappe.whitelist()
-def restore_translations():
+def restore_translations(apps=None):
 	"""
 	Restores translations from the configured Git repository.
 	"""
 	frappe.only_for("System Manager")
 	from translation_hub.core.git_sync_service import GitSyncService
 
+	if isinstance(apps, str):
+		apps = frappe.parse_json(apps)
+
 	settings = frappe.get_single("Translator Settings")
 	if not settings.backup_repo_url:
 		frappe.throw("Backup Repository URL is not configured in Translator Settings.")
 
 	service = GitSyncService(settings)
-	service.restore()
+	service.restore(apps=apps)

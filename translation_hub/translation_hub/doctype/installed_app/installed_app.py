@@ -18,8 +18,8 @@ class InstalledApp(Document):
 	@staticmethod
 	def get_list(args):
 		apps = frappe.get_installed_apps()
-		start = args.get("start", 0)
-		page_len = args.get("page_length", 20)
+		start = int(args.get("start") or 0)
+		page_len = int(args.get("page_length") or 20)
 
 		# Filter if needed (simple implementation)
 		if args.get("filters"):

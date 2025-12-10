@@ -74,7 +74,7 @@ class GitSyncService:
 			return "develop"
 		return f"version-{version.split('.')[0]}"
 
-	def collect_translations(self):
+	def collect_translations(self, apps=None):
 		"""Copies PO files from monitored apps to the repo directory."""
 		if not self.settings.monitored_apps:
 			return
@@ -83,6 +83,11 @@ class GitSyncService:
 
 		for app_row in self.settings.monitored_apps:
 			app_name = app_row.source_app
+			
+			# Filter by selected apps if provided
+			if apps and app_name not in apps:
+				continue
+
 			try:
 				app_path = frappe.get_app_path(app_name)
 				# Correct internal path: app key is module name
@@ -105,7 +110,7 @@ class GitSyncService:
 			except Exception as e:
 				frappe.log_error(f"Failed to collect translations for {app_name}: {e}", "Git Sync Service")
 
-	def distribute_translations(self):
+	def distribute_translations(self, apps=None):
 		"""Copies PO files from the repo directory back to monitored apps."""
 		if not self.repo_dir.exists():
 			raise Exception("Repository not initialized. Run backup first or check configuration.")
@@ -122,6 +127,11 @@ class GitSyncService:
 				continue
 
 			app_name = app_dir.name
+			
+			# Filter by selected apps if provided
+			if apps and app_name not in apps:
+				continue
+
 			# Check if app is installed
 			if app_name not in frappe.get_installed_apps():
 				continue
@@ -143,9 +153,9 @@ class GitSyncService:
 			except Exception as e:
 				frappe.log_error(f"Failed to distribute translations for {app_name}: {e}", "Git Sync Service")
 
-	def backup(self):
+	def backup(self, apps=None):
 		self.setup_repo()
-		self.collect_translations()
+		self.collect_translations(apps=apps)
 
 		# Check for changes
 		status = self._run_git(["status", "--porcelain"])
@@ -154,13 +164,18 @@ class GitSyncService:
 			return
 
 		self._run_git(["add", "."])
-		self._run_git(["commit", "-m", "chore: backup translations [skip ci]"])
+		msg = "chore: backup translations [skip ci]"
+		if apps:
+			app_list = ", ".join(apps)
+			msg = f"chore: backup translations for {app_list} [skip ci]"
+		
+		self._run_git(["commit", "-m", msg])
 		self._run_git(["push", "origin", self.branch])
 		frappe.msgprint("Backup completed successfully.")
 
-	def restore(self):
+	def restore(self, apps=None):
 		self.setup_repo()
-		self.distribute_translations()
+		self.distribute_translations(apps=apps)
 		frappe.msgprint("Restore completed successfully.")
 
 	def sync(self):

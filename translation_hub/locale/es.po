@@ -394,29 +394,11 @@ msgstr "por ejemplo, Formal, Amistoso, Profesional"
 msgid "e.g. Healthcare, Logistics, Education"
 msgstr "por ejemplo, Salud, Logística, Educación"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:21
-msgid "Are you sure you want to backup translations to the remote repository?"
-msgstr ""
-"¿Está seguro de que desea respaldar las traducciones en el repositorio "
-"remoto?"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:43
-msgid ""
-"Are you sure you want to restore translations from the remote repository? "
-"This will overwrite local files."
-msgstr ""
-"¿Está seguro de que desea restaurar las traducciones desde el repositorio "
-"remoto? Esto sobrescribirá los archivos locales."
-
 #: DocType: Translator Settings:0
 msgid "Auth Token (PAT)"
 msgstr "Token de Autenticación (PAT)"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:26
-msgid "Backing up translations..."
-msgstr "Respaldando traducciones..."
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:36
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:98
 msgid "Backup / Restore"
 msgstr "Respaldar / Restaurar"
 
@@ -436,19 +418,15 @@ msgstr "Frecuencia de Respaldo"
 msgid "Backup Repository URL"
 msgstr "URL del Repositorio de Respaldo"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:18
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:90
 msgid "Backup Translations"
 msgstr "Respaldar Traducciones"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:29
-msgid "Backup initiated successfully."
-msgstr "Respaldo iniciado correctamente."
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:145
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:195
 msgid "Connection Test"
 msgstr "Prueba de Conexión"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:82
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:132
 msgid "Fetching available models..."
 msgstr "Obteniendo modelos disponibles..."
 
@@ -496,11 +474,11 @@ msgstr "Configuración de LLM"
 msgid "LLM Provider"
 msgstr "Proveedor de LLM"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:125
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:175
 msgid "No Models Found"
 msgstr "No se encontraron modelos"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:127
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:177
 msgid ""
 "No models were returned. Please check that your API key is configured "
 "correctly."
@@ -548,23 +526,15 @@ msgstr ""
 msgid "Refresh Models"
 msgstr "Actualizar Modelos"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:40
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:102
 msgid "Restore Translations"
 msgstr "Restaurar Traducciones"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:53
-msgid "Restore initiated successfully."
-msgstr "Restauración iniciada correctamente."
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:50
-msgid "Restoring translations..."
-msgstr "Restaurando traducciones..."
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:121
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:106
 msgid "Select"
 msgstr "Seleccionar"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:93
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:143
 msgid "Select Model"
 msgstr "Seleccionar Modelo"
 
@@ -572,11 +542,11 @@ msgstr "Seleccionar Modelo"
 msgid "Select the LLM provider for translations"
 msgstr "Seleccione el proveedor LLM para traducciones"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:120
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:170
 msgid "Select {0} Model"
 msgstr "Seleccionar modelo {0}"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:106
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:156
 msgid "Selected model: {0}. Note: Gemini model is set in code."
 msgstr ""
 "Modelo seleccionado: {0}. Nota: El modelo Gemini se establece en el código."
@@ -589,9 +559,67 @@ msgstr "Sincronizar Traducciones Remotas antes de Traducir"
 msgid "Test API Connection"
 msgstr "Conectar API de Prueba"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:140
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:190
 msgid "Testing API connection..."
 msgstr "Probando conexión API..."
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:73
+msgid ""
+"Are you sure you want to restore? This will overwrite local files for the "
+"selected apps."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:26
+msgid "Fetching installed apps..."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:40
+msgid "Only selected apps will be processed. All apps if empty."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:64
+msgid "Operation completed successfully."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:60
+msgid "Processing..."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:105
+msgid "Restore Configuration"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:36
+msgid "Select Apps (Leave empty for all)"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:94
+msgid "Start Backup"
+msgstr ""
+
+#~ msgid "Are you sure you want to backup translations to the remote repository?"
+#~ msgstr ""
+#~ "¿Está seguro de que desea respaldar las traducciones en el repositorio "
+#~ "remoto?"
+
+#~ msgid ""
+#~ "Are you sure you want to restore translations from the remote repository? "
+#~ "This will overwrite local files."
+#~ msgstr ""
+#~ "¿Está seguro de que desea restaurar las traducciones desde el repositorio "
+#~ "remoto? Esto sobrescribirá los archivos locales."
+
+#~ msgid "Backing up translations..."
+#~ msgstr "Respaldando traducciones..."
+
+#~ msgid "Backup initiated successfully."
+#~ msgstr "Respaldo iniciado correctamente."
+
+#~ msgid "Restore initiated successfully."
+#~ msgstr "Restauración iniciada correctamente."
+
+#~ msgid "Restoring translations..."
+#~ msgstr "Restaurando traducciones..."
 
 #~ msgid "API Key"
 #~ msgstr "Clave de API"

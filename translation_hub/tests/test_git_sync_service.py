@@ -180,8 +180,8 @@ class TestGitSyncService(FrappeTestCase):
 				if test_po_file.exists():
 					test_po_file.unlink()
 
-	def test_multiple_apps_backup(self):
-		"""Test backup with multiple monitored apps"""
+	def test_selective_backup(self):
+		"""Test backup with selective apps"""
 		from translation_hub.core.git_sync_service import GitSyncService
 
 		# Add frappe to monitored apps
@@ -191,29 +191,70 @@ class TestGitSyncService(FrappeTestCase):
 		with patch.object(GitSyncService, "_get_version_folder", return_value="develop"):
 			service = GitSyncService(self.settings)
 
-			# Create test files for both apps
+			# Create test files
 			test_files = []
 			for app_name in ["translation_hub", "frappe"]:
 				app_path = frappe.get_app_path(app_name)
-				# Fix: locale is now inside the module
 				locale_dir = Path(app_path) / "locale"
 				locale_dir.mkdir(exist_ok=True)
-
 				test_po = locale_dir / f"test_{app_name}.po"
 				test_po.write_text(f'# {app_name}\nmsgid "test"\nmsgstr "teste"\n')
 				test_files.append(test_po)
 
 			try:
+				# Backup ONLY translation_hub
+				service.backup(apps=["translation_hub"])
+
+				# Verify translation_hub exists, frappe does not
+				hub_dir = self.backup_repo_dir / "develop" / "translation_hub" / "locale"
+				frappe_dir = self.backup_repo_dir / "develop" / "frappe" / "locale"
+
+				self.assertTrue(hub_dir.exists())
+				self.assertTrue((hub_dir / "test_translation_hub.po").exists())
+				self.assertFalse(frappe_dir.exists())
+
+			finally:
+				for test_file in test_files:
+					if test_file.exists():
+						test_file.unlink()
+
+	def test_selective_restore(self):
+		"""Test restore with selective apps"""
+		from translation_hub.core.git_sync_service import GitSyncService
+
+		# Add frappe to monitored apps
+		self.settings.append("monitored_apps", {"source_app": "frappe"})
+		self.settings.save()
+
+		with patch.object(GitSyncService, "_get_version_folder", return_value="develop"):
+			service = GitSyncService(self.settings)
+
+			# 1. Setup Backup with BOTH apps
+			test_files = []
+			for app_name in ["translation_hub", "frappe"]:
+				app_path = frappe.get_app_path(app_name)
+				locale_dir = Path(app_path) / "locale"
+				locale_dir.mkdir(exist_ok=True)
+				test_po = locale_dir / f"test_{app_name}.po"
+				test_po.write_text(f'# {app_name} Original\nmsgid "test"\nmsgstr "original"\n')
+				test_files.append(test_po)
+
+			try:
 				service.backup()
 
-				# Verify both apps have directories in repo
-				for app_name in ["translation_hub", "frappe"]:
-					# Check inside version folder
-					app_dir = self.backup_repo_dir / "develop" / app_name / "locale"
-					self.assertTrue(app_dir.exists(), f"{app_name} directory should exist at {app_dir}")
+				# 2. Modify local files (both)
+				for test_file in test_files:
+					test_file.write_text('# Modified\nmsgid "test"\nmsgstr "modified"\n')
 
-					po_file = app_dir / f"test_{app_name}.po"
-					self.assertTrue(po_file.exists(), f"{app_name} PO file should exist")
+				# 3. Restore ONLY translation_hub
+				service.restore(apps=["translation_hub"])
+
+				# 4. Verify translation_hub reverted, frappe stayed modified
+				hub_content = test_files[0].read_text()
+				frappe_content = test_files[1].read_text()
+
+				self.assertIn("Original", hub_content)
+				self.assertIn("Modified", frappe_content)
 
 			finally:
 				for test_file in test_files:

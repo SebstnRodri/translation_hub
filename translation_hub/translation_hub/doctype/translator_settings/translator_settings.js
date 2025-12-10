@@ -14,23 +14,85 @@ frappe.ui.form.on("Translator Settings", {
 
 		if (!frm.doc.backup_repo_url) return;
 
+		const fetch_apps_and_show_dialog = (title, primary_action_label, action_method) => {
+			frappe.call({
+				method: "frappe.client.get_list",
+				args: {
+					doctype: "Installed App",
+					fields: ["app_name"],
+					limit_page_length: 50,
+				},
+				freeze: true,
+				freeze_message: __("Fetching installed apps..."),
+				callback: function (r) {
+					let installed_apps = [];
+					if (r.message) {
+						installed_apps = r.message.map((d) => d.app_name);
+					}
+
+					frappe.prompt(
+						[
+							{
+								label: __("Select Apps (Leave empty for all)"),
+								fieldname: "apps",
+								fieldtype: "MultiSelect",
+								options: installed_apps,
+								description: __(
+									"Only selected apps will be processed. All apps if empty."
+								),
+							},
+						],
+						function (values) {
+							let apps = values.apps
+								? values.apps
+										.split(",")
+										.map((s) => s.trim())
+										.filter((s) => s)
+								: [];
+
+							let perform_action = () => {
+								frappe.call({
+									method: "translation_hub.tasks." + action_method,
+									args: {
+										apps: apps.length > 0 ? apps : null,
+									},
+									freeze: true,
+									freeze_message: __("Processing..."),
+									callback: function (r) {
+										if (!r.exc) {
+											frappe.msgprint(
+												__("Operation completed successfully.")
+											);
+										}
+									},
+								});
+							};
+
+							if (action_method === "restore_translations") {
+								frappe.confirm(
+									__(
+										"Are you sure you want to restore? This will overwrite local files for the selected apps."
+									),
+									perform_action
+								);
+							} else {
+								perform_action();
+							}
+						},
+						title,
+						primary_action_label
+					);
+				},
+			});
+		};
+
 		frm.add_custom_button(
 			__("Backup Translations"),
 			function () {
-				frappe.confirm(
-					__("Are you sure you want to backup translations to the remote repository?"),
-					function () {
-						frappe.call({
-							method: "translation_hub.tasks.backup_translations",
-							freeze: true,
-							freeze_message: __("Backing up translations..."),
-							callback: function (r) {
-								if (!r.exc) {
-									frappe.msgprint(__("Backup initiated successfully."));
-								}
-							},
-						});
-					}
+				fetch_apps_and_show_dialog(
+					__("Backup Configuration"),
+					__("Start Backup"),
+					"backup_translations"
 				);
 			},
 			__("Backup / Restore")
@@ -39,22 +101,10 @@ frappe.ui.form.on("Translator Settings", {
 		frm.add_custom_button(
 			__("Restore Translations"),
 			function () {
-				frappe.confirm(
-					__(
-						"Are you sure you want to restore translations from the remote repository? This will overwrite local files."
-					),
-					function () {
-						frappe.call({
-							method: "translation_hub.tasks.restore_translations",
-							freeze: true,
-							freeze_message: __("Restoring translations..."),
-							callback: function (r) {
-								if (!r.exc) {
-									frappe.msgprint(__("Restore initiated successfully."));
-								}
-							},
-						});
-					}
+				fetch_apps_and_show_dialog(
+					__("Restore Configuration"),
+					__("Select"),
+					"restore_translations"
 				);
 			},
 			__("Backup / Restore")

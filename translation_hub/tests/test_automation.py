@@ -9,6 +9,8 @@ from translation_hub.tasks import run_automated_translations
 
 class TestAutomation(FrappeTestCase):
 	def setUp(self):
+		frappe.db.delete("Translation Job", {"source_app": "translation_hub"})
+		frappe.db.commit()
 		super().setUp()
 		# Ensure Settings
 		settings = frappe.get_single("Translator Settings")

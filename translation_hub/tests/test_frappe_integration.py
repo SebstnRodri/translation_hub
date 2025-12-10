@@ -11,9 +11,8 @@ from frappe.tests.utils import FrappeTestCase
 
 class TestFrappeIntegration(FrappeTestCase):
 	def setUp(self):
-		frappe.db.delete("Translation Job", {"title": "Test Job"})
-		frappe.db.delete("Translation Job", {"source_app": "frappe", "target_language": "es"})
-		frappe.db.delete("Translation Job", {"source_app": "frappe", "target_language": "fr"})
+		# Aggressive cleanup
+		frappe.db.delete("Translation Job")
 
 		# Configure Translator Settings
 		settings = frappe.get_single("Translator Settings")
@@ -24,6 +23,7 @@ class TestFrappeIntegration(FrappeTestCase):
 			"default_languages", {"language_code": "es", "language_name": "Spanish", "enabled": 1}
 		)
 		settings.save(ignore_permissions=True)
+		frappe.db.commit()
 
 		if not frappe.db.exists("App", "frappe"):
 			frappe.get_doc({"doctype": "App", "app_name": "frappe", "app_title": "Frappe Framework"}).insert(

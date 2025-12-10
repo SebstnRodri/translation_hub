@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.2.3] - 2025-12-10
+
+### ✨ Features
+- **Selective Backup & Restore**: Added ability to select specific apps to backup or restore via a Multi-Select dialog in Translator Settings. Backend now supports filtering operations by app list.
+
+### 🐛 Bug Fixes
+- **Installed App API**: Fixed `TypeError` when fetching installed apps list (handling string pagination arguments).
+- **UI Improvements**: Fixed race condition in "Select Apps" dialog by ensuring app list is fetched dynamically before display.
+
+---
+
 ## [v1.2.2] - 2025-12-09
 
 ### 🐛 Bug Fixes

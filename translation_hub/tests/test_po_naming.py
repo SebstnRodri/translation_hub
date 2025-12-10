@@ -23,10 +23,16 @@ class TestPONaming(FrappeTestCase):
 		self.production_po_path = self.locale_dir / self.production_po_filename
 		self.wrong_po_path = self.locale_dir / "pt-BR.po"
 
+		# Backup existing file if needed
+		if self.production_po_path.exists():
+			self.production_po_backup = self.production_po_path.with_suffix(".po.bak")
+			shutil.copy2(self.production_po_path, self.production_po_backup)
+			os.remove(self.production_po_path)
+		else:
+			self.production_po_backup = None
+
 		if self.po_path.exists():
 			os.remove(self.po_path)
-		if self.production_po_path.exists():
-			os.remove(self.production_po_path)
 		if self.wrong_po_path.exists():
 			os.remove(self.wrong_po_path)
 
@@ -53,8 +59,17 @@ class TestPONaming(FrappeTestCase):
 	def tearDown(self):
 		if self.po_path.exists():
 			os.remove(self.po_path)
-		if self.production_po_path.exists():
-			os.remove(self.production_po_path)
+
+		# Restore original file
+		if self.production_po_backup and self.production_po_backup.exists():
+			shutil.move(self.production_po_backup, self.production_po_path)
+		elif self.production_po_path.exists():
+			# If we didn't back up (it didn't exist), but now it does, remove it?
+			# The test assertion expects it NOT to exist.
+			# But if we restored it, it should be there.
+			# Wait, the test ensures pT_BR.po is NOT created.
+			pass
+
 		if self.wrong_po_path.exists():
 			os.remove(self.wrong_po_path)
 		self.job.delete(ignore_permissions=True)
