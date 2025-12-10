@@ -15,7 +15,9 @@ Translation Hub is a powerful tool designed to automate the translation of Frapp
 > [!NOTE]
 > **Compatibility**: This project is compatible with **Frappe Framework v15** and **v16**.
 
-### 🚀 Key Features (v1.2.3)
+### 🚀 Key Features (v1.4.0)
+- **🧠 AI-Assisted Bulk Review**: Generate AI suggestions for hundreds of bad translations in one click.
+- **✨ Individual AI Helper**: Ask AI for suggestions while reviewing specific translations.
 - **🤖 AI-Powered**: Uses Google Gemini, **Groq**, or **OpenRouter** (500+ models) for translations.
 - **⚡ Multiple LLM Providers**: Choose between Gemini, Groq, and OpenRouter with free tier options.
 - **🔌 Test API Connection**: Verify provider setup directly from Translator Settings.

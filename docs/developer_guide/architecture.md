@@ -604,3 +604,36 @@ sequenceDiagram
     Note right of Config: The combined guide is now\nready to be sent to the LLM\nwith every translation request.
 ```
 
+    Note right of Config: The combined guide is now\nready to be sent to the LLM\nwith every translation request.
+```
+
+## AI Review Workflow
+
+The v1.4.0 update introduces an AI-assisted review workflow, allowing the AI to act as a reviewer/suggester rather than just a translator.
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant UI as Translation Finder UI
+    participant ReviewAPI as translation_review.py
+    participant Service as Translation Service
+    participant ReviewDoc as Translation Review Doc
+
+    Note over User, ReviewDoc: Scenario: Bulk Review with AI
+    User->>UI: Search "Against" (Finds 100 items)
+    User->>UI: Click "Review All" + Check "Use AI"
+    UI->>ReviewAPI: create_bulk_reviews(search="Against", use_ai=True)
+    
+    ReviewAPI->>Service: batch_translate(source_texts)
+    Service-->>ReviewAPI: Return [suggested_translations]
+    
+    loop For each item
+        ReviewAPI->>ReviewDoc: Create(status="Pending", suggested_text=AI_Value)
+    end
+    
+    ReviewAPI-->>UI: Created 100 reviews
+    UI->>User: Show "Pending" reviews
+    
+    User->>ReviewDoc: Inspects & Approves
+    ReviewDoc->>ReviewDoc: On Submit -> Update Translation DocType
+```

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-10 13:49\n"
+"PO-Revision-Date: 2025-12-10 15:06\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -598,20 +598,8 @@ msgstr ""
 msgid "Start Backup"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:94
-msgid "(No translation)"
-msgstr ""
-
 #: DocType: Translation Review:0
 msgid "Approved"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:103
-msgid "Click to fix this one"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:45
-msgid "Close"
 msgstr ""
 
 #: DocType: Translation Review:0
@@ -622,32 +610,12 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:13
-msgid "Find and Fix Translation"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:4
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:5
 msgid "Fix Translation"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:82
-msgid "Found {0} results."
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:76
-msgid "No translations found."
 msgstr ""
 
 #: DocType: Translation Review:0
 msgid "Rejected"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:41
-msgid "Results"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:84
-msgid "Review All ({0})"
 msgstr ""
 
 #: DocType: Translation Review:0
@@ -658,10 +626,6 @@ msgstr ""
 msgid "Reviewed On"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:34
-msgid "Search Text (Source or Translated)"
-msgstr ""
-
 #: DocType: Translation Review:0
 msgid "Source Text"
 msgstr ""
@@ -670,32 +634,12 @@ msgstr ""
 msgid "Suggested Translation"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:17
-msgid "Target App"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:21
-msgid "The app this translation belongs to (Search is global)"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:121
-msgid "This will create {0} review records. Continue?"
-msgstr ""
-
 #: DocType: Translation Review:0
 msgid "Translation Review"
 msgstr ""
 
 #: DocType: Translation Review:0
 msgid "Translator"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:36
-msgid "Type at least 3 characters"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:134
-msgid "{0} reviews created! Go to list view to edit."
 msgstr ""
 
 #: ../translation_hub/translation_hub/translation_hub/number_card/strings_translated/strings_translated.json:0
@@ -722,6 +666,134 @@ msgstr ""
 msgctxt "Dashboard Chart"
 msgid "Translations Over Time"
 msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:88
+msgid "(No translation)"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:99
+msgid "Click to fix this one"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:15
+msgid "Find and Fix Translation"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:77
+msgid "Found {0} results."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:71
+msgid "No translations found."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:79
+msgid "Review All ({0})"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:27
+msgid "Search Text (Source or Translated)"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:29
+msgid "Type at least 3 characters"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:37
+msgid "Fechar"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:19
+msgid "Idioma"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:187
+msgid "Reviews created: {0}"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:183
+msgid "Asking AI for suggestions..."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:138
+msgid "Bulk Review Options"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:16
+msgid "Context for AI (Optional)"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:167
+msgid "Create Reviews"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:184
+msgid "Creating reviews..."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:162
+msgid ""
+"E.g., 'Financial context, use formal tone' or 'Glossary: Against -> Vínculo'"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:153
+msgid ""
+"If checked, AI will generate suggested translations instead of using current"
+" values."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:143
+msgid "This will create {0} review records."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:150
+msgid "Use AI to Suggest Corrections"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:40
+msgid "AI Translation Helper"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:8
+msgid "Ask AI Suggestion"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:31
+msgid "Asking AI..."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:18
+msgid "E.g. \"Formal tone\", \"Financial term\""
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:41
+msgid "Generate"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:35
+msgid "Suggestion applied!"
+msgstr ""
+
+#~ msgid "Are you sure you want to review all found items?"
+#~ msgstr ""
+
+#~ msgid "Close"
+#~ msgstr ""
+
+#~ msgid "Results"
+#~ msgstr ""
+
+#~ msgid "Target App"
+#~ msgstr ""
+
+#~ msgid "The app this translation belongs to (Search is global)"
+#~ msgstr ""
+
+#~ msgid "This will create {0} review records. Continue?"
+#~ msgstr ""
+
+#~ msgid "{0} reviews created! Go to list view to edit."
+#~ msgstr ""
 
 #~ msgid "Are you sure you want to backup translations to the remote repository?"
 #~ msgstr ""

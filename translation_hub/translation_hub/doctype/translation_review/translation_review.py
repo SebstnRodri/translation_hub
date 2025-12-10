@@ -202,7 +202,13 @@ def get_translations_for_review(
 
 
 @frappe.whitelist()
-def create_bulk_reviews(source_app: str, language: str, search_text: str):
+def create_bulk_reviews(
+	source_app: str,
+	language: str,
+	search_text: str,
+	use_ai: bool = False,
+	ai_context: str | None = None,
+):
 	"""
 	Creates Translation Reviews for ALL translations matching the search text.
 
@@ -215,35 +221,97 @@ def create_bulk_reviews(source_app: str, language: str, search_text: str):
 		Number of reviews created
 	"""
 	if not search_text or len(search_text) < 3:
-		frappe.throw("Search text too short")
+		frappe.throw("Search text must be at least 3 characters")
 
-	translations = frappe.db.sql(
-		"""
-		SELECT source_text, translated_text
-		FROM `tabTranslation`
-		WHERE language = %(language)s
-		AND (source_text LIKE %(search)s OR translated_text LIKE %(search)s)
-	""",
-		{
-			"language": language,
-			"search": f"%{search_text}%",
-		},
-		as_dict=True,
-	)
+	# 1. Fetch Candidates (DB + Memory)
+	translations = get_translations_for_review(source_app, language, search_text, limit=500)
 
 	count = 0
+
+	# Prepare for AI processing if requested
+	ai_suggestions = {}
+	if use_ai and translations:
+		try:
+			from translation_hub.core.config import TranslationConfig
+			from translation_hub.core.translation_service import GeminiService, GroqService, OpenRouterService
+
+			settings = frappe.get_single("Translator Settings")
+			if not settings.llm_provider:
+				frappe.throw("Translator Service is not configured (LLM Provider missing).")
+
+			# Determine API Key based on provider
+			api_key = None
+			if settings.llm_provider == "Gemini":
+				api_key = settings.get_password("api_key")
+			elif settings.llm_provider == "Groq":
+				api_key = settings.get_password("groq_api_key")
+			elif settings.llm_provider == "OpenRouter":
+				api_key = settings.get_password("openrouter_api_key")
+
+			if not api_key:
+				frappe.throw(f"API Key for {settings.llm_provider} is missing.")
+
+			model = settings.get(f"{settings.llm_provider.lower()}_model") or "gemini-pro"
+
+			config = TranslationConfig(
+				language_code=language,
+				api_key=api_key,
+				model_name=model,
+				provider=settings.llm_provider,
+				standardization_guide=ai_context,  # Inject user context as guide
+			)
+
+			# Select Service
+			service_map = {"Gemini": GeminiService, "Groq": GroqService, "OpenRouter": OpenRouterService}
+			ServiceClass = service_map.get(settings.llm_provider)
+			if not ServiceClass:
+				frappe.throw(f"Unsupported provider: {settings.llm_provider}")
+
+			service = ServiceClass(config, app_name=source_app)
+
+			# Batch translate
+			# Filter only those that really need translation (though here we review all)
+			entries = [
+				{"msgid": t.source_text, "context": None} for t in translations
+			]  # t.context is not available from get_translations_for_review
+
+			# Call AI (chunking if necessary, but 500 might fit in one go for some models, safeguards in service handles retries)
+			# Let's chunk conservatively to 50 just in case
+			results = []
+			chunk_size = 50
+			for i in range(0, len(entries), chunk_size):
+				chunk = entries[i : i + chunk_size]
+				results.extend(service.translate(chunk))
+
+			# Map back results
+			for res in results:
+				if res and res.get("msgid"):
+					ai_suggestions[res["msgid"]] = res.get("msgstr")
+
+		except Exception as e:
+			frappe.log_error(f"AI Bulk Review Failed: {e}")
+			frappe.msgprint(f"AI Suggestion failed, falling back to existing texts. Error: {e}")
+
 	for t in translations:
-		# check if exists
+		# Check if exists
 		existing = frappe.db.exists(
 			"Translation Review", {"source_text": t.source_text, "language": language, "status": "Pending"}
 		)
+
 		if not existing:
+			# Determine suggested text
+			suggested = ai_suggestions.get(t.source_text)
+
+			# Fallback to current translation (or source if none)
+			if not suggested:
+				suggested = t.translated_text or t.source_text
+
 			doc = frappe.get_doc(
 				{
 					"doctype": "Translation Review",
 					"source_text": t.source_text,
-					"translated_text": t.translated_text or "",
-					"suggested_text": t.translated_text or "",
+					"translated_text": t.translated_text,
+					"suggested_text": suggested,
 					"language": language,
 					"source_app": source_app,
 					"status": "Pending",
@@ -254,3 +322,60 @@ def create_bulk_reviews(source_app: str, language: str, search_text: str):
 
 	frappe.db.commit()
 	return count
+
+
+@frappe.whitelist()
+def get_ai_suggestion(source_text: str, language: str, source_app: str, context: str | None = None) -> str:
+	"""
+	Generate a single AI suggestion for the given text.
+	"""
+	try:
+		from translation_hub.core.config import TranslationConfig
+		from translation_hub.core.translation_service import GeminiService, GroqService, OpenRouterService
+
+		settings = frappe.get_single("Translator Settings")
+		if not settings.llm_provider:
+			frappe.throw("Translator Service is not configured (LLM Provider missing).")
+
+		# Determine API Key based on provider
+		api_key = None
+		if settings.llm_provider == "Gemini":
+			api_key = settings.get_password("api_key")
+		elif settings.llm_provider == "Groq":
+			api_key = settings.get_password("groq_api_key")
+		elif settings.llm_provider == "OpenRouter":
+			api_key = settings.get_password("openrouter_api_key")
+
+		if not api_key:
+			frappe.throw(f"API Key for {settings.llm_provider} is missing.")
+
+		model = settings.get(f"{settings.llm_provider.lower()}_model") or "gemini-pro"
+
+		config = TranslationConfig(
+			language_code=language,
+			api_key=api_key,
+			model_name=model,
+			provider=settings.llm_provider,
+			standardization_guide=context,
+		)
+
+		service_map = {"Gemini": GeminiService, "Groq": GroqService, "OpenRouter": OpenRouterService}
+		ServiceClass = service_map.get(settings.llm_provider)
+		if not ServiceClass:
+			frappe.throw(f"Unsupported provider: {settings.llm_provider}")
+
+		service = ServiceClass(config, app_name=source_app)
+
+		# Translate single entry
+		entry = {"msgid": source_text, "context": None}
+		# Using _translate_single logic via translate method
+		result = service.translate([entry])
+
+		if result and result[0] and result[0].get("msgstr"):
+			return result[0]["msgstr"]
+
+		return ""
+
+	except Exception as e:
+		frappe.log_error(f"AI Suggestion Failed: {e}")
+		frappe.throw(f"AI Suggestion failed: {e}")

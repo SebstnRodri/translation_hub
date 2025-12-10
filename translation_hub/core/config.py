@@ -11,6 +11,7 @@ class TranslationConfig:
 	"""
 
 	model_name: str = "gemini-2.5-flash"
+	provider: str = "Gemini"
 	max_batch_retries: int = 3
 	max_single_retries: int = 3
 	retry_wait_seconds: int = 2

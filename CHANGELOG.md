@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.3.0] - 2025-12-10
+## [v1.4.0] - 2025-12-10
 
 ### ✨ Features
 - **Selective Backup & Restore**: Added ability to select specific apps to backup or restore via a Multi-Select dialog in Translator Settings. Backend now supports filtering operations by app list.
