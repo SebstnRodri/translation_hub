@@ -169,6 +169,30 @@ def get_translations_for_review(
 			{"language": language, "search": f"%{search_text}%", "limit": int(limit)},
 			as_dict=True,
 		)
+
+		# Fallback: Search in memory (PO files + Cache)
+		# This ensures we find strings that are visible in UI but not yet in DB
+		from frappe.translate import get_all_translations
+
+		memory_translations = get_all_translations(language)
+
+		existing_sources = {t.source_text for t in translations}
+		search_lower = search_text.lower()
+		count = len(translations)
+		limit = int(limit)
+
+		for source, translated in memory_translations.items():
+			if count >= limit:
+				break
+
+			if source in existing_sources:
+				continue
+
+			# Check match
+			if search_lower in source.lower() or (translated and search_lower in translated.lower()):
+				translations.append(frappe._dict({"source_text": source, "translated_text": translated}))
+				count += 1
+
 	else:
 		translations = frappe.get_all(
 			"Translation", filters=filters, fields=["source_text", "translated_text"], limit=int(limit)
