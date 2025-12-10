@@ -266,6 +266,11 @@ def ensure_pot_file(app_name):
 
 	messages = get_messages_for_app(app_name)
 
+	# Custom Extraction for Dashboard Cards (Number Card, Workspace)
+	custom_messages = extract_custom_messages(app_name)
+	if custom_messages:
+		messages.extend(custom_messages)
+
 	existing_metadata = {}
 	if os.path.exists(pot_path):
 		try:
@@ -328,7 +333,7 @@ def backup_translations(apps=None):
 	frappe.only_for("System Manager")
 	from translation_hub.core.git_sync_service import GitSyncService
 
-	if isinstance(apps, str):
+	if isinstance(apps, str) and apps:
 		apps = frappe.parse_json(apps)
 
 	settings = frappe.get_single("Translator Settings")
@@ -347,7 +352,7 @@ def restore_translations(apps=None):
 	frappe.only_for("System Manager")
 	from translation_hub.core.git_sync_service import GitSyncService
 
-	if isinstance(apps, str):
+	if isinstance(apps, str) and apps:
 		apps = frappe.parse_json(apps)
 
 	settings = frappe.get_single("Translator Settings")
@@ -356,3 +361,51 @@ def restore_translations(apps=None):
 
 	service = GitSyncService(settings)
 	service.restore(apps=apps)
+
+
+def extract_custom_messages(app_name):
+	"""
+	Scans the app directory for dashboard artifacts (Number Card, Workspace)
+	that behave like standard doctypes but are not automatically picked up.
+	"""
+	import json
+	import os
+	from glob import glob
+
+	app_path = get_app_path(app_name)
+	messages = []
+
+	# Define artifacts to scan: (Folder Name, Field to Extract, Context)
+	artifacts = [
+		("number_card", "label", "Number Card"),
+		("workspace", "label", "Workspace"),
+		("dashboard_chart", "chart_name", "Dashboard Chart"),
+	]
+
+	for folder, field, context in artifacts:
+		# Search pattern: app/module/doctype_folder/doc_name/doc_name.json
+		# We'll just recursively look for json files in relevant folders
+		# A broader search might be safer:
+		search_path = os.path.join(app_path, "**", folder, "**", "*.json")
+		files = glob(search_path, recursive=True)
+
+		for file_path in files:
+			if not file_path.endswith(".json"):
+				continue
+
+			try:
+				with open(file_path) as f:
+					data = json.load(f)
+
+				msgid = data.get(field)
+				if msgid and isinstance(msgid, str):
+					# Format: (path, msgid, context, line)
+					# Path should be relative to bench root usually, but get_messages returns relative to app?
+					# Actually get_messages returns path relative to bench dir usually
+					rel_path = os.path.relpath(file_path, frappe.get_app_path("frappe", ".."))
+					messages.append((rel_path, msgid, context, 0))
+
+			except Exception:
+				continue
+
+	return messages

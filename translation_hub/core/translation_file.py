@@ -25,6 +25,17 @@ class TranslationFile:
 		self.logger = logger or logging.getLogger(__name__)
 		self.pofile: polib.POFile = self._load_or_create_pofile()
 
+	def reload(self):
+		"""
+		Reloads the .po file from disk. Use this if the file has been modified externally
+		(e.g., by DatabaseTranslationHandler).
+		"""
+		if self.po_path.exists():
+			self.logger.info(f"Reloading .po file from: {self.po_path}")
+			self.pofile = polib.pofile(str(self.po_path), encoding="utf-8")
+		else:
+			self.logger.warning(f"Cannot reload .po file: {self.po_path} does not exist.")
+
 	def _load_or_create_pofile(self) -> polib.POFile:
 		"""
 		Loads an existing .po file or creates a new one if it doesn't exist.
@@ -47,6 +58,7 @@ class TranslationFile:
 		"""
 		Merges the .pot file into the .po file. This adds new entries from
 		.pot and marks entries in .po that are not in .pot as obsolete.
+		Also standardizes headers to Translation Hub format.
 		"""
 		if not self.pot_path or not self.pot_path.exists():
 			self.logger.warning("[Warning] .pot file not found. Skipping merge.")
@@ -58,7 +70,40 @@ class TranslationFile:
 		self.logger.info(f"Merging entries from {self.pot_path} into {self.po_path}...")
 		self.pofile.merge(potfile)
 		self.logger.info(f"Total entries after merge: {len(self.pofile)}")
+
+		# Standardize headers: adopt POT metadata but preserve language-specific fields
+		self._standardize_headers(potfile.metadata)
+
 		self.save()  # Save to reflect the merge immediately
+
+	def _standardize_headers(self, pot_metadata: dict):
+		"""
+		Standardizes PO file headers to Translation Hub format.
+		Copies key fields from POT, strips external service headers (Crowdin, Babel).
+		"""
+		import frappe
+
+		now_str = frappe.utils.now_datetime().strftime("%Y-%m-%d %H:%M")
+
+		# Start with POT metadata as base
+		new_metadata = dict(pot_metadata)
+
+		# Override with Translation Hub branding
+		new_metadata["Last-Translator"] = "Translation Hub <ai@translationhub.com>"
+		new_metadata["PO-Revision-Date"] = now_str
+		new_metadata["X-Generator"] = "Frappe Translation Hub"
+
+		# Strip external service headers
+		keys_to_remove = [k for k in new_metadata if k.startswith("X-Crowdin")]
+		for key in keys_to_remove:
+			del new_metadata[key]
+
+		# Remove Babel generator if present
+		if new_metadata.get("Generated-By", "").startswith("Babel"):
+			del new_metadata["Generated-By"]
+
+		self.pofile.metadata = new_metadata
+		self.logger.info("Standardized PO headers to Translation Hub format.")
 
 	def get_untranslated_entries(self) -> list[polib.POEntry]:
 		"""

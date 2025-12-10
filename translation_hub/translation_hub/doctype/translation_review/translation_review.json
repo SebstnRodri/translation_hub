@@ -1,0 +1,137 @@
+{
+    "actions": [],
+    "autoname": "format:TR-{######}",
+    "creation": "2025-12-10 13:45:00",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "section_texts",
+        "source_text",
+        "translated_text",
+        "column_break_texts",
+        "suggested_text",
+        "section_meta",
+        "language",
+        "source_app",
+        "column_break_meta",
+        "status",
+        "reviewed_by",
+        "reviewed_on"
+    ],
+    "fields": [
+        {
+            "fieldname": "section_texts",
+            "fieldtype": "Section Break",
+            "label": "Translation"
+        },
+        {
+            "fieldname": "source_text",
+            "fieldtype": "Small Text",
+            "hidden": 0,
+            "in_list_view": 1,
+            "label": "Source Text",
+            "read_only": 1,
+            "reqd": 1
+        },
+        {
+            "fieldname": "translated_text",
+            "fieldtype": "Small Text",
+            "hidden": 0,
+            "in_list_view": 1,
+            "label": "Current Translation",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_texts",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "suggested_text",
+            "fieldtype": "Small Text",
+            "in_list_view": 1,
+            "label": "Suggested Translation",
+            "reqd": 1
+        },
+        {
+            "fieldname": "section_meta",
+            "fieldtype": "Section Break",
+            "label": "Details"
+        },
+        {
+            "fieldname": "language",
+            "fieldtype": "Link",
+            "label": "Language",
+            "options": "Language",
+            "reqd": 1
+        },
+        {
+            "fieldname": "source_app",
+            "fieldtype": "Link",
+            "label": "Source App",
+            "options": "Installed App",
+            "reqd": 1
+        },
+        {
+            "fieldname": "column_break_meta",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "Pending",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Status",
+            "options": "Pending\nApproved\nRejected"
+        },
+        {
+            "fieldname": "reviewed_by",
+            "fieldtype": "Link",
+            "label": "Reviewed By",
+            "options": "User",
+            "read_only": 1
+        },
+        {
+            "fieldname": "reviewed_on",
+            "fieldtype": "Datetime",
+            "label": "Reviewed On",
+            "read_only": 1
+        }
+    ],
+    "links": [],
+    "modified": "2025-12-10 14:20:00.000000",
+    "modified_by": "Administrator",
+    "module": "Translation Hub",
+    "name": "Translation Review",
+    "naming_rule": "Expression",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Translator",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": [],
+    "title_field": "source_text",
+    "track_changes": 1
+}

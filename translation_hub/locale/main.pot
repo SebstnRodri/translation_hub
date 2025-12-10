@@ -4,13 +4,17 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-10 08:08\n"
+"PO-Revision-Date: 2025-12-10 12:31\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Frappe Translation Hub\n"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:94
+msgid "(No translation)"
+msgstr ""
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
@@ -37,6 +41,10 @@ msgstr ""
 
 #: DocType: App:0
 msgid "App Title"
+msgstr ""
+
+#: DocType: Translation Review:0
+msgid "Approved"
 msgstr ""
 
 #: Navbar::0
@@ -90,12 +98,24 @@ msgstr ""
 msgid "Cancelled"
 msgstr ""
 
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:103
+msgid "Click to fix this one"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:45
+msgid "Close"
+msgstr ""
+
 #: DocType: Translation Job:0
 msgid "Completed"
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:195
 msgid "Connection Test"
+msgstr ""
+
+#: DocType: Translation Review:0
+msgid "Current Translation"
 msgstr ""
 
 #: DocType: Translator Settings:0
@@ -118,6 +138,10 @@ msgstr ""
 
 #: DocType: Translation Glossary:0
 msgid "Description (Context)"
+msgstr ""
+
+#: DocType: Translation Review:0
+msgid "Details"
 msgstr ""
 
 #: DocType: App:0
@@ -160,6 +184,18 @@ msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:26
 msgid "Fetching installed apps..."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:13
+msgid "Find and Fix Translation"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:4
+msgid "Fix Translation"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:82
+msgid "Found {0} results."
 msgstr ""
 
 #: Navbar::0
@@ -279,6 +315,10 @@ msgid ""
 "correctly."
 msgstr ""
 
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:76
+msgid "No translations found."
+msgstr ""
+
 #: DocType: Translator Settings:0
 msgid "None"
 msgstr ""
@@ -351,6 +391,10 @@ msgstr ""
 msgid "Refresh Models"
 msgstr ""
 
+#: DocType: Translation Review:0
+msgid "Rejected"
+msgstr ""
+
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Reload"
@@ -364,8 +408,28 @@ msgstr ""
 msgid "Restore Translations"
 msgstr ""
 
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:41
+msgid "Results"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:84
+msgid "Review All ({0})"
+msgstr ""
+
+#: DocType: Translation Review:0
+msgid "Reviewed By"
+msgstr ""
+
+#: DocType: Translation Review:0
+msgid "Reviewed On"
+msgstr ""
+
 #: DocType: Translator Settings:0
 msgid "Save to .po File"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:34
+msgid "Search Text (Source or Translated)"
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:106
@@ -399,6 +463,10 @@ msgstr ""
 
 #: DocType: Monitored App:0
 msgid "Source App"
+msgstr ""
+
+#: DocType: Translation Review:0
+msgid "Source Text"
 msgstr ""
 
 #: DocType: Monitored App:0
@@ -443,6 +511,10 @@ msgid ""
 " highest priority rendering and survives container restarts."
 msgstr ""
 
+#: DocType: Translation Review:0
+msgid "Suggested Translation"
+msgstr ""
+
 #: DocType: Translator Settings:0
 msgid "Sync Remote Translations Before Translating"
 msgstr ""
@@ -454,6 +526,10 @@ msgstr ""
 
 #: DocType: App:0
 msgid "System Manager"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:17
+msgid "Target App"
 msgstr ""
 
 #: DocType: Translation Job:0
@@ -470,6 +546,14 @@ msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:190
 msgid "Testing API connection..."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:21
+msgid "The app this translation belongs to (Search is global)"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:121
+msgid "This will create {0} review records. Continue?"
 msgstr ""
 
 #: DocType: Translation Job:0
@@ -530,12 +614,24 @@ msgstr ""
 msgid "Translation Job"
 msgstr ""
 
+#: DocType: Translation Review:0
+msgid "Translation Review"
+msgstr ""
+
+#: DocType: Translation Review:0
+msgid "Translator"
+msgstr ""
+
 #: DocType: Translator Language:0
 msgid "Translator Language"
 msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Translator Settings"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:36
+msgid "Type at least 3 characters"
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/report/monitored_apps_progress_report/monitored_apps_progress_report.py:20
@@ -571,4 +667,33 @@ msgstr ""
 
 #: DocType: App:0
 msgid "e.g. Healthcare, Logistics, Education"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:134
+msgid "{0} reviews created! Go to list view to edit."
+msgstr ""
+
+#: ../translation_hub/translation_hub/translation_hub/number_card/strings_translated/strings_translated.json:0
+msgctxt "Number Card"
+msgid "Strings Translated"
+msgstr ""
+
+#: ../translation_hub/translation_hub/translation_hub/number_card/total_apps_tracked/total_apps_tracked.json:0
+msgctxt "Number Card"
+msgid "Total Apps Tracked"
+msgstr ""
+
+#: ../translation_hub/translation_hub/translation_hub/number_card/jobs_in_progress/jobs_in_progress.json:0
+msgctxt "Number Card"
+msgid "Jobs in Progress"
+msgstr ""
+
+#: ../translation_hub/translation_hub/translation_hub/workspace/translation_hub/translation_hub.json:0
+msgctxt "Workspace"
+msgid "Translation Hub"
+msgstr ""
+
+#: ../translation_hub/translation_hub/translation_hub/dashboard_chart/translations_over_time/translations_over_time.json:0
+msgctxt "Dashboard Chart"
+msgid "Translations Over Time"
 msgstr ""

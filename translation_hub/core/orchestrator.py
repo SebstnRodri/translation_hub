@@ -33,6 +33,20 @@ class TranslationOrchestrator:
 		"""
 		try:
 			self.file_handler.merge()
+
+			# REUSE EXISTING TRANSLATIONS FROM DB
+			# If database storage is enabled, pull known translations from DB into the PO file
+			# before we check for untranslated entries. This prevents re-translating known strings.
+			if self.config.use_database_storage:
+				from translation_hub.core.database_translation import DatabaseTranslationHandler
+
+				self.logger.info("Syncing existing translations from database...")
+				db_handler = DatabaseTranslationHandler(self.config.language_code, self.logger)
+				# This updates the PO file on disk with any matching source_text from DB
+				db_handler.export_to_po(str(self.config.po_file))
+				# Reload the file handler to pick up changes from disk
+				self.file_handler.reload()
+
 			untranslated_entries = self.file_handler.get_untranslated_entries()
 			total_strings = len(untranslated_entries)
 			translated_strings = 0

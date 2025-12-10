@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.2.3] - 2025-12-10
+## [v1.3.0] - 2025-12-10
 
 ### ✨ Features
 - **Selective Backup & Restore**: Added ability to select specific apps to backup or restore via a Multi-Select dialog in Translator Settings. Backend now supports filtering operations by app list.
@@ -10,6 +10,19 @@ All notable changes to this project will be documented in this file.
 ### 🐛 Bug Fixes
 - **Installed App API**: Fixed `TypeError` when fetching installed apps list (handling string pagination arguments).
 - **UI Improvements**: Fixed race condition in "Select Apps" dialog by ensuring app list is fetched dynamically before display.
+
+---
+
+## [v1.2.3] - 2025-12-10
+
+### 🚀 Features
+- **Full Translation Ownership**:
+    - **Header Standardization**: Translation Hub now asserts authority over PO files, removing external (Crowdin/Babel) metadata and applying consistent branding.
+    - **Review System**: New `Translation Review` DocType for human refinement with full synchronization (DB -> PO -> Remote Git) upon approval.
+    - **Finder UI**: "Find and Fix Translation" dialog to search translations and instantly create review tasks.
+    - **Bulk Actions**: Ability to create review tasks for all search results at once (e.g., "Review All 161 matches").
+- **Smart Reuse**: The system now checks the database/remote repo for existing translations before starting new AI jobs, preventing redundant token usage.
+- **Dashboard Extraction**: Added custom extractor for `Number Card` and `Dashboard Chart` labels (e.g., "Total Outgoing Bills") which were previously missed.
 
 ---
 
