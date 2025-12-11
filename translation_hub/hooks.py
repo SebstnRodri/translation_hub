@@ -12,15 +12,18 @@ app_license = "mit"
 # required_apps = []
 
 # Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "translation_hub",
-# 		"logo": "/assets/translation_hub/logo.png",
-# 		"title": "Translation Hub",
-# 		"route": "/translation_hub",
-# 		"has_permission": "translation_hub.api.permission.has_app_permission"
-# 	}
-# ]
+app_logo_url = "/assets/translation_hub/images/logo.png"
+
+# Each item in the list will be shown as an app in the apps page
+add_to_apps_screen = [
+	{
+		"name": "translation_hub",
+		"logo": "/assets/translation_hub/images/logo.png",
+		"title": "Translation Hub",
+		"route": "/app/translation-hub",
+		# "has_permission": "translation_hub.api.permission.has_app_permission"
+	}
+]
 
 # Includes in <head>
 # ------------------
