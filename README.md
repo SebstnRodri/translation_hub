@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="https://github.com/SebstnRodri/translation_hub/raw/main/translation_hub/public/images/logo.png" alt="Translation Hub Logo" width="200" height="200">
+</div>
+
 # Translation Hub 🌍
 
 **🇺🇸 [English](#english) | 🇧🇷 [Português](#português)**
@@ -15,7 +19,7 @@ Translation Hub is a powerful tool designed to automate the translation of Frapp
 > [!NOTE]
 > **Compatibility**: This project is compatible with **Frappe Framework v15** and **v16**.
 
-### 🚀 Key Features (v1.4.0)
+### 🚀 Key Features (v1.5.0)
 - **🧠 AI-Assisted Bulk Review**: Generate AI suggestions for hundreds of bad translations in one click.
 - **✨ Individual AI Helper**: Ask AI for suggestions while reviewing specific translations.
 - **🤖 AI-Powered**: Uses Google Gemini, **Groq**, or **OpenRouter** (500+ models) for translations.
@@ -23,6 +27,8 @@ Translation Hub is a powerful tool designed to automate the translation of Frapp
 - **🔌 Test API Connection**: Verify provider setup directly from Translator Settings.
 - **🖥️ Enhanced Workspace**: Improved navigation with dedicated Configuration section.
 - **🛡️ Selective Backup & Restore**: Choose specific apps to backup or restore from versioned Git repository folders.
+- **🌍 Standard Repository Workflow**: Built-in integration with the community translation repository.
+- **⬇️ Download Standard Translations**: One-click restore of comprehensive translation sets.
 - **🔄 Sync Before Translate**: Pull existing translations before starting new jobs.
 - **📊 Real-time Monitoring**: Track translation progress directly from the dashboard.
 - **💾 Database Storage**: Translations stored in database (Docker-safe).
@@ -53,12 +59,14 @@ O Translation Hub é uma ferramenta poderosa para automatizar a tradução de ap
 > [!NOTE]
 > **Compatibilidade**: Este projeto é compatível com **Frappe Framework v15** e **v16**.
 
-### 🚀 Recursos Principais (v1.2.3)
+### 🚀 Recursos Principais (v1.5.0)
 - **🤖 IA Avançada**: Usa Google Gemini, **Groq** ou **OpenRouter** (500+ modelos) para traduções.
 - **⚡ Múltiplos Provedores LLM**: Escolha entre Gemini, Groq e OpenRouter com opções gratuitas.
 - **🔌 Testar Conexão API**: Verifique a configuração do provedor diretamente nas Configurações.
 - **🖥️ Workspace Aprimorado**: Navegação melhorada com seção dedicada de Configuração.
 - **🛡️ Backup & Restore Seletivo**: Escolha apps específicos para backup ou restauração de pastas versionadas no Git.
+- **🌍 Repositório Padrão**: Integração nativa com o repositório comunitário de traduções.
+- **⬇️ Baixar Traduções Padrão**: Restauração de conjuntos completos de tradução com um clique.
 - **🔄 Sincronizar Antes de Traduzir**: Baixa traduções existentes antes de iniciar novos jobs.
 - **📊 Monitoramento em Tempo Real**: Acompanhe o progresso das traduções no dashboard.
 - **💾 Armazenamento em Banco de Dados**: Traduções armazenadas no banco (Docker-safe).
