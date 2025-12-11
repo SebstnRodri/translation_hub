@@ -176,6 +176,9 @@ class GitSyncService:
 	def restore(self, apps=None):
 		self.setup_repo()
 		self.distribute_translations(apps=apps)
+		# Clear cache to ensure new translations are picked up
+		frappe.translate.clear_cache()
+		frappe.clear_cache()
 		frappe.msgprint("Restore completed successfully.")
 
 	def sync(self):
