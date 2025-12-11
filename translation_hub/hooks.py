@@ -2,6 +2,7 @@ app_name = "translation_hub"
 app_title = "Translation Hub"
 app_publisher = "Sebastian Rodrigues"
 app_description = "AI-Powered Translation Agent for Frappe Apps"
+app_version = "1.5.0"
 app_email = "sebstn@outlook.com.br"
 app_license = "mit"
 
