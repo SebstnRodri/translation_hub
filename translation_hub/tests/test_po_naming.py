@@ -44,6 +44,13 @@ class TestPONaming(FrappeTestCase):
 			"default_languages",
 			{"language_code": self.lang_code, "language_name": "Portuguese (Brazil)", "enabled": 1},
 		)
+		settings.append(
+			"default_languages",
+			{"language_code": self.lang_code, "language_name": "Portuguese (Brazil)", "enabled": 1},
+		)
+		# Disable sync to preventing pulling real PO files
+		settings.sync_before_translate = 0
+		settings.backup_repo_url = ""
 		settings.save(ignore_permissions=True)
 
 		# Create a dummy job

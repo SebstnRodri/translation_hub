@@ -109,6 +109,19 @@ frappe.ui.form.on("Translator Settings", {
 			},
 			__("Backup / Restore")
 		);
+
+		// Specific button for Standard Repository workflow
+		frm.add_custom_button(
+			__("Download Standard Translations"),
+			function () {
+				fetch_apps_and_show_dialog(
+					__("Download Standard Translations"),
+					__("Download & Sync"),
+					"restore_translations"
+				);
+			},
+			__("Backup / Restore")
+		);
 	},
 
 	llm_provider(frm) {

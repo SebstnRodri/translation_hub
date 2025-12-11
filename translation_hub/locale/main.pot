@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-10 15:06\n"
+"PO-Revision-Date: 2025-12-11 10:52\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -126,7 +126,7 @@ msgstr ""
 msgid "Completed"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:195
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:208
 msgid "Connection Test"
 msgstr ""
 
@@ -180,6 +180,14 @@ msgstr ""
 msgid "Domain"
 msgstr ""
 
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:119
+msgid "Download & Sync"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:115
+msgid "Download Standard Translations"
+msgstr ""
+
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:18
 msgid "E.g. \"Formal tone\", \"Financial term\""
 msgstr ""
@@ -219,7 +227,7 @@ msgstr ""
 msgid "Fechar"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:132
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:145
 msgid "Fetching available models..."
 msgstr ""
 
@@ -282,7 +290,8 @@ msgstr ""
 
 #: DocType: Translator Settings:0
 msgid ""
-"HTTPS URL of the Git repository (e.g., https://github.com/user/repo.git)"
+"HTTPS URL of the Git repository (Standard: "
+"https://github.com/SebstnRodri/frappe-translations)"
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:19
@@ -360,11 +369,11 @@ msgstr ""
 msgid "Monitored Apps Progress Report"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:175
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:188
 msgid "No Models Found"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:177
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:190
 msgid ""
 "No models were returned. Please check that your API key is configured "
 "correctly."
@@ -495,7 +504,7 @@ msgstr ""
 msgid "Select Apps (Leave empty for all)"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:143
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:156
 msgid "Select Model"
 msgstr ""
 
@@ -503,11 +512,11 @@ msgstr ""
 msgid "Select the LLM provider for translations"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:170
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:183
 msgid "Select {0} Model"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:156
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:169
 msgid "Selected model: {0}. Note: Gemini model is set in code."
 msgstr ""
 
@@ -599,7 +608,7 @@ msgstr ""
 msgid "Test API Connection"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:190
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:203
 msgid "Testing API connection..."
 msgstr ""
 

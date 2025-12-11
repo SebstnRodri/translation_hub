@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v1.5.0] - 2025-12-11
+### Added
+- **Standard Repository**: Defaulted backup URL to `https://github.com/SebstnRodri/frappe-translations`.
+- **Download Standard Translations**: Dedicated button in Settings to pull translations from the standard repository.
+
 ## [v1.4.0] - 2025-12-10
 
 ### ✨ Features

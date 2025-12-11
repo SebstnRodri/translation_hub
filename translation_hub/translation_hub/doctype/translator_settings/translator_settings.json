@@ -162,7 +162,8 @@
             "fieldname": "backup_repo_url",
             "fieldtype": "Data",
             "label": "Backup Repository URL",
-            "description": "HTTPS URL of the Git repository (e.g., https://github.com/user/repo.git)"
+            "default": "https://github.com/SebstnRodri/frappe-translations",
+            "description": "HTTPS URL of the Git repository (Standard: https://github.com/SebstnRodri/frappe-translations)"
         },
         {
             "default": "main",
