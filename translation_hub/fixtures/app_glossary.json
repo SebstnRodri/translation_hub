@@ -7,41 +7,6 @@
    {
     "description": "DocType representing a translation task",
     "term": "Translation Job",
-    "translation": "Trabalho de Tradução"
-   },
-   {
-    "description": "Configuration for automated translation",
-    "term": "Monitored App",
-    "translation": "App Monitorado"
-   },
-   {
-    "description": "Global settings",
-    "term": "Translator Settings",
-    "translation": "Configurações do Tradutor"
-   },
-   {
-    "description": "Context provided to the AI",
-    "term": "Standardization Guide",
-    "translation": "Guia de Padronização"
-   },
-   {
-    "description": "Core logic component",
-    "term": "Orchestrator",
-    "translation": "Orquestrador"
-   }
-  ],
-  "language": "pt-BR",
-  "modified": "2025-11-28 11:36:22.652244",
-  "name": "0g2etc8f85"
- },
- {
-  "app": "translation_hub",
-  "docstatus": 0,
-  "doctype": "App Glossary",
-  "glossary_items": [
-   {
-    "description": "DocType representing a translation task",
-    "term": "Translation Job",
     "translation": "Trabajo de Traducción"
    },
    {
@@ -68,5 +33,20 @@
   "language": "es",
   "modified": "2025-11-28 11:36:22.677135",
   "name": "0g2bioll6i"
+ },
+ {
+  "app": "translation_hub",
+  "docstatus": 0,
+  "doctype": "App Glossary",
+  "glossary_items": [
+   {
+    "description": "Contexto de teste",
+    "term": "Test Term",
+    "translation": "Termo de Teste"
+   }
+  ],
+  "language": "pt-BR",
+  "modified": "2025-12-11 14:48:21.924039",
+  "name": "9nrnfk5pue"
  }
 ]

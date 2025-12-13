@@ -2,7 +2,7 @@ app_name = "translation_hub"
 app_title = "Translation Hub"
 app_publisher = "Sebastian Rodrigues"
 app_description = "AI-Powered Translation Agent for Frappe Apps"
-app_version = "1.5.0"
+app_version = "1.6.0"
 app_email = "sebstn@outlook.com.br"
 app_license = "mit"
 
@@ -85,6 +85,9 @@ add_to_apps_screen = [
 
 # Installation
 # ------------
+
+# Apply monkey patches for Frappe desk translations (only on version-16-beta)
+boot_session = "translation_hub.overrides.apply_patches"
 
 # before_install = "translation_hub.install.before_install"
 # after_install = "translation_hub.install.after_install"
