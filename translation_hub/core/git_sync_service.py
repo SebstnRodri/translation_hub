@@ -69,17 +69,15 @@ class GitSyncService:
 
 	def _get_version_folder(self):
 		"""
-		Returns the folder name for the current Frappe version/branch.
+		Returns the folder name for the current Frappe version.
+		Always uses major version (e.g., 'version-16') for consistency across sites.
 		"""
-		branch = frappe.conf.get("branch")
-		if branch:
-			return branch
-
-		# Fallback to major version if no branch is configured
 		version = frappe.__version__
 		if "develop" in version:
 			return "develop"
-		return f"version-{version.split('.')[0]}"
+		# Always use major version for consistency
+		major_version = version.split('.')[0]
+		return f"version-{major_version}"
 
 	def collect_translations(self, apps=None):
 		"""Copies PO files from monitored apps to the repo directory."""
