@@ -9,4 +9,7 @@ from frappe.model.document import Document
 class App(Document):
 	def validate(self):
 		if self.app_name not in frappe.get_installed_apps():
-			frappe.throw(f"App '{self.app_name}' is not installed on this site.", frappe.ValidationError)
+			frappe.log_error(
+				title="App Not Installed",
+				message=f"App '{self.app_name}' is not installed on this site. Translation features may not work for this app.",
+			)
