@@ -35,6 +35,13 @@ class GitSyncService:
 			return result.stdout.strip()
 		except subprocess.CalledProcessError as e:
 			frappe.log_error(f"Git Error: {e.stderr}", "Git Sync Service")
+			
+			# Provide helpful error message for common authentication issues
+			if "could not read Username" in e.stderr or "Authentication failed" in e.stderr:
+				raise Exception(
+					"Git authentication failed. Please configure an Auth Token in Translator Settings "
+				)
+			
 			raise Exception(f"Git command failed: {' '.join(full_args)}\nError: {e.stderr}")
 
 	def setup_repo(self):
