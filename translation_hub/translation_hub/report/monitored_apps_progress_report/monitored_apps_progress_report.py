@@ -69,7 +69,7 @@ def get_data() -> list[dict]:
 				else:
 					translated_strings = 0
 
-				untranslated_strings = total_strings - translated_strings
+				untranslated_strings = max(0, total_strings - translated_strings)
 				progress = (translated_strings / total_strings) * 100 if total_strings > 0 else 0
 
 				data.append(
