@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-13 10:09\n"
+"PO-Revision-Date: 2025-12-14 08:42\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -14,6 +14,13 @@ msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:88
 msgid "(No translation)"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid ""
+"<p><strong>Note:</strong> Check the box next to each language you want to "
+"enable for translation. Languages must be enabled before they appear in "
+"Translation Jobs.</p>"
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:40
@@ -82,6 +89,10 @@ msgstr ""
 msgid "Automation"
 msgstr ""
 
+#: DocType: Translator Settings:0
+msgid "Available Languages"
+msgstr ""
+
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:98
 msgid "Backup / Restore"
 msgstr ""
@@ -118,6 +129,14 @@ msgstr ""
 msgid "Cancelled"
 msgstr ""
 
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:135
+msgid "Cleanup"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:128
+msgid "Cleanup Locale Directories"
+msgstr ""
+
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:99
 msgid "Click to fix this one"
 msgstr ""
@@ -126,7 +145,7 @@ msgstr ""
 msgid "Completed"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:208
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:226
 msgid "Connection Test"
 msgstr ""
 
@@ -201,7 +220,11 @@ msgstr ""
 msgid "Enable Automated Translation"
 msgstr ""
 
-#: DocType: Translator Language:0
+#: DocType: Translator Settings:0
+msgid "Enable or disable languages for translation"
+msgstr ""
+
+#: DocType: Language Setup Item:0
 msgid "Enabled"
 msgstr ""
 
@@ -227,7 +250,7 @@ msgstr ""
 msgid "Fechar"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:145
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:163
 msgid "Fetching available models..."
 msgstr ""
 
@@ -337,16 +360,32 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: DocType: Translator Language:0
+#: DocType: Language Setup Item:0
 msgid "Language Code"
 msgstr ""
 
-#: DocType: Translator Language:0
+#: DocType: Translator Settings:0
+msgid "Language Manager"
+msgstr ""
+
+#: DocType: Language Setup Item:0
 msgid "Language Name"
 msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Language Setup"
+msgstr ""
+
+#: DocType: Language Setup Item:0
+msgid "Language Setup Item"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Load All Languages"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:246
+msgid "Loading all languages..."
 msgstr ""
 
 #: DocType: Translation Job:0
@@ -369,11 +408,11 @@ msgstr ""
 msgid "Monitored Apps Progress Report"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:188
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:206
 msgid "No Models Found"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:190
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:208
 msgid ""
 "No models were returned. Please check that your API key is configured "
 "correctly."
@@ -489,7 +528,15 @@ msgid "Reviews created: {0}"
 msgstr ""
 
 #: DocType: Translator Settings:0
+msgid "Save Language Settings"
+msgstr ""
+
+#: DocType: Translator Settings:0
 msgid "Save to .po File"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:259
+msgid "Saving language settings..."
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:27
@@ -504,7 +551,7 @@ msgstr ""
 msgid "Select Apps (Leave empty for all)"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:156
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:174
 msgid "Select Model"
 msgstr ""
 
@@ -512,11 +559,11 @@ msgstr ""
 msgid "Select the LLM provider for translations"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:183
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:201
 msgid "Select {0} Model"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:169
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:187
 msgid "Selected model: {0}. Note: Gemini model is set in code."
 msgstr ""
 
@@ -608,12 +655,18 @@ msgstr ""
 msgid "Test API Connection"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:203
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:221
 msgid "Testing API connection..."
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:143
 msgid "This will create {0} review records."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:131
+msgid ""
+"This will permanently delete .po files of disabled languages from monitored "
+"apps. Make sure to backup first!<br><br>Continue?"
 msgstr ""
 
 #: DocType: Translation Job:0

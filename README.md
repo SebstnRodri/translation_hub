@@ -19,14 +19,18 @@ Translation Hub is a powerful tool designed to automate the translation of Frapp
 > [!NOTE]
 > **Compatibility**: This project is compatible with **Frappe Framework v16**.
 
-### 🚀 Key Features (v1.5.0)
+### 🚀 Key Features (v1.6.0)
+- **🗣️ Language Manager UI**: Enable/disable languages via intuitive table interface - no terminal needed!
+- **🎯 Selective Backup**: Backup/restore only enabled languages, reducing repository size.
+- **🧹 Locale Cleanup**: Remove .po files of disabled languages to keep directories organized.
+- **⚡ Auto-compilation**: Automatic .mo compilation after restore and translation jobs.
 - **🧠 AI-Assisted Bulk Review**: Generate AI suggestions for hundreds of bad translations in one click.
 - **✨ Individual AI Helper**: Ask AI for suggestions while reviewing specific translations.
 - **🤖 AI-Powered**: Uses Google Gemini, **Groq**, or **OpenRouter** (500+ models) for translations.
 - **⚡ Multiple LLM Providers**: Choose between Gemini, Groq, and OpenRouter with free tier options.
 - **🔌 Test API Connection**: Verify provider setup directly from Translator Settings.
 - **🖥️ Enhanced Workspace**: Improved navigation with dedicated Configuration section.
-- **🛡️ Selective Backup & Restore**: Choose specific apps to backup or restore from versioned Git repository folders.
+- **🛡️ Versioned Backup & Restore**: Choose specific apps to backup or restore from versioned Git repository folders.
 - **🌍 Standard Repository Workflow**: Built-in integration with the community translation repository.
 - **⬇️ Download Standard Translations**: One-click restore of comprehensive translation sets.
 - **🔄 Sync Before Translate**: Pull existing translations before starting new jobs.
@@ -57,14 +61,20 @@ Translation Hub is a powerful tool designed to automate the translation of Frapp
 O Translation Hub é uma ferramenta poderosa para automatizar a tradução de aplicações Frappe usando IA avançada (Google Gemini, Groq ou OpenRouter). Ele simplifica o processo de localização, garantindo que suas apps estejam prontas para um público global com mínimo esforço manual.
 
 > [!NOTE]
-> **Compatibilidade**: Este projeto é compatível com **Frappe Framework v15** e **v16**.
+> **Compatibilidade**: Este projeto é compatível com **Frappe Framework v16**.
 
-### 🚀 Recursos Principais (v1.5.0)
+### 🚀 Recursos Principais (v1.6.0)
+- **🗣️ Interface de Gerenciamento de Idiomas**: Habilite/desabilite idiomas via interface de tabela intuitiva - sem terminal!
+- **🎯 Backup Seletivo**: Backup/restore apenas de idiomas habilitados, reduzindo tamanho do repositório.
+- **🧹 Limpeza de Locale**: Remove arquivos .po de idiomas desabilitados para manter diretórios organizados.
+- **⚡ Auto-compilação**: Compilação automática de .mo após restore e jobs de tradução.
+- **🧠 Revisão em Massa com IA**: Gere sugestões de IA para centenas de traduções ruins com um clique.
+- **✨ Assistente IA Individual**: Peça sugestões à IA ao revisar traduções específicas.
 - **🤖 IA Avançada**: Usa Google Gemini, **Groq** ou **OpenRouter** (500+ modelos) para traduções.
 - **⚡ Múltiplos Provedores LLM**: Escolha entre Gemini, Groq e OpenRouter com opções gratuitas.
 - **🔌 Testar Conexão API**: Verifique a configuração do provedor diretamente nas Configurações.
 - **🖥️ Workspace Aprimorado**: Navegação melhorada com seção dedicada de Configuração.
-- **🛡️ Backup & Restore Seletivo**: Escolha apps específicos para backup ou restauração de pastas versionadas no Git.
+- **🛡️ Backup & Restore Versionado**: Escolha apps específicos para backup ou restauração de pastas versionadas no Git.
 - **🌍 Repositório Padrão**: Integração nativa com o repositório comunitário de traduções.
 - **⬇️ Baixar Traduções Padrão**: Restauração de conjuntos completos de tradução com um clique.
 - **🔄 Sincronizar Antes de Traduzir**: Baixa traduções existentes antes de iniciar novos jobs.

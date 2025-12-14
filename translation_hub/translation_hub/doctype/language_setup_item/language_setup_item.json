@@ -1,0 +1,44 @@
+{
+    "actions": [],
+    "creation": "2025-12-14 02:00:00.000000",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "language_code",
+        "language_name",
+        "enabled"
+    ],
+    "fields": [
+        {
+            "fieldname": "language_code",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Language Code",
+            "read_only": 1
+        },
+        {
+            "fieldname": "language_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Language Name",
+            "read_only": 1
+        },
+        {
+            "fieldname": "enabled",
+            "fieldtype": "Check",
+            "in_list_view": 1,
+            "label": "Enabled"
+        }
+    ],
+    "istable": 1,
+    "links": [],
+    "modified": "2025-12-14 02:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Translation Hub",
+    "name": "Language Setup Item",
+    "owner": "Administrator",
+    "permissions": [],
+    "sort_field": "modified",
+    "sort_order": "DESC"
+}

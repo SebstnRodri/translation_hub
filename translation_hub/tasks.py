@@ -59,9 +59,6 @@ def execute_translation_job(translation_job_name):
 		po_path = Path(app_path) / "locale" / f"{job.target_language.replace('-', '_')}.po"
 		pot_path = Path(app_path) / "locale" / "main.pot"
 
-		# Get unmasked API key
-		api_key = settings.get_password("api_key")
-
 		# 1. Global Guide (System Prompt)
 		guides = [f"Global Guide (System Prompt):\n{SYSTEM_PROMPT}"]
 
@@ -109,7 +106,8 @@ def execute_translation_job(translation_job_name):
 		elif llm_provider == "OpenRouter":
 			active_api_key = settings.get_password("openrouter_api_key")
 		else:
-			active_api_key = api_key  # Gemini API key
+			# Gemini (default)
+			active_api_key = settings.get_password("api_key")
 
 		# Detect Test Mode based on the active provider's API key
 		is_test_mode = active_api_key and active_api_key.startswith("test-")
@@ -178,6 +176,11 @@ def execute_translation_job(translation_job_name):
 		)
 
 		orchestrator.run()
+
+		# Compile translations to .mo files for immediate use
+		from frappe.gettext.translate import compile_translations
+		compile_translations(job.source_app)
+		frappe.logger().info(f"Compiled translations for {job.source_app}")
 
 		job.status = "Completed"
 		job.end_time = frappe.utils.now_datetime()
@@ -361,6 +364,17 @@ def restore_translations(apps=None):
 
 	service = GitSyncService(settings)
 	service.restore(apps=apps)
+
+
+@frappe.whitelist()
+def cleanup_locale_directories(apps=None):
+	"""
+	Removes .po files of disabled languages from monitored app locale directories.
+	"""
+	frappe.only_for("System Manager")
+	from translation_hub.translation_hub.doctype.translator_settings import translator_settings
+
+	translator_settings.cleanup_locale_directories(apps=apps)
 
 
 def extract_custom_messages(app_name):

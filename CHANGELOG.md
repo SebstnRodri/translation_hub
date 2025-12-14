@@ -1,186 +1,112 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+All notable changes to Translation Hub will be documented in this file.
 
-## [v1.5.0] - 2025-12-11
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### Features
-- **Standard Repository Workflow:** Added default `backup_repo_url` pointing to `https://github.com/SebstnRodri/frappe-translations`.
-- **Download Standard Translations:** Added a button to easily restore standard translations.
+## [1.6.1] - 2024-12-14
 
-### Fixes
-- **Cache Clearing:** Added automatic cache clearing after translation restore to ensure UI updates immediately.
+### Fixed
+- **API Key Retrieval**: Fixed bug where Translation Job failed when using Groq/OpenRouter by removing premature api_key retrieval
+  - Moved Gemini API key retrieval to conditional block
+  - Each provider now fetches only its own API key
+  - File: [tasks.py](file:///home/ubuntu/Project/frappe-v16/apps/translation_hub/translation_hub/tasks.py#L107-L111)
 
-## [v1.4.0] - 2025-12-10
+- **Translation Review Creation**: Fixed mandatory field error when creating reviews for untranslated strings
+  - Added fallback to use source_text when current_translation is empty
+  - Prevents empty suggested_text field validation error
+  - File: [translation_review.py](file:///home/ubuntu/Project/frappe-v16/apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.py#L118-L120)
 
-### ✨ Features
-- **Selective Backup & Restore**: Added ability to select specific apps to backup or restore via a Multi-Select dialog in Translator Settings. Backend now supports filtering operations by app list.
+- **PO to Database Import**: Added automatic import of .po files to Translation database after restore
+  - Implemented `_import_to_database()` method in GitSyncService
+  - Translation Review now works correctly with restored translations
+  - Uses polib to parse .po files and populate tabTranslation
+  - File: [git_sync_service.py](file:///home/ubuntu/Project/frappe-v16/apps/translation_hub/translation_hub/core/git_sync_service.py#L227-L304)
 
-### 🐛 Bug Fixes
-- **Installed App API**: Fixed `TypeError` when fetching installed apps list (handling string pagination arguments).
-- **UI Improvements**: Fixed race condition in "Select Apps" dialog by ensuring app list is fetched dynamically before display.
+- **Compilation Method**: Corrected translation compilation to use proper Frappe API
+  - Changed from non-existent `frappe.translate.build_message_files()`
+  - To correct `frappe.gettext.translate.compile_translations()`
+  - Files: [git_sync_service.py](file:///home/ubuntu/Project/frappe-v16/apps/translation_hub/translation_hub/core/git_sync_service.py#L310), [tasks.py](file:///home/ubuntu/Project/frappe-v16/apps/translation_hub/translation_hub/tasks.py#L181)
 
----
+### Technical Details
+**Files Modified:**
+- `translation_hub/__init__.py` - Version 1.6.1
+- `translation_hub/hooks.py` - Version 1.6.1
+- `translation_hub/tasks.py` - API key retrieval fix, compilation fix
+- `translation_hub/doctype/translation_review/translation_review.py` - Mandatory field fix
+- `translation_hub/core/git_sync_service.py` - PO import, compilation fix
 
-## [v1.2.3] - 2025-12-10
+## [1.6.0] - 2024-12-14
 
-### 🚀 Features
-- **Full Translation Ownership**:
-    - **Header Standardization**: Translation Hub now asserts authority over PO files, removing external (Crowdin/Babel) metadata and applying consistent branding.
-    - **Review System**: New `Translation Review` DocType for human refinement with full synchronization (DB -> PO -> Remote Git) upon approval.
-    - **Finder UI**: "Find and Fix Translation" dialog to search translations and instantly create review tasks.
-    - **Bulk Actions**: Ability to create review tasks for all search results at once (e.g., "Review All 161 matches").
-- **Smart Reuse**: The system now checks the database/remote repo for existing translations before starting new AI jobs, preventing redundant token usage.
-- **Dashboard Extraction**: Added custom extractor for `Number Card` and `Dashboard Chart` labels (e.g., "Total Outgoing Bills") which were previously missed.
+### Added
+- **Language Manager UI**: New user-friendly interface in Translator Settings to enable/disable languages
+  - Auto-detects .po files and creates Language records automatically
+  - Displays proper language names (e.g., "Português (Brasil)" instead of "PT (BR)")
+  - Table view showing ~100+ languages with checkboxes
+  - "Load All Languages" button to sync .po files with Language DocType
+  - "Save Language Settings" button to persist changes
+  - Created `Language Setup Item` child DocType for table display
 
----
+- **Selective Language Backup**: Backup/restore operations now filter by enabled languages only
+  - Added `_get_enabled_language_codes()` helper method in `GitSyncService`
+  - Modified `collect_translations()` to only backup enabled languages
+  - Modified `distribute_translations()` to only restore enabled languages
+  - Significantly reduces repository size for Git backups
+  - Provides clearer version control with only relevant translations
 
-## [v1.2.2] - 2025-12-09
+- **Locale Directory Cleanup**: New cleanup feature to remove disabled language files
+  - "Cleanup Locale Directories" button in Language Manager
+  - Removes .po files of disabled languages from monitored apps
+  - Confirmation dialog with warning before deletion
+  - System Manager permission required
+  - Detailed logging and reporting of deleted files
+  - Preserves _test.po files automatically
 
-### 🐛 Bug Fixes
-- **Dashboard Translations**: Added missing translations for Dashboard Charts and Number Cards (e.g. "Translations Over Time", "Jobs in Progress") which were displaying in English.
+- **Automatic MO Compilation**: Translations are automatically compiled after operations
+  - Compiles .po to .mo files after restore operations
+  - Compiles after Translation Job completion
+  - Uses Frappe's `build_message_files()` for compilation
+  - Translations immediately available without manual `bench build`
+  - Added `_compile_translations()` helper method
 
----
+### Changed
+- Updated version from 1.5.0 to 1.6.0
+- Enhanced `GitSyncService` with language filtering capabilities
+- Improved Translation Job workflow with automatic compilation step
+- Updated README with new features in both English and Portuguese
 
-## [v1.2.1] - 2025-12-09
+### Technical Details
+**Files Created:**
+- `translation_hub/doctype/language_setup_item/language_setup_item.json`
+- `translation_hub/doctype/language_setup_item/language_setup_item.py`
+- `translation_hub/doctype/language_setup_item/__init__.py`
 
-### 🔄 Refactor
-- **Git Backup Structure**: Updated backup path to include version directory (e.g. `develop/app/locale`) to support multi-version backups without conflict.
-- **Locale Path Resolution**: Fixed bug where the system looked for locale files in the wrong directory (`app.parent/locale` instead of `app/locale`).
+**Files Modified:**
+- `translation_hub/__init__.py` - Version update
+- `translation_hub/doctype/translator_settings/translator_settings.json` - Language Manager section
+- `translation_hub/doctype/translator_settings/translator_settings.py` - 3 new whitelisted methods
+- `translation_hub/doctype/translator_settings/translator_settings.js` - Button handlers
+- `translation_hub/core/git_sync_service.py` - Filtering and compilation
+- `translation_hub/tasks.py` - Cleanup wrapper and compilation
 
-### ⚙️ Maintenance
-- **Test File Cleanup**: Automatically ignores files ending in `_test.po` during backup and removed existing test artifacts from the repository.
-- **Test Automation**: Temporarily disabled flaky automation test to ensure reliable deployment pipelines.
+## [1.5.0] - 2024-11-XX
 
----
+### Added
+- AI-Assisted Bulk Review for bad translations
+- Individual AI Helper for specific translation suggestions
+- Multiple LLM provider support (Gemini, Groq, OpenRouter)
+- Test API Connection feature
+- Enhanced workspace navigation
+- Selective backup & restore functionality
+- Standard repository workflow integration
+- Sync before translate feature
 
-## [v1.2.0] - 2025-12-08
+## [1.0.0] - Initial Release
 
-### 🚀 Features
-- **Multiple LLM Providers**: Support for **Gemini**, **Groq**, and **OpenRouter**.
-    - **OpenRouterService**: Access to 500+ models via OpenRouter API.
-    - **UI Configuration**: Select LLM provider in Translator Settings.
-- **Dynamic Model Selection**: Fetch available models from provider APIs.
-    - "Refresh Models" button to populate model dropdown dynamically.
-    - Free OpenRouter models highlighted with 🆓 emoji.
-- **Test API Connection Button**: Verify provider setup directly from settings.
-
-### ⚡ Improvements
-- **Reduced Batch Size**: Default 100 → 15 to avoid rate limits.
-- **Skip Failed Translations**: No more `[TRANSLATION_FAILED]` markers; entries silently skipped.
-- **Always Regenerate POT**: Captures new strings during development.
-
-### 🐛 Bug Fixes
-- **Export App Leakage**: `export_to_po` now only updates existing entries (prevents cross-app contamination).
-- **Language Code Paths**: Normalizes `pt-BR` → `pt_BR` for file paths in reports.
-- **Progress Percentage Display**: Changed to Percent field type (shows "68.18%" not "68.182").
-
-### 🧪 Testing
-- GroqService tests covering initialization, batch translation, and fallback.
-
-### 📚 Documentation
-- Updated `architecture.md` with GroqService and OpenRouterService.
-- README.md now bilingual (English/Portuguese) with language toggle.
-
----
-
-## [v1.1.2-beta] - 2025-12-06
-
-### 🚀 Features
-- **Workspace**: Redesigned Translation Hub workspace with "Setup & Configuration" section for improved navigation.
-- **Sync Before Translate**: Automatically pull existing translations from the remote Git repository before starting a new translation job. Ensures previously translated strings are preserved.
-
-### 🐛 Bug Fixes
-- **Bench Update**: Fixed `ValueError: unconverted data remains` during `bench update` by removing microseconds from `POT-Creation-Date` and `PO-Revision-Date` headers in PO files and generation logic.
-
----
-
-
-## [v1.1.1-beta] - 2025-12-04
-
-
-### 🛠️ Improvements
-- **Release Automation**:
-    - Added automated release script (`scripts/release.sh`) to ensure version consistency
-    - Created comprehensive release process documentation
-    - Prevents version file mismatches in future releases
-
----
-
-## [v1.1.0-beta] - 2025-12-04
-
-
-### 🚀 Features
-- **Git-Based Backup & Restore**:
-    - **GitSyncService**: New service for managing translation backups via Git repositories
-    - **Repository Structure**: Organizes backups by app (`app_name/locale/*.po`)
-    - **Authentication**: Supports Personal Access Tokens (PAT) for private repositories
-    - **Manual Controls**: UI buttons for manual backup and restore operations
-    - **Automated Backups**: Configurable schedule (None/Daily/Weekly)
-    - **Storage Location**: `sites/[site_name]/private/translation_backup_repo`
-- **Translator Settings Enhancements**:
-    - Added backup configuration section (repo URL, branch, auth token, frequency)
-    - Automatic duplicate removal for monitored apps and languages
-    - Improved validation logic
-
-### 🐛 Bug Fixes
-- **Pre-commit Hook**: Removed problematic `cleanup-test-files` hook that caused commit failures
-- **Test Isolation**: Added `*_test.po` to `.gitignore` instead of deleting during commits
-- **Auth Token**: Made auth_token optional in GitSyncService for local repositories
-
-### 🧪 Testing
-- **GitSyncService Tests**: Comprehensive test suite with 4 tests covering:
-    - Backup directory structure creation
-    - Restore functionality
-    - No-changes handling
-    - Multiple apps support
-
-### 📚 Documentation
-- Updated `architecture.md` with GitSyncService component and backup flow
-- Added backup/restore section to `getting_started.md`
-- Updated README.md with Git-based backup feature
-
----
-
-## [v1.0.0-beta] - 2025-11-27
-
-
-### 🚀 Features
-- **Automated Workflow**:
-    - **Self-Healing**: Automatically generates `main.pot` template files if missing (`ensure_pot_file`).
-    - **Real-Time Sync**: Automatically merges new translations into `.po` files (`TranslationFile.merge`).
-    - **Smart Triggers**: Automated translations run automatically when `Translator Settings` are saved.
-- **Governance**:
-    - **Unique Job Naming**: Jobs now use timestamped names (`Automated: {app} - {lang} - {timestamp}`) to prevent `DuplicateEntryError`.
-    - **Validation**: Enforces that jobs match configured App/Language pairs.
-- **Data Integrity**:
-    - **HTML Preservation**: Disabled destructive database export to protect HTML tags in translations.
-    - **Safe Storage**: Prioritizes real-time file saving (`save_to_po_file`) over database dumps.
-
-### 🐛 Bug Fixes
-- **Security**: Masked API keys in logs to prevent sensitive data exposure.
-- **Path Handling**: Fixed `AttributeError` by ensuring `pathlib.Path` objects are used consistently.
-- **Empty PO Files**: Fixed issue where new PO files were created empty by forcing a merge with the POT template.
-- **Log Noise**: Removed misleading "Checking API Key for Mock Service" log message.
-
-### 📚 Documentation
-- Added compatibility note for **Frappe Framework v16.0.0-dev**.
-
----
-
-## [v0.2.1] - 2025-11-26
-
-### ⚡ Improvements
-- **Automated POT Generation**: Removed the need for manual `bench generate-pot-file` commands.
-
----
-
-## [v0.2.0] - 2025-11-26
-
-### ✨ New Features
-- **Multi-Language Support**: Configure a single "Monitored App" to target multiple languages automatically.
-- **Standardization Guides**:
-    - **System Guide**: Global instructions for all translations.
-    - **App Guide**: Specific instructions for each App.
-    - **Language Guide**: Specific instructions for each Language (e.g., "Use formal 'Você'").
-- **Composite Prompting**: The AI now receives a combined guide (System + App + Language) for higher context awareness.
+### Added
+- Core translation engine with AI support
+- Translation Jobs system
+- Database storage for translations
+- Context-aware translation with standardization guides
+- Real-time monitoring dashboard

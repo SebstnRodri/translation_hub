@@ -216,3 +216,241 @@ def fetch_available_models(provider=None):
 	except Exception:
 		frappe.log_error(f"Failed to fetch models for {llm_provider}", "Translation Hub Model Fetch Error")
 		return []
+
+
+def sync_po_files_to_languages():
+	"""
+	Scans frappe/locale directory for .po files and creates Language records
+	for any that don't exist in the database.
+	"""
+	import os
+	import glob
+	
+	# Language name mapping for better display
+	LANGUAGE_NAMES = {
+		"pt-BR": "Português (Brasil)",
+		"pt": "Português",
+		"es": "Español",
+		"es-AR": "Español (Argentina)",
+		"es-BO": "Español (Bolivia)",
+		"es-CL": "Español (Chile)",
+		"es-CO": "Español (Colombia)",
+		"es-MX": "Español (México)",
+		"es-PE": "Español (Perú)",
+		"en": "English",
+		"en-US": "English (United States)",
+		"en-GB": "English (United Kingdom)",
+		"fr": "Français",
+		"fr-CA": "Français (Canada)",
+		"de": "Deutsch",
+		"it": "Italiano",
+		"ja": "日本語",
+		"ko": "한국어",
+		"zh": "中文",
+		"zh-TW": "繁體中文",
+		"zh-CN": "简体中文",
+		"ru": "Русский",
+		"ar": "العربية",
+		"hi": "हिन्दी",
+		"nl": "Nederlands",
+		"pl": "Polski",
+		"tr": "Türkçe",
+		"vi": "Tiếng Việt",
+		"th": "ไทย",
+		"sv": "Svenska",
+		"da": "Dansk",
+		"no": "Norsk",
+		"fi": "Suomi",
+		"cs": "Čeština",
+		"hu": "Magyar",
+		"ro": "Română",
+		"id": "Bahasa Indonesia",
+		"ms": "Bahasa Melayu",
+		"uk": "Українська",
+		"el": "Ελληνικά",
+		"he": "עברית",
+		"fa": "فارسی",
+		"bn": "বাংলা",
+		"ta": "தமிழ்",
+		"te": "తెలుగు",
+	}
+	
+	# Find all .po files in frappe locale directory
+	frappe_path = frappe.get_app_path("frappe")
+	locale_path = os.path.join(frappe_path, "locale")
+	po_files = glob.glob(os.path.join(locale_path, "*.po"))
+	
+	created_count = 0
+	for po_file in po_files:
+		# Extract language code from filename (e.g., pt_BR.po -> pt-BR)
+		filename = os.path.basename(po_file)
+		lang_code = filename.replace(".po", "").replace("_", "-")
+		
+		# Skip if already exists
+		if frappe.db.exists("Language", lang_code):
+			continue
+		
+		# Get proper language name from mapping or generate one
+		if lang_code in LANGUAGE_NAMES:
+			lang_name = LANGUAGE_NAMES[lang_code]
+		elif "-" in lang_code:
+			# Fallback: try to make it readable
+			base_lang = lang_code.split("-")[0]
+			region = lang_code.split("-")[1]
+			base_name = LANGUAGE_NAMES.get(base_lang, base_lang.capitalize())
+			lang_name = f"{base_name} ({region.upper()})"
+		else:
+			lang_name = LANGUAGE_NAMES.get(lang_code, lang_code.capitalize())
+		
+		# Create Language record
+		try:
+			doc = frappe.new_doc("Language")
+			doc.language_code = lang_code
+			doc.language_name = lang_name
+			doc.enabled = 0  # Default to disabled
+			doc.insert(ignore_permissions=True)
+			created_count += 1
+			frappe.logger().info(f"Created Language record for {lang_code} ({lang_name}) from .po file")
+		except Exception as e:
+			frappe.logger().error(f"Failed to create Language for {lang_code}: {str(e)}")
+	
+	return created_count
+
+
+@frappe.whitelist()
+def populate_language_manager_table():
+	"""
+	Populates the Language Manager table with all available languages from the Language DocType.
+	First syncs .po files to ensure all languages with translation files are included.
+	Returns updated table data.
+	"""
+	frappe.only_for("System Manager")
+	
+	# Sync .po files to Languages first
+	created = sync_po_files_to_languages()
+	
+	settings = frappe.get_single("Translator Settings")
+	
+	# Clear existing table
+	settings.language_manager_table = []
+	
+	# Get all languages sorted by name
+	languages = frappe.get_all(
+		"Language",
+		fields=["name", "language_name", "enabled"],
+		order_by="language_name asc"
+	)
+	
+	# Populate table
+	for lang in languages:
+		settings.append("language_manager_table", {
+			"language_code": lang.name,
+			"language_name": lang.language_name,
+			"enabled": lang.enabled or 0
+		})
+	
+	# Save without triggering on_update hooks
+	settings.flags.ignore_validate = True
+	settings.save(ignore_permissions=True)
+	
+	msg = f"Loaded {len(languages)} languages into Language Manager"
+	if created > 0:
+		msg += f" ({created} new language(s) created from .po files)"
+	frappe.msgprint(msg)
+	return settings.language_manager_table
+
+
+@frappe.whitelist()
+def save_language_manager_settings():
+	"""
+	Saves the enabled/disabled status of languages from the Language Manager table
+	back to the Language DocType.
+	"""
+	frappe.only_for("System Manager")
+	settings = frappe.get_single("Translator Settings")
+	
+	if not settings.language_manager_table:
+		frappe.throw("Language Manager table is empty. Click 'Load All Languages' first.")
+	
+	updated_count = 0
+	for row in settings.language_manager_table:
+		if frappe.db.exists("Language", row.language_code):
+			lang = frappe.get_doc("Language", row.language_code)
+			if lang.enabled != row.enabled:
+				lang.enabled = row.enabled
+				lang.save(ignore_permissions=True)
+				updated_count += 1
+	
+	frappe.msgprint(f"✅ Language settings saved! {updated_count} language(s) updated.")
+
+
+@frappe.whitelist()
+def cleanup_locale_directories(apps=None):
+	"""
+	Removes .po files of disabled languages from monitored app locale directories.
+	Only keeps files for enabled languages.
+	"""
+	import os
+	import glob
+	from pathlib import Path
+	
+	frappe.only_for("System Manager")
+	
+	if isinstance(apps, str) and apps:
+		apps = frappe.parse_json(apps)
+	
+	# Get enabled language codes in .po format (pt_BR)
+	enabled_langs = frappe.get_all("Language", filters={"enabled": 1}, fields=["name"])
+	enabled_codes = {lang.name.replace("-", "_") for lang in enabled_langs}
+	
+	settings = frappe.get_single("Translator Settings")
+	
+	if not settings.monitored_apps:
+		frappe.msgprint("No monitored apps configured.")
+		return
+	
+	deleted_count = 0
+	apps_affected = []
+	
+	for app_row in settings.monitored_apps:
+		app_name = app_row.source_app
+		
+		# Filter by selected apps if provided
+		if apps and app_name not in apps:
+			continue
+		
+		try:
+			app_path = frappe.get_app_path(app_name)
+			locale_dir = Path(app_path) / "locale"
+			
+			if not locale_dir.exists():
+				continue
+			
+			app_deleted = 0
+			# Remove .po files of disabled languages
+			for po_file in locale_dir.glob("*.po"):
+				if po_file.name.endswith("_test.po"):
+					continue
+				
+				# Extract lang code from filename (e.g., pt_BR.po -> pt_BR)
+				lang_code = po_file.stem
+				
+				# Delete if language is NOT enabled
+				if lang_code not in enabled_codes:
+					po_file.unlink()
+					deleted_count += 1
+					app_deleted += 1
+					frappe.logger().info(f"Deleted {po_file.name} from {app_name}")
+			
+			if app_deleted > 0:
+				apps_affected.append(f"{app_name} ({app_deleted} files)")
+		
+		except Exception as e:
+			frappe.log_error(f"Failed to cleanup locale directory for {app_name}: {e}", "Locale Cleanup")
+	
+	if deleted_count > 0:
+		msg = f"✅ Cleanup completed! Removed {deleted_count} disabled language file(s).<br>"
+		msg += f"Apps affected: {', '.join(apps_affected)}"
+		frappe.msgprint(msg)
+	else:
+		frappe.msgprint("No disabled language files found to remove.")

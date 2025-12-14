@@ -45,9 +45,9 @@ frappe.ui.form.on("Translator Settings", {
 						function (values) {
 							let apps = values.apps
 								? values.apps
-										.split(",")
-										.map((s) => s.trim())
-										.filter((s) => s)
+									.split(",")
+									.map((s) => s.trim())
+									.filter((s) => s)
 								: [];
 
 							let perform_action = () => {
@@ -121,6 +121,24 @@ frappe.ui.form.on("Translator Settings", {
 				);
 			},
 			__("Backup / Restore")
+		);
+
+		// Cleanup locale directories button
+		frm.add_custom_button(
+			__("Cleanup Locale Directories"),
+			function () {
+				frappe.confirm(
+					__("This will permanently delete .po files of disabled languages from monitored apps. Make sure to backup first!<br><br>Continue?"),
+					function () {
+						fetch_apps_and_show_dialog(
+							__("Cleanup Locale Directories"),
+							__("Cleanup"),
+							"cleanup_locale_directories"
+						);
+					}
+				);
+			},
+			__("Language Manager")
 		);
 	},
 
@@ -216,6 +234,32 @@ frappe.ui.form.on("Translator Settings", {
 							message: r.message.message,
 						});
 					}
+				}
+			},
+		});
+	},
+
+	sync_languages_button(frm) {
+		frappe.call({
+			method: "translation_hub.translation_hub.doctype.translator_settings.translator_settings.populate_language_manager_table",
+			freeze: true,
+			freeze_message: __("Loading all languages..."),
+			callback: function (r) {
+				if (!r.exc) {
+					frm.reload_doc();
+				}
+			},
+		});
+	},
+
+	save_language_settings(frm) {
+		frappe.call({
+			method: "translation_hub.translation_hub.doctype.translator_settings.translator_settings.save_language_manager_settings",
+			freeze: true,
+			freeze_message: __("Saving language settings..."),
+			callback: function (r) {
+				if (!r.exc) {
+					frm.reload_doc();
 				}
 			},
 		});

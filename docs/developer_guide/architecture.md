@@ -2,6 +2,28 @@
 
 This document describes the overall architecture and design principles of the `translation_hub` application.
 
+## Recent Changes (v1.6.x)
+
+> [!NOTE]
+> **Version 1.6.1** (2024-12-14): Bug fixes for API key retrieval, Translation Review creation, PO import, and compilation.
+>
+> **Version 1.6.0** (2024-12-14): Major update with Language Manager UI, Selective Backup, Locale Cleanup, and Auto-compilation.
+
+### Key Additions in v1.6.0
+
+1. **Language Manager UI** - New child table `Language Setup Item` for managing languages via Frappe Desk
+2. **Selective Language Backup** - GitSyncService now filters by enabled languages
+3. **Locale Cleanup** - Remove .po files of disabled languages with confirmation dialog
+4. **Automatic MO Compilation** - Compile .po to .mo after restore and Translation Jobs
+
+### Key Fixes in v1.6.1
+
+1. **API Key Retrieval** - Fixed Groq/OpenRouter provider support
+2. **Translation Review Creation** - Handle empty translations gracefully
+3. **PO to Database Import** - Automatically import restored .po files to tabTranslation
+4. **Compilation Method** - Use correct `frappe.gettext.translate.compile_translations()`
+
+
 ## Design Principles
 
 The system is designed following a **Layered Architecture** pattern. This separates concerns into distinct, independent components, making the codebase more modular, testable, and extensible.
@@ -21,7 +43,11 @@ The four main layers are:
 
 - **`Translator Settings` (Singleton DocType)**: Stores global configuration like API keys, automation settings, and monitored apps.
   - Contains child table `Monitored App` for automated translation configuration
-  - Fields: `api_key`, `standardization_guide`, `enable_automated_translation`, `frequency`, `monitored_apps`
+  - Contains child table `Translator Language` for default language settings
+  - **NEW in v1.6.0**: Contains child table `Language Setup Item` for Language Manager UI
+  - Fields: `api_key`, `groq_api_key`, `openrouter_api_key`, `llm_provider`, `standardization_guide`, `enable_automated_translation`, `frequency`, `monitored_apps`, `language_manager`
+  - **Language Manager**: UI for enabling/disabling languages via table interface
+  - **Selective Backup**: Only backs up enabled languages to reduce repository size
 
 - **`Translation Job` (Standard DocType)**: Represents a single translation task, tracking its status, progress, timing, and logs.
   - Links to `App` (source application) and `Language` (target language)
@@ -29,6 +55,14 @@ The four main layers are:
   - Records timing: `start_time`, `end_time`
   - Maintains execution log for debugging and monitoring
   - Status values: Pending, Queued, In Progress, Completed, Failed, Cancelled
+  - **NEW in v1.6.1**: Automatic .mo compilation after job completion
+
+- **`Translation Review` (Standard DocType)**: Allows users to review and correct translations.
+  - Links to `Language` and `source_app`
+  - Fields: `source_text`, `translated_text` (current), `suggested_text` (AI or manual suggestion)
+  - Status: Pending, Approved, Rejected
+  - **AI Integration**: Can generate bulk suggestions for bad translations
+  - **Workflow**: Review → Approve → Updates Translation DocType
 
 - **`App` (Standard DocType)**: Represents a Frappe/ERPNext application available for translation.
   - Stores `app_name` (Link to `Installed App`) and `app_title` (display name)
@@ -44,6 +78,12 @@ The four main layers are:
   - Links to `App` and `Language`
   - Contains child table `Glossary Items` (Term, Translation, Description)
   - Used to inject specific terminology into the translation context.
+
+- **`Language Setup Item` (Child Table)**: NEW in v1.6.0 - Displays languages in Language Manager table.
+  - Part of `Translator Settings.language_manager`
+  - Fields: `language_code`, `language_name`, `enabled`
+  - Auto-populated from .po files and Language DocType
+  - Synced to Language DocType on save
 
 - **`Installed App` (Virtual DocType)**: A virtual resource that dynamically lists all apps installed on the current Frappe site.
   - Wraps `frappe.get_installed_apps()`
@@ -330,6 +370,17 @@ The `GitSyncService` class provides automated backup and restore functionality:
 - **Directory Structure**: Organizes backups by version and app (`version/app_name/locale/*.po`)
 - **Authentication**: Supports Personal Access Tokens (PAT) for private repositories
 - **Automatic Commits**: Creates timestamped commits with `[skip ci]` tag
+- **NEW in v1.6.0 - Selective Language Backup**: Only backs up/restores enabled languages
+  - Filters by Language DocType `enabled` field
+  - Significantly reduces repository size
+  - Improves backup/restore performance
+- **NEW in v1.6.1 - PO to Database Import**: Automatically imports restored .po files to Translation database
+  - Parses .po files with `polib`
+  - Populates `tabTranslation` for Translation Review functionality
+  - Only imports enabled languages
+- **NEW in v1.6.1 - Automatic Compilation**: Compiles .po to .mo files after restore
+  - Uses `frappe.gettext.translate.compile_translations()`
+  - Translations immediately available without manual `bench build`
 
 **Configuration** (in Translator Settings):
 - `backup_repo_url`: HTTPS URL of the Git repository
@@ -342,12 +393,11 @@ The `GitSyncService` class provides automated backup and restore functionality:
 **Repository Structure:**
 ```
 translation-backup-repo/
-├── develop/ (or version-15/)
+├── version-16/  # Only major version for consistency
 │   ├── frappe/
 │   │   └── locale/
-│   │       ├── pt_BR.po
-│   │       ├── es.po
-│   │       └── fr.po
+│   │       ├── pt_BR.po    # Only enabled languages
+│   │       └── es.po
 │   ├── erpnext/
 │   │   └── locale/
 │   │       └── pt_BR.po
@@ -358,8 +408,16 @@ translation-backup-repo/
 
 **Usage:**
 - **Manual Backup**: Click "Backup Translations" button in Translator Settings
+  - Optional: Select specific apps to backup
 - **Manual Restore**: Click "Restore Translations" button in Translator Settings
+  - Optional: Select specific apps to restore
+  - Automatically imports to database
+  - Automatically compiles .mo files
 - **Automated**: Configure `backup_frequency` for scheduled backups
+- **Locale Cleanup**: NEW in v1.6.0 - Remove .po files of disabled languages
+  - "Cleanup Locale Directories" button
+  - Confirmation dialog for safety
+  - Preserves _test.po files
 
 
 ### Database-First Approach & HTML Preservation
@@ -604,8 +662,6 @@ sequenceDiagram
     Note right of Config: The combined guide is now\nready to be sent to the LLM\nwith every translation request.
 ```
 
-    Note right of Config: The combined guide is now\nready to be sent to the LLM\nwith every translation request.
-```
 
 ## AI Review Workflow
 

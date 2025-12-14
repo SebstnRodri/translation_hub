@@ -115,12 +115,15 @@ def create_translation_review(source_text: str, language: str, source_app: str):
 		frappe.throw(f"A pending review already exists for this translation: {existing}")
 
 	# Create the review
+	# Use current translation if available, otherwise use source text as placeholder
+	suggested_value = current_translation if current_translation else source_text
+	
 	doc = frappe.get_doc(
 		{
 			"doctype": "Translation Review",
 			"source_text": source_text,
 			"translated_text": current_translation,
-			"suggested_text": current_translation,  # Pre-fill with current so user can edit
+			"suggested_text": suggested_value,  # Use fallback to avoid empty mandatory field
 			"language": language,
 			"source_app": source_app,
 			"status": "Pending",

@@ -1,16 +1,15 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.0\n"
+"Project-Id-Version: translation_hub\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-13 10:09\n"
+"POT-Creation-Date: 2025-12-01 11:13\n"
+"PO-Revision-Date: 2025-12-01 11:13\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Frappe Translation Hub\n"
 
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
@@ -408,11 +407,11 @@ msgstr ""
 msgid "Backup Translations"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:208
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:195
 msgid "Connection Test"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:145
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:132
 msgid "Fetching available models..."
 msgstr ""
 
@@ -440,6 +439,11 @@ msgstr ""
 msgid "Groq model to use (e.g., llama-3.3-70b-versatile, mixtral-8x7b-32768)"
 msgstr ""
 
+#: DocType: Translator Settings:0
+msgid ""
+"HTTPS URL of the Git repository (e.g., https://github.com/user/repo.git)"
+msgstr ""
+
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:12
 msgid "LLM"
 msgstr ""
@@ -452,11 +456,11 @@ msgstr ""
 msgid "LLM Provider"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:188
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:175
 msgid "No Models Found"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:190
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:177
 msgid ""
 "No models were returned. Please check that your API key is configured "
 "correctly."
@@ -506,7 +510,7 @@ msgstr ""
 msgid "Select"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:156
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:143
 msgid "Select Model"
 msgstr ""
 
@@ -514,11 +518,11 @@ msgstr ""
 msgid "Select the LLM provider for translations"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:183
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:170
 msgid "Select {0} Model"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:169
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:156
 msgid "Selected model: {0}. Note: Gemini model is set in code."
 msgstr ""
 
@@ -530,7 +534,7 @@ msgstr ""
 msgid "Test API Connection"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:203
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:190
 msgid "Testing API connection..."
 msgstr ""
 
@@ -567,200 +571,6 @@ msgstr ""
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:94
 msgid "Start Backup"
 msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:88
-msgid "(No translation)"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:40
-msgid "AI Translation Helper"
-msgstr ""
-
-#: DocType: Translation Review:0
-msgid "Approved"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:8
-msgid "Ask AI Suggestion"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:183
-msgid "Asking AI for suggestions..."
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:31
-msgid "Asking AI..."
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:138
-msgid "Bulk Review Options"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:99
-msgid "Click to fix this one"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:16
-msgid "Context for AI (Optional)"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:167
-msgid "Create Reviews"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:184
-msgid "Creating reviews..."
-msgstr ""
-
-#: DocType: Translation Review:0
-msgid "Current Translation"
-msgstr ""
-
-#: DocType: Translation Review:0
-msgid "Details"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:119
-msgid "Download & Sync"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:115
-msgid "Download Standard Translations"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:18
-msgid "E.g. \"Formal tone\", \"Financial term\""
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:162
-msgid ""
-"E.g., 'Financial context, use formal tone' or 'Glossary: Against -> Vínculo'"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:37
-msgid "Fechar"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:15
-msgid "Find and Fix Translation"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:5
-msgid "Fix Translation"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:77
-msgid "Found {0} results."
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:41
-msgid "Generate"
-msgstr ""
-
-#: DocType: Translator Settings:0
-msgid ""
-"HTTPS URL of the Git repository (Standard: "
-"https://github.com/SebstnRodri/frappe-translations)"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:19
-msgid "Idioma"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:153
-msgid ""
-"If checked, AI will generate suggested translations instead of using current"
-" values."
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:71
-msgid "No translations found."
-msgstr ""
-
-#: DocType: Translation Review:0
-msgid "Rejected"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:79
-msgid "Review All ({0})"
-msgstr ""
-
-#: DocType: Translation Review:0
-msgid "Reviewed By"
-msgstr ""
-
-#: DocType: Translation Review:0
-msgid "Reviewed On"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:187
-msgid "Reviews created: {0}"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:27
-msgid "Search Text (Source or Translated)"
-msgstr ""
-
-#: DocType: Translation Review:0
-msgid "Source Text"
-msgstr ""
-
-#: DocType: Translation Review:0
-msgid "Suggested Translation"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:35
-msgid "Suggestion applied!"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:143
-msgid "This will create {0} review records."
-msgstr ""
-
-#: DocType: Translation Review:0
-msgid "Translation Review"
-msgstr ""
-
-#: DocType: Translation Review:0
-msgid "Translator"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:29
-msgid "Type at least 3 characters"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:150
-msgid "Use AI to Suggest Corrections"
-msgstr ""
-
-#: ../translation_hub/translation_hub/translation_hub/number_card/strings_translated/strings_translated.json:0
-msgctxt "Number Card"
-msgid "Strings Translated"
-msgstr ""
-
-#: ../translation_hub/translation_hub/translation_hub/number_card/total_apps_tracked/total_apps_tracked.json:0
-msgctxt "Number Card"
-msgid "Total Apps Tracked"
-msgstr ""
-
-#: ../translation_hub/translation_hub/translation_hub/number_card/jobs_in_progress/jobs_in_progress.json:0
-msgctxt "Number Card"
-msgid "Jobs in Progress"
-msgstr ""
-
-#: ../translation_hub/translation_hub/translation_hub/workspace/translation_hub/translation_hub.json:0
-msgctxt "Workspace"
-msgid "Translation Hub"
-msgstr ""
-
-#: ../translation_hub/translation_hub/translation_hub/dashboard_chart/translations_over_time/translations_over_time.json:0
-msgctxt "Dashboard Chart"
-msgid "Translations Over Time"
-msgstr ""
-
-#~ msgid ""
-#~ "HTTPS URL of the Git repository (e.g., https://github.com/user/repo.git)"
-#~ msgstr ""
 
 #~ msgid "Are you sure you want to backup translations to the remote repository?"
 #~ msgstr ""
