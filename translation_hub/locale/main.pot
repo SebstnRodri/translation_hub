@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-14 08:42\n"
+"PO-Revision-Date: 2025-12-14 13:13\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -335,7 +335,7 @@ msgstr ""
 msgid "Installed App"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_job/translation_job.js:15
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_job/translation_job.js:16
 msgid "Job enqueued successfully"
 msgstr ""
 
@@ -600,7 +600,7 @@ msgstr ""
 msgid "Start Backup"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_job/translation_job.js:11
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_job/translation_job.js:12
 msgid "Start Job"
 msgstr ""
 
