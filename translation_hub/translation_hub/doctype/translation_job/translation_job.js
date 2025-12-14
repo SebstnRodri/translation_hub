@@ -5,6 +5,7 @@ frappe.ui.form.on("Translation Job", {
 	refresh: function (frm) {
 		if (
 			frm.doc.status === "Pending" ||
+			frm.doc.status === "Queued" || // Allow re-enqueue of stuck jobs
 			frm.doc.status === "Failed" ||
 			frm.doc.status === "Cancelled"
 		) {

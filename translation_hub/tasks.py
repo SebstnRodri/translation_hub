@@ -178,9 +178,23 @@ def execute_translation_job(translation_job_name):
 		orchestrator.run()
 
 		# Compile translations to .mo files for immediate use
+		logger.info(f"Compiling translations for {job.source_app}...")
 		from frappe.gettext.translate import compile_translations
+
 		compile_translations(job.source_app)
-		frappe.logger().info(f"Compiled translations for {job.source_app}")
+		logger.info(f"✓ Compiled translations for {job.source_app}")
+
+		# Automatic backup if configured
+		if settings.backup_repo_url and getattr(settings, "backup_frequency", None) != "None":
+			try:
+				logger.info("Initiating automatic backup to remote repository...")
+				from translation_hub.core.git_sync_service import GitSyncService
+
+				git_service = GitSyncService(settings)
+				git_service.backup(apps=[job.source_app])
+				logger.info("✓ Backup completed successfully")
+			except Exception as e:
+				logger.warning(f"Backup failed (non-critical): {e}")
 
 		job.status = "Completed"
 		job.end_time = frappe.utils.now_datetime()
