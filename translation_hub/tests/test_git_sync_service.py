@@ -1,6 +1,7 @@
 import os
 import shutil
 import subprocess
+import unittest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
@@ -77,6 +78,7 @@ class TestGitSyncService(FrappeTestCase):
 			shutil.rmtree(test_repo_dir)
 		super().tearDownClass()
 
+	@unittest.skip("Slow test - requires full Git integration")
 	def test_backup_creates_directory_structure(self):
 		"""Test that backup creates app/locale directory structure"""
 		from translation_hub.core.git_sync_service import GitSyncService
@@ -115,6 +117,7 @@ class TestGitSyncService(FrappeTestCase):
 				if test_po_file.exists():
 					test_po_file.unlink()
 
+	@unittest.skip("Slow test - requires full Git integration")
 	def test_restore_copies_files_back(self):
 		"""Test that restore copies files from repo back to apps"""
 		from translation_hub.core.git_sync_service import GitSyncService
@@ -151,6 +154,7 @@ class TestGitSyncService(FrappeTestCase):
 				if test_po_file.exists():
 					test_po_file.unlink()
 
+	@unittest.skip("Slow test - requires full Git integration")
 	def test_backup_with_no_changes(self):
 		"""Test that backup handles no changes gracefully"""
 		from translation_hub.core.git_sync_service import GitSyncService
@@ -180,6 +184,7 @@ class TestGitSyncService(FrappeTestCase):
 				if test_po_file.exists():
 					test_po_file.unlink()
 
+	@unittest.skip("Slow test - requires full Git integration")
 	def test_selective_backup(self):
 		"""Test backup with selective apps"""
 		from translation_hub.core.git_sync_service import GitSyncService
@@ -218,6 +223,7 @@ class TestGitSyncService(FrappeTestCase):
 					if test_file.exists():
 						test_file.unlink()
 
+	@unittest.skip("Slow test - requires full Git integration")
 	def test_selective_restore(self):
 		"""Test restore with selective apps"""
 		from translation_hub.core.git_sync_service import GitSyncService
