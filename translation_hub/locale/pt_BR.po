@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-14 13:38\n"
+"PO-Revision-Date: 2025-12-16 13:30\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -594,10 +594,6 @@ msgstr "ex.: Formal, Amigável, Profissional"
 msgid "e.g. Healthcare, Logistics, Education"
 msgstr "ex.: Saúde, Logística, Educação"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:88
-msgid "(No translation)"
-msgstr "(Sem tradução)"
-
 #: DocType: Translator Settings:0
 msgid ""
 "<p><strong>Note:</strong> Check the box next to each language you want to "
@@ -608,33 +604,13 @@ msgstr ""
 "você deseja habilitar para tradução. Os idiomas devem ser habilitados antes "
 "de aparecerem em Trabalhos de Tradução.</p>"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:40
-msgid "AI Translation Helper"
-msgstr "Assistente de Tradução AI"
-
 #: DocType: Translation Review:0
 msgid "Approved"
 msgstr "Aprovado"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:8
-msgid "Ask AI Suggestion"
-msgstr "Solicitar Sugestão AI"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:183
-msgid "Asking AI for suggestions..."
-msgstr "Solicitando sugestões do AI..."
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:31
-msgid "Asking AI..."
-msgstr "Solicitando AI..."
-
 #: DocType: Translator Settings:0
 msgid "Available Languages"
 msgstr "Idiomas Disponíveis"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:138
-msgid "Bulk Review Options"
-msgstr "Opções de Revisão em Lote"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:135
 msgid "Cleanup"
@@ -643,22 +619,6 @@ msgstr "Limpeza"
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:128
 msgid "Cleanup Locale Directories"
 msgstr "Limpar Diretórios de Locale"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:99
-msgid "Click to fix this one"
-msgstr "Clique para corrigir este"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:16
-msgid "Context for AI (Optional)"
-msgstr "Contexto para AI (Opcional)"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:167
-msgid "Create Reviews"
-msgstr "Criar Revisões"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:184
-msgid "Creating reviews..."
-msgstr "Criando revisões..."
 
 #: DocType: Translation Review:0
 msgid "Current Translation"
@@ -676,39 +636,9 @@ msgstr "Baixar e Sincronizar"
 msgid "Download Standard Translations"
 msgstr "Baixar Traduções Padrão"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:18
-msgid "E.g. \"Formal tone\", \"Financial term\""
-msgstr "Ex. \"Tono formal\", \"Termo financeiro\""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:162
-msgid ""
-"E.g., 'Financial context, use formal tone' or 'Glossary: Against -> Vínculo'"
-msgstr ""
-"Ex., 'Contexto financeiro, use tom formal' ou 'Glossário: Contra -> Vínculo'"
-
 #: DocType: Translator Settings:0
 msgid "Enable or disable languages for translation"
 msgstr "Habilitar ou desabilitar idiomas para tradução"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:37
-msgid "Fechar"
-msgstr "Fechar"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:15
-msgid "Find and Fix Translation"
-msgstr "Encontrar e Corrigir Tradução"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:5
-msgid "Fix Translation"
-msgstr "Corrigir Tradução"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:77
-msgid "Found {0} results."
-msgstr "Encontrados {0} resultados."
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:41
-msgid "Generate"
-msgstr "Gerar"
 
 #: DocType: Translator Settings:0
 msgid ""
@@ -717,18 +647,6 @@ msgid ""
 msgstr ""
 "URL HTTPS do repositório Git (Padrão: https://github.com/SebstnRodri/frappe-"
 "translations)"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:19
-msgid "Idioma"
-msgstr "Idioma"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:153
-msgid ""
-"If checked, AI will generate suggested translations instead of using current"
-" values."
-msgstr ""
-"Se marcado, a IA gerará sugestões de traduções em vez de usar os valores "
-"atuais."
 
 #: DocType: Translator Settings:0
 msgid "Language Manager"
@@ -746,17 +664,9 @@ msgstr "Carregar Todos os Idiomas"
 msgid "Loading all languages..."
 msgstr "Carregando todos os idiomas..."
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:71
-msgid "No translations found."
-msgstr "Nenhuma tradução encontrada."
-
 #: DocType: Translation Review:0
 msgid "Rejected"
 msgstr "Rejeitado"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:79
-msgid "Review All ({0})"
-msgstr "Revisar Todos ({0})"
 
 #: DocType: Translation Review:0
 msgid "Reviewed By"
@@ -766,10 +676,6 @@ msgstr "Revisado Por"
 msgid "Reviewed On"
 msgstr "Revisado Em"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:187
-msgid "Reviews created: {0}"
-msgstr "Revisões criadas: {0}"
-
 #: DocType: Translator Settings:0
 msgid "Save Language Settings"
 msgstr "Salvar Configurações de Idioma"
@@ -778,25 +684,13 @@ msgstr "Salvar Configurações de Idioma"
 msgid "Saving language settings..."
 msgstr "Salvando configurações de idioma..."
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:27
-msgid "Search Text (Source or Translated)"
-msgstr "Texto de Pesquisa (Fonte ou Traduzido)"
-
-#: DocType: Translation Review:0
+#: DocType: Translation Learning:0
 msgid "Source Text"
 msgstr "Texto Fonte"
 
 #: DocType: Translation Review:0
 msgid "Suggested Translation"
 msgstr "Tradução Sugerida"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:35
-msgid "Suggestion applied!"
-msgstr "Sugestão aplicada!"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:143
-msgid "This will create {0} review records."
-msgstr "Isso criará {0} registros de revisão."
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:131
 msgid ""
@@ -811,17 +705,9 @@ msgstr ""
 msgid "Translation Review"
 msgstr "Revisão de Tradução"
 
-#: DocType: Translation Review:0
+#: DocType: Translation Learning:0
 msgid "Translator"
 msgstr "Tradutor"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:29
-msgid "Type at least 3 characters"
-msgstr "Digite pelo menos 3 caracteres"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:150
-msgid "Use AI to Suggest Corrections"
-msgstr "Use IA para Sugestão de Correções"
 
 #: ../translation_hub/translation_hub/translation_hub/number_card/strings_translated/strings_translated.json:0
 msgctxt "Number Card"
@@ -847,6 +733,393 @@ msgstr "Translation Hub"
 msgctxt "Dashboard Chart"
 msgid "Translations Over Time"
 msgstr "Traduções ao Longo do Tempo"
+
+#: DocType: Translation Review:0
+msgid "Feedback Loop"
+msgstr "Ciclo de Feedback"
+
+#: DocType: Translation Learning:0
+msgid "Human Correction"
+msgstr "Correção Humana"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:100
+msgid "Reject"
+msgstr "Rejeitar"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:420
+msgid "Reject Translation"
+msgstr "Rejeitar Tradução"
+
+#: DocType: Translation Review:0
+msgid "Rejection Reason"
+msgstr "Motivo da Rejeição"
+
+msgid "Review Center"
+msgstr "Central de Revisão"
+
+#: DocType: Translation Learning:0
+msgid "Review Reference"
+msgstr "Referência de Revisão"
+
+#: DocType: Translation Learning:0
+msgid "Translation Learning"
+msgstr "Aprendizado de Tradução"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:325
+msgid "(no current translation)"
+msgstr "(sem tradução atual)"
+
+#: DocType: Translation Learning:0
+msgid "AI Incorrect Output"
+msgstr "Saída Incorreta da IA"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:94
+msgid "AI Original:"
+msgstr "Original da IA:"
+
+#: DocType: Translation Review:0
+msgid "AI Suggestion Snapshot"
+msgstr "Instantâneo da Sugestão da IA"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:253
+msgid "All caught up!"
+msgstr "Tudo atualizado!"
+
+#: DocType: Translation Learning:0
+msgid "App (Domain)"
+msgstr "Aplicativo (Domínio)"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:103
+msgid "Approve"
+msgstr "Aprovar"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:363
+msgid "Approved!"
+msgstr "Aprovado!"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:420
+msgid "Confirm"
+msgstr "Confirmar"
+
+#: DocType: Translation Review:0
+msgid "Context Snapshot"
+msgstr "Instantâneo de Contexto"
+
+#: DocType: Translation Learning:0
+msgid "Correct Translation"
+msgstr "Tradução Correta"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:194
+msgid "Failed to load reviews"
+msgstr "Falha ao carregar revisões"
+
+#: DocType: Translation Learning:0
+msgid "Full Correction"
+msgstr "Correção Completa"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:384
+msgid ""
+"If a specific term is consistently mistranslated, fill in below to teach the"
+" AI."
+msgstr ""
+"Se um termo específico é consistentemente traduzido de forma incorreta, "
+"preencha abaixo para ensinar a IA."
+
+#: DocType: Translation Learning:0
+msgid "Learning"
+msgstr "Aprendizado"
+
+#: DocType: Translation Learning:0
+msgid "Learning Type"
+msgstr "Tipo de Aprendizado"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:159
+msgid "Loading..."
+msgstr "Carregando..."
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:254
+msgid "No pending reviews"
+msgstr "Nenhuma revisão pendente"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:65
+msgid "Pending Reviews"
+msgstr "Revisões Pendentes"
+
+#: DocType: Translation Learning:0
+msgid "Problematic Term"
+msgstr "Termo Problemático"
+
+#: DocType: Translation Learning:0
+msgid "Problematic Term (Original)"
+msgstr "Termo Problemático (Original)"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:33
+msgid "Refresh"
+msgstr "Atualizar"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:73
+msgid "Select a review from the list"
+msgstr "Selecione uma revisão da lista"
+
+#: DocType: Translation Learning:0
+msgid "Term Correction"
+msgstr "Correção de Termo"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:383
+msgid "Term Correction (Optional)"
+msgstr "Correção de Termo (Opcional)"
+
+#: apps/translation_hub/translation_hub/api/review_api.py:103
+msgid "Term learning created: '{0}' → '{1}'"
+msgstr "Aprendizado de termo criado: '{0}' → '{1}'"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:413
+msgid "Term learning saved!"
+msgstr "Aprendizado de termo salvo!"
+
+#: DocType: Translation Review:0
+msgid "Was Edited"
+msgstr "Foi Editado"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:379
+msgid "Why is this translation incorrect?"
+msgstr "Por que essa tradução está incorreta?"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:390
+msgid "e.g. \"against\""
+msgstr "ex. \"contra\""
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:396
+msgid "e.g. \"para\" (not \"contra\")"
+msgstr "ex. \"para\" (não \"contra\")"
+
+#: DocType: Translation Learning:0
+msgid "e.g. 'against'"
+msgstr "ex. 'contra'"
+
+#: DocType: Translation Learning:0
+msgid "e.g. 'para' (not 'contra')"
+msgstr "ex. 'para' (não 'contra')"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:88
+msgid "(No translation)"
+msgstr "(Sem tradução)"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:183
+msgid "Asking AI for suggestions..."
+msgstr "Solicitando sugestões do AI..."
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:138
+msgid "Bulk Review Options"
+msgstr "Opções de Revisão em Lote"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:99
+msgid "Click to fix this one"
+msgstr "Clique para corrigir este"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:159
+msgid "Context for AI (Optional)"
+msgstr "Contexto para AI (Opcional)"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:167
+msgid "Create Reviews"
+msgstr "Criar Revisões"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:184
+msgid "Creating reviews..."
+msgstr "Criando revisões..."
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:162
+msgid ""
+"E.g., 'Financial context, use formal tone' or 'Glossary: Against -> Vínculo'"
+msgstr ""
+"Ex., 'Contexto financeiro, use tom formal' ou 'Glossário: Contra -> Vínculo'"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:37
+msgid "Fechar"
+msgstr "Fechar"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:15
+msgid "Find and Fix Translation"
+msgstr "Encontrar e Corrigir Tradução"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:5
+msgid "Fix Translation"
+msgstr "Corrigir Tradução"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:77
+msgid "Found {0} results."
+msgstr "Encontrados {0} resultados."
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:19
+msgid "Idioma"
+msgstr "Idioma"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:153
+msgid ""
+"If checked, AI will generate suggested translations instead of using current"
+" values."
+msgstr ""
+"Se marcado, a IA gerará sugestões de traduções em vez de usar os valores "
+"atuais."
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:71
+msgid "No translations found."
+msgstr "Nenhuma tradução encontrada."
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:79
+msgid "Review All ({0})"
+msgstr "Revisar Todos ({0})"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:187
+msgid "Reviews created: {0}"
+msgstr "Revisões criadas: {0}"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:27
+msgid "Search Text (Source or Translated)"
+msgstr "Texto de Pesquisa (Fonte ou Traduzido)"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:143
+msgid "This will create {0} review records."
+msgstr "Isso criará {0} registros de revisão."
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:29
+msgid "Type at least 3 characters"
+msgstr "Digite pelo menos 3 caracteres"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:150
+msgid "Use AI to Suggest Corrections"
+msgstr "Use IA para Sugestão de Correções"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:45
+msgid ""
+"A new Translation Review has been created with AI suggestion based on your "
+"feedback: {0}"
+msgstr ""
+"Uma nova Revisão de Tradução foi criada com sugestão de IA com base no seu "
+"feedback: {0}"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:51
+msgid "Actions"
+msgstr "Ações"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:39
+msgid "Asking AI for a new translation with feedback context..."
+msgstr "Solicitando IA para uma nova tradução com contexto de feedback..."
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:239
+msgid "Could not find review: {0}"
+msgstr "Não foi possível encontrar a revisão: {0}"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:43
+msgid "New Review Created"
+msgstr "Nova Revisão Criada"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:20
+msgid "Open Review Center"
+msgstr "Abrir Central de Revisão"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:32
+msgid "Retry with AI"
+msgstr "Tentar Novamente com IA"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:227
+msgid "Review Already Processed"
+msgstr "Revisão Já Processada"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:237
+msgid "Review Not Found"
+msgstr "Revisão Não Encontrada"
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:229
+msgid ""
+"This review ({0}) has already been {1}. <a href=\"/desk/Form/Translation "
+"Review/{2}\">View it here</a>."
+msgstr ""
+"Esta revisão ({0}) já foi {1}. <a href=\"/desk/Form/Translation "
+"Review/{2}\">Visualize aqui</a>."
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:14
+msgid ""
+"Use <a href=\"/desk/review-center?review={0}\">Review Center</a> to edit "
+"this translation."
+msgstr ""
+"Use o <a href=\"/desk/review-center?review={0}\">Centro de Revisão</a> para "
+"editar esta tradução."
+
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:36
+msgid "View Full List"
+msgstr "Ver Lista Completa"
+
+#~ msgid "Abrir Review Center"
+#~ msgstr ""
+
+#~ msgid "Abrir no Review Center"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Para revisar este item, use o <a href=\"/desk/review-center\">Review "
+#~ "Center</a>."
+#~ msgstr ""
+
+#~ msgid "Revisar"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "💡 Use o <strong><a href=\"/desk/review-center\">Review Center</a></strong> "
+#~ "para revisar traduções de forma mais eficiente."
+#~ msgstr ""
+
+#~ msgid "AI Translation Helper"
+#~ msgstr "Assistente de Tradução AI"
+
+#~ msgid "Ask AI Suggestion"
+#~ msgstr "Solicitar Sugestão AI"
+
+#~ msgid "Asking AI..."
+#~ msgstr "Solicitando AI..."
+
+#~ msgid "E.g. \"Formal tone\", \"Financial term\""
+#~ msgstr "Ex. \"Tono formal\", \"Termo financeiro\""
+
+#~ msgid "Generate"
+#~ msgstr "Gerar"
+
+#~ msgid "Suggestion applied!"
+#~ msgstr "Sugestão aplicada!"
+
+#~ msgid "AI Input"
+#~ msgstr ""
+
+#~ msgid "Approve Translation"
+#~ msgstr ""
+
+#~ msgid "Code Context Snapshot"
+#~ msgstr ""
+
+#~ msgid "Failed to load reviews. Check console."
+#~ msgstr ""
+
+#~ msgid "Invalid action"
+#~ msgstr ""
+
+#~ msgid "Original AI Suggestion"
+#~ msgstr ""
+
+#~ msgid "Rejection reason is mandatory"
+#~ msgstr ""
+
+#~ msgid "Review is not pending"
+#~ msgstr ""
+
+#~ msgid "Was Edited by Human"
+#~ msgstr ""
+
+#~ msgid "What AI Suggested"
+#~ msgstr ""
+
+#~ msgid "What Human Corrected"
+#~ msgstr ""
 
 #~ msgid ""
 #~ "HTTPS URL of the Git repository (e.g., https://github.com/user/repo.git)"
