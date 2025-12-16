@@ -1,0 +1,45 @@
+[
+    {
+        "api_key": null,
+        "default_languages": [
+            {
+                "enabled": 1,
+                "language_code": "es",
+                "language_name": "Español",
+                "standardization_guide": "Use neutral Spanish. Address the user as 'Usted'. Avoid regional slang."
+            },
+            {
+                "enabled": 1,
+                "language_code": "fr",
+                "language_name": "Français",
+                "standardization_guide": null
+            },
+            {
+                "enabled": 1,
+                "language_code": "pt-BR",
+                "language_name": "Portuguese (Brazil)",
+                "standardization_guide": "Use formal tone. Address the user as 'Você'. Avoid using 'Tu'."
+            }
+        ],
+        "docstatus": 0,
+        "doctype": "Translator Settings",
+        "llm_provider": "Gemini",
+        "enable_automated_translation": 1,
+        "export_po_on_complete": 0,
+        "frequency": "Daily",
+        "modified": "2025-11-28 11:36:22.700649",
+        "monitored_apps": [
+            {
+                "source_app": "frappe",
+                "standardization_guide": null
+            },
+            {
+                "source_app": "translation_hub",
+                "standardization_guide": null
+            }
+        ],
+        "name": "Translator Settings",
+        "save_to_po_file": 1,
+        "use_database_storage": 1
+    }
+]
