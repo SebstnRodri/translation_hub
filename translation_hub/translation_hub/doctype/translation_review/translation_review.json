@@ -95,6 +95,39 @@
             "fieldtype": "Datetime",
             "label": "Reviewed On",
             "read_only": 1
+        },
+        {
+            "fieldname": "section_break_feedback",
+            "fieldtype": "Section Break",
+            "label": "Feedback Loop"
+        },
+        {
+            "fieldname": "rejection_reason",
+            "fieldtype": "Small Text",
+            "label": "Rejection Reason",
+            "depends_on": "eval:doc.status=='Rejected'"
+        },
+        {
+            "fieldname": "ai_suggestion_snapshot",
+            "fieldtype": "Small Text",
+            "hidden": 1,
+            "label": "AI Suggestion Snapshot",
+            "read_only": 1
+        },
+        {
+            "fieldname": "context_snapshot",
+            "fieldtype": "Small Text",
+            "hidden": 1,
+            "label": "Context Snapshot",
+            "read_only": 1
+        },
+        {
+            "default": "0",
+            "fieldname": "was_edited",
+            "fieldtype": "Check",
+            "hidden": 1,
+            "label": "Was Edited",
+            "read_only": 1
         }
     ],
     "links": [],

@@ -31,6 +31,69 @@ class TranslationService(ABC):
 		"""
 		pass
 
+	def _fetch_learning_examples(self) -> str:
+		"""
+		Fetches relevant few-shot learning examples from 'Translation Learning'.
+		Includes both Full Corrections and Term-specific Corrections.
+		Returns a formatted string of examples or empty string.
+		"""
+		if not getattr(self, "app_name", None):
+			return ""
+			
+		try:
+			import frappe
+			
+			if not self.config or not self.config.language_code:
+				return ""
+
+			instruction = ""
+			
+			# 1. Fetch Term Corrections (higher priority - specific rules)
+			term_corrections = frappe.get_all(
+				"Translation Learning",
+				filters={
+					"language": self.config.language_code,
+					"learning_type": "Term Correction"
+				},
+				fields=["problematic_term", "correct_term"],
+				order_by="creation desc",
+				limit=10
+			)
+			
+			if term_corrections:
+				instruction += "\n\n**CRITICAL TERM RULES (Always follow these):**\n"
+				instruction += "The following terms are often mistranslated. Use the CORRECT translation:\n"
+				for tc in term_corrections:
+					if tc.problematic_term and tc.correct_term:
+						instruction += f"- '{tc.problematic_term}' → translate as '{tc.correct_term}'\n"
+			
+			# 2. Fetch Full Corrections (few-shot examples)
+			full_corrections = frappe.get_all(
+				"Translation Learning",
+				filters={
+					"domain": self.app_name,
+					"language": self.config.language_code,
+					"learning_type": "Full Correction"
+				},
+				fields=["source_text", "ai_output", "human_correction"],
+				order_by="creation desc",
+				limit=3
+			)
+			
+			if full_corrections:
+				instruction += "\n\n**Learning from Corrections (Few-Shot Examples):**\n"
+				instruction += "Pay attention to these past corrections. The 'AI Output' was REJECTED. Use the 'Human Correction' style/terminology instead.\n"
+				
+				for ex in full_corrections:
+					instruction += f"- Source: '{ex.source_text}'\n"
+					instruction += f"  ❌ Avoid: '{ex.ai_output}'\n"
+					instruction += f"  ✅ Preferred: '{ex.human_correction}'\n"
+				
+			return instruction
+			
+		except Exception as e:
+			return ""
+
 
 class MockTranslationService(TranslationService):
 	"""
@@ -154,85 +217,46 @@ class GeminiService(TranslationService):
 
 		return context
 
-	def _configure_model(self) -> genai.GenerativeModel:
+	def _fetch_learning_examples(self) -> str:
 		"""
-		Configures and returns a Google Gemini model instance.
+		Fetches relevant few-shot learning examples from 'Translation Learning'.
+		Returns a formatted string of examples or empty string.
 		"""
-		if not self.config.api_key:
-			raise ValueError("API key not found in settings.")
-
-		genai.configure(api_key=self.config.api_key)
-		return genai.GenerativeModel(self.config.model_name)
-
-	def translate(self, entries: list[dict[str, Any]]) -> list[dict[str, str]]:
-		"""
-		Translates a batch of entries using the Gemini API.
-		Includes retry logic and fallback to single-entry translation.
-		"""
-		# --- BATCH TRANSLATION ATTEMPT ---
-		for attempt in range(self.config.max_batch_retries):
-			try:
-				prompt = self._build_batch_prompt(entries)
-				self.logger.debug(f"Batch prompt:\n{prompt}")
-				self.logger.info(
-					f"  [API Call] Translating batch of {len(entries)} entries (Attempt {attempt + 1}/{self.config.max_batch_retries})"
-				)
-				response = self.model.generate_content(prompt)
-				json_str = self._clean_json_response(response.text)
-				translated_items = json.loads(json_str)
-
-				if isinstance(translated_items, list) and len(translated_items) == len(entries):
-					processed_translations = []
-					for i, item in enumerate(translated_items):
-						original_msgid = entries[i]["msgid"]
-						translated_text = item.get("translated", "")
-						preserved_text = self._preserve_whitespace(original_msgid, translated_text)
-						processed_translations.append({"msgid": original_msgid, "msgstr": preserved_text})
-					return processed_translations
-
-			except (json.JSONDecodeError, Exception) as e:
-				self.logger.warning(
-					f"  [Warning] Batch translation attempt {attempt + 1}/{self.config.max_batch_retries} failed: {e}"
-				)
-				if attempt < self.config.max_batch_retries - 1:
-					time.sleep(self.config.retry_wait_seconds)
-
-		# --- FALLBACK TO SINGLE-ENTRY TRANSLATION ---
-		self.logger.info(
-			f"  [Info] Batch failed after {self.config.max_batch_retries} attempts. Switching to single-entry mode for this batch."
-		)
-		return [self._translate_single(entry) for entry in entries]
-
-	def _translate_single(self, entry: dict[str, Any]) -> dict[str, str]:
-		"""
-		Translates a single entry, with retries.
-		"""
-		msgid = entry["msgid"]
-		for attempt in range(self.config.max_single_retries):
-			try:
-				prompt = self._build_single_prompt(entry)
-				self.logger.debug(f"Single entry prompt:\n{prompt}")
-				self.logger.info(
-					f"    [API Call] Translating single entry: '{msgid}' (Attempt {attempt + 1}/{self.config.max_single_retries})"
-				)
-				response = self.model.generate_content(prompt)
-				json_str = self._clean_json_response(response.text)
-				translated_item = json.loads(json_str)
-				if isinstance(translated_item, dict) and "translated" in translated_item:
-					translated_text = self._preserve_whitespace(msgid, translated_item["translated"])
-					return {"msgid": msgid, "msgstr": translated_text}
-			except (json.JSONDecodeError, Exception) as e:
-				self.logger.warning(
-					f"    [Warning] Single-entry attempt {attempt + 1}/{self.config.max_single_retries} failed for '{msgid}': {e}"
-				)
-				if attempt < self.config.max_single_retries - 1:
-					time.sleep(self.config.retry_wait_seconds)
-
-		self.logger.error(
-			f"    [Error] Failed to translate '{msgid}' after {self.config.max_single_retries} attempts."
-		)
-		# Return None to skip this entry (don't write failed translations)
-		return None
+		if not self.app_name:
+			return ""
+			
+		try:
+			import frappe
+			
+			# Fetch learned corrections for this app and language
+			# Limit to 3 most recent to avoid context bloat
+			examples = frappe.get_all(
+				"Translation Learning",
+				filters={
+					"domain": self.app_name,
+					"language": self.config.language_code
+				},
+				fields=["source_text", "ai_output", "human_correction"],
+				order_by="creation desc",
+				limit=3
+			)
+			
+			if not examples:
+				return ""
+				
+			instruction = "\n\n**Learning from Corrections (Few-Shot Examples):**\n"
+			instruction += "Pay attention to these past corrections. The 'AI Output' was REJECTED. Use the 'Human Correction' style/terminology instead.\n"
+			
+			for ex in examples:
+				instruction += f"- Source: '{ex.source_text}'\n"
+				instruction += f"  ❌ Avoid (AI Bad Output): '{ex.ai_output}'\n"
+				instruction += f"  ✅ Preferred (Human): '{ex.human_correction}'\n"
+				
+			return instruction
+			
+		except Exception as e:
+			self.logger.warning(f"Failed to fetch learning examples: {e}")
+			return ""
 
 	def _build_batch_prompt(self, entries: list[dict[str, Any]]) -> str:
 		base_prompt = (
@@ -258,6 +282,15 @@ class GeminiService(TranslationService):
 			if self.context.get("do_not_translate"):
 				base_prompt += "\n**DO NOT TRANSLATE these terms:**\n"
 				base_prompt += ", ".join(self.context["do_not_translate"]) + "\n"
+
+		# Inject Learning Examples
+		base_prompt += self._fetch_learning_examples()
+
+		base_prompt += (
+			"\nReturn YOUR RESPONSE AS A SINGLE JSON ARRAY of objects, each with the key 'translated'.\n"
+			"The output array must have exactly the same number of items as the input.\n"
+			"Keep placeholders like `{0}` and HTML tags like `<strong>` intact."
+		)
 
 		base_prompt += (
 			"\nReturn YOUR RESPONSE AS A SINGLE JSON ARRAY of objects, each with the key 'translated'.\n"
@@ -548,6 +581,9 @@ class GroqService(TranslationService):
 				base_prompt += "\n**DO NOT TRANSLATE these terms:**\n"
 				base_prompt += ", ".join(self.context["do_not_translate"]) + "\n"
 
+		# Inject Learning Examples
+		base_prompt += self._fetch_learning_examples()
+
 		base_prompt += (
 			"\nReturn YOUR RESPONSE AS A SINGLE JSON ARRAY of objects, each with the key 'translated'.\n"
 			"The output array must have exactly the same number of items as the input.\n"
@@ -798,6 +834,8 @@ class OpenRouterService(TranslationService):
 Translate the following texts, considering the context where they appear in the code (occurrences), developer comments (comment), and other flags (flags).
 
 {guide}
+
+{self._fetch_learning_examples()}
 
 Return YOUR RESPONSE AS A SINGLE JSON ARRAY of objects, each with the key 'translated'.
 The output array must have exactly the same number of items as the input.
