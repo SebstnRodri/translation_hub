@@ -1,0 +1,134 @@
+{
+    "actions": [],
+    "autoname": "format:TL-{######}",
+    "creation": "2025-12-15 11:30:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "source_text",
+        "domain",
+        "language",
+        "review_ref",
+        "learning_type",
+        "section_break_term",
+        "problematic_term",
+        "correct_term",
+        "section_break_ai",
+        "ai_output",
+        "column_break_human",
+        "human_correction"
+    ],
+    "fields": [
+        {
+            "fieldname": "source_text",
+            "fieldtype": "Small Text",
+            "in_list_view": 1,
+            "label": "Source Text",
+            "reqd": 1
+        },
+        {
+            "fieldname": "domain",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "App (Domain)",
+            "options": "Installed App",
+            "reqd": 1
+        },
+        {
+            "fieldname": "language",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Language",
+            "options": "Language",
+            "reqd": 1
+        },
+        {
+            "fieldname": "review_ref",
+            "fieldtype": "Link",
+            "label": "Review Reference",
+            "options": "Translation Review",
+            "read_only": 1
+        },
+        {
+            "fieldname": "learning_type",
+            "fieldtype": "Select",
+            "label": "Learning Type",
+            "options": "Full Correction\nTerm Correction",
+            "default": "Full Correction",
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "section_break_term",
+            "fieldtype": "Section Break",
+            "label": "Problematic Term",
+            "depends_on": "eval:doc.learning_type=='Term Correction'"
+        },
+        {
+            "fieldname": "problematic_term",
+            "fieldtype": "Data",
+            "label": "Problematic Term (Original)",
+            "description": "e.g. 'against'",
+            "depends_on": "eval:doc.learning_type=='Term Correction'"
+        },
+        {
+            "fieldname": "correct_term",
+            "fieldtype": "Data",
+            "label": "Correct Translation",
+            "description": "e.g. 'para' (not 'contra')",
+            "depends_on": "eval:doc.learning_type=='Term Correction'"
+        },
+        {
+            "fieldname": "section_break_ai",
+            "fieldtype": "Section Break",
+            "label": "Learning"
+        },
+        {
+            "fieldname": "ai_output",
+            "fieldtype": "Small Text",
+            "label": "AI Incorrect Output",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_human",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "human_correction",
+            "fieldtype": "Small Text",
+            "label": "Human Correction",
+            "reqd": 1
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2025-12-15 11:30:00.000000",
+    "modified_by": "Administrator",
+    "module": "Translation Hub",
+    "name": "Translation Learning",
+    "naming_rule": "Expression",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "read": 1,
+            "write": 1,
+            "role": "Translator"
+        }
+    ],
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1
+}
