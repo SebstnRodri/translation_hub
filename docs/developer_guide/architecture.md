@@ -2,12 +2,27 @@
 
 This document describes the overall architecture and design principles of the `translation_hub` application.
 
-## Recent Changes (v1.6.x)
+## Recent Changes (v1.6.x - v1.7.x)
 
 > [!NOTE]
+> **Version 1.7.0** (2024-12-15): Review Center UI overhaul, AI Feedback Loop with Term Corrections, Deep Links.
+>
 > **Version 1.6.1** (2024-12-14): Bug fixes for API key retrieval, Translation Review creation, PO import, and compilation.
 >
 > **Version 1.6.0** (2024-12-14): Major update with Language Manager UI, Selective Backup, Locale Cleanup, and Auto-compilation.
+
+### Key Additions in v1.7.0
+
+1. **Review Center Page** - Redesigned split-panel UI for efficient translation review
+   - Left panel: Pending reviews list with filters (app, language)
+   - Right panel: Detail view with editable translation
+   - Keyboard shortcuts: `A` (approve), `R` (reject), `↑`/`↓` (navigate)
+2. **Deep Links** - URL parameter support (`?review=TR-000123`) for direct navigation
+3. **Translation Learning DocType** - Stores AI feedback for continuous improvement
+   - `learning_type`: "General Correction" or "Term Correction"
+   - `problematic_term` / `correct_term`: Term-specific rules
+4. **AI Feedback Loop** - Term corrections injected as "CRITICAL RULES" in AI prompts
+5. **Retry with AI** - Re-request translation with rejection feedback as context
 
 ### Key Additions in v1.6.0
 
@@ -63,6 +78,18 @@ The four main layers are:
   - Status: Pending, Approved, Rejected
   - **AI Integration**: Can generate bulk suggestions for bad translations
   - **Workflow**: Review → Approve → Updates Translation DocType
+  - **NEW in v1.7.0**: Deep link support via URL parameter (`?review=TR-000123`)
+  - **NEW in v1.7.0**: `rejection_reason` field for AI feedback
+  - **NEW in v1.7.0**: Retry with AI action on rejected reviews
+
+- **`Translation Learning` (Standard DocType)**: NEW in v1.7.0 - Stores AI learning data from user feedback.
+  - Links to `Language` and `source_app`
+  - Fields: `source_text`, `original_translation`, `corrected_translation`
+  - **Learning Types**:
+    - `General Correction`: Full translation corrections used as few-shot examples
+    - `Term Correction`: Specific term mappings with `problematic_term` and `correct_term`
+  - **Priority**: Term corrections are injected as "CRITICAL TERM RULES" in AI prompts
+  - **Usage**: Automatically fetched by TranslationService to improve future translations
 
 - **`App` (Standard DocType)**: Represents a Frappe/ERPNext application available for translation.
   - Stores `app_name` (Link to `Installed App`) and `app_title` (display name)
