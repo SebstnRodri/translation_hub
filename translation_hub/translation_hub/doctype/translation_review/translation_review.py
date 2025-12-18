@@ -11,8 +11,139 @@ class TranslationReview(Document):
 		Called after the document is saved.
 		If status changed to 'Approved', apply the suggested translation.
 		"""
-		if self.has_value_changed("status") and self.status == "Approved":
-			self._apply_approved_translation()
+		if self.has_value_changed("status"):
+			if self.status == "Approved":
+				self._apply_approved_translation()
+			elif self.status == "Rejected":
+				self._create_translation_task()
+
+	def _create_translation_task(self):
+		"""
+		Creates a Translation Task when a review is rejected.
+		"""
+		if not self.rejection_reason:
+			# Should rely on UI to enforce this, but good safety check
+			frappe.msgprint("Warning: Rejection reason is missing.")
+
+		# Track rejection pattern
+		self._track_rejection_pattern()
+
+		task = frappe.get_doc(
+			{
+				"doctype": "Translation Task",
+				"source_text": self.source_text,
+				"source_app": self.source_app,
+				"target_language": self.language,
+				"rejection_reason": self.rejection_reason,
+				"related_review": self.name,
+				"status": "Pending",
+				"priority": "Medium",
+			}
+		)
+		task.insert(ignore_permissions=True)
+		frappe.msgprint(f"Translation Task {task.name} created for manual review.")
+
+	def _track_rejection_pattern(self):
+		"""
+		Increments the rejection count for this term in Term Rejection Pattern.
+		"""
+		from frappe.utils import now_datetime
+
+		# Sanitize source text for naming (simple approach, might need more robust slugify)
+		# But we used format:TRP-{source_text}-{language} in JSON.
+		# Ideally we should just use filters to find it.
+
+		pattern_name = frappe.db.exists(
+			"Term Rejection Pattern", {"source_text": self.source_text, "language": self.language}
+		)
+
+		if pattern_name:
+			doc = frappe.get_doc("Term Rejection Pattern", pattern_name)
+			doc.rejection_count += 1
+			doc.last_rejection = now_datetime()
+			doc.save(ignore_permissions=True)
+		else:
+			doc = frappe.get_doc(
+				{
+					"doctype": "Term Rejection Pattern",
+					"source_text": self.source_text,
+					"language": self.language,
+					"rejection_count": 1,
+					"last_rejection": now_datetime(),
+					"status": "Monitoring",
+				}
+			)
+			doc.insert(ignore_permissions=True)
+
+	def before_insert(self):
+		"""
+		Check for auto-approval content before inserting.
+		"""
+		if self.status == "Pending" and self._check_auto_approval_criteria():
+			self.status = "Approved"
+			frappe.msgprint(f"Auto-approved '{self.source_text}' based on Localization Profile.", alert=True)
+
+	def auto_review(self):
+		"""
+		Checks if the translation can be automatically approved based on Localization Profile.
+		Returns True if approved, False otherwise.
+		"""
+		if self.status != "Pending":
+			return False
+
+		if self._check_auto_approval_criteria():
+			self.status = "Approved"
+			self.save()
+			frappe.msgprint("Auto-approved based on Localization Profile")
+			return True
+
+		return False
+
+	def _check_auto_approval_criteria(self):
+		"""
+		Evaluates if the review meets criteria for auto-approval.
+		Returns True/False.
+		"""
+		# Find active profile
+		profile_name = frappe.db.get_value(
+			"Localization Profile", {"language": self.language, "is_active": 1}, "name"
+		)
+
+		if not profile_name:
+			return False
+
+		profile = frappe.get_doc("Localization Profile", profile_name)
+
+		# 1. Check Regional Glossary
+		for term in profile.regional_glossary:
+			if term.english_term.strip().lower() == self.source_text.strip().lower():
+				if term.localized_term.strip().lower() == self.suggested_text.strip().lower():
+					return True
+
+		# 2. Check Context Rules (Regex)
+		import html
+		import re
+
+		for rule in profile.context_rules:
+			try:
+				# Unescape to handle potential HTML entity encoding in text fields
+				pattern = html.unescape(rule.source_pattern)
+				match = re.search(pattern, self.source_text, re.IGNORECASE)
+				if match:
+					# Use match.groupdict() to format the target string
+					# This allows users to use {doc} or {name} in target_translation
+					try:
+						expected = rule.target_translation.format(**match.groupdict())
+					except KeyError:
+						# Fallback if rule uses regex group numbers or is static
+						expected = rule.target_translation
+
+					if expected.strip().lower() == self.suggested_text.strip().lower():
+						return True
+			except Exception:
+				continue
+
+		return False
 
 	def _apply_approved_translation(self):
 		"""

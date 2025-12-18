@@ -22,6 +22,7 @@ class TranslationConfig:
 	api_key: str | None = field(default=None, compare=False)
 	logger: Any = field(default=None, compare=False)
 	language_code: str = "en"
+	localization_profile: str | None = None
 
 	# Database storage options
 	use_database_storage: bool = True  # Use Translation DocType (recommended)

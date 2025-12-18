@@ -297,6 +297,42 @@ class GeminiService(TranslationService):
 		except Exception as e:
 			self.logger.warning(f"Failed to fetch context from hook: {e}")
 
+		# 3. Localization Profile (Takes precedence over App Context for glossary)
+		if getattr(self.config, "localization_profile", None):
+			try:
+				profile = frappe.get_doc("Localization Profile", self.config.localization_profile)
+
+				# Regional Glossary
+				if profile.regional_glossary:
+					if "glossary" not in context:
+						context["glossary"] = {}
+
+					for item in profile.regional_glossary:
+						# Format: "Term": "Translation" (Context)
+						term_key = item.english_term
+						translation = item.localized_term
+						if item.context:
+							translation += f" ({item.context})"
+						context["glossary"][term_key] = translation
+
+				# Context Rules
+				if profile.context_rules:
+					if "context_rules" not in context:
+						context["context_rules"] = []
+
+					for rule in profile.context_rules:
+						context["context_rules"].append(
+							{
+								"pattern": rule.source_pattern,
+								"translation": rule.target_translation,
+								"priority": rule.priority,
+								"examples": rule.examples,
+							}
+						)
+
+			except Exception as e:
+				self.logger.warning(f"Failed to fetch Localization Profile: {e}")
+
 		return context
 
 	def _fetch_learning_examples(self) -> str:
@@ -362,6 +398,16 @@ class GeminiService(TranslationService):
 				base_prompt += "\n**DO NOT TRANSLATE these terms:**\n"
 				base_prompt += ", ".join(self.context["do_not_translate"]) + "\n"
 
+			if self.context.get("context_rules"):
+				base_prompt += "\n**CONTEXT RULES (Strictly follow these):**\n"
+				for rule in self.context["context_rules"]:
+					base_prompt += f"- Pattern: '{rule['pattern']}' → Translate as: '{rule['translation']}'"
+					if rule.get("priority", 0) > 80:
+						base_prompt += " (CRITICAL)"
+					base_prompt += "\n"
+					if rule.get("examples"):
+						base_prompt += f"  Example: {rule['examples']}\n"
+
 		# Inject Learning Examples
 		base_prompt += self._fetch_learning_examples()
 
@@ -412,6 +458,16 @@ class GeminiService(TranslationService):
 			if self.context.get("do_not_translate"):
 				base_prompt += "\n**DO NOT TRANSLATE these terms:**\n"
 				base_prompt += ", ".join(self.context["do_not_translate"]) + "\n"
+
+			if self.context.get("context_rules"):
+				base_prompt += "\n**CONTEXT RULES (Strictly follow these):**\n"
+				for rule in self.context["context_rules"]:
+					base_prompt += f"- Pattern: '{rule['pattern']}' → Translate as: '{rule['translation']}'"
+					if rule.get("priority", 0) > 80:
+						base_prompt += " (CRITICAL)"
+					base_prompt += "\n"
+					if rule.get("examples"):
+						base_prompt += f"  Example: {rule['examples']}\n"
 
 		base_prompt += (
 			"\nReturn YOUR RESPONSE AS A SINGLE JSON OBJECT with the key 'translated'.\n"
@@ -536,6 +592,42 @@ class GroqService(TranslationService):
 						context = hook_context
 		except Exception as e:
 			self.logger.warning(f"Failed to fetch context from hook: {e}")
+
+		# 3. Localization Profile (Takes precedence over App Context for glossary)
+		if getattr(self.config, "localization_profile", None):
+			try:
+				profile = frappe.get_doc("Localization Profile", self.config.localization_profile)
+
+				# Regional Glossary
+				if profile.regional_glossary:
+					if "glossary" not in context:
+						context["glossary"] = {}
+
+					for item in profile.regional_glossary:
+						# Format: "Term": "Translation" (Context)
+						term_key = item.english_term
+						translation = item.localized_term
+						if item.context:
+							translation += f" ({item.context})"
+						context["glossary"][term_key] = translation
+
+				# Context Rules
+				if profile.context_rules:
+					if "context_rules" not in context:
+						context["context_rules"] = []
+
+					for rule in profile.context_rules:
+						context["context_rules"].append(
+							{
+								"pattern": rule.source_pattern,
+								"translation": rule.target_translation,
+								"priority": rule.priority,
+								"examples": rule.examples,
+							}
+						)
+
+			except Exception as e:
+				self.logger.warning(f"Failed to fetch Localization Profile: {e}")
 
 		return context
 

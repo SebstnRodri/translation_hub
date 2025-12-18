@@ -1,0 +1,154 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "field:profile_name",
+    "creation": "2025-12-18 10:55:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "profile_name",
+        "is_active",
+        "setup_section",
+        "country",
+        "language",
+        "expert_validated",
+        "regional_rules_section",
+        "regional_glossary",
+        "context_rules_section",
+        "context_rules",
+        "standards_section",
+        "regulatory_standards",
+        "metadata_section",
+        "last_updated",
+        "maintained_by"
+    ],
+    "fields": [
+        {
+            "fieldname": "profile_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Profile Name",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "default": "0",
+            "fieldname": "is_active",
+            "fieldtype": "Check",
+            "in_list_view": 1,
+            "label": "Is Active"
+        },
+        {
+            "fieldname": "setup_section",
+            "fieldtype": "Section Break",
+            "label": "Setup"
+        },
+        {
+            "fieldname": "country",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Country",
+            "options": "Country",
+            "reqd": 1
+        },
+        {
+            "fieldname": "language",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Language",
+            "options": "Language",
+            "reqd": 1
+        },
+        {
+            "default": "0",
+            "fieldname": "expert_validated",
+            "fieldtype": "Check",
+            "label": "Expert Validated"
+        },
+        {
+            "fieldname": "regional_rules_section",
+            "fieldtype": "Section Break",
+            "label": "Regional Rules"
+        },
+        {
+            "fieldname": "regional_glossary",
+            "fieldtype": "Table",
+            "label": "Regional Glossary",
+            "options": "Regional Term"
+        },
+        {
+            "fieldname": "context_rules_section",
+            "fieldtype": "Section Break",
+            "label": "Context Rules"
+        },
+        {
+            "fieldname": "context_rules",
+            "fieldtype": "Table",
+            "label": "Context Rules",
+            "options": "Context Rule"
+        },
+        {
+            "fieldname": "standards_section",
+            "fieldtype": "Section Break",
+            "label": "Regulatory Standards"
+        },
+        {
+            "fieldname": "regulatory_standards",
+            "fieldtype": "Table",
+            "label": "Regulatory Standards",
+            "options": "Regulatory Standard"
+        },
+        {
+            "fieldname": "metadata_section",
+            "fieldtype": "Section Break",
+            "label": "Metadata"
+        },
+        {
+            "fieldname": "last_updated",
+            "fieldtype": "Date",
+            "label": "Last Updated",
+            "read_only": 1
+        },
+        {
+            "fieldname": "maintained_by",
+            "fieldtype": "Data",
+            "label": "Maintained By"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2025-12-18 10:55:00.000000",
+    "modified_by": "Administrator",
+    "module": "Translation Hub",
+    "name": "Localization Profile",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Translator",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
+}

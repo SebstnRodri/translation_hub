@@ -1,0 +1,52 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2025-12-18 10:55:00.000000",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "standard_name",
+        "standard_type",
+        "official_reference",
+        "term_mappings"
+    ],
+    "fields": [
+        {
+            "fieldname": "standard_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Standard Name",
+            "reqd": 1
+        },
+        {
+            "fieldname": "standard_type",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Standard Type",
+            "options": "Accounting\nTax\nLabor\nOther"
+        },
+        {
+            "fieldname": "official_reference",
+            "fieldtype": "Data",
+            "label": "Official Reference (URL/Law)"
+        },
+        {
+            "fieldname": "term_mappings",
+            "fieldtype": "Code",
+            "label": "Term Mappings (JSON)",
+            "options": "JSON"
+        }
+    ],
+    "istable": 1,
+    "links": [],
+    "modified": "2025-12-18 10:55:00.000000",
+    "modified_by": "Administrator",
+    "module": "Translation Hub",
+    "name": "Regulatory Standard",
+    "owner": "Administrator",
+    "permissions": [],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
+}

@@ -54,6 +54,13 @@
             "reqd": 1
         },
         {
+            "fieldname": "localization_profile",
+            "fieldtype": "Link",
+            "label": "Localization Profile",
+            "options": "Localization Profile",
+            "in_list_view": 1
+        },
+        {
             "fieldname": "progress_section",
             "fieldtype": "Section Break",
             "label": "Progress"

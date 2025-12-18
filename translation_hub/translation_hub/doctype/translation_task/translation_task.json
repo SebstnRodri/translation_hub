@@ -1,0 +1,139 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2025-01-01 10:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "task_info_section",
+        "source_text",
+        "source_app",
+        "target_language",
+        "priority",
+        "status",
+        "assignment_section",
+        "assigned_to",
+        "due_date",
+        "rejection_info_section",
+        "rejection_reason",
+        "related_review"
+    ],
+    "fields": [
+        {
+            "fieldname": "task_info_section",
+            "fieldtype": "Section Break",
+            "label": "Task Info"
+        },
+        {
+            "fieldname": "source_text",
+            "fieldtype": "Small Text",
+            "in_list_view": 1,
+            "label": "Source Text",
+            "read_only": 1,
+            "reqd": 1
+        },
+        {
+            "fieldname": "source_app",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Source App",
+            "options": "App",
+            "read_only": 1
+        },
+        {
+            "fieldname": "target_language",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Target Language",
+            "options": "Language",
+            "read_only": 1
+        },
+        {
+            "fieldname": "priority",
+            "fieldtype": "Select",
+            "label": "Priority",
+            "options": "Low\nMedium\nHigh\nCritical",
+            "default": "Medium",
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "label": "Status",
+            "options": "Pending\nIn Progress\nCompleted\nCancelled",
+            "default": "Pending",
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "assignment_section",
+            "fieldtype": "Section Break",
+            "label": "Assignment"
+        },
+        {
+            "fieldname": "assigned_to",
+            "fieldtype": "Link",
+            "label": "Assigned To",
+            "options": "User"
+        },
+        {
+            "fieldname": "due_date",
+            "fieldtype": "Date",
+            "label": "Due Date"
+        },
+        {
+            "fieldname": "rejection_info_section",
+            "fieldtype": "Section Break",
+            "label": "Rejection Info"
+        },
+        {
+            "fieldname": "rejection_reason",
+            "fieldtype": "Small Text",
+            "label": "Rejection Reason",
+            "read_only": 1
+        },
+        {
+            "fieldname": "related_review",
+            "fieldtype": "Link",
+            "label": "Related Review",
+            "options": "Translation Review",
+            "read_only": 1
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2025-01-01 10:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Translation Hub",
+    "name": "Translation Task",
+    "naming_rule": "Expression",
+    "autoname": "format:TASK-{YYYY}-{MM}-{#####}",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Global Translator",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "track_changes": 1
+}

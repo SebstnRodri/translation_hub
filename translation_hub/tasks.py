@@ -15,17 +15,6 @@ from translation_hub.core.translation_file import TranslationFile
 from translation_hub.core.translation_service import GeminiService
 from translation_hub.utils.doctype_logger import DocTypeLogger
 
-SYSTEM_PROMPT = """You are an expert software localizer specializing in the Frappe Framework.
-Your mission is to translate user interface strings, messages, and content with high precision.
-
-Core Principles:
-- **Accuracy**: Convey the exact meaning of the source text.
-- **Consistency**: Adhere to standard software terminology.
-- **Safety**: Strictly preserve all Jinja/Python variables (e.g., `{{ name }}`, `{0}`, `%s`) and HTML tags.
-- **Neutrality**: Maintain a professional and neutral tone unless specified otherwise by the Language Guide.
-
-Follow the specific instructions provided in the App Guide and Language Guide below."""
-
 
 @frappe.whitelist()
 def execute_translation_job(translation_job_name):
@@ -60,7 +49,9 @@ def execute_translation_job(translation_job_name):
 		pot_path = Path(app_path) / "locale" / "main.pot"
 
 		# 1. Global Guide (System Prompt)
-		guides = [f"Global Guide (System Prompt):\n{SYSTEM_PROMPT}"]
+		# Load from settings, fallback to a sensible default if somehow empty
+		system_prompt = settings.system_prompt or "You are an expert translator."
+		guides = [f"Global Guide (System Prompt):\n{system_prompt}"]
 
 		# 2. App-Specific Guide (from Monitored App)
 		# Find the monitored app row that matches source_app and target_language (or is generic)
@@ -119,6 +110,19 @@ def execute_translation_job(translation_job_name):
 			settings.save_to_po_file = True  # Force save to file so we can verify output
 			settings.export_po_on_complete = False
 
+		# Auto-detect localization profile if not set
+		if not job.localization_profile:
+			# Try to find active profile for this language
+			# Note: target_language is the name/code of the Language document
+			profile = frappe.db.get_value(
+				"Localization Profile", {"language": job.target_language, "is_active": 1}, "name"
+			)
+			if profile:
+				job.localization_profile = profile
+				job.save(ignore_permissions=True)
+				frappe.db.commit()
+				logger.info(f"Auto-detected Localization Profile: {profile}")
+
 		config = TranslationConfig(
 			api_key=active_api_key,
 			standardization_guide=standardization_guide,
@@ -129,6 +133,7 @@ def execute_translation_job(translation_job_name):
 			save_to_po_file=settings.save_to_po_file,
 			export_po_on_complete=settings.export_po_on_complete,
 			language_code=job.target_language,
+			localization_profile=job.localization_profile,
 		)
 
 		file_handler = TranslationFile(po_path=config.po_file, pot_path=config.pot_file, logger=logger)

@@ -9,24 +9,50 @@ frappe.ui.form.on("Translation Review", {
 			frm.set_df_property("suggested_text", "read_only", 1);
 			frm.set_df_property("status", "read_only", 1);
 
-			// Add info message with link to this specific review
-			frm.dashboard.add_comment(
-				__(
-					'Use <a href="/desk/review-center?review={0}">Review Center</a> to edit this translation.',
-					[frm.doc.name]
-				),
-				"blue",
-				true
-			);
-
-			// Primary action: Go to Review Center
-			frm.page.set_primary_action(
-				__("Open Review Center"),
+			// Approve Button
+			frm.add_custom_button(
+				__("Approve"),
 				() => {
-					frappe.set_route("review-center");
+					frm.set_value("status", "Approved");
+					frm.save().then(() => {
+						frappe.show_alert({
+							message: __("Translation Approved"),
+							indicator: "green",
+						});
+					});
 				},
-				"review"
-			);
+				"Actions"
+			).addClass("btn-success");
+
+			// Reject Button
+			frm.add_custom_button(
+				__("Reject"),
+				() => {
+					frappe.prompt(
+						[
+							{
+								label: __("Rejection Reason"),
+								fieldname: "reason",
+								fieldtype: "Small Text",
+								reqd: 1,
+							},
+						],
+						(values) => {
+							frm.set_value("status", "Rejected");
+							frm.set_value("rejection_reason", values.reason); // Assume field exists or will be added
+							frm.save().then(() => {
+								frappe.show_alert({
+									message: __("Translation Rejected"),
+									indicator: "red",
+								});
+							});
+						},
+						__("Reject Translation"),
+						__("Reject")
+					);
+				},
+				"Actions"
+			).addClass("btn-danger");
 		}
 
 		// Show status indicator
