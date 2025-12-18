@@ -90,7 +90,8 @@ add_to_apps_screen = [
 boot_session = "translation_hub.overrides.apply_patches"
 
 # before_install = "translation_hub.install.before_install"
-# after_install = "translation_hub.install.after_install"
+after_install = "translation_hub.install.after_install"
+after_migrate = "translation_hub.install.after_migrate"
 
 # Uninstallation
 # ------------
@@ -156,7 +157,7 @@ boot_session = "translation_hub.overrides.apply_patches"
 fixtures = [
 	"App",
 	"Translator Settings",
-	{"dt": "Workspace", "filters": [["name", "=", "Translation Hub"]]},
+	# {"dt": "Workspace", "filters": [["name", "=", "Translation Hub"]]},
 	{"dt": "Dashboard Chart", "filters": [["module", "=", "Translation Hub"]]},
 	{"dt": "App Glossary", "filters": [["app", "=", "translation_hub"]]},
 ]

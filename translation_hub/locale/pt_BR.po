@@ -273,7 +273,7 @@ msgstr "App monitorado"
 
 #: DocType: Translator Settings:0
 msgid "Monitored Apps"
-msgstr "Apps monitorados"
+msgstr "Monitored Apps"
 
 msgid "Monitored Apps Progress Report"
 msgstr "Relatório de Progresso dos Aplicativos Monitorados"
@@ -554,7 +554,7 @@ msgstr "Translation Hub"
 
 #: DocType: Translation Job:0
 msgid "Translation Job"
-msgstr "Trabalho de Tradução"
+msgstr "Tarefa de Tradução"
 
 #: DocType: Translator Language:0
 msgid "Translator Language"

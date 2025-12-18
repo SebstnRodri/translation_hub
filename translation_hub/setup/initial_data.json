@@ -1,0 +1,112 @@
+{
+    "Translation Domain": [
+        {
+            "domain_name": "Accounting",
+            "description": "Universal Accounting Terms",
+            "base_glossary": [
+                {
+                    "english_term": "Invoice",
+                    "default_translation": "Invoice",
+                    "context": "Document for payment"
+                },
+                {
+                    "english_term": "Supplier",
+                    "default_translation": "Supplier",
+                    "context": "Entity providing goods/services"
+                },
+                {
+                    "english_term": "Customer",
+                    "default_translation": "Customer",
+                    "context": "Entity purchasing goods/services"
+                },
+                {
+                    "english_term": "Chart of Accounts",
+                    "default_translation": "Chart of Accounts",
+                    "context": "List of financial accounts"
+                },
+                {
+                    "english_term": "General Ledger",
+                    "default_translation": "General Ledger",
+                    "context": "Master accounting record"
+                }
+            ]
+        }
+    ],
+    "Localization Profile": [
+        {
+            "profile_name": "Brazil - SPED",
+            "country_code": "Brazil",
+            "language_code": "pt-BR",
+            "is_active": 1,
+            "expert_validated": 1,
+            "regional_glossary": [
+                {
+                    "english_term": "Invoice",
+                    "localized_term": "Nota Fiscal",
+                    "domain": "Accounting",
+                    "regulatory_reference": "NFe"
+                },
+                {
+                    "english_term": "Supplier",
+                    "localized_term": "Fornecedor",
+                    "domain": "Accounting"
+                },
+                {
+                    "english_term": "Chart of Accounts",
+                    "localized_term": "Plano de Contas",
+                    "domain": "Accounting",
+                    "regulatory_reference": "SPED"
+                },
+                {
+                    "english_term": "General Ledger",
+                    "localized_term": "Livro Razão",
+                    "domain": "Accounting",
+                    "regulatory_reference": "SPED"
+                }
+            ],
+            "context_rules": [
+                {
+                    "rule_type": "Regex Pattern",
+                    "source_pattern": "Return Against (?P<doc>.*)",
+                    "target_translation": "Devolução de {doc}",
+                    "priority": 100,
+                    "examples": "Return Against Purchase Invoice -> Devolução de Nota Fiscal de Compra"
+                }
+            ]
+        },
+        {
+            "profile_name": "Portugal - POC",
+            "country_code": "Portugal",
+            "language_code": "pt-PT",
+            "is_active": 1,
+            "expert_validated": 1,
+            "regional_glossary": [
+                {
+                    "english_term": "Invoice",
+                    "localized_term": "Fatura",
+                    "domain": "Accounting",
+                    "regulatory_reference": "CIVA"
+                },
+                {
+                    "english_term": "Supplier",
+                    "localized_term": "Fornecedor",
+                    "domain": "Accounting"
+                },
+                {
+                    "english_term": "Chart of Accounts",
+                    "localized_term": "Plano de Contas",
+                    "domain": "Accounting",
+                    "regulatory_reference": "SNC"
+                }
+            ],
+            "context_rules": [
+                {
+                    "rule_type": "Regex Pattern",
+                    "source_pattern": "Return Against (?P<doc>.*)",
+                    "target_translation": "Devolução de {doc}",
+                    "priority": 100
+                }
+            ]
+        }
+    ]
+}

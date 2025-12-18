@@ -45,6 +45,7 @@ class TestFrappeIntegration(FrappeTestCase):
 	@patch("frappe.enqueue")
 	def test_enqueue_job(self, mock_enqueue):
 		self.job.enqueue_job()
+		self.job.reload()
 		self.assertEqual(self.job.status, "Queued")
 		mock_enqueue.assert_called_with(
 			"translation_hub.tasks.execute_translation_job",

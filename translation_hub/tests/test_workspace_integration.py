@@ -37,10 +37,10 @@ class TestWorkspaceIntegration(FrappeTestCase):
 
 		card_names = []
 		for item in content:
-			if item.get("type") == "number_card":
-				card_names.append(item.get("data", {}).get("number_card_name"))
+			if item.get("type") == "card":
+				card_names.append(item.get("data", {}).get("card_name"))
 
-		expected_cards = ["Total Apps Tracked", "Jobs in Progress", "Strings Translated"]
+		expected_cards = ["Configuration", "Settings"]
 
 		for expected in expected_cards:
 			self.assertIn(expected, card_names, f"Card {expected} not found in Workspace content")
