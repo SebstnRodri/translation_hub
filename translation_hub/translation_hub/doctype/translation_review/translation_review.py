@@ -3,6 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
+from translation_hub.utils.localization import get_localization_profile
 
 
 class TranslationReview(Document):
@@ -105,9 +106,7 @@ class TranslationReview(Document):
 		Returns True/False.
 		"""
 		# Find active profile
-		profile_name = frappe.db.get_value(
-			"Localization Profile", {"language": self.language, "is_active": 1}, "name"
-		)
+		profile_name = get_localization_profile(self.language, self.source_app)
 
 		if not profile_name:
 			return False

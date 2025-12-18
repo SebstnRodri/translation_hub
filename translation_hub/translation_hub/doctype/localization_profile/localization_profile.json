@@ -11,6 +11,7 @@
         "setup_section",
         "country",
         "language",
+        "app",
         "expert_validated",
         "regional_rules_section",
         "regional_glossary",
@@ -58,6 +59,14 @@
             "label": "Language",
             "options": "Language",
             "reqd": 1
+        },
+        {
+            "fieldname": "app",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Scope App (Optional)",
+            "options": "App",
+            "description": "If set, this profile will only apply to this App. Leave empty for generic country/language rules."
         },
         {
             "default": "0",

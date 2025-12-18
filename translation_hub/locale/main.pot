@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-18 20:05\n"
+"PO-Revision-Date: 2025-12-19 12:33\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgid ""
 "Translation Jobs.</p>"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:63
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:82
 msgid ""
 "A new Translation Review has been created with AI suggestion based on your "
 "feedback: {0}"
@@ -46,7 +46,7 @@ msgstr ""
 msgid "Accounting"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:74
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:93
 msgid "Actions"
 msgstr ""
 
@@ -80,7 +80,7 @@ msgstr ""
 msgid "App Title"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:13
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:14
 msgid "Approve"
 msgstr ""
 
@@ -99,7 +99,7 @@ msgid ""
 "selected apps."
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:55
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:74
 msgid "Asking AI for a new translation with feedback context..."
 msgstr ""
 
@@ -449,6 +449,12 @@ msgid ""
 " values."
 msgstr ""
 
+#: DocType: Localization Profile:0
+msgid ""
+"If set, this profile will only apply to this App. Leave empty for generic "
+"country/language rules."
+msgstr ""
+
 #: DocType: Translation Job:0
 msgid "In Progress"
 msgstr ""
@@ -594,7 +600,7 @@ msgstr ""
 msgid "Needs Action"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:61
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:80
 msgid "New Review Created"
 msgstr ""
 
@@ -736,11 +742,11 @@ msgstr ""
 msgid "Regulatory Standards"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:21
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:29
 msgid "Reject"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:35
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:50
 msgid "Reject Translation"
 msgstr ""
 
@@ -781,7 +787,7 @@ msgstr ""
 msgid "Restore Translations"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:47
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:66
 msgid "Retry with AI"
 msgstr ""
 
@@ -822,6 +828,10 @@ msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:261
 msgid "Saving language settings..."
+msgstr ""
+
+#: DocType: Localization Profile:0
+msgid "Scope App (Optional)"
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:27
@@ -1050,7 +1060,7 @@ msgstr ""
 msgid "Translation"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:16
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:19
 msgid "Translation Approved"
 msgstr ""
 
@@ -1082,7 +1092,7 @@ msgstr ""
 msgid "Translation Learning"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:33
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:45
 msgid "Translation Rejected"
 msgstr ""
 

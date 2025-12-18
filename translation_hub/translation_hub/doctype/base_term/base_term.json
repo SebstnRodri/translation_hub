@@ -23,7 +23,7 @@
             "fieldname": "default_translation",
             "fieldtype": "Data",
             "in_list_view": 1,
-            "label": "Default Translation",
+            "label": "Standard Term (English)",
             "reqd": 1
         },
         {

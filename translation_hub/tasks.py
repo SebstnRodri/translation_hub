@@ -11,6 +11,7 @@ from frappe.model.document import Document
 
 from translation_hub.core.config import TranslationConfig
 from translation_hub.core.orchestrator import TranslationOrchestrator
+from translation_hub.utils.localization import get_localization_profile
 from translation_hub.core.translation_file import TranslationFile
 from translation_hub.core.translation_service import GeminiService
 from translation_hub.utils.doctype_logger import DocTypeLogger
@@ -112,11 +113,9 @@ def execute_translation_job(translation_job_name):
 
 		# Auto-detect localization profile if not set
 		if not job.localization_profile:
-			# Try to find active profile for this language
+			# Try to find active profile for this language, scoped by app
 			# Note: target_language is the name/code of the Language document
-			profile = frappe.db.get_value(
-				"Localization Profile", {"language": job.target_language, "is_active": 1}, "name"
-			)
+			profile = get_localization_profile(job.target_language, job.source_app)
 			if profile:
 				job.localization_profile = profile
 				job.save(ignore_permissions=True)
