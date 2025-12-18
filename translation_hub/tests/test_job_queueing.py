@@ -12,6 +12,29 @@ from frappe.tests.utils import FrappeTestCase
 class TestJobQueueing(FrappeTestCase):
 	"""Test job queueing and status transitions"""
 
+	def setUp(self):
+		super().setUp()
+		# Ensure translation_hub is configured as monitored app and pt-BR is enabled
+		settings = frappe.get_single("Translator Settings")
+
+		# Add monitored app if not exists
+		app_exists = any(ma.source_app == "translation_hub" for ma in settings.monitored_apps)
+		if not app_exists:
+			settings.append("monitored_apps", {"source_app": "translation_hub"})
+
+		# Add pt-BR to default_languages if not exists
+		lang_exists = any(
+			lang.language_code == "pt-BR" and lang.enabled for lang in settings.default_languages
+		)
+		if not lang_exists:
+			settings.append(
+				"default_languages",
+				{"language_code": "pt-BR", "language_name": "Portuguese (Brazil)", "enabled": 1},
+			)
+
+		settings.save(ignore_permissions=True)
+		frappe.db.commit()
+
 	def tearDown(self):
 		# Clean up test jobs
 		frappe.db.delete("Translation Job", {"title": ["like", "Test%"]})

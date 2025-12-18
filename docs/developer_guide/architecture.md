@@ -5,13 +5,28 @@ This document describes the overall architecture and design principles of the `t
 ## Recent Changes (v1.6.x - v1.7.x)
 
 > [!NOTE]
-> **Version 1.7.0** (2024-12-15): Review Center UI overhaul, AI Feedback Loop with Term Corrections, Deep Links.
+> **Version 1.7.0** (2024-12-18): File reorganization, Maintenance Module, GeminiService fix.
 >
-> **Version 1.6.1** (2024-12-14): Bug fixes for API key retrieval, Translation Review creation, PO import, and compilation.
+> **Version 1.6.1** (2024-12-15): Review Center UI overhaul, AI Feedback Loop, Deep Links, bug fixes.
 >
 > **Version 1.6.0** (2024-12-14): Major update with Language Manager UI, Selective Backup, Locale Cleanup, and Auto-compilation.
 
 ### Key Additions in v1.7.0
+
+1. **File Reorganization** - Moved loose scripts to proper module directories:
+   - `import_script.py` → `core/po_importer.py`
+   - `maintenance.py` → `core/maintenance.py`
+   - `setup_demo_context.py` → `utils/demo_setup.py`
+2. **Maintenance Module** (`core/maintenance.py`) - Smart utilities for system health:
+   - Cancel stuck translation jobs automatically
+   - Fix language code mismatches (pt_BR → pt-BR)
+   - Clear translation caches dynamically
+   - Sync System Settings with site_config
+   - CLI command: `bench maintenance --all`
+3. **GeminiService Fix** - Added missing `translate()` and `_configure_model()` methods
+4. **PO Importer** (`core/po_importer.py`) - Import .po translations to database without context
+
+### Key Additions in v1.6.1
 
 1. **Review Center Page** - Redesigned split-panel UI for efficient translation review
    - Left panel: Pending reviews list with filters (app, language)
@@ -265,6 +280,19 @@ classDiagram
         +restore()
     }
 
+    class TranslationMaintenance {
+        +fix_stuck_jobs()
+        +fix_language_codes()
+        +clear_caches()
+        +verify_translations()
+        +run_all()
+    }
+
+    class POImporter {
+        +import_po_to_db(app, language)
+        +import_all()
+    }
+
     FrappeUI ..> BackgroundJob : enqueues
     BackgroundJob ..> Orchestrator : instantiates and runs
     BackgroundJob ..> Config : instantiates
@@ -286,6 +314,7 @@ classDiagram
     BackgroundJob ..> GroqService : instantiates (if Groq provider)
     DocTypeLogger ..> FrappeUI : logs to TranslationJob
     GitSyncService ..> FrappeUI : reads TranslatorSettings
+    POImporter ..> DatabaseTranslationHandler : uses
 ```
 
 ### DocType Relationships

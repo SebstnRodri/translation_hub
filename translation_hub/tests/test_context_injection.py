@@ -40,6 +40,14 @@ class TestContextInjection(FrappeTestCase):
 			self.app.set("do_not_translate", [{"term": "HIMS"}])
 			self.app.save(ignore_permissions=True)
 
+		# Add to monitored apps to pass Translation Job validation
+		settings = frappe.get_single("Translator Settings")
+		app_exists = any(ma.source_app == self.app_name for ma in settings.monitored_apps)
+		if not app_exists:
+			settings.append("monitored_apps", {"source_app": self.app_name})
+			settings.save(ignore_permissions=True)
+			frappe.db.commit()
+
 	def tearDown(self):
 		# Delete linked jobs first
 		frappe.db.delete("Translation Job", {"source_app": self.app_name})

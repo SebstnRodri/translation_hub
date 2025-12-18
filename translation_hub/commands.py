@@ -28,4 +28,36 @@ def setup_languages(context):
 		frappe.destroy()
 
 
-commands = [setup_languages]
+@click.command("maintenance")
+@click.option("--fix-jobs", is_flag=True, help="Cancel stuck translation jobs")
+@click.option("--fix-langs", is_flag=True, help="Fix language code issues")
+@click.option("--clear-cache", is_flag=True, help="Clear translation caches")
+@click.option("--all", "run_all", is_flag=True, help="Run all maintenance tasks")
+@pass_context
+def maintenance(context, fix_jobs, fix_langs, clear_cache, run_all):
+	"""Run translation maintenance tasks to fix common issues."""
+	site = context.sites[0]
+	frappe.init(site=site)
+	frappe.connect()
+
+	try:
+		from translation_hub.core.maintenance import TranslationMaintenance
+
+		m = TranslationMaintenance()
+
+		if run_all or not any([fix_jobs, fix_langs, clear_cache]):
+			m.run_all()
+		else:
+			if fix_jobs:
+				m.fix_stuck_jobs()
+			if fix_langs:
+				m.fix_language_codes()
+			if clear_cache:
+				m.clear_caches()
+
+		frappe.db.commit()
+	finally:
+		frappe.destroy()
+
+
+commands = [setup_languages, maintenance]

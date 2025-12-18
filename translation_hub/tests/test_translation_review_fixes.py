@@ -30,22 +30,25 @@ class TestTranslationReviewFixes(FrappeTestCase):
 
 	def test_empty_translation_fallback(self):
 		"""Test suggested_text fallback when translation is empty"""
+		# Use unique test string that won't exist in database
+		import uuid
+
 		from translation_hub.translation_hub.doctype.translation_review.translation_review import (
 			create_translation_review,
 		)
 
+		test_text = f"Unique Test String {uuid.uuid4().hex[:8]}"
+
 		# Create review with empty current translation
 		# The function should fall back to source_text
-		review_name = create_translation_review(
-			source_text="Hello World", language="pt-BR", source_app="frappe"
-		)
+		review_name = create_translation_review(source_text=test_text, language="pt-BR", source_app="frappe")
 
 		review = frappe.get_doc("Translation Review", review_name)
 
 		# suggested_text should be populated (fallback to source_text)
 		self.assertIsNotNone(review.suggested_text)
 		self.assertNotEqual(review.suggested_text, "")
-		self.assertEqual(review.suggested_text, "Hello World")  # Fallback value
+		self.assertEqual(review.suggested_text, test_text)  # Fallback value
 
 	def test_suggested_text_never_empty(self):
 		"""Test that suggested_text is always populated"""

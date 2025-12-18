@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-16 13:30\n"
+"PO-Revision-Date: 2025-12-18 00:01\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 msgid "(No translation)"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:325
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:334
 msgid "(no current translation)"
 msgstr ""
 
@@ -27,7 +27,7 @@ msgid ""
 "Translation Jobs.</p>"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:45
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:56
 msgid ""
 "A new Translation Review has been created with AI suggestion based on your "
 "feedback: {0}"
@@ -37,7 +37,7 @@ msgstr ""
 msgid "AI Incorrect Output"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:94
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:95
 msgid "AI Original:"
 msgstr ""
 
@@ -50,11 +50,11 @@ msgctxt "Label of a Navbar Item"
 msgid "About"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:51
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:67
 msgid "Actions"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:253
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:258
 msgid "All caught up!"
 msgstr ""
 
@@ -84,7 +84,7 @@ msgstr ""
 msgid "App Title"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:103
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:106
 msgid "Approve"
 msgstr ""
 
@@ -92,7 +92,7 @@ msgstr ""
 msgid "Approved"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:363
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:375
 msgid "Approved!"
 msgstr ""
 
@@ -107,7 +107,7 @@ msgid ""
 "selected apps."
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:39
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:48
 msgid "Asking AI for a new translation with feedback context..."
 msgstr ""
 
@@ -163,7 +163,7 @@ msgstr ""
 msgid "Cancelled"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:135
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:137
 msgid "Cleanup"
 msgstr ""
 
@@ -179,11 +179,11 @@ msgstr ""
 msgid "Completed"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:420
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:438
 msgid "Confirm"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:226
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:228
 msgid "Connection Test"
 msgstr ""
 
@@ -199,7 +199,7 @@ msgstr ""
 msgid "Correct Translation"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:239
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:244
 msgid "Could not find review: {0}"
 msgstr ""
 
@@ -292,7 +292,7 @@ msgstr ""
 msgid "Failed"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:194
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:197
 msgid "Failed to load reviews"
 msgstr ""
 
@@ -304,7 +304,7 @@ msgstr ""
 msgid "Feedback Loop"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:163
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:165
 msgid "Fetching available models..."
 msgstr ""
 
@@ -379,7 +379,7 @@ msgstr ""
 msgid "Idioma"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:384
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:397
 msgid ""
 "If a specific term is consistently mistranslated, fill in below to teach the"
 " AI."
@@ -456,11 +456,11 @@ msgstr ""
 msgid "Load All Languages"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:246
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:248
 msgid "Loading all languages..."
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:159
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:162
 msgid "Loading..."
 msgstr ""
 
@@ -484,21 +484,21 @@ msgstr ""
 msgid "Monitored Apps Progress Report"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:43
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:54
 msgid "New Review Created"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:206
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:208
 msgid "No Models Found"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:208
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:210
 msgid ""
 "No models were returned. Please check that your API key is configured "
 "correctly."
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:254
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:259
 msgid "No pending reviews"
 msgstr ""
 
@@ -514,7 +514,7 @@ msgstr ""
 msgid "Only selected apps will be processed. All apps if empty."
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:20
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:24
 msgid "Open Review Center"
 msgstr ""
 
@@ -544,7 +544,7 @@ msgstr ""
 msgid "Pending"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:65
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:66
 msgid "Pending Reviews"
 msgstr ""
 
@@ -590,7 +590,7 @@ msgstr ""
 msgid "Queued"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:33
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:34
 msgid "Refresh"
 msgstr ""
 
@@ -598,11 +598,11 @@ msgstr ""
 msgid "Refresh Models"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:100
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:103
 msgid "Reject"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:420
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:437
 msgid "Reject Translation"
 msgstr ""
 
@@ -627,7 +627,7 @@ msgstr ""
 msgid "Restore Translations"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:32
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:40
 msgid "Retry with AI"
 msgstr ""
 
@@ -635,14 +635,14 @@ msgstr ""
 msgid "Review All ({0})"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:227
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:230
 msgid "Review Already Processed"
 msgstr ""
 
 msgid "Review Center"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:237
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:242
 msgid "Review Not Found"
 msgstr ""
 
@@ -670,7 +670,7 @@ msgstr ""
 msgid "Save to .po File"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:259
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:261
 msgid "Saving language settings..."
 msgstr ""
 
@@ -686,11 +686,11 @@ msgstr ""
 msgid "Select Apps (Leave empty for all)"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:174
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:176
 msgid "Select Model"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:73
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:74
 msgid "Select a review from the list"
 msgstr ""
 
@@ -698,11 +698,11 @@ msgstr ""
 msgid "Select the LLM provider for translations"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:201
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:203
 msgid "Select {0} Model"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:187
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:189
 msgid "Selected model: {0}. Note: Gemini model is set in code."
 msgstr ""
 
@@ -790,15 +790,15 @@ msgstr ""
 msgid "Term Correction"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:383
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:396
 msgid "Term Correction (Optional)"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/api/review_api.py:103
+#: apps/translation_hub/translation_hub/api/review_api.py:113
 msgid "Term learning created: '{0}' → '{1}'"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:413
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:429
 msgid "Term learning saved!"
 msgstr ""
 
@@ -806,11 +806,11 @@ msgstr ""
 msgid "Test API Connection"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:221
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:223
 msgid "Testing API connection..."
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:229
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:232
 msgid ""
 "This review ({0}) has already been {1}. <a href=\"/desk/Form/Translation "
 "Review/{2}\">View it here</a>."
@@ -931,7 +931,7 @@ msgctxt "Label of a Navbar Item"
 msgid "User Settings"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:36
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:37
 msgid "View Full List"
 msgstr ""
 
@@ -948,7 +948,7 @@ msgstr ""
 msgid "Weekly"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:379
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:392
 msgid "Why is this translation incorrect?"
 msgstr ""
 
@@ -957,11 +957,11 @@ msgctxt "Label of a Navbar Item"
 msgid "Workspace Settings"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:390
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:405
 msgid "e.g. \"against\""
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:396
+#: apps/translation_hub/translation_hub/translation_hub/page/review_center/review_center.js:411
 msgid "e.g. \"para\" (not \"contra\")"
 msgstr ""
 

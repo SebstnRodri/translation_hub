@@ -45,9 +45,9 @@ frappe.ui.form.on("Translator Settings", {
 						function (values) {
 							let apps = values.apps
 								? values.apps
-									.split(",")
-									.map((s) => s.trim())
-									.filter((s) => s)
+										.split(",")
+										.map((s) => s.trim())
+										.filter((s) => s)
 								: [];
 
 							let perform_action = () => {
@@ -128,7 +128,9 @@ frappe.ui.form.on("Translator Settings", {
 			__("Cleanup Locale Directories"),
 			function () {
 				frappe.confirm(
-					__("This will permanently delete .po files of disabled languages from monitored apps. Make sure to backup first!<br><br>Continue?"),
+					__(
+						"This will permanently delete .po files of disabled languages from monitored apps. Make sure to backup first!<br><br>Continue?"
+					),
 					function () {
 						fetch_apps_and_show_dialog(
 							__("Cleanup Locale Directories"),

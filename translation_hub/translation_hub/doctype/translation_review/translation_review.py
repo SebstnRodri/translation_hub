@@ -117,7 +117,7 @@ def create_translation_review(source_text: str, language: str, source_app: str):
 	# Create the review
 	# Use current translation if available, otherwise use source text as placeholder
 	suggested_value = current_translation if current_translation else source_text
-	
+
 	doc = frappe.get_doc(
 		{
 			"doctype": "Translation Review",
@@ -385,76 +385,78 @@ def get_ai_suggestion(source_text: str, language: str, source_app: str, context:
 		frappe.log_error(f"AI Suggestion Failed: {e}")
 		frappe.throw(f"AI Suggestion failed: {e}")
 
+
 @frappe.whitelist()
 def retry_translation_with_feedback(review_name):
-    """
-    Creates a new Translation Review with AI suggestion.
-    Uses the rejection reason from the original review as context for the AI.
-    
-    Args:
-        review_name: Name of the rejected Translation Review
-        
-    Returns:
-        Name of the new Translation Review
-    """
-    original = frappe.get_doc("Translation Review", review_name)
-    
-    if original.status != "Rejected":
-        frappe.throw("Only rejected reviews can be retried")
-    
-    # Build context from rejection reason and any term corrections
-    context_parts = []
-    
-    if original.rejection_reason:
-        context_parts.append(f"Previous translation was rejected. Feedback: {original.rejection_reason}")
-    
-    # Get any term corrections for this language
-    term_corrections = frappe.get_all(
-        "Translation Learning",
-        filters={
-            "language": original.language,
-            "learning_type": "Term Correction"
-        },
-        fields=["problematic_term", "correct_term"],
-        limit=10
-    )
-    
-    if term_corrections:
-        term_rules = ", ".join([
-            f"'{tc.problematic_term}' → '{tc.correct_term}'" 
-            for tc in term_corrections 
-            if tc.problematic_term and tc.correct_term
-        ])
-        if term_rules:
-            context_parts.append(f"Term rules: {term_rules}")
-    
-    context = ". ".join(context_parts) if context_parts else None
-    
-    # Get new AI suggestion with context
-    new_suggestion = get_ai_suggestion(
-        source_text=original.source_text,
-        language=original.language,
-        source_app=original.source_app,
-        context=context
-    )
-    
-    if not new_suggestion:
-        frappe.throw("AI could not generate a new suggestion")
-    
-    # Create new Translation Review
-    new_review = frappe.get_doc({
-        "doctype": "Translation Review",
-        "source_text": original.source_text,
-        "translated_text": original.translated_text,
-        "suggested_text": new_suggestion,
-        "language": original.language,
-        "source_app": original.source_app,
-        "status": "Pending",
-        "ai_suggestion_snapshot": new_suggestion,
-        "context_snapshot": context
-    })
-    new_review.insert(ignore_permissions=True)
-    
-    frappe.db.commit()
-    
-    return new_review.name
+	"""
+	Creates a new Translation Review with AI suggestion.
+	Uses the rejection reason from the original review as context for the AI.
+
+	Args:
+	    review_name: Name of the rejected Translation Review
+
+	Returns:
+	    Name of the new Translation Review
+	"""
+	original = frappe.get_doc("Translation Review", review_name)
+
+	if original.status != "Rejected":
+		frappe.throw("Only rejected reviews can be retried")
+
+	# Build context from rejection reason and any term corrections
+	context_parts = []
+
+	if original.rejection_reason:
+		context_parts.append(f"Previous translation was rejected. Feedback: {original.rejection_reason}")
+
+	# Get any term corrections for this language
+	term_corrections = frappe.get_all(
+		"Translation Learning",
+		filters={"language": original.language, "learning_type": "Term Correction"},
+		fields=["problematic_term", "correct_term"],
+		limit=10,
+	)
+
+	if term_corrections:
+		term_rules = ", ".join(
+			[
+				f"'{tc.problematic_term}' → '{tc.correct_term}'"
+				for tc in term_corrections
+				if tc.problematic_term and tc.correct_term
+			]
+		)
+		if term_rules:
+			context_parts.append(f"Term rules: {term_rules}")
+
+	context = ". ".join(context_parts) if context_parts else None
+
+	# Get new AI suggestion with context
+	new_suggestion = get_ai_suggestion(
+		source_text=original.source_text,
+		language=original.language,
+		source_app=original.source_app,
+		context=context,
+	)
+
+	if not new_suggestion:
+		frappe.throw("AI could not generate a new suggestion")
+
+	# Create new Translation Review
+	new_review = frappe.get_doc(
+		{
+			"doctype": "Translation Review",
+			"source_text": original.source_text,
+			"translated_text": original.translated_text,
+			"suggested_text": new_suggestion,
+			"language": original.language,
+			"source_app": original.source_app,
+			"status": "Pending",
+			"ai_suggestion_snapshot": new_suggestion,
+			"context_snapshot": context,
+		}
+	)
+	new_review.insert(ignore_permissions=True)
+
+	frappe.db.commit()
+
+	return new_review.name
