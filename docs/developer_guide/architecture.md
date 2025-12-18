@@ -11,59 +11,31 @@ This document describes the overall architecture and design principles of the `t
 >
 > **Version 1.6.0** (2024-12-14): Major update with Language Manager UI, Selective Backup, Locale Cleanup, and Auto-compilation.
 
-### Key Additions in v1.7.0
+### Key Additions in Release Candidate 2.0
 
-1. **File Reorganization** - Moved loose scripts to proper module directories:
-   - `import_script.py` → `core/po_importer.py`
-   - `maintenance.py` → `core/maintenance.py`
-   - `setup_demo_context.py` → `utils/demo_setup.py`
-2. **Maintenance Module** (`core/maintenance.py`) - Smart utilities for system health:
-   - Cancel stuck translation jobs automatically
-   - Fix language code mismatches (pt_BR → pt-BR)
-   - Clear translation caches dynamically
-   - Sync System Settings with site_config
-   - CLI command: `bench maintenance --all`
-3. **GeminiService Fix** - Added missing `translate()` and `_configure_model()` methods
-4. **PO Importer** (`core/po_importer.py`) - Import .po translations to database without context
+1. **New Localization Engine**:
+   - **Localization Profile**: Defines regional context (e.g., "Brazil - SPED") used to steer LLM translations.
+   - **Translation Domain**: Manages industry-specific terminology (e.g., "Accounting", "Healthcare").
+   - **Context Rules**: Regex-based rules for mandatory pattern replacements (e.g., `Return Against (.*)` -> `Devolução de \1`).
 
-### Key Additions in v1.6.1
+2. **Dual Review System**:
+   - **Translation Task**: A dedicated DocType to track rejection fixes.
+   - **Term Rejection Pattern**: Automatically identifies problematic terms based on frequent rejections.
+   - **Auto-Review Logic**: Automatically approves translations that match the glossary or context rules.
 
-1. **Review Center Page** - Redesigned split-panel UI for efficient translation review
-   - Left panel: Pending reviews list with filters (app, language)
-   - Right panel: Detail view with editable translation
-   - Keyboard shortcuts: `A` (approve), `R` (reject), `↑`/`↓` (navigate)
-2. **Deep Links** - URL parameter support (`?review=TR-000123`) for direct navigation
-3. **Translation Learning DocType** - Stores AI feedback for continuous improvement
-   - `learning_type`: "General Correction" or "Term Correction"
-   - `problematic_term` / `correct_term`: Term-specific rules
-4. **AI Feedback Loop** - Term corrections injected as "CRITICAL RULES" in AI prompts
-5. **Retry with AI** - Re-request translation with rejection feedback as context
+3. **Workspace 2.0**:
+   - Split between **Operational Workspace** (Shortcuts/Tasks) and **Analytics Dashboard** (Charts/Metrics).
+   - Zero-Code Configuration via `Translator Settings` (Prompts, Keys).
 
-### Key Additions in v1.6.0
+### Key Additions in Previous Versions (v1.7.0)
 
-1. **Language Manager UI** - New child table `Language Setup Item` for managing languages via Frappe Desk
-2. **Selective Language Backup** - GitSyncService now filters by enabled languages
-3. **Locale Cleanup** - Remove .po files of disabled languages with confirmation dialog
-4. **Automatic MO Compilation** - Compile .po to .mo after restore and Translation Jobs
-
-### Key Fixes in v1.6.1
-
-1. **API Key Retrieval** - Fixed Groq/OpenRouter provider support
-2. **Translation Review Creation** - Handle empty translations gracefully
-3. **PO to Database Import** - Automatically import restored .po files to tabTranslation
-4. **Compilation Method** - Use correct `frappe.gettext.translate.compile_translations()`
-
+1. **File Reorganization** - Moved loose scripts to proper module directories.
+2. **Maintenance Module** - Smart utilities for system health.
+3. **GeminiService Fix** - Improved API integration.
 
 ## Design Principles
 
-The system is designed following a **Layered Architecture** pattern. This separates concerns into distinct, independent components, making the codebase more modular, testable, and extensible.
-
-The four main layers are:
-
-1.  **Presentation Layer (Frappe UI)**: Handles user interaction through Frappe DocTypes and a custom Desk Page.
-2.  **Application Layer (Frappe Backend)**: Manages the business logic, including DocType controllers, background jobs, and the scheduler.
-3.  **Core Logic Layer**: Contains the domain-specific logic for the translation process. This layer is independent of the Frappe framework.
-4.  **Service & Data Access Layer**: Manages external services (translation API) and filesystem interactions (`.po` files).
+The system is designed following a **Layered Architecture** pattern...
 
 ## Core Components
 
@@ -71,33 +43,22 @@ The four main layers are:
 
 #### DocTypes
 
-- **`Translator Settings` (Singleton DocType)**: Stores global configuration like API keys, automation settings, and monitored apps.
-  - Contains child table `Monitored App` for automated translation configuration
-  - Contains child table `Translator Language` for default language settings
-  - **NEW in v1.6.0**: Contains child table `Language Setup Item` for Language Manager UI
-  - Fields: `api_key`, `groq_api_key`, `openrouter_api_key`, `llm_provider`, `standardization_guide`, `enable_automated_translation`, `frequency`, `monitored_apps`, `language_manager`
-  - **Language Manager**: UI for enabling/disabling languages via table interface
-  - **Selective Backup**: Only backs up enabled languages to reduce repository size
+- **NEW `Localization Profile`**: The brain of the context engine. Stores language-specific rules and glossary links.
+- **NEW `Translation Domain`**: Conceptual grouping for terms. Linked to Profiles.
+- **NEW `Translation Task`**: Represents a unit of work for fixing a rejected translation.
+- **NEW `Term Rejection Pattern`**: Stores learned patterns of "bad" translations to avoid repetition.
 
-- **`Translation Job` (Standard DocType)**: Represents a single translation task, tracking its status, progress, timing, and logs.
-  - Links to `App` (source application) and `Language` (target language)
-  - Tracks progress metrics: `total_strings`, `translated_strings`, `progress_percentage`
-  - Records timing: `start_time`, `end_time`
-  - Maintains execution log for debugging and monitoring
-  - Status values: Pending, Queued, In Progress, Completed, Failed, Cancelled
-  - **NEW in v1.6.1**: Automatic .mo compilation after job completion
+- **`Translator Settings`**: Now includes:
+  - System Prompt editor (Small Text).
+  - API Keys for Groq/OpenRouter/Gemini (Password).
+  - Default Localization Profile selection.
 
-- **`Translation Review` (Standard DocType)**: Allows users to review and correct translations.
-  - Links to `Language` and `source_app`
-  - Fields: `source_text`, `translated_text` (current), `suggested_text` (AI or manual suggestion)
-  - Status: Pending, Approved, Rejected
-  - **AI Integration**: Can generate bulk suggestions for bad translations
-  - **Workflow**: Review → Approve → Updates Translation DocType
-  - **NEW in v1.7.0**: Deep link support via URL parameter (`?review=TR-000123`)
-  - **NEW in v1.7.0**: `rejection_reason` field for AI feedback
-  - **NEW in v1.7.0**: Retry with AI action on rejected reviews
+- **`Translation Job`**: Now integrates with `Localization Profile` to fetch context before sending prompts to LLM.
 
-- **`Translation Learning` (Standard DocType)**: NEW in v1.7.0 - Stores AI learning data from user feedback.
+- **`Translation Review`**: 
+  - **Auto-Review**: New method `auto_review()` checks against Context Rules.
+  - **Rejection Workflow**: Rejecting a review now creates a `Translation Task`.
+
   - Links to `Language` and `source_app`
   - Fields: `source_text`, `original_translation`, `corrected_translation`
   - **Learning Types**:
@@ -325,77 +286,61 @@ The following diagram shows how the Frappe DocTypes relate to each other:
 erDiagram
     TRANSLATOR_SETTINGS ||--o{ MONITORED_APP : "contains"
     TRANSLATOR_SETTINGS ||--o{ TRANSLATOR_LANGUAGE : "contains"
+    TRANSLATOR_SETTINGS }o--|| LOCALIZATION_PROFILE : "default_profile"
+    
+    LOCALIZATION_PROFILE ||--o{ TRANSLATION_DOMAIN : "contains"
+    LOCALIZATION_PROFILE ||--o{ REGIONAL_TERM : "contains"
+    LOCALIZATION_PROFILE ||--o{ CONTEXT_RULE : "contains"
+    
     MONITORED_APP }o--|| APP : "source_app"
     MONITORED_APP }o--|| LANGUAGE : "target_language"
+    
     TRANSLATION_JOB }o--|| APP : "source_app"
     TRANSLATION_JOB }o--|| LANGUAGE : "target_language"
-    APP_GLOSSARY }o--|| APP : "app"
-    APP_GLOSSARY }o--|| LANGUAGE : "language"
-    APP_GLOSSARY ||--o{ GLOSSARY_ITEM : "contains"
+    TRANSLATION_JOB }o--|| LOCALIZATION_PROFILE : "uses_profile"
+    
+    TRANSLATION_REVIEW ||--o{ TRANSLATION_TASK : "generates_on_rejection"
+    TRANSLATION_TASK }o--|| APP : "app"
+    TRANSLATION_TASK }o--|| LANGUAGE : "language"
+    
+    TERM_REJECTION_PATTERN }o--|| LANGUAGE : "language"
     
     TRANSLATOR_SETTINGS {
         string api_key
-        bool enable_automated_translation
-        string frequency
-        bool use_database_storage
-        bool save_to_po_file
-        bool export_po_on_complete
-        table monitored_apps
-        table default_languages
+        string system_prompt "Editable System Prompt"
+        link default_profile
     }
     
-    MONITORED_APP {
-        link source_app
-        link target_language
+    LOCALIZATION_PROFILE {
+        string name "e.g. Brazil - SPED"
+        string language "pt-BR"
+        table domains
+        table regional_terms
+        table context_rules
     }
     
-    TRANSLATOR_LANGUAGE {
-        string language_code
-        string language_name
-        bool enabled
+    TRANSLATION_DOMAIN {
+        string name "e.g. Accounting"
+        table terms "Glossary"
     }
     
-    APP {
-        link app_name "Link to Installed App"
-        string app_title
-        string domain
-        string tone
-        text description
-        table do_not_translate
+    TRANSLATION_TASK {
+        string name "TASK-2025-XXXX"
+        string status "Open/Closed"
+        text rejection_reason
     }
-
-    APP_GLOSSARY {
-        link app
-        link language
-        table glossary_items
-    }
-
-    GLOSSARY_ITEM {
+    
+    TERM_REJECTION_PATTERN {
         string term
-        string translation
-        string description
-    }
-
-    INSTALLED_APP {
-        string app_name "Virtual"
+        int rejection_count
     }
     
     TRANSLATION_JOB {
-        string title "Unique: Automated: {app} - {lang} - {timestamp}"
+        string title
         string status
-        link source_app
-        link target_language
+        link localization_profile
         int total_strings
-        int translated_strings
         float progress_percentage
-        datetime start_time
-        datetime end_time
-        text log
-    }
-    
-    LANGUAGE {
-        string language_code
-        string language_name
     }
 ```
 
