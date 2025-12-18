@@ -5,6 +5,21 @@
   "doctype": "App Glossary",
   "glossary_items": [
    {
+    "description": "Contexto de teste",
+    "term": "Test Term",
+    "translation": "Termo de Teste"
+   }
+  ],
+  "language": "pt-BR",
+  "modified": "2025-12-18 08:47:54.232815",
+  "name": "8p6j39vfe3"
+ },
+ {
+  "app": "translation_hub",
+  "docstatus": 0,
+  "doctype": "App Glossary",
+  "glossary_items": [
+   {
     "description": "DocType representing a translation task",
     "term": "Translation Job",
     "translation": "Trabajo de Traducción"

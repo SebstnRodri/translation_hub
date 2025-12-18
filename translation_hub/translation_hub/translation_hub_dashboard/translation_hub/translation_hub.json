@@ -1,0 +1,38 @@
+{
+    "cards": [
+        {
+            "card": "Total Apps Tracked"
+        },
+        {
+            "card": "Strings Translated"
+        },
+        {
+            "card": "Jobs in Progress"
+        },
+        {
+            "card": "Pending Review Tasks"
+        }
+    ],
+    "charts": [
+        {
+            "chart": "Translations Over Time",
+            "width": "Full"
+        },
+        {
+            "chart": "Monitored Apps Progress",
+            "width": "Full"
+        }
+    ],
+    "creation": "2025-12-18 16:32:49.113110",
+    "dashboard_name": "Translation Hub",
+    "docstatus": 0,
+    "doctype": "Dashboard",
+    "idx": 0,
+    "is_default": 0,
+    "is_standard": 1,
+    "modified": "2025-12-18 16:32:49.113110",
+    "modified_by": "Administrator",
+    "module": "Translation Hub",
+    "name": "Translation Hub",
+    "owner": "Administrator"
+}

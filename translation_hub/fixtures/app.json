@@ -1,30 +1,58 @@
 [
-    {
-        "app_name": "frappe",
-        "app_title": "Frappe Framework",
-        "description": null,
-        "do_not_translate": [],
-        "docstatus": 0,
-        "doctype": "App",
-        "domain": null,
-        "modified": "2025-11-25 08:27:43.404596",
-        "name": "frappe",
-        "tone": null
-    },
-    {
-        "app_name": "translation_hub",
-        "app_title": "Translation Hub",
-        "description": null,
-        "do_not_translate": [
-            {
-                "term": "Translation Hub"
-            }
-        ],
-        "docstatus": 0,
-        "doctype": "App",
-        "domain": "I18n",
-        "modified": "2025-12-08 13:34:18.893424",
-        "name": "translation_hub",
-        "tone": "Professional"
-    }
+ {
+  "app_name": "erpnext",
+  "app_title": "Erpnext",
+  "description": null,
+  "do_not_translate": [],
+  "docstatus": 0,
+  "doctype": "App",
+  "domain": null,
+  "modified": "2025-12-16 17:14:21.629722",
+  "name": "erpnext",
+  "tone": null
+ },
+ {
+  "app_name": "test_app_injection",
+  "app_title": "Translation Hub",
+  "description": "An ERP system for logistics.",
+  "do_not_translate": [
+   {
+    "term": "HIMS"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "App",
+  "domain": "Logistics",
+  "modified": "2025-12-18 08:48:03.061395",
+  "name": "test_app_injection",
+  "tone": "Formal"
+ },
+ {
+  "app_name": "frappe",
+  "app_title": "Frappe Framework",
+  "description": null,
+  "do_not_translate": [],
+  "docstatus": 0,
+  "doctype": "App",
+  "domain": null,
+  "modified": "2025-11-25 08:27:43.404596",
+  "name": "frappe",
+  "tone": null
+ },
+ {
+  "app_name": "translation_hub",
+  "app_title": "Translation Hub",
+  "description": null,
+  "do_not_translate": [
+   {
+    "term": "Translation Hub"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "App",
+  "domain": "I18n",
+  "modified": "2025-12-08 13:34:18.893424",
+  "name": "translation_hub",
+  "tone": "Professional"
+ }
 ]
