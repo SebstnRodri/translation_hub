@@ -8,6 +8,7 @@
         "llm_provider",
         "section_break_gemini",
         "api_key",
+        "gemini_model",
         "html_gemini_help",
         "section_break_groq",
         "groq_api_key",

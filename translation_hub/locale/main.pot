@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-19 16:22\n"
+"PO-Revision-Date: 2025-12-19 17:08\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -755,7 +755,7 @@ msgstr ""
 msgid "Rejected"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:120
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:118
 msgid "Rejected {0} times (Last: {1})"
 msgstr ""
 
@@ -1200,7 +1200,7 @@ msgstr ""
 msgid "llama-3.3-70b-versatile"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:127
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:125
 msgid ""
 "⚠️ Warning: This term has been rejected {0} times previously. Please verify "
 "carefully."
