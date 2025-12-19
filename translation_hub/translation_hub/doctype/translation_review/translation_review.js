@@ -93,5 +93,42 @@ frappe.ui.form.on("Translation Review", {
 				__("Actions")
 			);
 		}
+
+
+		// Check for rejection history
+		check_rejection_history(frm);
 	},
 });
+
+
+function check_rejection_history(frm) {
+	if (!frm.doc.source_text || !frm.doc.language) return;
+
+	frappe.call({
+		method: "translation_hub.translation_hub.doctype.translation_review.translation_review.check_rejection_history",
+		args: {
+			source_text: frm.doc.source_text,
+			language: frm.doc.language,
+		},
+		callback: (r) => {
+			if (r.message && r.message.rejection_count > 0) {
+				const count = r.message.rejection_count;
+				const last = frappe.datetime.str_to_user(r.message.last_rejection);
+				const color = count >= 3 ? "red" : "orange";
+
+				frm.dashboard.add_indicator(
+					__("Rejected {0} times (Last: {1})", [count, last]),
+					color
+				);
+
+				// Optional: Show a more detailed alert banner
+				if (count >= 3) {
+					frm.dashboard.set_headline_alert(
+						__("⚠️ Warning: This term has been rejected {0} times previously. Please verify carefully.", [count]),
+						"red"
+					);
+				}
+			}
+		},
+	});
+}

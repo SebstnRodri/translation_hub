@@ -590,3 +590,21 @@ def retry_translation_with_feedback(review_name):
 	frappe.db.commit()
 
 	return new_review.name
+
+@frappe.whitelist()
+def check_rejection_history(source_text: str, language: str):
+	"""
+Checks if a term has a rejection history.
+"""
+	pattern_name = frappe.db.exists(
+"Term Rejection Pattern", {"source_text": source_text, "language": language}
+)
+
+	if pattern_name:
+		return frappe.db.get_value(
+"Term Rejection Pattern",
+pattern_name,
+["rejection_count", "last_rejection", "status"],
+as_dict=1,
+)
+	return None

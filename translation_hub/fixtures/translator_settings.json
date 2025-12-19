@@ -1,56 +1,56 @@
 [
- {
-  "api_key": null,
-  "auth_token": null,
-  "backup_branch": null,
-  "backup_frequency": null,
-  "backup_repo_url": null,
-  "default_languages": [
-   {
-    "enabled": 1,
-    "language_code": "es",
-    "language_name": "Español",
-    "standardization_guide": "Use neutral Spanish. Address the user as 'Usted'. Avoid regional slang."
-   },
-   {
-    "enabled": 1,
-    "language_code": "fr",
-    "language_name": "Français",
-    "standardization_guide": null
-   },
-   {
-    "enabled": 1,
-    "language_code": "pt-BR",
-    "language_name": "Portuguese (Brazil)",
-    "standardization_guide": "Use formal tone. Address the user as 'Você'. Avoid using 'Tu'."
-   }
-  ],
-  "docstatus": 0,
-  "doctype": "Translator Settings",
-  "enable_automated_translation": 1,
-  "export_po_on_complete": 0,
-  "frequency": "Daily",
-  "groq_api_key": null,
-  "groq_model": null,
-  "language_manager_table": [],
-  "llm_provider": "Gemini",
-  "modified": "2025-12-18 16:07:50.024310",
-  "monitored_apps": [
-   {
-    "source_app": "frappe",
-    "standardization_guide": null
-   },
-   {
-    "source_app": "translation_hub",
-    "standardization_guide": null
-   }
-  ],
-  "name": "Translator Settings",
-  "openrouter_api_key": null,
-  "openrouter_model": null,
-  "save_to_po_file": 1,
-  "sync_before_translate": 0,
-  "system_prompt": "You are an expert software localizer specializing in the Frappe Framework.\nYour mission is to translate user interface strings, messages, and content with high precision.\n\nCore Principles:\n- **Accuracy**: Convey the exact meaning of the source text.\n- **Consistency**: Adhere to standard software terminology.\n- **Safety**: Strictly preserve all Jinja/Python variables (e.g., `{{ name }}`, `{0}`, `%s`) and HTML tags.\n- **Neutrality**: Maintain a professional and neutral tone unless specified otherwise by the Language Guide.\n\nFollow the specific instructions provided in the App Guide and Language Guide below.",
-  "use_database_storage": 1
- }
+    {
+        "api_key": null,
+        "auth_token": null,
+        "backup_branch": null,
+        "backup_frequency": null,
+        "backup_repo_url": null,
+        "default_languages": [
+            {
+                "enabled": 1,
+                "language_code": "es",
+                "language_name": "Español",
+                "standardization_guide": "Use neutral Spanish. Address the user as 'Usted'. Avoid regional slang."
+            },
+            {
+                "enabled": 1,
+                "language_code": "pt-PT",
+                "language_name": "Portuguese (Portugal)",
+                "standardization_guide": null
+            },
+            {
+                "enabled": 1,
+                "language_code": "pt-BR",
+                "language_name": "Portuguese (Brazil)",
+                "standardization_guide": "Use formal tone. Address the user as 'Você'. Avoid using 'Tu'."
+            }
+        ],
+        "docstatus": 0,
+        "doctype": "Translator Settings",
+        "enable_automated_translation": 1,
+        "export_po_on_complete": 0,
+        "frequency": "Daily",
+        "groq_api_key": null,
+        "groq_model": null,
+        "language_manager_table": [],
+        "llm_provider": "Gemini",
+        "modified": "2025-12-18 16:07:50.024310",
+        "monitored_apps": [
+            {
+                "source_app": "frappe",
+                "standardization_guide": null
+            },
+            {
+                "source_app": "translation_hub",
+                "standardization_guide": null
+            }
+        ],
+        "name": "Translator Settings",
+        "openrouter_api_key": null,
+        "openrouter_model": null,
+        "save_to_po_file": 1,
+        "sync_before_translate": 0,
+        "system_prompt": "You are an expert software localizer specializing in the Frappe Framework.\nYour mission is to translate user interface strings, messages, and content with high precision.\n\nCore Principles:\n- **Accuracy**: Convey the exact meaning of the source text.\n- **Consistency**: Adhere to standard software terminology.\n- **Safety**: Strictly preserve all Jinja/Python variables (e.g., `{{ name }}`, `{0}`, `%s`) and HTML tags.\n- **Neutrality**: Maintain a professional and neutral tone unless specified otherwise by the Language Guide.\n\nFollow the specific instructions provided in the App Guide and Language Guide below.",
+        "use_database_storage": 1
+    }
 ]

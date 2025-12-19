@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-19 12:33\n"
+"PO-Revision-Date: 2025-12-19 14:20\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -253,10 +253,6 @@ msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Default Languages"
-msgstr ""
-
-#: DocType: Base Term:0
-msgid "Default Translation"
 msgstr ""
 
 #: DocType: Translator Settings:0
@@ -754,6 +750,10 @@ msgstr ""
 msgid "Rejected"
 msgstr ""
 
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:120
+msgid "Rejected {0} times (Last: {1})"
+msgstr ""
+
 #: DocType: Term Rejection Pattern:0
 msgid "Rejection Count"
 msgstr ""
@@ -897,6 +897,10 @@ msgstr ""
 
 #: DocType: Regulatory Standard:0
 msgid "Standard Name"
+msgstr ""
+
+#: DocType: Base Term:0
+msgid "Standard Term (English)"
 msgstr ""
 
 #: DocType: Regulatory Standard:0
@@ -1173,6 +1177,12 @@ msgstr ""
 
 #: DocType: App:0
 msgid "e.g. Healthcare, Logistics, Education"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:127
+msgid ""
+"⚠️ Warning: This term has been rejected {0} times previously. Please verify "
+"carefully."
 msgstr ""
 
 #: ../translation_hub/translation_hub/translation_hub/number_card/total_apps_tracked/total_apps_tracked.json:0

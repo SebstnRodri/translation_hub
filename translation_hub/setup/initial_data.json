@@ -67,6 +67,14 @@
             "context_rules": [
                 {
                     "rule_type": "Regex Pattern",
+                    "source_pattern": "(.*) [Aa]gainst (.*)",
+                    "target_translation": "{1} referente a {2}",
+                    "priority": 100,
+                    "examples": "Return Against Invoice -> Return referente a Invoice",
+                    "when_to_apply": "Accounting context where 'against' implies linking/reference."
+                },
+                {
+                    "rule_type": "Regex Pattern",
                     "source_pattern": "Return Against (?P<doc>.*)",
                     "target_translation": "Devolução de {doc}",
                     "priority": 100,
