@@ -94,12 +94,10 @@ frappe.ui.form.on("Translation Review", {
 			);
 		}
 
-
 		// Check for rejection history
 		check_rejection_history(frm);
 	},
 });
-
 
 function check_rejection_history(frm) {
 	if (!frm.doc.source_text || !frm.doc.language) return;
@@ -124,7 +122,10 @@ function check_rejection_history(frm) {
 				// Optional: Show a more detailed alert banner
 				if (count >= 3) {
 					frm.dashboard.set_headline_alert(
-						__("⚠️ Warning: This term has been rejected {0} times previously. Please verify carefully.", [count]),
+						__(
+							"⚠️ Warning: This term has been rejected {0} times previously. Please verify carefully.",
+							[count]
+						),
 						"red"
 					);
 				}

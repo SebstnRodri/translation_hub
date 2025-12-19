@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-19 14:19\n"
+"PO-Revision-Date: 2025-12-19 16:20\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -399,7 +399,7 @@ msgstr "por ejemplo, Salud, Logística, Educación"
 msgid "Auth Token (PAT)"
 msgstr "Token de Autenticación (PAT)"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:98
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:89
 msgid "Backup / Restore"
 msgstr "Respaldar / Restaurar"
 
@@ -419,17 +419,13 @@ msgstr "Frecuencia de Respaldo"
 msgid "Backup Repository URL"
 msgstr "URL del Repositorio de Respaldo"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:90
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:81
 msgid "Backup Translations"
 msgstr "Respaldar Traducciones"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:228
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:201
 msgid "Connection Test"
 msgstr "Prueba de Conexión"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:165
-msgid "Fetching available models..."
-msgstr "Obteniendo modelos disponibles..."
 
 #: DocType: Translator Settings:0
 msgid "Gemini"
@@ -452,34 +448,8 @@ msgid "Groq Model"
 msgstr "Modelo de Groq"
 
 #: DocType: Translator Settings:0
-msgid "Groq model to use (e.g., llama-3.3-70b-versatile, mixtral-8x7b-32768)"
-msgstr ""
-"Modelo de Groq a utilizar (p. ej., llama-3.3-70b-versatile, "
-"mixtral-8x7b-32768)"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:12
-msgid "LLM"
-msgstr "LLM"
-
-#: DocType: Translator Settings:0
-msgid "LLM Configuration"
-msgstr "Configuración de LLM"
-
-#: DocType: Translator Settings:0
 msgid "LLM Provider"
 msgstr "Proveedor de LLM"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:208
-msgid "No Models Found"
-msgstr "No se encontraron modelos"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:210
-msgid ""
-"No models were returned. Please check that your API key is configured "
-"correctly."
-msgstr ""
-"No se devolvieron modelos. Verifique que su clave API esté configurada "
-"correctamente."
 
 #: DocType: Translator Settings:0
 msgid "None"
@@ -498,14 +468,6 @@ msgid "OpenRouter Model"
 msgstr "Modelo de OpenRouter"
 
 #: DocType: Translator Settings:0
-msgid ""
-"OpenRouter model (e.g., deepseek/deepseek-chat-v3-0324:free, meta-"
-"llama/llama-3.3-70b-instruct:free)"
-msgstr ""
-"Modelo de OpenRouter (p. ej., deepseek/deepseek-chat-v3-0324:free, meta-"
-"llama/llama-3.3-70b-instruct:free)"
-
-#: DocType: Translator Settings:0
 msgid "Personal Access Token for authentication"
 msgstr "Token de Acceso Personal para autenticación"
 
@@ -517,34 +479,17 @@ msgstr ""
 "Extraer traducciones existentes del repositorio de respaldo antes de iniciar"
 " un nuevo trabajo de traducción."
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:8
-msgid "Refresh Models"
-msgstr "Actualizar Modelos"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:102
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:93
 msgid "Restore Translations"
 msgstr "Restaurar Traducciones"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:106
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:97
 msgid "Select"
 msgstr "Seleccionar"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:176
-msgid "Select Model"
-msgstr "Seleccionar Modelo"
 
 #: DocType: Translator Settings:0
 msgid "Select the LLM provider for translations"
 msgstr "Seleccione el proveedor LLM para traducciones"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:203
-msgid "Select {0} Model"
-msgstr "Seleccionar modelo {0}"
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:189
-msgid "Selected model: {0}. Note: Gemini model is set in code."
-msgstr ""
-"Modelo seleccionado: {0}. Nota: El modelo Gemini se establece en el código."
 
 #: DocType: Translator Settings:0
 msgid "Sync Remote Translations Before Translating"
@@ -554,41 +499,41 @@ msgstr "Sincronizar Traducciones Remotas antes de Traducir"
 msgid "Test API Connection"
 msgstr "Conectar API de Prueba"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:223
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:196
 msgid "Testing API connection..."
 msgstr "Probando conexión API..."
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:73
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:64
 msgid ""
 "Are you sure you want to restore? This will overwrite local files for the "
 "selected apps."
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:26
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:17
 msgid "Fetching installed apps..."
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:40
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:31
 msgid "Only selected apps will be processed. All apps if empty."
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:64
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:55
 msgid "Operation completed successfully."
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:60
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:51
 msgid "Processing..."
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:105
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:96
 msgid "Restore Configuration"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:36
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:27
 msgid "Select Apps (Leave empty for all)"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:94
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:85
 msgid "Start Backup"
 msgstr ""
 
@@ -681,11 +626,11 @@ msgstr ""
 msgid "Can Be Overridden by Region"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:137
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:128
 msgid "Cleanup"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:128
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:119
 msgid "Cleanup Locale Directories"
 msgstr ""
 
@@ -753,11 +698,11 @@ msgstr ""
 msgid "Domain Name"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:119
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:110
 msgid "Download & Sync"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:115
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:106
 msgid "Download Standard Translations"
 msgstr ""
 
@@ -874,7 +819,7 @@ msgstr ""
 msgid "Load All Languages"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:248
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:223
 msgid "Loading all languages..."
 msgstr ""
 
@@ -1045,7 +990,7 @@ msgstr ""
 msgid "Save Language Settings"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:261
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:236
 msgid "Saving language settings..."
 msgstr ""
 
@@ -1127,7 +1072,7 @@ msgstr ""
 msgid "This will create {0} review records."
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:131
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:122
 msgid ""
 "This will permanently delete .po files of disabled languages from monitored "
 "apps. Make sure to backup first!<br><br>Continue?"
@@ -1238,6 +1183,119 @@ msgid ""
 "⚠️ Warning: This term has been rejected {0} times previously. Please verify "
 "carefully."
 msgstr ""
+
+#: DocType: Translator Settings:0
+msgid ""
+"<div style='font-size: 12px; color: var(--text-muted); margin-top: "
+"5px;'>Access hundreds of models. <a href='https://openrouter.ai/keys' "
+"target='_blank'>Get your key</a>.</div>"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid ""
+"<div style='font-size: 12px; color: var(--text-muted); margin-top: "
+"5px;'>Don't have a key? <a href='https://aistudio.google.com/app/apikey' "
+"target='_blank'>Get a generic key from Google AI Studio</a>.</div>"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid ""
+"<div style='font-size: 12px; color: var(--text-muted); margin-top: "
+"5px;'>Fast inference requires a Groq key. <a "
+"href='https://console.groq.com/keys' target='_blank'>Get one here</a>.</div>"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Gemini Settings"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Groq Settings"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "LLM Selection"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "OpenRouter Settings"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Select the model to use on Groq."
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Select the model to use on OpenRouter."
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Translation Behavior"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "deepseek/deepseek-chat-v3-0324:free"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "llama-3.3-70b-versatile"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Gemini Model"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Select the Gemini model to use."
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "gemini-2.0-flash"
+msgstr ""
+
+#~ msgid "Fetching available models..."
+#~ msgstr "Obteniendo modelos disponibles..."
+
+#~ msgid "Groq model to use (e.g., llama-3.3-70b-versatile, mixtral-8x7b-32768)"
+#~ msgstr ""
+#~ "Modelo de Groq a utilizar (p. ej., llama-3.3-70b-versatile, "
+#~ "mixtral-8x7b-32768)"
+
+#~ msgid "LLM"
+#~ msgstr "LLM"
+
+#~ msgid "LLM Configuration"
+#~ msgstr "Configuración de LLM"
+
+#~ msgid "No Models Found"
+#~ msgstr "No se encontraron modelos"
+
+#~ msgid ""
+#~ "No models were returned. Please check that your API key is configured "
+#~ "correctly."
+#~ msgstr ""
+#~ "No se devolvieron modelos. Verifique que su clave API esté configurada "
+#~ "correctamente."
+
+#~ msgid ""
+#~ "OpenRouter model (e.g., deepseek/deepseek-chat-v3-0324:free, meta-"
+#~ "llama/llama-3.3-70b-instruct:free)"
+#~ msgstr ""
+#~ "Modelo de OpenRouter (p. ej., deepseek/deepseek-chat-v3-0324:free, meta-"
+#~ "llama/llama-3.3-70b-instruct:free)"
+
+#~ msgid "Refresh Models"
+#~ msgstr "Actualizar Modelos"
+
+#~ msgid "Select Model"
+#~ msgstr "Seleccionar Modelo"
+
+#~ msgid "Select {0} Model"
+#~ msgstr "Seleccionar modelo {0}"
+
+#~ msgid "Selected model: {0}. Note: Gemini model is set in code."
+#~ msgstr ""
+#~ "Modelo seleccionado: {0}. Nota: El modelo Gemini se establece en el código."
 
 #~ msgid "Default Translation"
 #~ msgstr ""

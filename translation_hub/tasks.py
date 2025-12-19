@@ -11,10 +11,10 @@ from frappe.model.document import Document
 
 from translation_hub.core.config import TranslationConfig
 from translation_hub.core.orchestrator import TranslationOrchestrator
-from translation_hub.utils.localization import get_localization_profile
 from translation_hub.core.translation_file import TranslationFile
 from translation_hub.core.translation_service import GeminiService
 from translation_hub.utils.doctype_logger import DocTypeLogger
+from translation_hub.utils.localization import get_localization_profile
 
 
 @frappe.whitelist()
@@ -172,7 +172,10 @@ def execute_translation_job(translation_job_name):
 				service = OpenRouterService(config=config, app_name=job.source_app, logger=logger)
 			else:
 				# Default to Gemini
-				logger.info("Using GeminiService (production mode)")
+				gemini_model = getattr(settings, "gemini_model", None) or "gemini-2.0-flash"
+				config.model_name = gemini_model
+
+				logger.info(f"Using GeminiService (model: {gemini_model})")
 				service = GeminiService(config=config, app_name=job.source_app, logger=logger)
 
 		orchestrator = TranslationOrchestrator(

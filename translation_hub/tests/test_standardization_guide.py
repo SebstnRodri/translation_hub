@@ -11,7 +11,9 @@ class TestStandardizationGuide(FrappeTestCase):
 		# Mock settings
 		settings = MagicMock()
 		settings.standardization_guide = "Global Rule"
-		settings.system_prompt = "You are an expert translator for the Frappe Framework. Core Principles: Be consistent."
+		settings.system_prompt = (
+			"You are an expert translator for the Frappe Framework. Core Principles: Be consistent."
+		)
 		settings.get_password.return_value = "test-key"
 		settings.use_database_storage = 1
 		settings.save_to_po_file = 0

@@ -6,14 +6,21 @@
     "field_order": [
         "llm_configuration_section",
         "llm_provider",
-        "system_prompt",
-        "column_break_llm",
+        "section_break_gemini",
         "api_key",
+        "html_gemini_help",
+        "section_break_groq",
         "groq_api_key",
         "groq_model",
+        "html_groq_help",
+        "section_break_openrouter",
         "openrouter_api_key",
         "openrouter_model",
+        "html_openrouter_help",
+        "section_check_connection",
         "test_connection",
+        "section_translation_behavior",
+        "system_prompt",
         "storage_strategy_section",
         "use_database_storage",
         "save_to_po_file",
@@ -40,7 +47,7 @@
         {
             "fieldname": "llm_configuration_section",
             "fieldtype": "Section Break",
-            "label": "LLM Configuration"
+            "label": "LLM Selection"
         },
         {
             "default": "Gemini",
@@ -52,54 +59,97 @@
             "reqd": 1
         },
         {
-            "default": "You are an expert software localizer specializing in the Frappe Framework.\nYour mission is to translate user interface strings, messages, and content with high precision.\n\nCore Principles:\n- **Accuracy**: Convey the exact meaning of the source text.\n- **Consistency**: Adhere to standard software terminology.\n- **Safety**: Strictly preserve all Jinja/Python variables (e.g., `{{ name }}`, `{0}`, `%s`) and HTML tags.\n- **Neutrality**: Maintain a professional and neutral tone unless specified otherwise by the Language Guide.\n\nFollow the specific instructions provided in the App Guide and Language Guide below.",
-            "description": "System Prompt used for all translation jobs. You can customize the persona and core detailed instructions here.",
-            "fieldname": "system_prompt",
-            "fieldtype": "Small Text",
-            "label": "System Prompt"
+            "fieldname": "section_break_gemini",
+            "fieldtype": "Section Break",
+            "label": "Gemini Settings",
+            "depends_on": "eval:doc.llm_provider === 'Gemini'"
         },
         {
-            "fieldname": "column_break_llm",
-            "fieldtype": "Column Break"
-        },
-        {
-            "depends_on": "eval:doc.llm_provider === 'Gemini'",
             "fieldname": "api_key",
             "fieldtype": "Password",
             "label": "Gemini API Key"
         },
         {
-            "depends_on": "eval:doc.llm_provider === 'Groq'",
+            "default": "gemini-2.0-flash",
+            "description": "Select the Gemini model to use.",
+            "fieldname": "gemini_model",
+            "fieldtype": "Select",
+            "label": "Gemini Model",
+            "options": "gemini-2.0-flash"
+        },
+        {
+            "fieldname": "html_gemini_help",
+            "fieldtype": "HTML",
+            "options": "<div style='font-size: 12px; color: var(--text-muted); margin-top: 5px;'>Don't have a key? <a href='https://aistudio.google.com/app/apikey' target='_blank'>Get a generic key from Google AI Studio</a>.</div>"
+        },
+        {
+            "fieldname": "section_break_groq",
+            "fieldtype": "Section Break",
+            "label": "Groq Settings",
+            "depends_on": "eval:doc.llm_provider === 'Groq'"
+        },
+        {
             "fieldname": "groq_api_key",
             "fieldtype": "Password",
             "label": "Groq API Key"
         },
         {
             "default": "llama-3.3-70b-versatile",
-            "depends_on": "eval:doc.llm_provider === 'Groq'",
-            "description": "Groq model to use (e.g., llama-3.3-70b-versatile, mixtral-8x7b-32768)",
+            "description": "Select the model to use on Groq.",
             "fieldname": "groq_model",
-            "fieldtype": "Data",
-            "label": "Groq Model"
+            "fieldtype": "Select",
+            "label": "Groq Model",
+            "options": "llama-3.3-70b-versatile"
         },
         {
-            "depends_on": "eval:doc.llm_provider === 'OpenRouter'",
+            "fieldname": "html_groq_help",
+            "fieldtype": "HTML",
+            "options": "<div style='font-size: 12px; color: var(--text-muted); margin-top: 5px;'>Fast inference requires a Groq key. <a href='https://console.groq.com/keys' target='_blank'>Get one here</a>.</div>"
+        },
+        {
+            "fieldname": "section_break_openrouter",
+            "fieldtype": "Section Break",
+            "label": "OpenRouter Settings",
+            "depends_on": "eval:doc.llm_provider === 'OpenRouter'"
+        },
+        {
             "fieldname": "openrouter_api_key",
             "fieldtype": "Password",
             "label": "OpenRouter API Key"
         },
         {
             "default": "deepseek/deepseek-chat-v3-0324:free",
-            "depends_on": "eval:doc.llm_provider === 'OpenRouter'",
-            "description": "OpenRouter model (e.g., deepseek/deepseek-chat-v3-0324:free, meta-llama/llama-3.3-70b-instruct:free)",
+            "description": "Select the model to use on OpenRouter.",
             "fieldname": "openrouter_model",
-            "fieldtype": "Data",
-            "label": "OpenRouter Model"
+            "fieldtype": "Select",
+            "label": "OpenRouter Model",
+            "options": "deepseek/deepseek-chat-v3-0324:free"
+        },
+        {
+            "fieldname": "html_openrouter_help",
+            "fieldtype": "HTML",
+            "options": "<div style='font-size: 12px; color: var(--text-muted); margin-top: 5px;'>Access hundreds of models. <a href='https://openrouter.ai/keys' target='_blank'>Get your key</a>.</div>"
+        },
+        {
+            "fieldname": "section_check_connection",
+            "fieldtype": "Section Break"
         },
         {
             "fieldname": "test_connection",
             "fieldtype": "Button",
             "label": "Test API Connection"
+        },
+        {
+            "fieldname": "section_translation_behavior",
+            "fieldtype": "Section Break",
+            "label": "Translation Behavior"
+        },
+        {
+            "default": "You are an expert software localizer specializing in the Frappe Framework.\nYour mission is to translate user interface strings, messages, and content with high precision.\n\nCore Principles:\n- **Accuracy**: Convey the exact meaning of the source text.\n- **Consistency**: Adhere to standard software terminology.\n- **Safety**: Strictly preserve all Jinja/Python variables (e.g., `{{ name }}`, `{0}`, `%s`) and HTML tags.\n- **Neutrality**: Maintain a professional and neutral tone unless specified otherwise by the Language Guide.\n\nFollow the specific instructions provided in the App Guide and Language Guide below.",
+            "description": "System Prompt used for all translation jobs. You can customize the persona and core detailed instructions here.",
+            "fieldname": "system_prompt",
+            "fieldtype": "Small Text",
+            "label": "System Prompt"
         },
         {
             "fieldname": "storage_strategy_section",

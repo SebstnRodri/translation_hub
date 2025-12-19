@@ -1,16 +1,7 @@
-// Copyright (c) 2025, Sebastian Rodrigues and contributors
-// For license information, please see license.txt
-
 frappe.ui.form.on("Translator Settings", {
 	refresh(frm) {
-		// Add Refresh Models button
-		frm.add_custom_button(
-			__("Refresh Models"),
-			function () {
-				frm.trigger("fetch_models");
-			},
-			__("LLM")
-		);
+		// Automatically fetch models if API key is present
+		frm.trigger("fetch_models_silent");
 
 		if (!frm.doc.backup_repo_url) return;
 
@@ -147,7 +138,7 @@ frappe.ui.form.on("Translator Settings", {
 	llm_provider(frm) {
 		// Clear current model selection when provider changes
 		if (frm.doc.llm_provider === "Gemini") {
-			// Keep existing value or clear
+			frm.set_value("gemini_model", "");
 		} else if (frm.doc.llm_provider === "Groq") {
 			frm.set_value("groq_model", "");
 		} else if (frm.doc.llm_provider === "OpenRouter") {
@@ -155,62 +146,44 @@ frappe.ui.form.on("Translator Settings", {
 		}
 	},
 
-	fetch_models(frm) {
-		const provider = frm.doc.llm_provider || "Gemini";
+	// Trigger on save if keys changed
+	after_save(frm) {
+		frm.trigger("fetch_models_silent");
+	},
+
+	fetch_models_silent(frm) {
+		const provider = frm.doc.llm_provider;
+		let api_key_field = "";
+		let model_field = "";
+
+		if (provider === "Groq") {
+			api_key_field = "groq_api_key";
+			model_field = "groq_model";
+		} else if (provider === "OpenRouter") {
+			api_key_field = "openrouter_api_key";
+			model_field = "openrouter_model";
+		} else if (provider === "Gemini") {
+			api_key_field = "api_key";
+			model_field = "gemini_model";
+		} else {
+			return;
+		}
+
+		if (!frm.doc[api_key_field]) {
+			// No key, clear options
+			set_model_options(frm, model_field, []);
+			return;
+		}
 
 		frappe.call({
 			method: "translation_hub.translation_hub.doctype.translator_settings.translator_settings.fetch_available_models",
 			args: { provider: provider },
-			freeze: true,
-			freeze_message: __("Fetching available models..."),
 			callback: function (r) {
 				if (r.message && r.message.length > 0) {
-					// Show model selection dialog
-					let models = r.message;
-					let options = models.map((m) => m.label);
-
-					frappe.prompt(
-						[
-							{
-								fieldname: "model",
-								label: __("Select Model"),
-								fieldtype: "Autocomplete",
-								options: options,
-								reqd: 1,
-							},
-						],
-						function (values) {
-							// Find the selected model's value
-							let selected = models.find((m) => m.label === values.model);
-							if (selected) {
-								if (provider === "Gemini") {
-									frm.set_value("api_key", frm.doc.api_key); // Keep as is
-									frappe.msgprint(
-										__(
-											"Selected model: {0}. Note: Gemini model is set in code.",
-											[selected.value]
-										)
-									);
-								} else if (provider === "Groq") {
-									frm.set_value("groq_model", selected.value);
-									frm.save();
-								} else if (provider === "OpenRouter") {
-									frm.set_value("openrouter_model", selected.value);
-									frm.save();
-								}
-							}
-						},
-						__("Select {0} Model", [provider]),
-						__("Select")
-					);
+					let options = r.message.map((m) => m.value);
+					set_model_options(frm, model_field, options);
 				} else {
-					frappe.msgprint({
-						title: __("No Models Found"),
-						indicator: "orange",
-						message: __(
-							"No models were returned. Please check that your API key is configured correctly."
-						),
-					});
+					set_model_options(frm, model_field, ["Check API Key"]);
 				}
 			},
 		});
@@ -229,6 +202,8 @@ frappe.ui.form.on("Translator Settings", {
 							indicator: "green",
 							message: r.message.message,
 						});
+						// Also refresh models on successful connection
+						frm.trigger("fetch_models_silent");
 					} else {
 						frappe.msgprint({
 							title: __("Connection Test"),
@@ -267,3 +242,16 @@ frappe.ui.form.on("Translator Settings", {
 		});
 	},
 });
+
+function set_model_options(frm, fieldname, options) {
+	if (options.length > 0) {
+		frm.set_df_property(fieldname, "options", options.join("\n"));
+		// If current value is not in options, set to first
+		if (!options.includes(frm.doc[fieldname])) {
+			frm.set_value(fieldname, options[0]);
+		}
+	} else {
+		frm.set_df_property(fieldname, "options", "");
+	}
+	frm.refresh_field(fieldname);
+}

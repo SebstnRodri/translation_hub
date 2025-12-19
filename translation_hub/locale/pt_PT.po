@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-19 16:22\n"
+"PO-Revision-Date: 2025-12-19 16:20\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -412,10 +412,6 @@ msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Gemini API Key"
-msgstr ""
-
-#: DocType: Translator Settings:0
-msgid "Gemini Model"
 msgstr ""
 
 #: DocType: Translator Settings:0
@@ -852,10 +848,6 @@ msgid "Select Apps (Leave empty for all)"
 msgstr ""
 
 #: DocType: Translator Settings:0
-msgid "Select the Gemini model to use."
-msgstr ""
-
-#: DocType: Translator Settings:0
 msgid "Select the LLM provider for translations"
 msgstr ""
 
@@ -1193,10 +1185,6 @@ msgid "e.g. Healthcare, Logistics, Education"
 msgstr ""
 
 #: DocType: Translator Settings:0
-msgid "gemini-2.0-flash"
-msgstr ""
-
-#: DocType: Translator Settings:0
 msgid "llama-3.3-70b-versatile"
 msgstr ""
 
@@ -1234,4 +1222,16 @@ msgstr ""
 #: ../translation_hub/translation_hub/translation_hub/dashboard_chart/translations_over_time/translations_over_time.json:0
 msgctxt "Dashboard Chart"
 msgid "Translations Over Time"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Gemini Model"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Select the Gemini model to use."
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "gemini-2.0-flash"
 msgstr ""
