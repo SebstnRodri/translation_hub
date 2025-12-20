@@ -10,6 +10,47 @@ class TranslatorSettings(Document):
 	def validate(self):
 		self.remove_duplicates()
 
+	def _validate_selects(self):
+		"""
+		Override to skip validation for dynamic model fields.
+		Standard Frappe validation enforces options to be present in the DocType definition.
+		"""
+		if frappe.flags.in_import:
+			return
+
+		# Fields to skip validation for because options are fetched dynamically
+		dynamic_fields = ["gemini_model", "groq_model", "openrouter_model"]
+
+		for df in self.meta.get_select_fields():
+			if df.fieldname in dynamic_fields:
+				continue
+
+			if df.fieldname == "naming_series" or not self.get(df.fieldname) or not df.options:
+				continue
+
+			options = (df.options or "").split("\n")
+
+			# if only empty options
+			if not filter(None, options):
+				continue
+
+			# strip and set
+			self.set(df.fieldname, frappe.utils.cstr(self.get(df.fieldname)).strip())
+			value = self.get(df.fieldname)
+
+			if value not in options and not (frappe.in_test and value.startswith("_T-")):
+				# show an elaborate message
+				prefix = frappe._("Row #{0}:").format(self.idx) if self.get("parentfield") else ""
+				label = frappe._(self.meta.get_label(df.fieldname))
+				comma_options = '", "'.join(frappe._(each) for each in options)
+
+				frappe.throw(
+					frappe._('{0} {1} cannot be "{2}". It should be one of "{3}"').format(
+						prefix, label, value, comma_options
+					)
+				)
+
+
 	def remove_duplicates(self):
 		# Remove duplicate Monitored Apps
 		unique_apps = set()

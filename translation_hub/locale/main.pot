@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-19 17:08\n"
+"PO-Revision-Date: 2025-12-20 07:55\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1172,10 +1172,6 @@ msgctxt "Label of a Navbar Item"
 msgid "Workspace Settings"
 msgstr ""
 
-#: DocType: Translator Settings:0
-msgid "deepseek/deepseek-chat-v3-0324:free"
-msgstr ""
-
 #: DocType: Translation Learning:0
 msgid "e.g. 'against'"
 msgstr ""
@@ -1190,14 +1186,6 @@ msgstr ""
 
 #: DocType: App:0
 msgid "e.g. Healthcare, Logistics, Education"
-msgstr ""
-
-#: DocType: Translator Settings:0
-msgid "gemini-2.0-flash"
-msgstr ""
-
-#: DocType: Translator Settings:0
-msgid "llama-3.3-70b-versatile"
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:125
