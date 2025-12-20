@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-20 07:55\n"
+"PO-Revision-Date: 2025-12-20 17:49\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -69,6 +69,10 @@ msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:93
 msgid "Actions"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Agent Pipeline (Multi-Agent Review)"
 msgstr ""
 
 #: DocType: Translator Settings:0
@@ -220,6 +224,10 @@ msgstr ""
 msgid "Connection Test"
 msgstr ""
 
+#: DocType: Preferred Synonym:0
+msgid "Context"
+msgstr ""
+
 #: DocType: Base Term:0
 msgid "Context (Universal)"
 msgstr ""
@@ -264,6 +272,10 @@ msgstr ""
 msgid "Critical"
 msgstr ""
 
+#: DocType: Regional Expert Profile:0
+msgid "Cultural Context"
+msgstr ""
+
 #: DocType: Translation Review:0
 msgid "Current Translation"
 msgstr ""
@@ -277,9 +289,19 @@ msgid "Default Languages"
 msgstr ""
 
 #: DocType: Translator Settings:0
+msgid "Default Regional Expert"
+msgstr ""
+
+#: DocType: Translator Settings:0
 msgid ""
 "Define languages to be created/enabled by the 'bench setup-languages' "
 "command."
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid ""
+"Describe cultural nuances, formality expectations, acceptable slang, "
+"regional preferences, etc. This will be injected into the LLM prompt."
 msgstr ""
 
 #: DocType: App:0
@@ -325,6 +347,13 @@ msgstr ""
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:162
 msgid ""
 "E.g., 'Financial context, use formal tone' or 'Glossary: Against -> Vínculo'"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid ""
+"Enable 3-agent pipeline: Translator → Regional Reviewer → Quality Agent. "
+"Translations below quality threshold go to human review. Uses 3 LLM calls "
+"per batch."
 msgstr ""
 
 #: DocType: Translator Settings:0
@@ -387,6 +416,22 @@ msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:5
 msgid "Fix Translation"
+msgstr ""
+
+#: DocType: Forbidden Term:0
+msgid "Forbidden Term"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Forbidden Terms"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Formal"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Formality Level"
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:77
@@ -470,6 +515,10 @@ msgid ""
 " values."
 msgstr ""
 
+#: DocType: Regional Expert Profile:0
+msgid "If set, this profile will only apply to this App."
+msgstr ""
+
 #: DocType: Localization Profile:0
 msgid ""
 "If set, this profile will only apply to this App. Leave empty for generic "
@@ -480,12 +529,26 @@ msgstr ""
 msgid "In Progress"
 msgstr ""
 
+#: DocType: Regional Expert Profile:0
+msgid "Industry Jargon (JSON)"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Informal"
+msgstr ""
+
 #: DocType: Installed App:0
 msgid "Installed App"
 msgstr ""
 
 #: DocType: Localization Profile:0
 msgid "Is Active"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid ""
+"JSON object with industry-specific terms: {\"ERP term\": \"Regional "
+"equivalent\"}"
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_job/translation_job.js:16
@@ -617,6 +680,10 @@ msgstr ""
 msgid "Needs Action"
 msgstr ""
 
+#: DocType: Regional Expert Profile:0
+msgid "Neutral"
+msgstr ""
+
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:80
 msgid "New Review Created"
 msgstr ""
@@ -657,6 +724,18 @@ msgstr ""
 msgid "Operation completed successfully."
 msgstr ""
 
+#: DocType: Translator Settings:0
+msgid "Optional: Default regional profile to use for cultural context."
+msgstr ""
+
+#: DocType: Translation Job:0
+msgid "Optional: Override default regional expert for this job"
+msgstr ""
+
+#: DocType: Preferred Synonym:0
+msgid "Original Term"
+msgstr ""
+
 #: DocType: Regulatory Standard:0
 msgid "Other"
 msgstr ""
@@ -671,6 +750,18 @@ msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/report/monitored_apps_progress_report/monitored_apps_progress_report.py:35
 msgid "Please install polib library to view translation progress."
+msgstr ""
+
+#: DocType: Preferred Synonym:0
+msgid "Preferred Synonym"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Preferred Synonyms"
+msgstr ""
+
+#: DocType: Preferred Synonym:0
+msgid "Preferred Term"
 msgstr ""
 
 #: DocType: Context Rule:0
@@ -711,12 +802,28 @@ msgid ""
 "translation job."
 msgstr ""
 
+#: DocType: Translator Settings:0
+msgid "Quality Threshold"
+msgstr ""
+
 #: DocType: Translation Job:0
 msgid "Queued"
 msgstr ""
 
+#: DocType: Forbidden Term:0
+msgid "Reason"
+msgstr ""
+
 #: DocType: Context Rule:0
 msgid "Regex Pattern"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Region"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Regional Expert Profile"
 msgstr ""
 
 #: DocType: Localization Profile:0
@@ -817,6 +924,10 @@ msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:187
 msgid "Reviews created: {0}"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:43
+msgid "Row #{0}:"
 msgstr ""
 
 #: DocType: Context Rule:0
@@ -985,7 +1096,11 @@ msgstr ""
 msgid "Tax"
 msgstr ""
 
-#: DocType: Translation Exclusion:0
+#: DocType: Regional Expert Profile:0
+msgid "Technical"
+msgstr ""
+
+#: DocType: Forbidden Term:0
 msgid "Term"
 msgstr ""
 
@@ -1011,6 +1126,10 @@ msgstr ""
 
 #: apps/translation_hub/translation_hub/api/review_api.py:113
 msgid "Term learning created: '{0}' → '{1}'"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Terms that should NEVER be used in translations for this region."
 msgstr ""
 
 #: DocType: Translator Settings:0
@@ -1117,6 +1236,12 @@ msgstr ""
 msgid "Translation Task"
 msgstr ""
 
+#: DocType: Translator Settings:0
+msgid ""
+"Translations with quality score below this threshold are sent to Translation"
+" Review for human approval."
+msgstr ""
+
 #: DocType: Localization Profile:0
 msgid "Translator"
 msgstr ""
@@ -1142,6 +1267,10 @@ msgid "Use AI to Suggest Corrections"
 msgstr ""
 
 #: DocType: Translator Settings:0
+msgid "Use Agent Pipeline"
+msgstr ""
+
+#: DocType: Translator Settings:0
 msgid "Use Database Storage"
 msgstr ""
 
@@ -1163,6 +1292,10 @@ msgstr ""
 msgid "Weekly"
 msgstr ""
 
+#: DocType: Regional Expert Profile:0
+msgid "When the original term appears, prefer the regional synonym."
+msgstr ""
+
 #: DocType: Context Rule:0
 msgid "When to Apply (Context)"
 msgstr ""
@@ -1170,6 +1303,18 @@ msgstr ""
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Workspace Settings"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "de-AT"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "de-DE"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "deepseek/deepseek-chat-v3-0324:free"
 msgstr ""
 
 #: DocType: Translation Learning:0
@@ -1186,6 +1331,78 @@ msgstr ""
 
 #: DocType: App:0
 msgid "e.g. Healthcare, Logistics, Education"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "en-GB"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "en-US"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "es-AR"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "es-CL"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "es-CO"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "es-ES"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "es-MX"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "fr-CA"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "fr-FR"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "gemini-2.0-flash"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "it-IT"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "ja-JP"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "llama-3.3-70b-versatile"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "pt-BR"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "pt-PT"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "zh-CN"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "zh-TW"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:48
+msgid "{0} {1} cannot be \"{2}\". It should be one of \"{3}\""
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:125

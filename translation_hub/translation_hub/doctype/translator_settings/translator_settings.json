@@ -26,6 +26,10 @@
         "use_database_storage",
         "save_to_po_file",
         "export_po_on_complete",
+        "agent_pipeline_section",
+        "use_agent_pipeline",
+        "quality_threshold",
+        "default_regional_expert",
         "automation_section",
         "enable_automated_translation",
         "frequency",
@@ -179,6 +183,34 @@
             "fieldname": "export_po_on_complete",
             "fieldtype": "Check",
             "label": "Export .po File on Completion"
+        },
+        {
+            "fieldname": "agent_pipeline_section",
+            "fieldtype": "Section Break",
+            "label": "Agent Pipeline (Multi-Agent Review)"
+        },
+        {
+            "default": "0",
+            "description": "Enable 3-agent pipeline: Translator → Regional Reviewer → Quality Agent. Translations below quality threshold go to human review. Uses 3 LLM calls per batch.",
+            "fieldname": "use_agent_pipeline",
+            "fieldtype": "Check",
+            "label": "Use Agent Pipeline"
+        },
+        {
+            "default": "0.8",
+            "depends_on": "eval:doc.use_agent_pipeline",
+            "description": "Translations with quality score below this threshold are sent to Translation Review for human approval.",
+            "fieldname": "quality_threshold",
+            "fieldtype": "Float",
+            "label": "Quality Threshold"
+        },
+        {
+            "depends_on": "eval:doc.use_agent_pipeline",
+            "description": "Optional: Default regional profile to use for cultural context.",
+            "fieldname": "default_regional_expert",
+            "fieldtype": "Link",
+            "label": "Default Regional Expert",
+            "options": "Regional Expert Profile"
         },
         {
             "fieldname": "automation_section",

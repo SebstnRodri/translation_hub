@@ -14,6 +14,17 @@ class TestJobQueueing(FrappeTestCase):
 
 	def setUp(self):
 		super().setUp()
+
+		# CRITICAL: Cancel any active Translation Jobs to avoid duplication validation errors
+		frappe.db.sql("""
+			UPDATE `tabTranslation Job`
+			SET status = 'Cancelled'
+			WHERE status IN ('Pending', 'Queued', 'In Progress')
+			AND source_app = 'translation_hub'
+			AND target_language = 'pt-BR'
+		""")
+		frappe.db.commit()
+
 		# Ensure translation_hub is configured as monitored app and pt-BR is enabled
 		settings = frappe.get_single("Translator Settings")
 

@@ -133,7 +133,14 @@ def execute_translation_job(translation_job_name):
 			export_po_on_complete=settings.export_po_on_complete,
 			language_code=job.target_language,
 			localization_profile=job.localization_profile,
+			# Agent Pipeline configuration
+			use_agent_pipeline=getattr(settings, "use_agent_pipeline", False),
+			quality_threshold=getattr(settings, "quality_threshold", 0.8),
+			regional_expert_profile=getattr(job, "regional_expert_profile", None)
+			or getattr(settings, "default_regional_expert", None),
+			llm_provider=llm_provider,
 		)
+		config.app_name = job.source_app  # Set app_name for agent context
 
 		file_handler = TranslationFile(po_path=config.po_file, pot_path=config.pot_file, logger=logger)
 		file_handler.merge()  # Ensure PO is up-to-date with POT

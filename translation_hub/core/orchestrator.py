@@ -61,6 +61,11 @@ class TranslationOrchestrator:
 			total_batches = len(batches)
 			self.logger.info(f"Created {total_batches} batches of size {self.config.batch_size}.")
 
+			# === AGENT PIPELINE MODE ===
+			if self.config.use_agent_pipeline:
+				self._run_agent_pipeline(untranslated_entries, total_strings)
+				return
+
 			for i, batch in enumerate(batches):
 				self.logger.info(f"--- Translating batch {i + 1}/{total_batches} ---")
 
@@ -107,6 +112,106 @@ class TranslationOrchestrator:
 			)
 			self.logger.warning("To continue, simply run the command again.")
 			sys.exit(130)
+
+	def _run_agent_pipeline(self, untranslated_entries: list, total_strings: int):
+		"""
+		Run the multi-agent translation pipeline.
+		Quality > Economy: Uses 3 LLM calls per batch.
+		No automatic fallback: Pauses for inspection on failure.
+		"""
+		from translation_hub.core.agent_orchestrator import AgentOrchestrator, create_review_from_result
+
+		self.logger.info("=== AGENT PIPELINE MODE ===")
+		self.logger.info("Pipeline: TranslatorAgent → RegionalReviewerAgent → QualityAgent")
+
+		# Determine app_name from context if possible
+		app_name = getattr(self.config, "app_name", None)
+		regional_profile = self.config.regional_expert_profile
+
+		agent_orchestrator = AgentOrchestrator(
+			config=self.config,
+			app_name=app_name,
+			regional_profile=regional_profile,
+			logger=self.logger,
+		)
+
+		# Process in batches
+		batches = list(self._split_into_batches(untranslated_entries, self.config.batch_size))
+		total_batches = len(batches)
+		translated_strings = 0
+		reviews_created = 0
+
+		for i, batch in enumerate(batches):
+			self.logger.info(f"--- Agent Pipeline Batch {i + 1}/{total_batches} ---")
+
+			# Convert POEntry to dict for the agent pipeline
+			batch_dicts = [
+				{
+					"msgid": entry.msgid if hasattr(entry, "msgid") else entry.get("msgid", ""),
+					"msgstr": entry.msgstr if hasattr(entry, "msgstr") else entry.get("msgstr", ""),
+					"msgctxt": entry.msgctxt if hasattr(entry, "msgctxt") else entry.get("msgctxt", ""),
+					"occurrences": entry.occurrences
+					if hasattr(entry, "occurrences")
+					else entry.get("occurrences", []),
+					"flags": entry.flags if hasattr(entry, "flags") else entry.get("flags", []),
+					"comment": entry.comment if hasattr(entry, "comment") else entry.get("comment", ""),
+				}
+				for entry in batch
+			]
+
+			# Run the 3-agent pipeline
+			results = agent_orchestrator.translate_with_review(batch_dicts)
+
+			# Process results
+			for result in results:
+				if result.needs_human_review:
+					# Create Translation Review for human review
+					import frappe
+
+					review_name = create_review_from_result(
+						result,
+						source_app=app_name or "unknown",
+						language=self.config.language_code,
+					)
+					self.logger.info(
+						f"  → Created review {review_name} for '{result.msgid[:30]}...' (score={result.quality_score:.2f})"
+					)
+					reviews_created += 1
+				else:
+					# Save high-quality translation directly
+					translated_entry = {"msgid": result.msgid, "msgstr": result.msgstr}
+
+					if self.config.use_database_storage:
+						from translation_hub.core.database_translation import DatabaseTranslationHandler
+
+						db_handler = DatabaseTranslationHandler(self.config.language_code, self.logger)
+						db_handler.save_translations([translated_entry])
+
+					if self.config.save_to_po_file:
+						self.file_handler.update_entries([translated_entry])
+
+				translated_strings += 1
+				self.logger.update_progress(translated_strings, total_strings)
+
+			if self.config.save_to_po_file:
+				self.file_handler.save()
+
+			self.logger.info(f"--- Batch {i + 1}/{total_batches} complete ---")
+
+		# Final summary
+		self.logger.info("\n=== AGENT PIPELINE COMPLETE ===")
+		self.logger.info(f"Total translated: {translated_strings}")
+		self.logger.info(f"Sent to human review: {reviews_created}")
+		self.logger.info(f"Auto-approved: {translated_strings - reviews_created}")
+
+		if self.config.use_database_storage and self.config.export_po_on_complete:
+			from translation_hub.core.database_translation import DatabaseTranslationHandler
+
+			db_handler = DatabaseTranslationHandler(self.config.language_code, self.logger)
+			db_handler.export_to_po(str(self.config.po_file))
+			self.logger.info(f"Exported database translations to {self.config.po_file}")
+
+		self.file_handler.final_verification()
 
 	@staticmethod
 	def _split_into_batches(

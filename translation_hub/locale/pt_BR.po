@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-20 07:55\n"
+"PO-Revision-Date: 2025-12-20 17:48\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -104,7 +104,7 @@ msgstr "Teste de Conexão"
 
 #: DocType: Translator Settings:0
 msgid "Daily"
-msgstr "Diariamente"
+msgstr "Diário"
 
 #: DocType: Translator Settings:0
 msgid "Default Languages"
@@ -426,7 +426,7 @@ msgstr "Administrador do Sistema"
 msgid "Target Language"
 msgstr "Idioma de destino"
 
-#: DocType: Translation Exclusion:0
+#: DocType: Forbidden Term:0
 msgid "Term"
 msgstr "Termo"
 
@@ -699,7 +699,7 @@ msgstr "Detalhes"
 
 #: DocType: Context Rule:0
 msgid "Document Type"
-msgstr "Tipo de documento "
+msgstr "Tipo de Documento "
 
 #: DocType: Translation Domain:0
 msgid "Domain Name"
@@ -1192,17 +1192,19 @@ msgstr "Escopo do Aplicativo (Opcional)"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:118
 msgid "Rejected {0} times (Last: {1})"
-msgstr ""
+msgstr "Rejeitado {0} vezes (Último: {1})"
 
 #: DocType: Base Term:0
 msgid "Standard Term (English)"
-msgstr ""
+msgstr "Termo Padrão (Inglês)"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:125
 msgid ""
 "⚠️ Warning: This term has been rejected {0} times previously. Please verify "
 "carefully."
 msgstr ""
+"⚠ Atenção: Esse termo foi rejeitado {0} vezes anteriormente. Por favor, "
+"verifique cuidadosamente."
 
 #: DocType: Translator Settings:0
 msgid ""
@@ -1210,6 +1212,9 @@ msgid ""
 "5px;'>Access hundreds of models. <a href='https://openrouter.ai/keys' "
 "target='_blank'>Get your key</a>.</div>"
 msgstr ""
+"<div style='font-size: 12px; color: var(--text-muted); margin-top: "
+"5px;'>Acesse centenas de modelos. <a href='https://openrouter.ai/keys' "
+"target='_blank'>Obtenha sua chave</a>.</div>"
 
 #: DocType: Translator Settings:0
 msgid ""
@@ -1217,6 +1222,9 @@ msgid ""
 "5px;'>Don't have a key? <a href='https://aistudio.google.com/app/apikey' "
 "target='_blank'>Get a generic key from Google AI Studio</a>.</div>"
 msgstr ""
+"<div style='font-size: 12px; color: var(--text-muted); margin-top: 5px;'>Não"
+" tem uma chave? <a href='https://aistudio.google.com/app/apikey' "
+"target='_blank'>Obtenha uma chave genérica do Google AI Studio</a>.</div>"
 
 #: DocType: Translator Settings:0
 msgid ""
@@ -1224,50 +1232,274 @@ msgid ""
 "5px;'>Fast inference requires a Groq key. <a "
 "href='https://console.groq.com/keys' target='_blank'>Get one here</a>.</div>"
 msgstr ""
+"<div style='font-size: 12px; color: var(--text-muted); margin-top: 5px;'>A "
+"inferência rápida exige uma chave do Groq. <a "
+"href='https://console.groq.com/keys' target='_blank'>Obtenha uma "
+"aqui</a>.</div>"
 
 #: DocType: Translator Settings:0
 msgid "Gemini Settings"
-msgstr ""
+msgstr "Configurações do Gemini"
 
 #: DocType: Translator Settings:0
 msgid "Groq Settings"
-msgstr ""
+msgstr "Configurações do Groq"
 
 #: DocType: Translator Settings:0
 msgid "LLM Selection"
-msgstr ""
+msgstr "Seleção do LLM"
 
 #: DocType: Translator Settings:0
 msgid "OpenRouter Settings"
-msgstr ""
+msgstr "Configurações do OpenRouter"
 
 #: DocType: Translator Settings:0
 msgid "Select the model to use on Groq."
-msgstr ""
+msgstr "Selecione o modelo a ser usado no Groq."
 
 #: DocType: Translator Settings:0
 msgid "Select the model to use on OpenRouter."
-msgstr ""
+msgstr "Selecione o modelo a ser usado no OpenRouter."
 
 #: DocType: Translator Settings:0
 msgid "Translation Behavior"
-msgstr ""
+msgstr "Comportamento de tradução"
 
 #: DocType: Translator Settings:0
 msgid "Gemini Model"
-msgstr ""
+msgstr "Modelo do Gemini"
 
 #: DocType: Translator Settings:0
 msgid "Select the Gemini model to use."
+msgstr "Selecione o modelo do Gemini a ser usado."
+
+#: DocType: Translator Settings:0
+msgid "deepseek/deepseek-chat-v3-0324:free"
+msgstr "deepseek/deepseek-chat-v3-0324:gratuito"
+
+#: DocType: Translator Settings:0
+msgid "llama-3.3-70b-versatile"
+msgstr "llama-3.3-70b-versátil"
+
+#: DocType: Translator Settings:0
+msgid "gemini-2.0-flash"
+msgstr "gemini-2.0-flash"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:43
+msgid "Row #{0}:"
+msgstr "Linha #{0}:"
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:48
+msgid "{0} {1} cannot be \"{2}\". It should be one of \"{3}\""
+msgstr "{0} {1} não pode ser \"{2}\". Ele deve ser um dos \"{3}\""
+
+#: DocType: Translator Settings:0
+msgid "Agent Pipeline (Multi-Agent Review)"
 msgstr ""
 
-#~ msgid "deepseek/deepseek-chat-v3-0324:free"
+#: DocType: Preferred Synonym:0
+msgid "Context"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Cultural Context"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Default Regional Expert"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid ""
+"Describe cultural nuances, formality expectations, acceptable slang, "
+"regional preferences, etc. This will be injected into the LLM prompt."
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid ""
+"Enable 3-agent pipeline: Translator → Regional Reviewer → Quality Agent. "
+"Translations below quality threshold go to human review. Uses 3 LLM calls "
+"per batch."
+msgstr ""
+
+#: DocType: Forbidden Term:0
+msgid "Forbidden Term"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Forbidden Terms"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Formal"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Formality Level"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "If set, this profile will only apply to this App."
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Industry Jargon (JSON)"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Informal"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid ""
+"JSON object with industry-specific terms: {\"ERP term\": \"Regional "
+"equivalent\"}"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Neutral"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Optional: Default regional profile to use for cultural context."
+msgstr ""
+
+#: DocType: Translation Job:0
+msgid "Optional: Override default regional expert for this job"
+msgstr ""
+
+#: DocType: Preferred Synonym:0
+msgid "Original Term"
+msgstr ""
+
+#: DocType: Preferred Synonym:0
+msgid "Preferred Synonym"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Preferred Synonyms"
+msgstr ""
+
+#: DocType: Preferred Synonym:0
+msgid "Preferred Term"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Quality Threshold"
+msgstr ""
+
+#: DocType: Forbidden Term:0
+msgid "Reason"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Region"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Regional Expert Profile"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Technical"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "Terms that should NEVER be used in translations for this region."
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid ""
+"Translations with quality score below this threshold are sent to Translation"
+" Review for human approval."
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Use Agent Pipeline"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "When the original term appears, prefer the regional synonym."
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "de-AT"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "de-DE"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "en-GB"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "en-US"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "es-AR"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "es-CL"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "es-CO"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "es-ES"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "es-MX"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "fr-CA"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "fr-FR"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "it-IT"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "ja-JP"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "pt-BR"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "pt-PT"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "zh-CN"
+msgstr ""
+
+#: DocType: Regional Expert Profile:0
+msgid "zh-TW"
+msgstr ""
+
+#~ msgid "AI Suggestion (Snapshot)"
 #~ msgstr ""
 
-#~ msgid "llama-3.3-70b-versatile"
+#~ msgid "Enter the correct translation here to complete the task."
 #~ msgstr ""
 
-#~ msgid "gemini-2.0-flash"
+#~ msgid "Manual Translation (Correction)"
+#~ msgstr ""
+
+#~ msgid "The incorrect suggestion rejected in the review."
 #~ msgstr ""
 
 #~ msgid "Fetching available models..."

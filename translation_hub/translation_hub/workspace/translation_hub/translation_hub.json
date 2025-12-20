@@ -1,134 +1,144 @@
 {
- "app": "translation_hub",
- "charts": [
-  {
-   "chart_name": "Monitored Apps Progress",
-   "label": "Monitored Apps Progress"
-  }
- ],
- "content": "[{\"id\":\"header_1\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Translation Hub</span>\",\"col\":12}},{\"id\":\"YZ8d7EXBlS\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Monitored Apps Progress\",\"col\":12}},{\"id\":\"spacer_1\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"shortcuts_header\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Your Shortcuts</b></span>\",\"col\":12}},{\"id\":\"sc_jobs\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Translation Jobs\",\"col\":4}},{\"id\":\"sc_list\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Translation Reviews\",\"col\":4}},{\"id\":\"7249827d82\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Full Analytics\",\"col\":4}},{\"id\":\"spacer_2\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"cards_header\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Configuration &amp; Masters</b></span>\",\"col\":12}},{\"id\":\"card_config\",\"type\":\"card\",\"data\":{\"card_name\":\"Configuration\",\"col\":4}},{\"id\":\"card_settings\",\"type\":\"card\",\"data\":{\"card_name\":\"Settings\",\"col\":4}}]",
- "creation": "2025-12-18 17:27:19.205924",
- "custom_blocks": [],
- "docstatus": 0,
- "doctype": "Workspace",
- "hide_custom": 0,
- "icon": "bot-message-square",
- "idx": 0,
- "indicator_color": "green",
- "is_hidden": 0,
- "label": "Translation Hub",
- "links": [
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Configuration",
-   "link_count": 0,
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Localization Profile",
-   "link_count": 0,
-   "link_to": "Localization Profile",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Translation Domain",
-   "link_count": 0,
-   "link_to": "Translation Domain",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Term Rejection Pattern",
-   "link_count": 0,
-   "link_to": "Term Rejection Pattern",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Settings",
-   "link_count": 3,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Translator Settings",
-   "link_count": 0,
-   "link_to": "Translator Settings",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "App Glossary",
-   "link_count": 0,
-   "link_to": "App Glossary",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Apps",
-   "link_count": 0,
-   "link_to": "App",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  }
- ],
- "modified": "2025-12-19 12:36:17.732592",
- "modified_by": "Administrator",
- "module": "Translation Hub",
- "name": "Translation Hub",
- "number_cards": [],
- "owner": "Administrator",
- "parent_page": "",
- "public": 1,
- "quick_lists": [],
- "roles": [],
- "sequence_id": 0.0,
- "shortcuts": [
-  {
-   "color": "Blue",
-   "format": "{} Active Jobs",
-   "label": "Translation Jobs",
-   "link_to": "Translation Job",
-   "stats_filter": "{\"status\": \"In Progress\"}",
-   "type": "DocType"
-  },
-  {
-   "color": "Grey",
-   "label": "Translation Reviews",
-   "link_to": "Translation Review",
-   "type": "DocType"
-  },
-  {
-   "color": "Purple",
-   "label": "Full Analytics",
-   "link_to": "Translation Hub",
-   "type": "Dashboard"
-  }
- ],
- "title": "Translation Hub",
- "type": "Workspace"
+    "app": "translation_hub",
+    "charts": [
+        {
+            "chart_name": "Monitored Apps Progress",
+            "label": "Monitored Apps Progress"
+        }
+    ],
+    "content": "[{\"id\":\"header_1\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Translation Hub</span>\",\"col\":12}},{\"id\":\"YZ8d7EXBlS\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Monitored Apps Progress\",\"col\":12}},{\"id\":\"spacer_1\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"shortcuts_header\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Your Shortcuts</b></span>\",\"col\":12}},{\"id\":\"sc_jobs\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Translation Jobs\",\"col\":4}},{\"id\":\"sc_list\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Translation Reviews\",\"col\":4}},{\"id\":\"7249827d82\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Full Analytics\",\"col\":4}},{\"id\":\"spacer_2\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"cards_header\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Configuration &amp; Masters</b></span>\",\"col\":12}},{\"id\":\"card_config\",\"type\":\"card\",\"data\":{\"card_name\":\"Configuration\",\"col\":4}},{\"id\":\"card_settings\",\"type\":\"card\",\"data\":{\"card_name\":\"Settings\",\"col\":4}}]",
+    "creation": "2025-12-18 17:27:19.205924",
+    "custom_blocks": [],
+    "docstatus": 0,
+    "doctype": "Workspace",
+    "hide_custom": 0,
+    "icon": "bot-message-square",
+    "idx": 0,
+    "indicator_color": "green",
+    "is_hidden": 0,
+    "label": "Translation Hub",
+    "links": [
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Configuration",
+            "link_count": 0,
+            "onboard": 0,
+            "type": "Card Break"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Localization Profile",
+            "link_count": 0,
+            "link_to": "Localization Profile",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Regional Expert Profile",
+            "link_count": 0,
+            "link_to": "Regional Expert Profile",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Translation Domain",
+            "link_count": 0,
+            "link_to": "Translation Domain",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Term Rejection Pattern",
+            "link_count": 0,
+            "link_to": "Term Rejection Pattern",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Settings",
+            "link_count": 3,
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Card Break"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Translator Settings",
+            "link_count": 0,
+            "link_to": "Translator Settings",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "App Glossary",
+            "link_count": 0,
+            "link_to": "App Glossary",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        },
+        {
+            "hidden": 0,
+            "is_query_report": 0,
+            "label": "Apps",
+            "link_count": 0,
+            "link_to": "App",
+            "link_type": "DocType",
+            "onboard": 0,
+            "type": "Link"
+        }
+    ],
+    "modified": "2025-12-19 12:36:17.732592",
+    "modified_by": "Administrator",
+    "module": "Translation Hub",
+    "name": "Translation Hub",
+    "number_cards": [],
+    "owner": "Administrator",
+    "parent_page": "",
+    "public": 1,
+    "quick_lists": [],
+    "roles": [],
+    "sequence_id": 0.0,
+    "shortcuts": [
+        {
+            "color": "Blue",
+            "format": "{} Active Jobs",
+            "label": "Translation Jobs",
+            "link_to": "Translation Job",
+            "stats_filter": "{\"status\": \"In Progress\"}",
+            "type": "DocType"
+        },
+        {
+            "color": "Grey",
+            "label": "Translation Reviews",
+            "link_to": "Translation Review",
+            "type": "DocType"
+        },
+        {
+            "color": "Purple",
+            "label": "Full Analytics",
+            "link_to": "Translation Hub",
+            "type": "Dashboard"
+        }
+    ],
+    "title": "Translation Hub",
+    "type": "Workspace"
 }

@@ -10,6 +10,8 @@
         "status",
         "source_app",
         "target_language",
+        "localization_profile",
+        "regional_expert_profile",
         "progress_section",
         "total_strings",
         "translated_strings",
@@ -59,6 +61,13 @@
             "label": "Localization Profile",
             "options": "Localization Profile",
             "in_list_view": 1
+        },
+        {
+            "fieldname": "regional_expert_profile",
+            "fieldtype": "Link",
+            "label": "Regional Expert Profile",
+            "options": "Regional Expert Profile",
+            "description": "Optional: Override default regional expert for this job"
         },
         {
             "fieldname": "progress_section",

@@ -50,7 +50,6 @@ class TranslatorSettings(Document):
 					)
 				)
 
-
 	def remove_duplicates(self):
 		# Remove duplicate Monitored Apps
 		unique_apps = set()

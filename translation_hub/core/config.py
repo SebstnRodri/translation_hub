@@ -29,6 +29,12 @@ class TranslationConfig:
 	save_to_po_file: bool = False  # Also save to .po file (optional)
 	export_po_on_complete: bool = False  # Export DB to .po when done (optional)
 
+	# Agent Pipeline options
+	use_agent_pipeline: bool = False  # Enable multi-agent pipeline with mandatory review
+	quality_threshold: float = 0.8  # Translations below this go to human review
+	regional_expert_profile: str | None = None  # Regional Expert Profile name
+	llm_provider: str = "Gemini"  # Gemini, Groq, or OpenRouter
+
 	def __post_init__(self):
 		if isinstance(self.pot_file, str):
 			self.pot_file = Path(self.pot_file)

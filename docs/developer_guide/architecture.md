@@ -2,14 +2,42 @@
 
 This document describes the overall architecture and design principles of the `translation_hub` application.
 
-## Recent Changes (v1.6.x - v1.7.x)
+## Recent Changes (v1.6.x - v2.0.x)
 
 > [!NOTE]
+> **Version 2.0.0** (2024-12-20): Multi-Agent Translation Pipeline with quality-first approach.
+>
 > **Version 1.7.0** (2024-12-18): File reorganization, Maintenance Module, GeminiService fix.
 >
 > **Version 1.6.1** (2024-12-15): Review Center UI overhaul, AI Feedback Loop, Deep Links, bug fixes.
 >
 > **Version 1.6.0** (2024-12-14): Major update with Language Manager UI, Selective Backup, Locale Cleanup, and Auto-compilation.
+
+### Key Additions in Version 2.0.0
+
+1. **Multi-Agent Translation Pipeline**:
+   - **TranslatorAgent**: Domain-specific translation with ERP context
+   - **RegionalReviewerAgent**: Cultural and regional adaptation using Regional Expert Profile
+   - **QualityAgent**: Quality evaluation with automatic human review flagging
+   - **AgentOrchestrator**: Coordinates the 3-agent pipeline
+
+2. **Regional Expert Profile** (New DocType):
+   - Rich cultural context for regional translations
+   - **Forbidden Terms**: Terms to avoid with alternatives
+   - **Preferred Synonyms**: Regional terminology preferences
+   - **Industry Jargon**: Domain-specific terminology (JSON)
+   - Works with existing Localization Profile
+
+3. **Quality-First Approach**:
+   - Translations evaluated before saving
+   - Quality threshold (default 0.8) determines auto-approval
+   - Low-quality translations flagged for human review
+   - No automatic fallback - failures pause for inspection
+
+4. **Translator Settings Enhancements**:
+   - `use_agent_pipeline`: Enable/disable multi-agent pipeline
+   - `quality_threshold`: Minimum quality score for auto-approval
+   - `default_regional_expert`: Default Regional Expert Profile
 
 ### Key Additions in Release Candidate 2.0
 

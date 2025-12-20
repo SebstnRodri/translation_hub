@@ -1,0 +1,166 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "field:profile_name",
+    "creation": "2025-12-20 15:15:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "profile_name",
+        "is_active",
+        "setup_section",
+        "region",
+        "language",
+        "formality_level",
+        "column_break_setup",
+        "app",
+        "expert_validated",
+        "cultural_section",
+        "cultural_context",
+        "industry_jargon",
+        "terms_section",
+        "forbidden_terms",
+        "synonyms_section",
+        "preferred_synonyms"
+    ],
+    "fields": [
+        {
+            "fieldname": "profile_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Profile Name",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "default": "1",
+            "fieldname": "is_active",
+            "fieldtype": "Check",
+            "in_list_view": 1,
+            "label": "Is Active"
+        },
+        {
+            "fieldname": "setup_section",
+            "fieldtype": "Section Break",
+            "label": "Setup"
+        },
+        {
+            "fieldname": "region",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Region",
+            "options": "\npt-BR\npt-PT\nes-ES\nes-MX\nes-AR\nes-CL\nes-CO\nen-US\nen-GB\nfr-FR\nfr-CA\nde-DE\nde-AT\nit-IT\nzh-CN\nzh-TW\nja-JP",
+            "reqd": 1
+        },
+        {
+            "fieldname": "language",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Language",
+            "options": "Language",
+            "reqd": 1
+        },
+        {
+            "fieldname": "formality_level",
+            "fieldtype": "Select",
+            "label": "Formality Level",
+            "options": "\nFormal\nNeutral\nInformal\nTechnical",
+            "default": "Neutral"
+        },
+        {
+            "fieldname": "column_break_setup",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "app",
+            "fieldtype": "Link",
+            "label": "Scope App (Optional)",
+            "options": "App",
+            "description": "If set, this profile will only apply to this App."
+        },
+        {
+            "default": "0",
+            "fieldname": "expert_validated",
+            "fieldtype": "Check",
+            "label": "Expert Validated"
+        },
+        {
+            "fieldname": "cultural_section",
+            "fieldtype": "Section Break",
+            "label": "Cultural Context"
+        },
+        {
+            "fieldname": "cultural_context",
+            "fieldtype": "Text",
+            "label": "Cultural Context",
+            "description": "Describe cultural nuances, formality expectations, acceptable slang, regional preferences, etc. This will be injected into the LLM prompt."
+        },
+        {
+            "fieldname": "industry_jargon",
+            "fieldtype": "Small Text",
+            "label": "Industry Jargon (JSON)",
+            "description": "JSON object with industry-specific terms: {\"ERP term\": \"Regional equivalent\"}"
+        },
+        {
+            "fieldname": "terms_section",
+            "fieldtype": "Section Break",
+            "label": "Forbidden Terms"
+        },
+        {
+            "fieldname": "forbidden_terms",
+            "fieldtype": "Table",
+            "label": "Forbidden Terms",
+            "options": "Forbidden Term",
+            "description": "Terms that should NEVER be used in translations for this region."
+        },
+        {
+            "fieldname": "synonyms_section",
+            "fieldtype": "Section Break",
+            "label": "Preferred Synonyms"
+        },
+        {
+            "fieldname": "preferred_synonyms",
+            "fieldtype": "Table",
+            "label": "Preferred Synonyms",
+            "options": "Preferred Synonym",
+            "description": "When the original term appears, prefer the regional synonym."
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2025-12-20 15:15:00.000000",
+    "modified_by": "Administrator",
+    "module": "Translation Hub",
+    "name": "Regional Expert Profile",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Translator",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1
+}
