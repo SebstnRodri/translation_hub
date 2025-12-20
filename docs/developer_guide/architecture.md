@@ -282,6 +282,27 @@ classDiagram
         +import_all()
     }
 
+    class AgentOrchestrator {
+        -TranslatorAgent translator
+        -RegionalReviewerAgent reviewer
+        -QualityAgent quality
+        +translate_with_review(entries)
+    }
+
+    class TranslatorAgent {
+        +translate(entries)
+    }
+
+    class RegionalReviewerAgent {
+        -RegionalExpertProfile profile
+        +review(translations)
+    }
+
+    class QualityAgent {
+        -float quality_threshold
+        +evaluate(translations)
+    }
+
     FrappeUI ..> BackgroundJob : enqueues
     BackgroundJob ..> Orchestrator : instantiates and runs
     BackgroundJob ..> Config : instantiates
@@ -295,6 +316,11 @@ classDiagram
     Orchestrator o-- Service
     Orchestrator o-- DocTypeLogger
     Orchestrator ..> DatabaseTranslationHandler : uses
+    Orchestrator ..> AgentOrchestrator : uses when agent_pipeline enabled
+
+    AgentOrchestrator o-- TranslatorAgent
+    AgentOrchestrator o-- RegionalReviewerAgent
+    AgentOrchestrator o-- QualityAgent
 
     GeminiService --|> Service
     GroqService --|> Service
@@ -315,10 +341,14 @@ erDiagram
     TRANSLATOR_SETTINGS ||--o{ MONITORED_APP : "contains"
     TRANSLATOR_SETTINGS ||--o{ TRANSLATOR_LANGUAGE : "contains"
     TRANSLATOR_SETTINGS }o--|| LOCALIZATION_PROFILE : "default_profile"
+    TRANSLATOR_SETTINGS }o--o| REGIONAL_EXPERT_PROFILE : "default_regional_expert"
     
     LOCALIZATION_PROFILE ||--o{ TRANSLATION_DOMAIN : "contains"
     LOCALIZATION_PROFILE ||--o{ REGIONAL_TERM : "contains"
     LOCALIZATION_PROFILE ||--o{ CONTEXT_RULE : "contains"
+    
+    REGIONAL_EXPERT_PROFILE ||--o{ FORBIDDEN_TERM : "contains"
+    REGIONAL_EXPERT_PROFILE ||--o{ PREFERRED_SYNONYM : "contains"
     
     MONITORED_APP }o--|| APP : "source_app"
     MONITORED_APP }o--|| LANGUAGE : "target_language"
@@ -326,6 +356,7 @@ erDiagram
     TRANSLATION_JOB }o--|| APP : "source_app"
     TRANSLATION_JOB }o--|| LANGUAGE : "target_language"
     TRANSLATION_JOB }o--|| LOCALIZATION_PROFILE : "uses_profile"
+    TRANSLATION_JOB }o--o| REGIONAL_EXPERT_PROFILE : "regional_expert"
     
     TRANSLATION_REVIEW ||--o{ TRANSLATION_TASK : "generates_on_rejection"
     TRANSLATION_TASK }o--|| APP : "app"
@@ -335,8 +366,11 @@ erDiagram
     
     TRANSLATOR_SETTINGS {
         string api_key
-        string system_prompt "Editable System Prompt"
+        string system_prompt
         link default_profile
+        bool use_agent_pipeline
+        float quality_threshold
+        link default_regional_expert
     }
     
     LOCALIZATION_PROFILE {
@@ -367,21 +401,45 @@ erDiagram
         string title
         string status
         link localization_profile
+        link regional_expert_profile
         int total_strings
         float progress_percentage
+    }
+    
+    REGIONAL_EXPERT_PROFILE {
+        string profile_name
+        string region
+        text cultural_context
+        text industry_jargon
+        string formality_level
+    }
+    
+    FORBIDDEN_TERM {
+        string term
+        string reason
+    }
+    
+    PREFERRED_SYNONYM {
+        string original_term
+        string preferred_term
+        string context
     }
 ```
 
 ### Component Descriptions
 
-- **`Orchestrator`**: The "brain" of the application. It coordinates the entire translation process. It is instantiated and run by the background job. Now supports both database and file-based storage.
+- **`Orchestrator`**: The "brain" of the application. It coordinates the entire translation process. It is instantiated and run by the background job. Now supports both database and file-based storage, and can delegate to `AgentOrchestrator` when agent pipeline is enabled.
+- **`AgentOrchestrator`** (NEW in v2.0): Coordinates 3 specialized agents for quality-first translation. Manages the pipeline: TranslatorAgent → RegionalReviewerAgent → QualityAgent.
+- **`TranslatorAgent`**: Domain-specific translation with ERP context injection.
+- **`RegionalReviewerAgent`**: Applies cultural and regional adjustments based on Regional Expert Profile.
+- **`QualityAgent`**: Evaluates translation quality and flags low-score translations for human review.
 - **`Service` (Abstract Base Class)**: Defines a common interface for any translation service.
 - **`GeminiService`**: The concrete implementation of `Service` for the Google Gemini API. Handles **Context Injection** by fetching app-specific details (domain, tone, glossary) and embedding them into the LLM prompt.
 - **`GroqService`**: An alternative implementation of `Service` that uses Groq's fast inference API. Uses the OpenAI-compatible SDK to call Groq endpoints. Supports models like `llama-3.3-70b-versatile` and `mixtral-8x7b-32768`. Selected via the `llm_provider` setting in Translator Settings.
 - **`MockTranslationService`**: A test implementation of `Service` that simulates translation without API calls. Automatically used when API key starts with `"test-"`.
 - **`DatabaseTranslationHandler`**: Stores translations in Frappe's Translation DocType (database). Provides highest priority for rendering and Docker-safe persistence.
 - **`FileHandler`**: Encapsulates all logic related to file manipulation using the `polib` library. Handles merging `.pot` templates into `.po` files and saving translations.
-- **`Config`**: A data class that holds all configuration parameters, including storage options (`use_database_storage`, `save_to_po_file`, `export_po_on_complete`).
+- **`Config`**: A data class that holds all configuration parameters, including storage options (`use_database_storage`, `save_to_po_file`, `export_po_on_complete`) and agent pipeline options (`use_agent_pipeline`, `quality_threshold`, `regional_expert_profile`).
 - **`DocTypeLogger`**: A custom logger that writes output to the `log` field of a `Translation Job` document.
 - **`GitSyncService`**: Manages Git-based backup and restore of translation files. Handles repository cloning, file synchronization, commits, and pushes to remote repositories.
 
@@ -645,7 +703,54 @@ sequenceDiagram
 
 -   **Multi-Language**: A single application can be translated into multiple languages simultaneously. Each App/Language pair is treated as a distinct `Translation Job` and `Monitored App` entry.
 
-## Context Generation Zoom-in
+### Agent Pipeline Flow (v2.0)
+
+When `use_agent_pipeline` is enabled, the Orchestrator delegates translation to the AgentOrchestrator, which coordinates 3 specialized agents:
+
+```mermaid
+sequenceDiagram
+    participant Orch as Orchestrator
+    participant AO as AgentOrchestrator
+    participant TA as TranslatorAgent
+    participant RA as RegionalReviewerAgent
+    participant QA as QualityAgent
+    participant REP as Regional Expert Profile
+    participant TR as Translation Review
+    participant DB as Database
+
+    Orch->>AO: translate_with_review(entries)
+    
+    Note over AO,TA: Phase 1 - Translation
+    AO->>TA: translate(entries)
+    Note over TA: Domain-specific ERP translation
+    TA-->>AO: raw_translations
+
+    Note over AO,RA: Phase 2 - Regional Review
+    AO->>RA: review(translations)
+    RA->>REP: get_context_for_prompt()
+    REP-->>RA: cultural_context, forbidden_terms, synonyms
+    Note over RA: Apply cultural adjustments
+    RA-->>AO: reviewed_translations
+
+    Note over AO,QA: Phase 3 - Quality Evaluation
+    AO->>QA: evaluate(reviewed_translations)
+    Note over QA: Check placeholders, HTML, length ratio
+    QA-->>AO: results with quality_score
+
+    loop For each result
+        alt quality_score >= threshold (0.8)
+            AO->>DB: save_translation()
+            Note over DB: Auto-approved
+        else quality_score < threshold
+            AO->>TR: create_review_record()
+            Note over TR: Flagged for human review
+        end
+    end
+
+    AO-->>Orch: translation_results
+```
+
+
 
 The quality of translation depends heavily on the context provided to the LLM. The system aggregates context from multiple sources to create a comprehensive `Standardization Guide`.
 
