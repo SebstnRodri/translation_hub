@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-23 08:12\n"
+"PO-Revision-Date: 2025-12-23 19:14\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -950,9 +950,6 @@ msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:79
 msgid "Review All ({0})"
-msgstr ""
-
-msgid "Review Center"
 msgstr ""
 
 #: DocType: Translation Learning:0

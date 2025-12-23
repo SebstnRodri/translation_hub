@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-23 08:12\n"
+"PO-Revision-Date: 2025-12-23 19:12\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -979,9 +979,6 @@ msgstr "Reintentar con IA"
 msgid "Review All ({0})"
 msgstr "Revisar Todos ({0})"
 
-msgid "Review Center"
-msgstr "Centro de Revisión"
-
 #: DocType: Translation Learning:0
 msgid "Review Reference"
 msgstr "Referencia de Revisión"
@@ -1565,6 +1562,9 @@ msgstr ""
 #: DocType: Translation Task:0
 msgid "🔄 Request AI Retranslation"
 msgstr ""
+
+#~ msgid "Review Center"
+#~ msgstr "Centro de Revisión"
 
 #~ msgid "AI Suggestion (Snapshot)"
 #~ msgstr ""
