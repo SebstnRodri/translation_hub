@@ -7,10 +7,19 @@
     "field_order": [
         "task_info_section",
         "source_text",
+        "column_break_info",
         "source_app",
         "target_language",
+        "translation_section",
+        "suggested_translation",
+        "retranslate_btn",
+        "column_break_translation",
+        "corrected_translation",
+        "resolution_section",
         "priority",
         "status",
+        "column_break_resolution",
+        "save_translation_btn",
         "assignment_section",
         "assigned_to",
         "due_date",
@@ -33,6 +42,10 @@
             "reqd": 1
         },
         {
+            "fieldname": "column_break_info",
+            "fieldtype": "Column Break"
+        },
+        {
             "fieldname": "source_app",
             "fieldtype": "Link",
             "in_list_view": 1,
@@ -49,6 +62,39 @@
             "read_only": 1
         },
         {
+            "fieldname": "translation_section",
+            "fieldtype": "Section Break",
+            "label": "Translation"
+        },
+        {
+            "fieldname": "suggested_translation",
+            "fieldtype": "Small Text",
+            "label": "AI Suggested Translation",
+            "read_only": 1,
+            "description": "Translation suggested by the AI that was flagged for review"
+        },
+        {
+            "fieldname": "retranslate_btn",
+            "fieldtype": "Button",
+            "label": "🔄 Request AI Retranslation",
+            "description": "Ask AI to suggest a new translation considering the rejection reason"
+        },
+        {
+            "fieldname": "column_break_translation",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "corrected_translation",
+            "fieldtype": "Small Text",
+            "label": "Corrected Translation",
+            "description": "Enter the corrected translation here. Leave empty to accept the AI suggestion."
+        },
+        {
+            "fieldname": "resolution_section",
+            "fieldtype": "Section Break",
+            "label": "Resolution"
+        },
+        {
             "fieldname": "priority",
             "fieldtype": "Select",
             "label": "Priority",
@@ -63,6 +109,16 @@
             "options": "Pending\nIn Progress\nCompleted\nCancelled",
             "default": "Pending",
             "in_list_view": 1
+        },
+        {
+            "fieldname": "column_break_resolution",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "save_translation_btn",
+            "fieldtype": "Button",
+            "label": "Save Translation to Database",
+            "depends_on": "eval:doc.status !== 'Completed'"
         },
         {
             "fieldname": "assignment_section",
@@ -83,7 +139,8 @@
         {
             "fieldname": "rejection_info_section",
             "fieldtype": "Section Break",
-            "label": "Rejection Info"
+            "label": "Rejection Info",
+            "collapsible": 1
         },
         {
             "fieldname": "rejection_reason",

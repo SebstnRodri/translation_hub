@@ -169,9 +169,9 @@ scheduler_events = {
 	# 		"translation_hub.tasks.all"
 	# 	],
 	"daily": ["translation_hub.tasks.run_automated_translations"],
-	# 	"hourly": [
-	# 		"translation_hub.tasks.hourly"
-	# 	],
+	"hourly": [
+		"translation_hub.tasks.auto_review_pending_tasks"
+	],
 	# 	"weekly": [
 	# 		"translation_hub.tasks.weekly"
 	# 	],

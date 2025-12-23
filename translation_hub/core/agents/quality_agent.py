@@ -58,7 +58,7 @@ class QualityAgent(BaseAgent):
 		Returns:
 			List of TranslationResult with quality scores and review flags
 		"""
-		self.log_info(f"Evaluating quality for {len(entries)} translations")
+		self.log_info(f"Evaluating quality for {len(entries)} translations (threshold={self.quality_threshold})")
 
 		results = []
 		for entry in entries:
@@ -78,6 +78,13 @@ class QualityAgent(BaseAgent):
 	def _evaluate_single(self, entry: TranslationEntry) -> TranslationResult:
 		"""Evaluate a single translation."""
 		translation = entry.reviewed_translation or entry.raw_translation or entry.msgstr
+
+		# Ensure translation is a string (LLM may return dict)
+		if isinstance(translation, dict):
+			# Extract translation from dict if present
+			translation = translation.get("translation") or translation.get("translated") or str(translation)
+		elif not isinstance(translation, str):
+			translation = str(translation) if translation else ""
 
 		# Initialize result
 		result = TranslationResult(
@@ -115,7 +122,10 @@ class QualityAgent(BaseAgent):
 		"""Check if all placeholders are preserved."""
 		# Common placeholder patterns
 		patterns = [
+			r"\{\}",  # {} empty placeholder
+			r"#\{\}",  # #{} hash placeholder (Frappe)
 			r"\{[0-9]+\}",  # {0}, {1}, etc.
+			r"#\{[0-9]+\}",  # #{0}, #{1} (Frappe row references)
 			r"\{[a-zA-Z_][a-zA-Z0-9_]*\}",  # {name}, {user_id}, etc.
 			r"%[sd]",  # %s, %d
 			r"%\([a-zA-Z_][a-zA-Z0-9_]*\)[sd]",  # %(name)s

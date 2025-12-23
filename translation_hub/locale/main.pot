@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-20 17:49\n"
+"PO-Revision-Date: 2025-12-23 08:12\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -52,6 +52,10 @@ msgstr ""
 
 #: DocType: Translation Learning:0
 msgid "AI Incorrect Output"
+msgstr ""
+
+#: DocType: Translation Task:0
+msgid "AI Suggested Translation"
 msgstr ""
 
 #: DocType: Translation Review:0
@@ -122,6 +126,10 @@ msgstr ""
 msgid ""
 "Are you sure you want to restore? This will overwrite local files for the "
 "selected apps."
+msgstr ""
+
+#: DocType: Translation Task:0
+msgid "Ask AI to suggest a new translation considering the rejection reason"
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:74
@@ -256,6 +264,10 @@ msgstr ""
 msgid "Correct Translation"
 msgstr ""
 
+#: DocType: Translation Task:0
+msgid "Corrected Translation"
+msgstr ""
+
 #: DocType: Localization Profile:0
 msgid "Country"
 msgstr ""
@@ -374,6 +386,12 @@ msgstr ""
 
 #: DocType: Base Term:0
 msgid "English Term"
+msgstr ""
+
+#: DocType: Translation Task:0
+msgid ""
+"Enter the corrected translation here. Leave empty to accept the AI "
+"suggestion."
 msgstr ""
 
 #: DocType: Context Rule:0
@@ -657,6 +675,10 @@ msgstr ""
 msgid "Metrics"
 msgstr ""
 
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:21
+msgid "Missing Translation"
+msgstr ""
+
 #: DocType: Context Rule:0
 msgid "Module Specific"
 msgstr ""
@@ -748,6 +770,12 @@ msgstr ""
 msgid "Personal Access Token for authentication"
 msgstr ""
 
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:23
+msgid ""
+"Please enter a corrected translation or ensure there is an AI suggested "
+"translation."
+msgstr ""
+
 #: apps/translation_hub/translation_hub/translation_hub/report/monitored_apps_progress_report/monitored_apps_progress_report.py:35
 msgid "Please install polib library to view translation progress."
 msgstr ""
@@ -804,6 +832,11 @@ msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Quality Threshold"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:19
+msgid ""
+"Quality Threshold must be between 0.0 and 1.0. Got {0}. Did you mean {1}?"
 msgstr ""
 
 #: DocType: Translation Job:0
@@ -887,6 +920,14 @@ msgctxt "Label of a Navbar Item"
 msgid "Reload"
 msgstr ""
 
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:71
+msgid "Requesting AI retranslation..."
+msgstr ""
+
+#: DocType: Translation Task:0
+msgid "Resolution"
+msgstr ""
+
 #: DocType: Term Rejection Pattern:0
 msgid "Resolved"
 msgstr ""
@@ -897,6 +938,10 @@ msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:93
 msgid "Restore Translations"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:85
+msgid "Retranslation Failed"
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:66
@@ -926,7 +971,7 @@ msgstr ""
 msgid "Reviews created: {0}"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:43
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:56
 msgid "Row #{0}:"
 msgstr ""
 
@@ -938,12 +983,20 @@ msgstr ""
 msgid "Save Language Settings"
 msgstr ""
 
+#: DocType: Translation Task:0
+msgid "Save Translation to Database"
+msgstr ""
+
 #: DocType: Translator Settings:0
 msgid "Save to .po File"
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:236
 msgid "Saving language settings..."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:41
+msgid "Saving translation..."
 msgstr ""
 
 #: DocType: Localization Profile:0
@@ -1140,6 +1193,12 @@ msgstr ""
 msgid "Testing API connection..."
 msgstr ""
 
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:61
+msgid ""
+"This will ask the AI to generate a new translation considering the rejection"
+" reason. Continue?"
+msgstr ""
+
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:143
 msgid "This will create {0} review records."
 msgstr ""
@@ -1148,6 +1207,12 @@ msgstr ""
 msgid ""
 "This will permanently delete .po files of disabled languages from monitored "
 "apps. Make sure to backup first!<br><br>Continue?"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:31
+msgid ""
+"This will save the translation to the database and mark this task as "
+"completed. Continue?"
 msgstr ""
 
 #: DocType: Translation Job:0
@@ -1234,6 +1299,10 @@ msgstr ""
 
 #: DocType: Translation Task:0
 msgid "Translation Task"
+msgstr ""
+
+#: DocType: Translation Task:0
+msgid "Translation suggested by the AI that was flagged for review"
 msgstr ""
 
 #: DocType: Translator Settings:0
@@ -1401,7 +1470,7 @@ msgstr ""
 msgid "zh-TW"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:48
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:61
 msgid "{0} {1} cannot be \"{2}\". It should be one of \"{3}\""
 msgstr ""
 
@@ -1409,6 +1478,10 @@ msgstr ""
 msgid ""
 "⚠️ Warning: This term has been rejected {0} times previously. Please verify "
 "carefully."
+msgstr ""
+
+#: DocType: Translation Task:0
+msgid "🔄 Request AI Retranslation"
 msgstr ""
 
 #: ../translation_hub/translation_hub/translation_hub/number_card/total_apps_tracked/total_apps_tracked.json:0

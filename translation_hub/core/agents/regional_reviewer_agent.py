@@ -32,7 +32,10 @@ class RegionalReviewerAgent(BaseAgent):
 
 	def _load_profile_context(self) -> dict[str, Any]:
 		"""Load context from Regional Expert Profile."""
+		self.log_info(f"Loading profile context for: '{self.regional_profile}'")
+		
 		if not self.regional_profile:
+			self.log_info("No regional profile configured, skipping")
 			return {}
 
 		try:
@@ -40,7 +43,11 @@ class RegionalReviewerAgent(BaseAgent):
 
 			if frappe.db.exists("Regional Expert Profile", self.regional_profile):
 				profile = frappe.get_doc("Regional Expert Profile", self.regional_profile)
-				return profile.get_context_for_prompt()
+				context = profile.get_context_for_prompt()
+				self.log_info(f"Loaded profile '{self.regional_profile}' with {len(context)} context keys")
+				return context
+			else:
+				self.log_warning(f"Profile '{self.regional_profile}' not found in database")
 		except Exception as e:
 			self.log_warning(f"Failed to load Regional Expert Profile: {e}")
 
@@ -209,6 +216,18 @@ If no changes needed, return the original translation.
 		parsed = json.loads(cleaned.strip())
 
 		if isinstance(parsed, list):
-			return parsed
+			# Normalize items: ensure each is a string
+			normalized = []
+			for item in parsed:
+				if isinstance(item, str):
+					normalized.append(item)
+				elif isinstance(item, dict):
+					# Extract translation from dict
+					normalized.append(
+						item.get("translation") or item.get("translated") or item.get("text") or str(item)
+					)
+				else:
+					normalized.append(str(item) if item else "")
+			return normalized
 		else:
 			raise ValueError(f"Expected list, got {type(parsed)}")

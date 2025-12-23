@@ -104,7 +104,11 @@ class TranslatorAgent(BaseAgent):
 Translate the following texts to '{self.config.language_code}'.
 
 CRITICAL RULES:
-1. Keep placeholders like {{0}}, {{1}}, %s, %(name)s EXACTLY as they are
+1. Keep ALL placeholders EXACTLY as they appear in the source:
+   - Empty: {{}} and #{{}} must remain as {{}} and #{{}}
+   - Numbered: {{0}}, {{1}}, #{{0}} must NOT be changed
+   - Named: {{name}}, %(user)s must remain identical
+   - DO NOT add numbers to empty placeholders
 2. Keep HTML tags like <strong>, <br>, </a> intact
 3. Maintain the same level of formality as the source
 4. Use terminology appropriate for business/ERP software

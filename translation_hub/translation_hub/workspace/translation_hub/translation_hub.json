@@ -21,7 +21,7 @@
         {
             "hidden": 0,
             "is_query_report": 0,
-            "label": "Configuration",
+            "label": "Profiles & Rules",
             "link_count": 0,
             "onboard": 0,
             "type": "Card Break"
@@ -69,7 +69,7 @@
         {
             "hidden": 0,
             "is_query_report": 0,
-            "label": "Settings",
+            "label": "Global Settings",
             "link_count": 3,
             "link_type": "DocType",
             "onboard": 0,

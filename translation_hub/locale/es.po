@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-20 17:48\n"
+"PO-Revision-Date: 2025-12-23 08:12\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1288,11 +1288,11 @@ msgstr "llama-3.3-70b-versatile"
 msgid "gemini-2.0-flash"
 msgstr "gemini-2.0-flash"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:43
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:56
 msgid "Row #{0}:"
 msgstr "<strong>Row #{0}:</strong>"
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:48
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:61
 msgid "{0} {1} cannot be \"{2}\". It should be one of \"{3}\""
 msgstr "{0} {1} no puede ser \"{2}\". Debe ser uno de \"{3}\""
 
@@ -1491,6 +1491,79 @@ msgstr ""
 
 #: DocType: Regional Expert Profile:0
 msgid "zh-TW"
+msgstr ""
+
+#: DocType: Translation Task:0
+msgid "AI Suggested Translation"
+msgstr ""
+
+#: DocType: Translation Task:0
+msgid "Ask AI to suggest a new translation considering the rejection reason"
+msgstr ""
+
+#: DocType: Translation Task:0
+msgid "Corrected Translation"
+msgstr ""
+
+#: DocType: Translation Task:0
+msgid ""
+"Enter the corrected translation here. Leave empty to accept the AI "
+"suggestion."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:21
+msgid "Missing Translation"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:23
+msgid ""
+"Please enter a corrected translation or ensure there is an AI suggested "
+"translation."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:19
+msgid ""
+"Quality Threshold must be between 0.0 and 1.0. Got {0}. Did you mean {1}?"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:71
+msgid "Requesting AI retranslation..."
+msgstr ""
+
+#: DocType: Translation Task:0
+msgid "Resolution"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:85
+msgid "Retranslation Failed"
+msgstr ""
+
+#: DocType: Translation Task:0
+msgid "Save Translation to Database"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:41
+msgid "Saving translation..."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:61
+msgid ""
+"This will ask the AI to generate a new translation considering the rejection"
+" reason. Continue?"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:31
+msgid ""
+"This will save the translation to the database and mark this task as "
+"completed. Continue?"
+msgstr ""
+
+#: DocType: Translation Task:0
+msgid "Translation suggested by the AI that was flagged for review"
+msgstr ""
+
+#: DocType: Translation Task:0
+msgid "🔄 Request AI Retranslation"
 msgstr ""
 
 #~ msgid "AI Suggestion (Snapshot)"

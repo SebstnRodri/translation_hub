@@ -9,6 +9,19 @@ from frappe.model.document import Document
 class TranslatorSettings(Document):
 	def validate(self):
 		self.remove_duplicates()
+		self.validate_quality_threshold()
+
+	def validate_quality_threshold(self):
+		"""Validate that quality_threshold is between 0.0 and 1.0."""
+		if hasattr(self, "quality_threshold") and self.quality_threshold is not None:
+			if self.quality_threshold < 0.0 or self.quality_threshold > 1.0:
+				frappe.throw(
+					frappe._(
+						"Quality Threshold must be between 0.0 and 1.0. "
+						"Got {0}. Did you mean {1}?"
+					).format(self.quality_threshold, self.quality_threshold / 10 if self.quality_threshold <= 10 else 0.8),
+					frappe.ValidationError,
+				)
 
 	def _validate_selects(self):
 		"""

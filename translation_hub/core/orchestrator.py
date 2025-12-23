@@ -127,6 +127,7 @@ class TranslationOrchestrator:
 		# Determine app_name from context if possible
 		app_name = getattr(self.config, "app_name", None)
 		regional_profile = self.config.regional_expert_profile
+		self.logger.info(f"Regional Expert Profile: '{regional_profile}'")
 
 		agent_orchestrator = AgentOrchestrator(
 			config=self.config,
