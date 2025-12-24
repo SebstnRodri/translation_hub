@@ -103,15 +103,20 @@ class TranslatorAgent(BaseAgent):
 		base_prompt = f"""You are a professional translator specialized in ERP/business software.
 Translate the following texts to '{self.config.language_code}'.
 
-CRITICAL RULES:
-1. Keep ALL placeholders EXACTLY as they appear in the source:
+CRITICAL RULES - MUST FOLLOW EXACTLY:
+1. PLACEHOLDERS - Keep EXACTLY as they appear:
    - Empty: {{}} and #{{}} must remain as {{}} and #{{}}
    - Numbered: {{0}}, {{1}}, #{{0}} must NOT be changed
    - Named: {{name}}, %(user)s must remain identical
    - DO NOT add numbers to empty placeholders
-2. Keep HTML tags like <strong>, <br>, </a> intact
-3. Maintain the same level of formality as the source
-4. Use terminology appropriate for business/ERP software
+
+2. HTML TAGS - PRESERVE EXACTLY AS-IS:
+   - <b>text</b> must remain <b>texto</b> (NOT "texto" or **texto**)
+   - <strong>, <em>, <br>, </a>, etc. must be kept unchanged
+   - Same number of opening and closing tags as source
+   - Do NOT replace HTML tags with quotes, asterisks or other formatting
+
+3. Maintain formality level and use ERP/business terminology
 
 """
 		if self.config.standardization_guide:
@@ -136,9 +141,9 @@ Source: {entry.msgid}
 Context: {entry.context}
 Occurrences: {entry.occurrences}
 
-RULES:
-- Keep placeholders {{0}}, %s, etc. intact
-- Keep HTML tags intact
+CRITICAL RULES:
+- Keep placeholders {{0}}, %s, {{name}} etc. EXACTLY as-is
+- Keep HTML tags <b>, <strong>, <br>, etc. EXACTLY as-is (do NOT replace with quotes)
 - Use ERP/business terminology
 
 Return ONLY a JSON object: {{"translated": "your translation"}}
