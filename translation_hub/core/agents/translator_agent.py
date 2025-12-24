@@ -160,15 +160,30 @@ Return ONLY a JSON object: {{"translated": "your translation"}}
 				],
 				temperature=0.3,
 			)
-			return response.choices[0].message.content
+			content = response.choices[0].message.content
+			if not content or not content.strip():
+				raise ValueError(f"Empty response from {provider} API")
+			return content
 		else:
 			# Gemini
 			response = self.client.generate_content(prompt)
+			# Handle blocked or empty responses
+			if not response.text:
+				# Check if blocked by safety filters
+				if hasattr(response, 'prompt_feedback') and response.prompt_feedback:
+					raise ValueError(f"Gemini blocked: {response.prompt_feedback}")
+				raise ValueError("Empty response from Gemini API")
 			return response.text
 
 	def _parse_response(self, response: str, expected_count: int) -> list[str]:
 		"""Parse the LLM response into a list of translations."""
+		if not response or not response.strip():
+			raise ValueError("Empty response received from LLM")
+		
 		cleaned = self._clean_json_response(response)
+		if not cleaned:
+			raise ValueError(f"Failed to extract JSON from response: {response[:100]}")
+		
 		parsed = json.loads(cleaned)
 
 		if isinstance(parsed, list):

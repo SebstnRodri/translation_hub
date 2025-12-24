@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-23 19:12\n"
+"PO-Revision-Date: 2025-12-23 20:51\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1498,40 +1498,47 @@ msgstr "zh-TW"
 
 #: DocType: Translation Task:0
 msgid "AI Suggested Translation"
-msgstr ""
+msgstr "Tradução Sugerida pela IA"
 
 #: DocType: Translation Task:0
 msgid "Ask AI to suggest a new translation considering the rejection reason"
 msgstr ""
+"Peça à IA para sugerir uma nova tradução considerando o motivo de rejeição"
 
 #: DocType: Translation Task:0
 msgid "Corrected Translation"
-msgstr ""
+msgstr "Tradução Corrigida"
 
 #: DocType: Translation Task:0
 msgid ""
 "Enter the corrected translation here. Leave empty to accept the AI "
 "suggestion."
 msgstr ""
+"Insira a tradução corrigida aqui. Deixe em branco para aceitar a sugestão da"
+" IA."
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:21
 msgid "Missing Translation"
-msgstr ""
+msgstr "Tradução Ausente"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:23
 msgid ""
 "Please enter a corrected translation or ensure there is an AI suggested "
 "translation."
 msgstr ""
+"Por favor, insira uma tradução corrigida ou certifique-se de que haja uma "
+"tradução sugerida pela IA."
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:19
 msgid ""
 "Quality Threshold must be between 0.0 and 1.0. Got {0}. Did you mean {1}?"
 msgstr ""
+"O Limiar de Qualidade deve estar entre 0.0 e 1.0. Obtido {0}. Você quis "
+"dizer {1}?"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:71
 msgid "Requesting AI retranslation..."
-msgstr ""
+msgstr "Solicitando retradução da IA..."
 
 #: DocType: Translation Task:0
 msgid "Resolution"
@@ -1539,35 +1546,39 @@ msgstr "Resolução"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:85
 msgid "Retranslation Failed"
-msgstr ""
+msgstr "Retradução Falhou"
 
 #: DocType: Translation Task:0
 msgid "Save Translation to Database"
-msgstr ""
+msgstr "Salvar Tradução no Banco de Dados"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:41
 msgid "Saving translation..."
-msgstr ""
+msgstr "Salvando tradução..."
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:61
 msgid ""
 "This will ask the AI to generate a new translation considering the rejection"
 " reason. Continue?"
 msgstr ""
+"Isso solicitará à IA que gere uma nova tradução considerando o motivo de "
+"rejeição. Continuar?"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:31
 msgid ""
 "This will save the translation to the database and mark this task as "
 "completed. Continue?"
 msgstr ""
+"Isso salvará a tradução no banco de dados e marcará esta tarefa como "
+"concluída. Continuar?"
 
 #: DocType: Translation Task:0
 msgid "Translation suggested by the AI that was flagged for review"
-msgstr ""
+msgstr "Tradução sugerida pela IA que foi sinalizada para revisão"
 
 #: DocType: Translation Task:0
 msgid "🔄 Request AI Retranslation"
-msgstr ""
+msgstr "🔄 Solicitar Retradução da IA"
 
 #~ msgid "Review Center"
 #~ msgstr "Aba de Revisão"

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-23 19:12\n"
+"PO-Revision-Date: 2025-12-23 20:50\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -137,7 +137,7 @@ msgstr "Elementos del Glosario"
 
 #: DocType: Translation Job:0
 msgid "In Progress"
-msgstr "En Progreso"
+msgstr "En progreso"
 
 #: DocType: Installed App:0
 msgid "Installed App"
@@ -718,7 +718,7 @@ msgstr "Descargar Traducciones Estándar"
 
 #: DocType: Translation Task:0
 msgid "Due Date"
-msgstr "Fecha límite"
+msgstr "Fecha de Vencimiento"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:162
 msgid ""
@@ -821,7 +821,7 @@ msgstr "Última Rechazo"
 
 #: DocType: Localization Profile:0
 msgid "Last Updated"
-msgstr "Última Actualización"
+msgstr "Última actualización"
 
 #: DocType: Translation Learning:0
 msgid "Learning"
@@ -1295,25 +1295,27 @@ msgstr "{0} {1} no puede ser \"{2}\". Debe ser uno de \"{3}\""
 
 #: DocType: Translator Settings:0
 msgid "Agent Pipeline (Multi-Agent Review)"
-msgstr ""
+msgstr "Canal de Agente (Revisión Multi-Agente)"
 
 #: DocType: Preferred Synonym:0
 msgid "Context"
-msgstr ""
+msgstr "Contexto"
 
 #: DocType: Regional Expert Profile:0
 msgid "Cultural Context"
-msgstr ""
+msgstr "Contexto Cultural"
 
 #: DocType: Translator Settings:0
 msgid "Default Regional Expert"
-msgstr ""
+msgstr "Experto Regional Predeterminado"
 
 #: DocType: Regional Expert Profile:0
 msgid ""
 "Describe cultural nuances, formality expectations, acceptable slang, "
 "regional preferences, etc. This will be injected into the LLM prompt."
 msgstr ""
+"Describa matices culturales, expectativas de formalidad, jerga aceptable, "
+"preferencias regionales, etc. Esto se inyectará en el prompt del LLM."
 
 #: DocType: Translator Settings:0
 msgid ""
@@ -1321,106 +1323,116 @@ msgid ""
 "Translations below quality threshold go to human review. Uses 3 LLM calls "
 "per batch."
 msgstr ""
+"Habilitar canal de 3 agentes: Traductor → Revisor Regional → Agente de "
+"Calidad. Las traducciones por debajo del umbral de calidad pasan a revisión "
+"humana. Utiliza 3 llamadas LLM por lote."
 
 #: DocType: Forbidden Term:0
 msgid "Forbidden Term"
-msgstr ""
+msgstr "Término Prohibido"
 
 #: DocType: Regional Expert Profile:0
 msgid "Forbidden Terms"
-msgstr ""
+msgstr "Términos Prohibidos"
 
 #: DocType: Regional Expert Profile:0
 msgid "Formal"
-msgstr ""
+msgstr "Formal"
 
 #: DocType: Regional Expert Profile:0
 msgid "Formality Level"
-msgstr ""
+msgstr "Nivel de Formalidad"
 
 #: DocType: Regional Expert Profile:0
 msgid "If set, this profile will only apply to this App."
-msgstr ""
+msgstr "Si se establece, este perfil solo se aplicará a esta Aplicación."
 
 #: DocType: Regional Expert Profile:0
 msgid "Industry Jargon (JSON)"
-msgstr ""
+msgstr "Jerga de la Industria (JSON)"
 
 #: DocType: Regional Expert Profile:0
 msgid "Informal"
-msgstr ""
+msgstr "Informal"
 
 #: DocType: Regional Expert Profile:0
 msgid ""
 "JSON object with industry-specific terms: {\"ERP term\": \"Regional "
 "equivalent\"}"
 msgstr ""
+"Objeto JSON con términos específicos de la industria: {\"Término ERP\": "
+"\"Equivalente regional\"}"
 
 #: DocType: Regional Expert Profile:0
 msgid "Neutral"
-msgstr ""
+msgstr "Neutral"
 
 #: DocType: Translator Settings:0
 msgid "Optional: Default regional profile to use for cultural context."
 msgstr ""
+"Opcional: Perfil regional predeterminado para utilizar en el contexto "
+"cultural."
 
 #: DocType: Translation Job:0
 msgid "Optional: Override default regional expert for this job"
-msgstr ""
+msgstr "Opcional: Anular el experto regional predeterminado para este trabajo"
 
 #: DocType: Preferred Synonym:0
 msgid "Original Term"
-msgstr ""
+msgstr "Término Original"
 
 #: DocType: Preferred Synonym:0
 msgid "Preferred Synonym"
-msgstr ""
+msgstr "Sinónimo Preferido"
 
 #: DocType: Regional Expert Profile:0
 msgid "Preferred Synonyms"
-msgstr ""
+msgstr "Sinónimos Preferidos"
 
 #: DocType: Preferred Synonym:0
 msgid "Preferred Term"
-msgstr ""
+msgstr "Término Preferido"
 
 #: DocType: Translator Settings:0
 msgid "Quality Threshold"
-msgstr ""
+msgstr "Umbral de Calidad"
 
 #: DocType: Forbidden Term:0
 msgid "Reason"
-msgstr ""
+msgstr "Motivo"
 
 #: DocType: Regional Expert Profile:0
 msgid "Region"
-msgstr ""
+msgstr "Región"
 
 #: DocType: Regional Expert Profile:0
 msgid "Regional Expert Profile"
-msgstr ""
+msgstr "Perfil de Experto Regional"
 
 #: DocType: Regional Expert Profile:0
 msgid "Technical"
-msgstr ""
+msgstr "Técnico"
 
 #: DocType: Regional Expert Profile:0
 msgid "Terms that should NEVER be used in translations for this region."
 msgstr ""
+"Términos que NUNCA deben utilizarse en las traducciones para esta región."
 
 #: DocType: Translator Settings:0
 msgid ""
 "Translations with quality score below this threshold are sent to Translation"
 " Review for human approval."
 msgstr ""
+"Las traducciones con una puntuación de calidad por debajo de este umbral se "
+"envían a la Revisión de Traducción para su aprobación humana."
 
 #: DocType: Translator Settings:0
 msgid "Use Agent Pipeline"
-msgstr ""
+msgstr "Usar Canalización del Agente"
 
 #: DocType: Regional Expert Profile:0
 msgid "When the original term appears, prefer the regional synonym."
-msgstr ""
+msgstr "Cuando aparezca el término original, prefiera el sinónimo regional."
 
 #: DocType: Regional Expert Profile:0
 msgid "de-AT"
@@ -1452,7 +1464,7 @@ msgstr ""
 
 #: DocType: Regional Expert Profile:0
 msgid "es-ES"
-msgstr ""
+msgstr "es-ES"
 
 #: DocType: Regional Expert Profile:0
 msgid "es-MX"
@@ -1468,7 +1480,7 @@ msgstr ""
 
 #: DocType: Regional Expert Profile:0
 msgid "it-IT"
-msgstr ""
+msgstr "es"
 
 #: DocType: Regional Expert Profile:0
 msgid "ja-JP"
@@ -1484,99 +1496,111 @@ msgstr ""
 
 #: DocType: Regional Expert Profile:0
 msgid "zh-CN"
-msgstr ""
+msgstr "zh-CN"
 
 #: DocType: Regional Expert Profile:0
 msgid "zh-TW"
-msgstr ""
+msgstr "zh-TW"
 
 #: DocType: Translation Task:0
 msgid "AI Suggested Translation"
-msgstr ""
+msgstr "Traducción Sugerida por IA"
 
 #: DocType: Translation Task:0
 msgid "Ask AI to suggest a new translation considering the rejection reason"
 msgstr ""
+"Pedir a la IA que sugiera una nueva traducción considerando el motivo de "
+"rechazo"
 
 #: DocType: Translation Task:0
 msgid "Corrected Translation"
-msgstr ""
+msgstr "Traducción Corregida"
 
 #: DocType: Translation Task:0
 msgid ""
 "Enter the corrected translation here. Leave empty to accept the AI "
 "suggestion."
 msgstr ""
+"Ingrese la traducción corregida aquí. Deje vacío para aceptar la sugerencia "
+"de la IA."
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:21
 msgid "Missing Translation"
-msgstr ""
+msgstr "Traducción Faltante"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:23
 msgid ""
 "Please enter a corrected translation or ensure there is an AI suggested "
 "translation."
 msgstr ""
+"Por favor, ingrese una traducción corregida o asegúrese de que haya una "
+"traducción sugerida por la IA."
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:19
 msgid ""
 "Quality Threshold must be between 0.0 and 1.0. Got {0}. Did you mean {1}?"
 msgstr ""
+"El Umbral de Calidad debe estar entre 0.0 y 1.0. Obtuvo {0}. ¿Quiso decir "
+"{1}?"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:71
 msgid "Requesting AI retranslation..."
-msgstr ""
+msgstr "Solicitando retraducción de IA..."
 
 #: DocType: Translation Task:0
 msgid "Resolution"
-msgstr ""
+msgstr "Resolución"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:85
 msgid "Retranslation Failed"
-msgstr ""
+msgstr "Retraducción Fallida"
 
 #: DocType: Translation Task:0
 msgid "Save Translation to Database"
-msgstr ""
+msgstr "Guardar Traducción en la Base de Datos"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:41
 msgid "Saving translation..."
-msgstr ""
+msgstr "Guardando traducción..."
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:61
 msgid ""
 "This will ask the AI to generate a new translation considering the rejection"
 " reason. Continue?"
 msgstr ""
+"Esto pedirá a la IA que genere una nueva traducción considerando el motivo "
+"de rechazo. ¿Continuar?"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:31
 msgid ""
 "This will save the translation to the database and mark this task as "
 "completed. Continue?"
 msgstr ""
+"Esto guardará la traducción en la base de datos y marcará esta tarea como "
+"completada. ¿Continuar?"
 
 #: DocType: Translation Task:0
 msgid "Translation suggested by the AI that was flagged for review"
-msgstr ""
+msgstr "Traducción sugerida por la IA que fue marcada para revisión"
 
 #: DocType: Translation Task:0
 msgid "🔄 Request AI Retranslation"
-msgstr ""
+msgstr "🔄 Solicitar Re-traducción de IA"
 
 #~ msgid "Review Center"
 #~ msgstr "Centro de Revisión"
 
 #~ msgid "AI Suggestion (Snapshot)"
-#~ msgstr ""
+#~ msgstr "Sugerencia de IA (Instantánea)"
 
 #~ msgid "Enter the correct translation here to complete the task."
-#~ msgstr ""
+#~ msgstr "Ingrese la traducción correcta aquí para completar la tarea."
 
 #~ msgid "Manual Translation (Correction)"
-#~ msgstr ""
+#~ msgstr "Traducción Manual (Corrección)"
 
 #~ msgid "The incorrect suggestion rejected in the review."
-#~ msgstr ""
+#~ msgstr "La sugerencia incorrecta rechazada en la revisión."
 
 #~ msgid "Fetching available models..."
 #~ msgstr "Obteniendo modelos disponibles..."
