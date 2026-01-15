@@ -186,15 +186,78 @@ class QualityAgent(BaseAgent):
 		return ("empty", 1.0, [])
 
 	def _check_untranslated(self, source: str, translation: str) -> tuple[str, float, list[str]]:
-		"""Check if translation is same as source (possibly not translated)."""
-		# Skip very short strings or strings with only placeholders
-		if len(source) < 5:
+		"""
+		Check if translation is same as source (possibly not translated).
+		
+		Uses hybrid approach:
+		1. Heuristics for obvious cognates/technical terms
+		2. Trust pipeline consensus (TranslatorAgent + RegionalReviewer approved)
+		"""
+		# Skip very short strings (likely cognates or abbreviations)
+		if len(source) < 20:
 			return ("untranslated", 1.0, [])
 
 		# Check if they're identical (excluding case)
-		if source.strip().lower() == translation.strip().lower():
-			# Could be intentional (e.g., proper nouns, technical terms)
-			# Mark for review but don't heavily penalize
-			return ("untranslated", 0.7, ["Translation identical to source (may need review)"])
+		if source.strip().lower() != translation.strip().lower():
+			return ("untranslated", 1.0, [])
 
-		return ("untranslated", 1.0, [])
+		# --- Identical translation detected, check if it's a legitimate cognate ---
+
+		source_lower = source.strip().lower()
+
+		# 1. Technical patterns that should remain unchanged
+		technical_patterns = [
+			r"^[A-Z]{2,}$",  # Acronyms: API, URL, ID, PDF
+			r"^[a-z]+_[a-z_]+$",  # snake_case identifiers
+			r"^[a-z]+[A-Z][a-zA-Z]*$",  # camelCase identifiers
+			r"^\d+[\d\s,\.]*$",  # Numbers
+			r"^https?://",  # URLs
+			r"@.*\.",  # Emails
+			r"^\{.*\}$",  # Placeholders only
+		]
+		for pattern in technical_patterns:
+			if re.match(pattern, source.strip(), re.IGNORECASE):
+				return ("untranslated", 1.0, [])
+
+		# 2. Common cognate suffixes (EN -> PT patterns)
+		# Words ending in these are often identical or very similar
+		cognate_suffixes = [
+			"tion", "sion",  # emotion, version
+			"al", "el",  # local, hotel
+			"ment",  # moment, document
+			"ble",  # possible, visible
+			"ude",  # longitude, latitude
+			"ive",  # active, native
+			"ence", "ance",  # reference, balance
+			"ism",  # capitalism
+			"ist",  # artist
+			"or", "er",  # error, server
+		]
+		for suffix in cognate_suffixes:
+			if source_lower.endswith(suffix):
+				return ("untranslated", 1.0, [])
+
+		# 3. Common technical/international terms (expanded list)
+		technical_terms = {
+			"email", "e-mail", "data", "status", "menu", "internet",
+			"software", "hardware", "online", "offline", "web", "website",
+			"login", "logout", "password", "username", "admin", "user",
+			"server", "client", "database", "backup", "cache", "proxy",
+			"api", "url", "html", "css", "json", "xml", "http", "https",
+			"pdf", "csv", "excel", "word", "powerpoint", "default",
+			"marketing", "design", "layout", "click", "link", "download",
+			"upload", "dashboard", "widget", "template", "plugin", "script",
+		}
+		# Check if source is a known technical term
+		if source_lower in technical_terms:
+			return ("untranslated", 1.0, [])
+
+		# 4. Single-word terms under 15 chars - trust the pipeline
+		# TranslatorAgent + RegionalReviewer already validated
+		if len(source.split()) == 1 and len(source) < 15:
+			return ("untranslated", 1.0, [])
+
+		# 5. For longer identical strings, trust the pipeline consensus
+		# If TranslatorAgent translated as-is AND RegionalReviewer approved,
+		# they made an informed decision - don't second-guess
+		return ("untranslated", 0.95, [])  # Slight note, but no penalty

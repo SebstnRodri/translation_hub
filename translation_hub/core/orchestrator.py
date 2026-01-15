@@ -163,7 +163,10 @@ class TranslationOrchestrator:
 			# Run the 3-agent pipeline
 			results = agent_orchestrator.translate_with_review(batch_dicts)
 
-			# Process results
+			# Process results - accumulate translations for batch saving
+			batch_translations = []
+			batch_po_entries = []
+
 			for result in results:
 				if result.needs_human_review:
 					# Create Translation Review for human review
@@ -179,22 +182,25 @@ class TranslationOrchestrator:
 					)
 					reviews_created += 1
 				else:
-					# Save high-quality translation directly
+					# Accumulate high-quality translations for batch saving
 					translated_entry = {"msgid": result.msgid, "msgstr": result.msgstr}
-
-					if self.config.use_database_storage:
-						from translation_hub.core.database_translation import DatabaseTranslationHandler
-
-						db_handler = DatabaseTranslationHandler(self.config.language_code, self.logger)
-						db_handler.save_translations([translated_entry])
+					batch_translations.append(translated_entry)
 
 					if self.config.save_to_po_file:
-						self.file_handler.update_entries([translated_entry])
+						batch_po_entries.append(translated_entry)
 
 				translated_strings += 1
 				self.logger.update_progress(translated_strings, total_strings)
 
-			if self.config.save_to_po_file:
+			# Save all batch translations at once (correct log: "Saved X/Y translations")
+			if self.config.use_database_storage and batch_translations:
+				from translation_hub.core.database_translation import DatabaseTranslationHandler
+
+				db_handler = DatabaseTranslationHandler(self.config.language_code, self.logger)
+				db_handler.save_translations(batch_translations)
+
+			if self.config.save_to_po_file and batch_po_entries:
+				self.file_handler.update_entries(batch_po_entries)
 				self.file_handler.save()
 
 			self.logger.info(f"--- Batch {i + 1}/{total_batches} complete ---")
