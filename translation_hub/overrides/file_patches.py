@@ -181,10 +181,23 @@ def _trigger_asset_rebuild():
         if result.returncode == 0:
             print("[translation_hub] ✓ Assets rebuilt successfully")
         else:
-            print(f"[translation_hub] ⚠ Asset rebuild warning: {result.stderr[:200]}")
+            # Log full error but only show summary to user
+            if result.stderr:
+                frappe.log_error(
+                    f"Asset rebuild warning:\n{result.stderr}",
+                    "Translation Hub - Asset Rebuild"
+                )
+            print("[translation_hub] ⚠ Asset rebuild had warnings (logged)")
+            print("[translation_hub] Note: Run 'bench build --app frappe' manually if needed")
             
     except subprocess.TimeoutExpired:
-        print("[translation_hub] ⚠ Asset rebuild timed out (will be applied on next bench build)")
+        print("[translation_hub] ⚠ Asset rebuild timed out")
+        print("[translation_hub] Note: Changes will be applied on next 'bench build'")
+    except FileNotFoundError:
+        # bench command not found (production environment without bench CLI)
+        print("[translation_hub] ⚠ 'bench' command not available")
+        print("[translation_hub] Note: Run 'bench build --app frappe' manually or restart web workers")
     except Exception as e:
-        print(f"[translation_hub] ⚠ Could not rebuild assets: {e}")
-        print("[translation_hub] Please run 'bench build --app frappe' manually")
+        frappe.log_error(f"Could not rebuild assets: {e}", "Translation Hub - Asset Rebuild")
+        print("[translation_hub] ⚠ Could not rebuild assets (logged)")
+        print("[translation_hub] Note: Run 'bench build --app frappe' manually")
