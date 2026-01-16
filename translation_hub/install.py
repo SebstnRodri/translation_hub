@@ -134,14 +134,28 @@ def setup_agent_pipeline():
 
 
 def _setup_agent_settings():
-	"""Enable Agent Pipeline in Translator Settings."""
+	"""Enable Agent Pipeline in Translator Settings (only if not already configured)."""
 	settings = frappe.get_single("Translator Settings")
 
+	# Only set defaults if they haven't been configured yet
+	changed = False
+	
 	if hasattr(settings, "use_agent_pipeline"):
-		settings.use_agent_pipeline = 1
-		settings.quality_threshold = 0.8
-		settings.save(ignore_permissions=True)
-		print("  ✓ Agent Pipeline enabled (threshold: 0.8)")
+		# Only enable if not explicitly disabled by user
+		if settings.use_agent_pipeline is None:
+			settings.use_agent_pipeline = 1
+			changed = True
+			
+		# Only set threshold if not already configured
+		if settings.quality_threshold is None or settings.quality_threshold == 0:
+			settings.quality_threshold = 0.8
+			changed = True
+			
+		if changed:
+			settings.save(ignore_permissions=True)
+			print("  ✓ Agent Pipeline defaults configured (threshold: 0.8)")
+		else:
+			print("  ✓ Agent Pipeline already configured, keeping existing settings")
 	else:
 		print("  ⚠ Agent Pipeline fields not found - run bench migrate first")
 
