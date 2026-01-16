@@ -156,7 +156,8 @@ before_uninstall = "translation_hub.uninstall.before_uninstall"
 # Fixtures
 fixtures = [
 	"App",
-	"Translator Settings",
+	# NOTE: Translator Settings removed from fixtures to prevent overwriting user config on migrate
+	# Default settings are configured via after_install hook instead
 	# {"dt": "Workspace", "filters": [["name", "=", "Translation Hub"]]},
 	{"dt": "Dashboard Chart", "filters": [["module", "=", "Translation Hub"]]},
 	{"dt": "App Glossary", "filters": [["app", "=", "translation_hub"]]},
