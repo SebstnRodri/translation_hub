@@ -1,0 +1,19 @@
+{
+ "app": "translation_hub",
+ "creation": "2025-12-26 10:09:46.854332",
+ "docstatus": 0,
+ "doctype": "Desktop Icon",
+ "hidden": 0,
+ "icon_type": "App",
+ "idx": 0,
+ "label": "Translation Hub",
+ "link": "/app/translation-hub",
+ "link_type": "External",
+ "logo_url": "/assets/translation_hub/images/logo.png",
+ "modified": "2025-12-26 10:09:46.854332",
+ "modified_by": "Administrator",
+ "name": "Translation Hub",
+ "owner": "Administrator",
+ "roles": [],
+ "standard": 1
+}

@@ -1,0 +1,26 @@
+[
+    {
+        "doctype": "Translation",
+        "language": "pt-BR",
+        "source_text": "Total Outgoing Bills",
+        "translated_text": "Total Faturas Emitidas"
+    },
+    {
+        "doctype": "Translation",
+        "language": "pt-BR",
+        "source_text": "Total Incoming Bills",
+        "translated_text": "Total Faturas Recebidas"
+    },
+    {
+        "doctype": "Translation",
+        "language": "pt-BR",
+        "source_text": "Total Incoming Payment",
+        "translated_text": "Total Pagamentos Recebidos"
+    },
+    {
+        "doctype": "Translation",
+        "language": "pt-BR",
+        "source_text": "Total Outgoing Payment",
+        "translated_text": "Total Pagamentos Efetuados"
+    }
+]

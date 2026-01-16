@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-23 21:54\n"
+"PO-Revision-Date: 2026-01-15 20:10\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -40,11 +40,6 @@ msgstr "Nome do Aplicativo"
 #: DocType: App:0
 msgid "App Title"
 msgstr "Título do Aplicativo"
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Apps"
-msgstr "Aplicativos"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:64
 msgid ""
@@ -322,11 +317,6 @@ msgstr ""
 msgid "Queued"
 msgstr "Na Fila"
 
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Reload"
-msgstr "Recarregar"
-
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:96
 msgid "Restore Configuration"
 msgstr "Restaurar Configuração"
@@ -350,11 +340,6 @@ msgstr "Selecionar aplicativos (deixe vazio para todos)"
 #: DocType: Translator Settings:0
 msgid "Select the LLM provider for translations"
 msgstr "Selecionar o provedor LLM para traduções"
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Session Defaults"
-msgstr "Padrões de Sessão"
 
 #: DocType: Monitored App:0
 msgid "Source App"
@@ -446,16 +431,6 @@ msgstr "Tempo"
 msgid "Title"
 msgstr "Título"
 
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Toggle Full Width"
-msgstr "Alternar largura total"
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Toggle Theme"
-msgstr "Alternar tema"
-
 #: DocType: App:0
 msgid "Tone"
 msgstr "Tom"
@@ -517,19 +492,9 @@ msgctxt "Label of a Navbar Item"
 msgid "User Settings"
 msgstr "Configurações do Usuário"
 
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "View Website"
-msgstr "Ver site"
-
 #: DocType: Translator Settings:0
 msgid "Weekly"
 msgstr "Semanal"
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Workspace Settings"
-msgstr "Configurações da Área de Trabalho"
 
 #: DocType: App:0
 msgid "e.g. Formal, Friendly, Professional"
@@ -1579,6 +1544,34 @@ msgstr "Tradução sugerida pela IA que foi sinalizada para revisão"
 #: DocType: Translation Task:0
 msgid "🔄 Request AI Retranslation"
 msgstr "🔄 Solicitar Retradução da IA"
+
+#~ msgctxt "Label of a Navbar Item"
+#~ msgid "Apps"
+#~ msgstr "Aplicativos"
+
+#~ msgctxt "Label of a Navbar Item"
+#~ msgid "Reload"
+#~ msgstr "Recarregar"
+
+#~ msgctxt "Label of a Navbar Item"
+#~ msgid "Session Defaults"
+#~ msgstr "Padrões de Sessão"
+
+#~ msgctxt "Label of a Navbar Item"
+#~ msgid "Toggle Full Width"
+#~ msgstr "Alternar largura total"
+
+#~ msgctxt "Label of a Navbar Item"
+#~ msgid "Toggle Theme"
+#~ msgstr "Alternar tema"
+
+#~ msgctxt "Label of a Navbar Item"
+#~ msgid "View Website"
+#~ msgstr "Ver site"
+
+#~ msgctxt "Label of a Navbar Item"
+#~ msgid "Workspace Settings"
+#~ msgstr "Configurações da Área de Trabalho"
 
 #~ msgid "Review Center"
 #~ msgstr "Aba de Revisão"

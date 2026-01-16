@@ -96,7 +96,7 @@ after_migrate = "translation_hub.install.after_migrate"
 # Uninstallation
 # ------------
 
-# before_uninstall = "translation_hub.uninstall.before_uninstall"
+before_uninstall = "translation_hub.uninstall.before_uninstall"
 # after_uninstall = "translation_hub.uninstall.after_uninstall"
 
 # Integration Setup
@@ -160,6 +160,7 @@ fixtures = [
 	# {"dt": "Workspace", "filters": [["name", "=", "Translation Hub"]]},
 	{"dt": "Dashboard Chart", "filters": [["module", "=", "Translation Hub"]]},
 	{"dt": "App Glossary", "filters": [["app", "=", "translation_hub"]]},
+	# {"dt": "Translation", "filters": [["source_text", "in", ["Total Outgoing Bills", "Total Incoming Bills"]]]},
 ]
 # Scheduled Tasks
 # ---------------

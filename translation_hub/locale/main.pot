@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-23 21:54\n"
+"PO-Revision-Date: 2026-01-15 20:10\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -115,11 +115,6 @@ msgstr ""
 
 #: DocType: Translation Review:0
 msgid "Approved"
-msgstr ""
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Apps"
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:64
@@ -915,11 +910,6 @@ msgstr ""
 msgid "Related Review"
 msgstr ""
 
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Reload"
-msgstr ""
-
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:71
 msgid "Requesting AI retranslation..."
 msgstr ""
@@ -1026,11 +1016,6 @@ msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Select the model to use on OpenRouter."
-msgstr ""
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Session Defaults"
 msgstr ""
 
 #: DocType: Localization Profile:0
@@ -1220,16 +1205,6 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Toggle Full Width"
-msgstr ""
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Toggle Theme"
-msgstr ""
-
 #: DocType: App:0
 msgid "Tone"
 msgstr ""
@@ -1345,11 +1320,6 @@ msgctxt "Label of a Navbar Item"
 msgid "User Settings"
 msgstr ""
 
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "View Website"
-msgstr ""
-
 #: DocType: Translation Review:0
 msgid "Was Edited"
 msgstr ""
@@ -1364,11 +1334,6 @@ msgstr ""
 
 #: DocType: Context Rule:0
 msgid "When to Apply (Context)"
-msgstr ""
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Workspace Settings"
 msgstr ""
 
 #: DocType: Regional Expert Profile:0
@@ -1481,9 +1446,9 @@ msgstr ""
 msgid "🔄 Request AI Retranslation"
 msgstr ""
 
-#: ../translation_hub/translation_hub/translation_hub/number_card/total_apps_tracked/total_apps_tracked.json:0
+#: ../translation_hub/translation_hub/translation_hub/number_card/jobs_in_progress/jobs_in_progress.json:0
 msgctxt "Number Card"
-msgid "Total Apps Tracked"
+msgid "Jobs in Progress"
 msgstr ""
 
 #: ../translation_hub/translation_hub/translation_hub/number_card/strings_translated/strings_translated.json:0
@@ -1491,14 +1456,14 @@ msgctxt "Number Card"
 msgid "Strings Translated"
 msgstr ""
 
+#: ../translation_hub/translation_hub/translation_hub/number_card/total_apps_tracked/total_apps_tracked.json:0
+msgctxt "Number Card"
+msgid "Total Apps Tracked"
+msgstr ""
+
 #: ../translation_hub/translation_hub/translation_hub/number_card/pending_review_tasks/pending_review_tasks.json:0
 msgctxt "Number Card"
 msgid "Pending Review Tasks"
-msgstr ""
-
-#: ../translation_hub/translation_hub/translation_hub/number_card/jobs_in_progress/jobs_in_progress.json:0
-msgctxt "Number Card"
-msgid "Jobs in Progress"
 msgstr ""
 
 #: ../translation_hub/translation_hub/translation_hub/workspace/translation_hub/translation_hub.json:0

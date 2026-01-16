@@ -7,10 +7,46 @@ import frappe
 def after_install():
 	setup_localization()
 	setup_agent_pipeline()
+	import_custom_translations()
+	apply_frappe_patches()
 
 
 def after_migrate():
 	setup_localization()
+	import_custom_translations()
+	apply_frappe_patches()
+
+
+def import_custom_translations():
+	"""Import critical translations that don't work via PO files (e.g. Number Cards)."""
+	import json
+	import os
+	
+	file_path = os.path.join(os.path.dirname(__file__), "setup", "custom_translations.json")
+	if not os.path.exists(file_path):
+		return
+
+	print("Importing Custom Translations...")
+	with open(file_path) as f:
+		translations = json.load(f)
+		
+	count = 0
+	for t in translations:
+		filters = {"source_text": t["source_text"], "language": t["language"]}
+		if not frappe.db.exists("Translation", filters):
+			doc = frappe.get_doc(t)
+			doc.insert(ignore_permissions=True)
+			count += 1
+			
+	if count > 0:
+		print(f"  ✓ Imported {count} custom translations")
+		frappe.db.commit()
+
+
+def apply_frappe_patches():
+	"""Apply file patches to Frappe core for translation fixes."""
+	from translation_hub.overrides.file_patches import apply_all_file_patches
+	apply_all_file_patches()
 
 
 def setup_localization():
