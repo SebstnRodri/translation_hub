@@ -151,7 +151,6 @@ def create_review_from_result(result: TranslationResult, source_app: str, langua
 	"""
 	# Validate required fields - skip if empty
 	if not result.msgid or not result.msgstr:
-		import frappe
 		frappe.log_error(
 			f"Skipped creating Translation Review: empty msgid='{result.msgid}' or msgstr='{result.msgstr}'",
 			"Translation Hub - Empty Review"
