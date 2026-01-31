@@ -177,10 +177,15 @@ class TranslationOrchestrator:
 						source_app=app_name or "unknown",
 						language=self.config.language_code,
 					)
-					self.logger.info(
-						f"  → Created review {review_name} for '{result.msgid[:30]}...' (score={result.quality_score:.2f})"
-					)
-					reviews_created += 1
+					if review_name:
+						self.logger.info(
+							f"  → Created review {review_name} for '{result.msgid[:30]}...' (score={result.quality_score:.2f})"
+						)
+						reviews_created += 1
+					else:
+						self.logger.warning(
+							f"  → Skipped review for empty entry (score={result.quality_score:.2f})"
+						)
 				else:
 					# Accumulate high-quality translations for batch saving
 					translated_entry = {"msgid": result.msgid, "msgstr": result.msgstr}

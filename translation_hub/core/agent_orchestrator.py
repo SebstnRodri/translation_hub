@@ -147,8 +147,17 @@ def create_review_from_result(result: TranslationResult, source_app: str, langua
 	Create a Translation Review record for a result that needs human review.
 
 	Returns:
-		Name of the created Translation Review
+		Name of the created Translation Review, or empty string if skipped
 	"""
+	# Validate required fields - skip if empty
+	if not result.msgid or not result.msgstr:
+		import frappe
+		frappe.log_error(
+			f"Skipped creating Translation Review: empty msgid='{result.msgid}' or msgstr='{result.msgstr}'",
+			"Translation Hub - Empty Review"
+		)
+		return ""
+	
 	review = frappe.get_doc(
 		{
 			"doctype": "Translation Review",
