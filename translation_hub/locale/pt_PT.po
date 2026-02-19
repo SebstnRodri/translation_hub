@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2026-01-15 20:10\n"
+"PO-Revision-Date: 2025-12-23 20:51\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -124,6 +124,11 @@ msgstr "Aprovar"
 #: DocType: Translation Review:0
 msgid "Approved"
 msgstr "Aprovado"
+
+#: Navbar::0
+msgctxt "Label of a Navbar Item"
+msgid "Apps"
+msgstr "Apps"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:64
 msgid ""
@@ -802,6 +807,11 @@ msgstr "Motivo de Rejeição"
 msgid "Related Review"
 msgstr "Revisão Relacionada"
 
+#: Navbar::0
+msgctxt "Label of a Navbar Item"
+msgid "Reload"
+msgstr "Recarregar"
+
 #: DocType: Term Rejection Pattern:0
 msgid "Resolved"
 msgstr "Resolvido"
@@ -881,6 +891,11 @@ msgstr "Seleccionar o modelo a usar no Groq."
 #: DocType: Translator Settings:0
 msgid "Select the model to use on OpenRouter."
 msgstr "Seleccione o modelo a usar no OpenRouter."
+
+#: Navbar::0
+msgctxt "Label of a Navbar Item"
+msgid "Session Defaults"
+msgstr "Sessões Padrão"
 
 #: DocType: Localization Profile:0
 msgid "Setup"
@@ -1061,6 +1076,16 @@ msgstr "Tempo"
 msgid "Title"
 msgstr "Título"
 
+#: Navbar::0
+msgctxt "Label of a Navbar Item"
+msgid "Toggle Full Width"
+msgstr "Alternar Largura Completa"
+
+#: Navbar::0
+msgctxt "Label of a Navbar Item"
+msgid "Toggle Theme"
+msgstr "Alternar Tema"
+
 #: DocType: App:0
 msgid "Tone"
 msgstr "Tono"
@@ -1162,6 +1187,11 @@ msgctxt "Label of a Navbar Item"
 msgid "User Settings"
 msgstr "Configurações do Utilizador"
 
+#: Navbar::0
+msgctxt "Label of a Navbar Item"
+msgid "View Website"
+msgstr "Ver Website"
+
 #: DocType: Translation Review:0
 msgid "Was Edited"
 msgstr "Foi Editado"
@@ -1173,6 +1203,11 @@ msgstr "Semanal"
 #: DocType: Context Rule:0
 msgid "When to Apply (Context)"
 msgstr "Quando Aplicar (Contexto)"
+
+#: Navbar::0
+msgctxt "Label of a Navbar Item"
+msgid "Workspace Settings"
+msgstr "Configurações do Espaço de Trabalho"
 
 #: DocType: Translation Learning:0
 msgid "e.g. 'against'"
@@ -1543,34 +1578,6 @@ msgstr "Tradução sugerida pela IA que foi sinalizada para revisão"
 #: DocType: Translation Task:0
 msgid "🔄 Request AI Retranslation"
 msgstr "🔄 Solicitar Retradução à IA"
-
-#~ msgctxt "Label of a Navbar Item"
-#~ msgid "Apps"
-#~ msgstr "Apps"
-
-#~ msgctxt "Label of a Navbar Item"
-#~ msgid "Reload"
-#~ msgstr "Recarregar"
-
-#~ msgctxt "Label of a Navbar Item"
-#~ msgid "Session Defaults"
-#~ msgstr "Sessões Padrão"
-
-#~ msgctxt "Label of a Navbar Item"
-#~ msgid "Toggle Full Width"
-#~ msgstr "Alternar Largura Completa"
-
-#~ msgctxt "Label of a Navbar Item"
-#~ msgid "Toggle Theme"
-#~ msgstr "Alternar Tema"
-
-#~ msgctxt "Label of a Navbar Item"
-#~ msgid "View Website"
-#~ msgstr "Ver Website"
-
-#~ msgctxt "Label of a Navbar Item"
-#~ msgid "Workspace Settings"
-#~ msgstr "Configurações do Espaço de Trabalho"
 
 #~ msgid "Review Center"
 #~ msgstr "Review Center"

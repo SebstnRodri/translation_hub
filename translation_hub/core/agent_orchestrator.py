@@ -149,25 +149,41 @@ def create_review_from_result(result: TranslationResult, source_app: str, langua
 	Returns:
 		Name of the created Translation Review, or empty string if skipped
 	"""
-	# Validate required fields - skip if empty
-	if not result.msgid or not result.msgstr:
+	# Validate required fields - ensure strings are not empty or just whitespace
+	msgid = str(result.msgid).strip() if result.msgid else ""
+	msgstr = str(result.msgstr).strip() if result.msgstr else ""
+
+	if not msgid or not msgstr:
 		frappe.log_error(
-			f"Skipped creating Translation Review: empty msgid='{result.msgid}' or msgstr='{result.msgstr}'",
+			f"Skipped creating Translation Review: empty/whitespace msgid='{result.msgid}' or msgstr='{result.msgstr}'",
 			"Translation Hub - Empty Review"
 		)
 		return ""
 	
-	review = frappe.get_doc(
-		{
-			"doctype": "Translation Review",
-			"source_text": result.msgid,
-			"suggested_text": result.msgstr,
-			"source_app": source_app,
-			"language": language,
-			"status": "Pending",
-			"ai_suggestion_snapshot": result.msgstr,
-			"context_snapshot": ", ".join(result.review_reasons),
-		}
-	)
-	review.insert(ignore_permissions=True)
-	return review.name
+	try:
+		review = frappe.get_doc(
+			{
+				"doctype": "Translation Review",
+				"source_text": msgid,
+				"suggested_text": msgstr,
+				"source_app": source_app,
+				"language": language,
+				"status": "Pending",
+				"ai_suggestion_snapshot": msgstr,
+				"context_snapshot": ", ".join(result.review_reasons),
+			}
+		)
+		review.insert(ignore_permissions=True)
+		return review.name
+	except frappe.MandatoryError as e:
+		frappe.log_error(
+			f"Failed to create review (MandatoryError): source_text='{msgid}', suggested_text='{msgstr}'. Error: {e}",
+			"Translation Hub - Review Creation Failed"
+		)
+		return ""
+	except Exception as e:
+		frappe.log_error(
+			f"Failed to create review: {e}",
+			"Translation Hub - Review Creation Failed"
+		)
+		return ""

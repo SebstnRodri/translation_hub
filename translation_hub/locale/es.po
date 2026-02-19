@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2026-01-15 20:10\n"
+"PO-Revision-Date: 2025-12-23 20:50\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -40,6 +40,11 @@ msgstr "Nombre de la Aplicación"
 #: DocType: App:0
 msgid "App Title"
 msgstr "Título de la Aplicación"
+
+#: Navbar::0
+msgctxt "Label of a Navbar Item"
+msgid "Apps"
+msgstr "Aplicaciones"
 
 #: DocType: Translator Settings:0
 msgid "Automation"
@@ -209,9 +214,19 @@ msgstr "Porcentaje de progreso"
 msgid "Queued"
 msgstr "En cola"
 
+#: Navbar::0
+msgctxt "Label of a Navbar Item"
+msgid "Reload"
+msgstr "Recargar"
+
 #: DocType: Translator Settings:0
 msgid "Save to .po File"
 msgstr "Guardar en archivo .po"
+
+#: Navbar::0
+msgctxt "Label of a Navbar Item"
+msgid "Session Defaults"
+msgstr "Valores predeterminados de sesión"
 
 #: DocType: Monitored App:0
 msgid "Source App"
@@ -287,6 +302,16 @@ msgstr "Tiempo"
 msgid "Title"
 msgstr "Título"
 
+#: Navbar::0
+msgctxt "Label of a Navbar Item"
+msgid "Toggle Full Width"
+msgstr "Alternar Ancho Completo"
+
+#: Navbar::0
+msgctxt "Label of a Navbar Item"
+msgid "Toggle Theme"
+msgstr "Alternar Tema"
+
 #: DocType: App:0
 msgid "Tone"
 msgstr "Tono"
@@ -348,9 +373,19 @@ msgctxt "Label of a Navbar Item"
 msgid "User Settings"
 msgstr "Configuración de usuario"
 
+#: Navbar::0
+msgctxt "Label of a Navbar Item"
+msgid "View Website"
+msgstr "Ver sitio web"
+
 #: DocType: Translator Settings:0
 msgid "Weekly"
 msgstr "Semanal"
+
+#: Navbar::0
+msgctxt "Label of a Navbar Item"
+msgid "Workspace Settings"
+msgstr "Configuración del espacio de trabajo"
 
 #: DocType: App:0
 msgid "e.g. Formal, Friendly, Professional"
@@ -1551,34 +1586,6 @@ msgstr "Traducción sugerida por la IA que fue marcada para revisión"
 #: DocType: Translation Task:0
 msgid "🔄 Request AI Retranslation"
 msgstr "🔄 Solicitar Re-traducción de IA"
-
-#~ msgctxt "Label of a Navbar Item"
-#~ msgid "Apps"
-#~ msgstr "Aplicaciones"
-
-#~ msgctxt "Label of a Navbar Item"
-#~ msgid "Reload"
-#~ msgstr "Recargar"
-
-#~ msgctxt "Label of a Navbar Item"
-#~ msgid "Session Defaults"
-#~ msgstr "Valores predeterminados de sesión"
-
-#~ msgctxt "Label of a Navbar Item"
-#~ msgid "Toggle Full Width"
-#~ msgstr "Alternar Ancho Completo"
-
-#~ msgctxt "Label of a Navbar Item"
-#~ msgid "Toggle Theme"
-#~ msgstr "Alternar Tema"
-
-#~ msgctxt "Label of a Navbar Item"
-#~ msgid "View Website"
-#~ msgstr "Ver sitio web"
-
-#~ msgctxt "Label of a Navbar Item"
-#~ msgid "Workspace Settings"
-#~ msgstr "Configuración del espacio de trabajo"
 
 #~ msgid "Review Center"
 #~ msgstr "Centro de Revisión"
