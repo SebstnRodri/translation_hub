@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2026-02-19 20:43\n"
+"PO-Revision-Date: 2026-06-15 18:07\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -303,6 +303,11 @@ msgstr ""
 msgid ""
 "Define languages to be created/enabled by the 'bench setup-languages' "
 "command."
+msgstr ""
+
+#: Navbar::0
+msgctxt "Label of a Navbar Item"
+msgid "Delete Demo Data"
 msgstr ""
 
 #: DocType: Regional Expert Profile:0
@@ -643,11 +648,6 @@ msgstr ""
 
 #: DocType: Translation Job:0
 msgid "Log"
-msgstr ""
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Log out"
 msgstr ""
 
 #: DocType: Translation Task:0
@@ -1313,11 +1313,6 @@ msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Use Database Storage"
-msgstr ""
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "User Settings"
 msgstr ""
 
 #: DocType: Translation Review:0
