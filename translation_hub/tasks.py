@@ -231,51 +231,58 @@ def run_automated_translations():
 		return
 
 	for monitored_app in settings.monitored_apps:
-		# Determine target languages - NOW ALWAYS ALL ENABLED DEFAULT LANGUAGES
-		target_languages = []
-		for lang in settings.default_languages:
-			if lang.enabled:
-				target_languages.append(lang.language_code)
+		try:
+			# Determine target languages - NOW ALWAYS ALL ENABLED DEFAULT LANGUAGES
+			target_languages = []
+			for lang in settings.default_languages:
+				if lang.enabled:
+					target_languages.append(lang.language_code)
 
-		# Ensure POT file exists (auto-generate if missing)
-		ensure_pot_file(monitored_app.source_app)
+			# Ensure POT file exists (auto-generate if missing)
+			ensure_pot_file(monitored_app.source_app)
 
-		for target_language in target_languages:
-			app_path = get_app_path(monitored_app.source_app)
-			po_path = Path(app_path) / "locale" / f"{target_language.replace('-', '_')}.po"
-			pot_path = Path(app_path) / "locale" / "main.pot"
+			for target_language in target_languages:
+				app_path = get_app_path(monitored_app.source_app)
+				po_path = Path(app_path) / "locale" / f"{target_language.replace('-', '_')}.po"
+				pot_path = Path(app_path) / "locale" / "main.pot"
 
-			# Check for untranslated strings
-			file_handler = TranslationFile(po_path=po_path, pot_path=pot_path)
+				# Check for untranslated strings
+				file_handler = TranslationFile(po_path=po_path, pot_path=pot_path)
 
-			# Merge POT into PO to ensure we have the latest strings
-			file_handler.merge()
+				# Merge POT into PO to ensure we have the latest strings
+				file_handler.merge()
 
-			untranslated_entries = file_handler.get_untranslated_entries()
+				untranslated_entries = file_handler.get_untranslated_entries()
 
-			if not untranslated_entries:
-				continue
+				if not untranslated_entries:
+					continue
 
-			# Check for active jobs
-			active_job = frappe.db.exists(
-				"Translation Job",
-				{
-					"source_app": monitored_app.source_app,
-					"target_language": target_language,
-					"status": ["in", ["Pending", "Queued", "In Progress"]],
-				},
+				# Check for active jobs
+				active_job = frappe.db.exists(
+					"Translation Job",
+					{
+						"source_app": monitored_app.source_app,
+						"target_language": target_language,
+						"status": ["in", ["Pending", "Queued", "In Progress"]],
+					},
+				)
+
+				if active_job:
+					continue
+
+				# Create and enqueue a new job
+				job = frappe.new_doc("Translation Job")
+				job.title = f"Automated: {monitored_app.source_app} - {target_language} - {frappe.utils.now()}"
+				job.source_app = monitored_app.source_app
+				job.target_language = target_language
+				job.insert(ignore_permissions=True)
+				job.enqueue_job()
+		except Exception as e:
+			frappe.log_error(
+				title="Translation Hub App Error",
+				message=f"Falha ao processar o app '{monitored_app.source_app}': {e!s}"
 			)
-
-			if active_job:
-				continue
-
-			# Create and enqueue a new job
-			job = frappe.new_doc("Translation Job")
-			job.title = f"Automated: {monitored_app.source_app} - {target_language} - {frappe.utils.now()}"
-			job.source_app = monitored_app.source_app
-			job.target_language = target_language
-			job.insert(ignore_permissions=True)
-			job.enqueue_job()
+			continue
 
 
 def ensure_pot_file(app_name):

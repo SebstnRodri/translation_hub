@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2025-12-23 21:54\n"
+"PO-Revision-Date: 2026-03-25 19:42\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -40,11 +40,6 @@ msgstr "Nome do Aplicativo"
 #: DocType: App:0
 msgid "App Title"
 msgstr "Título do Aplicativo"
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Apps"
-msgstr "Aplicativos"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:64
 msgid ""
@@ -120,7 +115,7 @@ msgstr ""
 
 #: DocType: App:0
 msgid "Description"
-msgstr "Descrição"
+msgstr "descrição"
 
 #: DocType: Translation Glossary:0
 msgid "Description (Context)"
@@ -140,11 +135,11 @@ msgstr "Habilitar Tradução Automatizada"
 
 #: DocType: Language Setup Item:0
 msgid "Enabled"
-msgstr "Ativado"
+msgstr "Habilitado"
 
 #: DocType: Translation Job:0
 msgid "End Time"
-msgstr "Hora de término"
+msgstr "Hora de Fim"
 
 #: DocType: Translator Settings:0
 msgid "Export .po File on Completion"
@@ -160,7 +155,7 @@ msgstr ""
 
 #: DocType: Translation Job:0
 msgid "Failed"
-msgstr "Falha"
+msgstr "falhou"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:17
 msgid "Fetching installed apps..."
@@ -214,7 +209,7 @@ msgstr "Job enfileirado com sucesso"
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "Keyboard Shortcuts"
-msgstr "Atalhos do Teclado"
+msgstr "Atalhos de Teclado"
 
 #: DocType: Translator Settings:0
 msgid "LLM Provider"
@@ -239,11 +234,6 @@ msgstr "Configuração de idioma"
 #: DocType: Translation Job:0
 msgid "Log"
 msgstr "Registro"
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Log out"
-msgstr "Sair"
 
 #: DocType: Monitored App:0
 msgid "Monitored App"
@@ -320,12 +310,7 @@ msgstr ""
 
 #: DocType: Translation Job:0
 msgid "Queued"
-msgstr "Na Fila"
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Reload"
-msgstr "Recarregar"
+msgstr "em fila"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:96
 msgid "Restore Configuration"
@@ -341,7 +326,7 @@ msgstr "Salvar em arquivo .po"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:97
 msgid "Select"
-msgstr "Selecionar"
+msgstr "selecionar"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:27
 msgid "Select Apps (Leave empty for all)"
@@ -350,11 +335,6 @@ msgstr "Selecionar aplicativos (deixe vazio para todos)"
 #: DocType: Translator Settings:0
 msgid "Select the LLM provider for translations"
 msgstr "Selecionar o provedor LLM para traduções"
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Session Defaults"
-msgstr "Padrões de Sessão"
 
 #: DocType: Monitored App:0
 msgid "Source App"
@@ -416,7 +396,7 @@ msgstr "Sincronizar traduções remotas antes de traduzir"
 #: Navbar::0
 msgctxt "Label of a Navbar Item"
 msgid "System Health"
-msgstr "Saúde do sistema"
+msgstr "Saúde do Sistema"
 
 #: DocType: App:0
 msgid "System Manager"
@@ -444,17 +424,7 @@ msgstr "Tempo"
 
 #: DocType: Translation Job:0
 msgid "Title"
-msgstr "Título"
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Toggle Full Width"
-msgstr "Alternar largura total"
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Toggle Theme"
-msgstr "Alternar tema"
+msgstr "título"
 
 #: DocType: App:0
 msgid "Tone"
@@ -512,24 +482,9 @@ msgstr "Não traduzido"
 msgid "Use Database Storage"
 msgstr "Usar armazenamento no banco de dados"
 
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "User Settings"
-msgstr "Configurações do Usuário"
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "View Website"
-msgstr "Ver site"
-
 #: DocType: Translator Settings:0
 msgid "Weekly"
 msgstr "Semanal"
-
-#: Navbar::0
-msgctxt "Label of a Navbar Item"
-msgid "Workspace Settings"
-msgstr "Configurações da Área de Trabalho"
 
 #: DocType: App:0
 msgid "e.g. Formal, Friendly, Professional"
@@ -603,7 +558,7 @@ msgstr "Solicitando sugestões da IA..."
 
 #: DocType: Translation Task:0
 msgid "Assigned To"
-msgstr "Atribuído a"
+msgstr "Atribuído A"
 
 #: DocType: Translation Task:0
 msgid "Assignment"
@@ -699,7 +654,7 @@ msgstr "Detalhes"
 
 #: DocType: Context Rule:0
 msgid "Document Type"
-msgstr "Tipo de Documento "
+msgstr "Tipo de documento"
 
 #: DocType: Translation Domain:0
 msgid "Domain Name"
@@ -778,7 +733,7 @@ msgstr ""
 
 #: DocType: Translation Task:0
 msgid "High"
-msgstr "Alto"
+msgstr "Alta"
 
 #: DocType: Translation Learning:0
 msgid "Human Correction"
@@ -798,7 +753,7 @@ msgstr ""
 
 #: DocType: Localization Profile:0
 msgid "Is Active"
-msgstr "Está Ativo"
+msgstr "É Ativo"
 
 #: DocType: Regulatory Standard:0
 msgid "Labor"
@@ -946,7 +901,7 @@ msgstr "Rejeitar Tradução"
 
 #: DocType: Translation Review:0
 msgid "Rejected"
-msgstr "Rejeitado "
+msgstr "Rejeitado"
 
 #: DocType: Term Rejection Pattern:0
 msgid "Rejection Count"
@@ -1288,7 +1243,7 @@ msgstr "Linha #{0}:"
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:61
 msgid "{0} {1} cannot be \"{2}\". It should be one of \"{3}\""
-msgstr "{0} {1} não pode ser \"{2}\". Ele deve ser um dos \"{3}\""
+msgstr "{0} {1} não pode ser \"{2}\". Deve ser um de: \"{3}\""
 
 #: DocType: Translator Settings:0
 msgid "Agent Pipeline (Multi-Agent Review)"
@@ -1579,6 +1534,51 @@ msgstr "Tradução sugerida pela IA que foi sinalizada para revisão"
 #: DocType: Translation Task:0
 msgid "🔄 Request AI Retranslation"
 msgstr "🔄 Solicitar Retradução da IA"
+
+#: Navbar::0
+msgctxt "Label of a Navbar Item"
+msgid "Delete Demo Data"
+msgstr "Excluir Dados de Demonstração"
+
+#~ msgctxt "Label of a Navbar Item"
+#~ msgid "Clear Demo Data"
+#~ msgstr "Limpar Dados de Demonstração"
+
+#~ msgctxt "Label of a Navbar Item"
+#~ msgid "Apps"
+#~ msgstr "Aplicativos"
+
+#~ msgctxt "Label of a Navbar Item"
+#~ msgid "Log out"
+#~ msgstr "Sair"
+
+#~ msgctxt "Label of a Navbar Item"
+#~ msgid "Reload"
+#~ msgstr "Recarregar"
+
+#~ msgctxt "Label of a Navbar Item"
+#~ msgid "Session Defaults"
+#~ msgstr "Padrões de Sessão"
+
+#~ msgctxt "Label of a Navbar Item"
+#~ msgid "Toggle Full Width"
+#~ msgstr "Alternar Largura Total"
+
+#~ msgctxt "Label of a Navbar Item"
+#~ msgid "Toggle Theme"
+#~ msgstr "Alternar Tema"
+
+#~ msgctxt "Label of a Navbar Item"
+#~ msgid "User Settings"
+#~ msgstr "Configurações do Usuário"
+
+#~ msgctxt "Label of a Navbar Item"
+#~ msgid "View Website"
+#~ msgstr "Visualizar Site"
+
+#~ msgctxt "Label of a Navbar Item"
+#~ msgid "Workspace Settings"
+#~ msgstr "Configurações da Área de Trabalho"
 
 #~ msgid "Review Center"
 #~ msgstr "Aba de Revisão"

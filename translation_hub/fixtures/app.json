@@ -54,5 +54,17 @@
   "modified": "2025-12-08 13:34:18.893424",
   "name": "translation_hub",
   "tone": "Professional"
+ },
+ {
+  "app_name": "mint",
+  "app_title": "Mint",
+  "description": null,
+  "do_not_translate": [],
+  "docstatus": 0,
+  "doctype": "App",
+  "domain": "Financeiro, Bancário",
+  "modified": "2026-01-14 20:39:37.716551",
+  "name": "mint",
+  "tone": null
  }
 ]
