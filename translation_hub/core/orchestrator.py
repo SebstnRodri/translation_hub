@@ -188,7 +188,11 @@ class TranslationOrchestrator:
 						)
 				else:
 					# Accumulate high-quality translations for batch saving
-					translated_entry = {"msgid": result.msgid, "msgstr": result.msgstr}
+					translated_entry = {
+						"msgid": result.msgid,
+						"msgstr": result.msgstr,
+						"msgctxt": getattr(result, "msgctxt", None),
+					}
 					batch_translations.append(translated_entry)
 
 					if self.config.save_to_po_file:

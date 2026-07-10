@@ -102,7 +102,8 @@ class AgentOrchestrator:
 			te = TranslationEntry(
 				msgid=entry.get("msgid", ""),
 				msgstr=entry.get("msgstr", ""),
-				context=entry.get("msgctxt", "") or entry.get("context", ""),
+				msgctxt=entry.get("msgctxt", ""),  # PO msgctxt identifier (preserved through pipeline)
+				context=entry.get("context", ""),  # Human-readable context for LLM prompts
 				occurrences=entry.get("occurrences", []),
 				flags=entry.get("flags", []),
 				comment=entry.get("comment", ""),

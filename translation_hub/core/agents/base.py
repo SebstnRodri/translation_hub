@@ -15,7 +15,8 @@ class TranslationEntry:
 
 	msgid: str
 	msgstr: str = ""
-	context: str = ""
+	msgctxt: str = ""  # PO msgctxt — disambiguates duplicate msgids
+	context: str = ""  # Human-readable context for LLM prompts
 	occurrences: list[tuple[str, str]] = field(default_factory=list)
 	flags: list[str] = field(default_factory=list)
 	comment: str = ""
@@ -41,6 +42,7 @@ class TranslationResult:
 
 	msgid: str
 	msgstr: str
+	msgctxt: str = ""  # Carried from TranslationEntry for correct PO lookup
 	quality_score: float = 0.0
 	needs_human_review: bool = False
 	review_reasons: list[str] = field(default_factory=list)

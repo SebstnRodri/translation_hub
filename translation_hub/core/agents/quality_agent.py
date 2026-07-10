@@ -90,6 +90,7 @@ class QualityAgent(BaseAgent):
 		result = TranslationResult(
 			msgid=entry.msgid,
 			msgstr=translation,
+			msgctxt=entry.msgctxt,
 			quality_score=1.0,
 			needs_human_review=False,
 			review_reasons=[],
