@@ -103,7 +103,7 @@ class AgentOrchestrator:
 				msgid=entry.get("msgid", ""),
 				msgstr=entry.get("msgstr", ""),
 				msgctxt=entry.get("msgctxt", ""),  # PO msgctxt identifier (preserved through pipeline)
-				context=entry.get("context", ""),  # Human-readable context for LLM prompts
+				context=entry.get("context", "") or entry.get("msgctxt", ""),  # Human-readable context for LLM prompts
 				occurrences=entry.get("occurrences", []),
 				flags=entry.get("flags", []),
 				comment=entry.get("comment", ""),
@@ -160,7 +160,20 @@ def create_review_from_result(result: TranslationResult, source_app: str, langua
 			"Translation Hub - Empty Review"
 		)
 		return ""
-	
+
+	# Prevent duplicate Pending reviews for the same string/language/app
+	existing_pending = frappe.db.exists(
+		"Translation Review",
+		{
+			"source_text": msgid,
+			"language": language,
+			"status": "Pending",
+			"source_app": source_app
+		}
+	)
+	if existing_pending:
+		return existing_pending
+
 	try:
 		review = frappe.get_doc(
 			{

@@ -261,4 +261,4 @@ class QualityAgent(BaseAgent):
 		# 5. For longer identical strings, trust the pipeline consensus
 		# If TranslatorAgent translated as-is AND RegionalReviewer approved,
 		# they made an informed decision - don't second-guess
-		return ("untranslated", 0.95, [])  # Slight note, but no penalty
+		return ("untranslated", 0.95, ["Translation is identical to source"])  # Slight note, but no penalty

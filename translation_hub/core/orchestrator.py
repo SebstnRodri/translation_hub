@@ -48,6 +48,67 @@ class TranslationOrchestrator:
 				self.file_handler.reload()
 
 			untranslated_entries = self.file_handler.get_untranslated_entries()
+
+			# REUSE EXISTING TRANSLATIONS AND PREVENT DUPLICATES (Translation Memory)
+			import frappe
+			from translation_hub.core.database_translation import DatabaseTranslationHandler
+
+			resolved_translations = []
+			pending_reviews_count = 0
+			filtered_untranslated = []
+
+			for entry in untranslated_entries:
+				msgid = entry.get("msgid") if isinstance(entry, dict) else getattr(entry, "msgid", "")
+				msgctxt = entry.get("msgctxt") if isinstance(entry, dict) else getattr(entry, "msgctxt", "")
+
+				if not msgid:
+					continue
+
+				# 1. Check Translation DocType (Database)
+				filters = {"source_text": msgid, "language": self.config.language_code}
+				if msgctxt:
+					filters["context"] = msgctxt
+				db_translation = frappe.db.get_value("Translation", filters, "translated_text")
+				if db_translation:
+					resolved_translations.append({
+						"msgid": msgid,
+						"msgstr": db_translation,
+						"msgctxt": msgctxt
+					})
+					continue
+
+				# 2. Check Translation Review (Approved)
+				review_filters = {"source_text": msgid, "language": self.config.language_code, "status": "Approved"}
+				approved_review = frappe.db.get_value("Translation Review", review_filters, "suggested_text")
+				if approved_review:
+					resolved_translations.append({
+						"msgid": msgid,
+						"msgstr": approved_review,
+						"msgctxt": msgctxt
+					})
+					continue
+
+				# 3. Check Translation Review (Pending)
+				pending_filters = {"source_text": msgid, "language": self.config.language_code, "status": "Pending"}
+				pending_review = frappe.db.get_value("Translation Review", pending_filters, "name")
+				if pending_review:
+					pending_reviews_count += 1
+					continue
+
+				filtered_untranslated.append(entry)
+
+			if resolved_translations:
+				self.logger.info(f"Reused {len(resolved_translations)} translations from database/review history.")
+				self.file_handler.update_entries(resolved_translations)
+				self.file_handler.save()
+				if self.config.use_database_storage:
+					db_handler = DatabaseTranslationHandler(self.config.language_code, self.logger)
+					db_handler.save_translations(resolved_translations)
+
+			if pending_reviews_count > 0:
+				self.logger.info(f"Skipped {pending_reviews_count} entries that are already pending human review.")
+
+			untranslated_entries = filtered_untranslated
 			total_strings = len(untranslated_entries)
 			translated_strings = 0
 			self.logger.update_progress(translated_strings, total_strings)
