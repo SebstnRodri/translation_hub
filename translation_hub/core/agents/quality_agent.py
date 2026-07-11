@@ -81,8 +81,19 @@ class QualityAgent(BaseAgent):
 
 		# Ensure translation is a string (LLM may return dict)
 		if isinstance(translation, dict):
-			# Extract translation from dict if present
-			translation = translation.get("translation") or translation.get("translated") or str(translation)
+			lang = getattr(self.config, "language_code", "")
+			val = None
+			for key in [lang, lang.replace("-", "_"), "translation", "translated", "text", "msgstr"]:
+				if key in translation and translation[key]:
+					val = str(translation[key])
+					break
+			if not val:
+				source_fields = {"msgid", "context", "occurrences", "flags", "comment"}
+				for key, v in translation.items():
+					if key not in source_fields and v:
+						val = str(v)
+						break
+			translation = val or str(translation)
 		elif not isinstance(translation, str):
 			translation = str(translation) if translation else ""
 

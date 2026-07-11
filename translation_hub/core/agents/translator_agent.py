@@ -191,20 +191,52 @@ Return ONLY a JSON object: {{"translated": "your translation"}}
 		
 		parsed = json.loads(cleaned)
 
+		raw_list = []
 		if isinstance(parsed, list):
-			return parsed
+			raw_list = parsed
 		elif isinstance(parsed, dict) and "translations" in parsed:
-			return parsed["translations"]
+			raw_list = parsed["translations"]
 		else:
 			raise ValueError(f"Unexpected response format: {type(parsed)}")
+
+		# Normalize to a list of strings
+		normalized = []
+		lang = getattr(self.config, "language_code", "")
+		for item in raw_list:
+			if isinstance(item, str):
+				normalized.append(item)
+			elif isinstance(item, dict):
+				val = None
+				for key in [lang, lang.replace("-", "_"), "translation", "translated", "msgstr", "text"]:
+					if key in item and item[key]:
+						val = str(item[key])
+						break
+				if not val:
+					source_fields = {"msgid", "context", "occurrences", "flags", "comment"}
+					for key, v in item.items():
+						if key not in source_fields and v:
+							val = str(v)
+							break
+				normalized.append(val or str(item))
+			else:
+				normalized.append(str(item) if item else "")
+		return normalized
 
 	def _parse_single_response(self, response: str) -> str:
 		"""Parse single entry response."""
 		cleaned = self._clean_json_response(response)
 		parsed = json.loads(cleaned)
 
-		if isinstance(parsed, dict) and "translated" in parsed:
-			return parsed["translated"]
+		if isinstance(parsed, dict):
+			lang = getattr(self.config, "language_code", "")
+			for key in [lang, lang.replace("-", "_"), "translated", "translation", "msgstr", "text"]:
+				if key in parsed and parsed[key]:
+					return str(parsed[key])
+			source_fields = {"msgid", "context", "occurrences", "flags", "comment"}
+			for key, val in parsed.items():
+				if key not in source_fields and val:
+					return str(val)
+			return str(parsed)
 		elif isinstance(parsed, str):
 			return parsed
 		else:
