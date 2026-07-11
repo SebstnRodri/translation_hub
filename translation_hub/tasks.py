@@ -30,8 +30,9 @@ def execute_translation_job(translation_job_name):
 
 		settings = frappe.get_single("Translator Settings")
 
-		# Sync remote translations if configured
-		if getattr(settings, "sync_before_translate", False) and settings.backup_repo_url:
+		# Sync remote translations if configured on settings and enabled on this job
+		job_sync_enabled = getattr(job, "sync_before_translate", 1)
+		if job_sync_enabled and getattr(settings, "sync_before_translate", False) and settings.backup_repo_url:
 			try:
 				from translation_hub.core.git_sync_service import GitSyncService
 
