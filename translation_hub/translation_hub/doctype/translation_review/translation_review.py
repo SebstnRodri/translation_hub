@@ -648,6 +648,44 @@ def request_ai_retranslation_inline(review_name, feedback):
 
 
 @frappe.whitelist()
+def validate_translation_text(source_text: str, target_text: str) -> dict:
+	"""
+	Runs QualityAgent rule-based checks on the translation and returns any warnings.
+	"""
+	if not ("System Manager" in frappe.get_roles() or "Translator" in frappe.get_roles()):
+		frappe.throw("Not permitted", frappe.PermissionError)
+
+	from translation_hub.core.agents.quality_agent import QualityAgent
+	from translation_hub.core.config import TranslationConfig
+
+	config = TranslationConfig(
+		api_key="test-api-key",  # Mock Config
+		language_code="pt-BR"
+	)
+	agent = QualityAgent(config)
+
+	warnings = []
+
+	# Run checks
+	check_results = [
+		agent._check_placeholders(source_text, target_text),
+		agent._check_html_tags(source_text, target_text),
+		agent._check_length_ratio(source_text, target_text),
+		agent._check_empty_translation(source_text, target_text),
+		agent._check_untranslated(source_text, target_text)
+	]
+
+	for check_name, score, reasons in check_results:
+		if score < 1.0 and reasons:
+			warnings.extend(reasons)
+
+	return {
+		"warnings": warnings,
+		"is_valid": len(warnings) == 0
+	}
+
+
+@frappe.whitelist()
 def check_rejection_history(source_text: str, language: str):
 	"""
 	Checks if a term has a rejection history.
