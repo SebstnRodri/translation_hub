@@ -12,6 +12,7 @@
         "target_language",
         "localization_profile",
         "regional_expert_profile",
+        "sync_before_translate",
         "progress_section",
         "total_strings",
         "translated_strings",
@@ -68,6 +69,13 @@
             "label": "Regional Expert Profile",
             "options": "Regional Expert Profile",
             "description": "Optional: Override default regional expert for this job"
+        },
+        {
+            "fieldname": "sync_before_translate",
+            "fieldtype": "Check",
+            "label": "Sync Remote Translations",
+            "default": "1",
+            "description": "Pull existing translations from the backup repository before starting this translation job."
         },
         {
             "fieldname": "progress_section",

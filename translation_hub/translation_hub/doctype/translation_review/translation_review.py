@@ -594,6 +594,95 @@ def retry_translation_with_feedback(review_name):
 
 
 @frappe.whitelist()
+def request_ai_retranslation_inline(review_name, feedback):
+	"""
+	Generates a new AI suggestion using feedback, and updates the current review inline.
+	"""
+	if not ("System Manager" in frappe.get_roles() or "Translator" in frappe.get_roles()):
+		frappe.throw("Not permitted", frappe.PermissionError)
+
+	doc = frappe.get_doc("Translation Review", review_name)
+
+	# Build context
+	context_parts = []
+	if feedback:
+		context_parts.append(f"Previous translation was rejected/needs improvement. Feedback: {feedback}")
+
+	# Get any term corrections for this language
+	term_corrections = frappe.get_all(
+		"Translation Learning",
+		filters={"language": doc.language, "learning_type": "Term Correction"},
+		fields=["problematic_term", "correct_term"],
+		limit=10,
+	)
+
+	if term_corrections:
+		term_rules = ", ".join(
+			[
+				f"'{tc.problematic_term}' → '{tc.correct_term}'"
+				for tc in term_corrections
+				if tc.problematic_term and tc.correct_term
+			]
+		)
+		if term_rules:
+			context_parts.append(f"Term rules: {term_rules}")
+
+	context = ". ".join(context_parts) if context_parts else None
+
+	new_suggestion = get_ai_suggestion(
+		source_text=doc.source_text,
+		language=doc.language,
+		source_app=doc.source_app,
+		context=context,
+	)
+
+	if not new_suggestion:
+		frappe.throw("AI could not generate a new suggestion")
+
+	doc.suggested_text = new_suggestion
+	doc.rejection_reason = feedback
+	doc.save(ignore_permissions=True)
+	frappe.db.commit()
+
+	return new_suggestion
+
+
+@frappe.whitelist()
+def validate_translation_text(source_text: str, target_text: str) -> dict:
+	"""
+	Runs QualityAgent rule-based checks on the translation and returns any warnings.
+	"""
+	if not ("System Manager" in frappe.get_roles() or "Translator" in frappe.get_roles()):
+		frappe.throw("Not permitted", frappe.PermissionError)
+
+	from translation_hub.core.agents.quality_agent import QualityAgent
+	from translation_hub.core.config import TranslationConfig
+
+	config = TranslationConfig(
+		api_key="test-api-key",  # Mock Config
+		language_code="pt-BR",
+	)
+	agent = QualityAgent(config)
+
+	warnings = []
+
+	# Run checks
+	check_results = [
+		agent._check_placeholders(source_text, target_text),
+		agent._check_html_tags(source_text, target_text),
+		agent._check_length_ratio(source_text, target_text),
+		agent._check_empty_translation(source_text, target_text),
+		agent._check_untranslated(source_text, target_text),
+	]
+
+	for _check_name, score, reasons in check_results:
+		if score < 1.0 and reasons:
+			warnings.extend(reasons)
+
+	return {"warnings": warnings, "is_valid": len(warnings) == 0}
+
+
+@frappe.whitelist()
 def check_rejection_history(source_text: str, language: str):
 	"""
 	Checks if a term has a rejection history.

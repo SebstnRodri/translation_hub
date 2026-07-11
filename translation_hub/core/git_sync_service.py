@@ -1,6 +1,8 @@
 import os
 import shutil
+import stat
 import subprocess
+import tempfile
 from pathlib import Path
 
 import frappe
@@ -16,56 +18,90 @@ class GitSyncService:
 		self.token = settings.get_password("auth_token", raise_exception=False)
 		self.repo_dir = Path(frappe.get_site_path("private", "translation_backup_repo"))
 
-	def _get_auth_url(self):
+	def _get_env_with_credentials(self):
+		"""Returns an env dict that injects credentials via GIT_ASKPASS.
+
+		Avoids embedding the token in the remote URL, so it never appears
+		in 'git remote -v', error messages, or the on-disk git config.
+		"""
+		env = os.environ.copy()
+		env["GIT_TERMINAL_PROMPT"] = "0"  # Never prompt interactively
+
 		if not self.token:
-			return self.repo_url
+			return env, None  # Return None as placeholder for the temp file
 
-		# Insert token into URL: https://TOKEN@github.com/...
-		if "https://" in self.repo_url:
-			return self.repo_url.replace("https://", f"https://{self.token}@")
-		return self.repo_url
+		# Write a minimal askpass script to a secure temp file.
+		# Git calls this script with a prompt string; we always return the token.
+		askpass_content = (
+			"#!/bin/sh\n"
+			f"echo '{self.token}'\n"
+		)
+		# mkstemp gives us a file descriptor with 0o600 permissions by default
+		fd, askpass_path = tempfile.mkstemp(prefix="th_askpass_", suffix=".sh")
+		try:
+			os.write(fd, askpass_content.encode())
+		finally:
+			os.close(fd)
+		os.chmod(askpass_path, stat.S_IRWXU)  # rwx only for owner
 
-	def _run_git(self, args, cwd=None):
+		env["GIT_ASKPASS"] = askpass_path
+		env["GIT_USERNAME"] = "token"  # GitHub PAT: username is ignored, but required
+		return env, askpass_path
+
+	def _run_git(self, args, cwd=None, env=None):
 		if cwd is None:
 			cwd = self.repo_dir
 
 		full_args = ["git", *args]
 		try:
-			result = subprocess.run(full_args, cwd=cwd, check=True, capture_output=True, text=True)
+			result = subprocess.run(
+				full_args, cwd=cwd, check=True, capture_output=True, text=True, env=env
+			)
 			return result.stdout.strip()
 		except subprocess.CalledProcessError as e:
-			frappe.log_error(f"Git Error: {e.stderr}", "Git Sync Service")
-			
-			# Provide helpful error message for common authentication issues
-			if "could not read Username" in e.stderr or "Authentication failed" in e.stderr:
+			sterr_safe = e.stderr  # stderr from git never contains the token (askpass hides it)
+			frappe.log_error(f"Git Error: {sterr_safe}", "Git Sync Service")
+
+			if "could not read" in e.stderr or "Authentication failed" in e.stderr:
 				raise Exception(
-					"Git authentication failed. Please configure an Auth Token in Translator Settings "
+					"Git authentication failed. Please check the Auth Token in Translator Settings."
 				)
-			
-			raise Exception(f"Git command failed: {' '.join(full_args)}\nError: {e.stderr}")
+
+			# Use only the subcommand name in the message, never the full args (could leak URL/token)
+			subcmd = args[0] if args else "unknown"
+			raise Exception(f"Git command failed: git {subcmd}\nError: {e.stderr}")
 
 	def setup_repo(self):
-		"""Clones or pulls the repository."""
-		auth_url = self._get_auth_url()
+		"""Clones or pulls the repository.
 
-		if not self.repo_dir.exists():
-			self.repo_dir.parent.mkdir(parents=True, exist_ok=True)
-			frappe.msgprint("Cloning backup repository...")
-			# Clone
-			subprocess.run(
-				["git", "clone", "-b", self.branch, auth_url, str(self.repo_dir)],
-				check=True,
-				capture_output=True,
-			)
-			# Configure user
-			self._run_git(["config", "user.email", "translation_hub@bot.com"])
-			self._run_git(["config", "user.name", "Translation Hub Bot"])
-		else:
-			frappe.msgprint("Pulling latest changes...")
-			# Update remote URL in case token changed
-			self._run_git(["remote", "set-url", "origin", auth_url])
-			self._run_git(["fetch", "origin"])
-			self._run_git(["reset", "--hard", f"origin/{self.branch}"])
+		Credentials are passed via GIT_ASKPASS so the token never appears
+		in the remote URL stored on disk or in error messages.
+		"""
+		env, askpass_path = self._get_env_with_credentials()
+		try:
+			if not self.repo_dir.exists():
+				self.repo_dir.parent.mkdir(parents=True, exist_ok=True)
+				frappe.msgprint("Cloning backup repository...")
+				# Use the clean URL (no token embedded) — credentials come from env
+				subprocess.run(
+					["git", "clone", "-b", self.branch, self.repo_url, str(self.repo_dir)],
+					check=True,
+					capture_output=True,
+					env=env,
+				)
+				# Configure user
+				self._run_git(["config", "user.email", "translation_hub@bot.com"])
+				self._run_git(["config", "user.name", "Translation Hub Bot"])
+			else:
+				frappe.msgprint("Pulling latest changes...")
+				# Ensure the stored remote URL is clean (no legacy embedded token)
+				self._run_git(["remote", "set-url", "origin", self.repo_url])
+				self._run_git(["fetch", "origin"], env=env)
+				self._run_git(["reset", "--hard", f"origin/{self.branch}"])
+		finally:
+			# Always delete the askpass script, even if an exception occurs
+			if askpass_path and os.path.exists(askpass_path):
+				os.unlink(askpass_path)
 
 	def _get_version_folder(self):
 		"""
@@ -84,8 +120,8 @@ class GitSyncService:
 		Returns a set of enabled language codes in .po file format (e.g., pt_BR).
 		"""
 		enabled_langs = frappe.get_all(
-			"Language", 
-			filters={"enabled": 1}, 
+			"Language",
+			filters={"enabled": 1},
 			fields=["name"]
 		)
 		# Convert to .po filename format: pt-BR -> pt_BR
@@ -101,7 +137,7 @@ class GitSyncService:
 
 		for app_row in self.settings.monitored_apps:
 			app_name = app_row.source_app
-			
+
 			# Filter by selected apps if provided
 			if apps and app_name not in apps:
 				continue
@@ -124,15 +160,15 @@ class GitSyncService:
 				for po_file in locale_dir.glob("*.po"):
 					if po_file.name.endswith("_test.po"):
 						continue
-					
+
 					# Extract lang code from filename (e.g., pt_BR.po -> pt_BR)
 					lang_code = po_file.stem
-					
+
 					# Only copy if language is enabled
 					if lang_code in enabled_codes:
 						shutil.copy2(po_file, repo_app_dir / po_file.name)
 						copied_count += 1
-				
+
 				if copied_count > 0:
 					frappe.logger().info(f"Backed up {copied_count} enabled language(s) for {app_name}")
 
@@ -158,7 +194,7 @@ class GitSyncService:
 				continue
 
 			app_name = app_dir.name
-			
+
 			# Filter by selected apps if provided
 			if apps and app_name not in apps:
 				continue
@@ -181,12 +217,12 @@ class GitSyncService:
 				for po_file in repo_locale_dir.glob("*.po"):
 					# Extract lang code from filename
 					lang_code = po_file.stem
-					
+
 					# Only restore if language is enabled
 					if lang_code in enabled_codes:
 						shutil.copy2(po_file, target_locale_dir / po_file.name)
 						restored_count += 1
-				
+
 				if restored_count > 0:
 					frappe.msgprint(f"Restored {restored_count} enabled language(s) for {app_name}")
 
@@ -208,21 +244,26 @@ class GitSyncService:
 		if apps:
 			app_list = ", ".join(apps)
 			msg = f"chore: backup translations for {app_list} [skip ci]"
-		
+
 		self._run_git(["commit", "-m", msg])
-		self._run_git(["push", "origin", self.branch])
+		env, askpass_path = self._get_env_with_credentials()
+		try:
+			self._run_git(["push", "origin", self.branch], env=env)
+		finally:
+			if askpass_path and os.path.exists(askpass_path):
+				os.unlink(askpass_path)
 		frappe.msgprint("Backup completed successfully.")
 
 	def restore(self, apps=None):
 		self.setup_repo()
 		self.distribute_translations(apps=apps)
-		
+
 		# Import .po files to Translation database
 		self._import_to_database(apps=apps)
-		
+
 		# Compile .po files to .mo for immediate use
 		self._compile_translations(apps=apps)
-		
+
 		# Clear cache to ensure new translations are picked up
 		frappe.translate.clear_cache()
 		frappe.clear_cache()
@@ -230,40 +271,41 @@ class GitSyncService:
 
 	def _import_to_database(self, apps=None):
 		"""Imports .po files to Translation database for enabled languages."""
-		import polib
 		from pathlib import Path
-		
+
+		import polib
+
 		apps_to_import = apps if apps else frappe.get_installed_apps()
-		
+
 		# Get enabled languages
 		enabled_langs = frappe.get_all("Language", filters={"enabled": 1}, fields=["name"])
 		enabled_codes = {lang.name.replace("-", "_") for lang in enabled_langs}
-		
+
 		frappe.logger().info(f"Importing translations to database for apps: {apps_to_import}")
-		
+
 		imported_count = 0
 		for app_name in apps_to_import:
 			try:
 				app_path = frappe.get_app_path(app_name)
 				locale_dir = Path(app_path) / "locale"
-				
+
 				if not locale_dir.exists():
 					continue
-				
+
 				for po_file in locale_dir.glob("*.po"):
 					lang_code = po_file.stem
-					
+
 					# Only import enabled languages
 					if lang_code not in enabled_codes:
 						continue
-					
+
 					try:
 						# Parse PO file
 						po = polib.pofile(str(po_file))
-						
+
 						# Convert to Frappe format (underscore to dash)
 						lang_db = lang_code.replace("_", "-")
-						
+
 						# Import each translation entry
 						for entry in po:
 							if entry.msgid and entry.msgstr:
@@ -272,7 +314,7 @@ class GitSyncService:
 									"Translation",
 									{"source_text": entry.msgid, "language": lang_db}
 								)
-								
+
 								if existing:
 									# Update existing
 									frappe.db.set_value(
@@ -290,17 +332,17 @@ class GitSyncService:
 										"translated_text": entry.msgstr,
 										"contributed": 0
 									}).insert(ignore_permissions=True)
-								
+
 								imported_count += 1
-						
+
 						frappe.logger().info(f"Imported {lang_code} for {app_name}")
-					
+
 					except Exception as e:
 						frappe.logger().error(f"Failed to import {lang_code} for {app_name}: {e}")
-				
+
 			except Exception as e:
 				frappe.log_error(f"Failed to import translations for {app_name}: {e}", "Translation Import")
-		
+
 		if imported_count > 0:
 			frappe.db.commit()
 			frappe.logger().info(f"Translation import completed. {imported_count} entries processed.")
@@ -308,15 +350,15 @@ class GitSyncService:
 	def _compile_translations(self, apps=None):
 		"""Compiles .po files to .mo files for the specified apps."""
 		from frappe.gettext.translate import compile_translations
-		
+
 		apps_to_compile = apps if apps else frappe.get_installed_apps()
-		
+
 		frappe.logger().info(f"Compiling translations for apps: {apps_to_compile}")
-		
+
 		for app in apps_to_compile:
 			# Compile all language files for this app
 			compile_translations(app)
-		
+
 		frappe.logger().info("Translation compilation completed")
 
 	def sync(self):

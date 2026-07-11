@@ -17,9 +17,11 @@ class TranslatorSettings(Document):
 			if self.quality_threshold < 0.0 or self.quality_threshold > 1.0:
 				frappe.throw(
 					frappe._(
-						"Quality Threshold must be between 0.0 and 1.0. "
-						"Got {0}. Did you mean {1}?"
-					).format(self.quality_threshold, self.quality_threshold / 10 if self.quality_threshold <= 10 else 0.8),
+						"Quality Threshold must be between 0.0 and 1.0. " "Got {0}. Did you mean {1}?"
+					).format(
+						self.quality_threshold,
+						self.quality_threshold / 10 if self.quality_threshold <= 10 else 0.8,
+					),
 					frappe.ValidationError,
 				)
 
@@ -86,6 +88,9 @@ class TranslatorSettings(Document):
 
 	def on_update(self):
 		self.sync_languages()
+		# Clean up disabled language locale directories if configured
+		if getattr(self, "auto_cleanup_locales", False):
+			cleanup_locale_directories()
 		# Trigger automated translations if enabled
 		if self.enable_automated_translation:
 			frappe.enqueue("translation_hub.tasks.run_automated_translations", queue="long")
@@ -368,70 +373,6 @@ def sync_po_files_to_languages():
 			frappe.logger().error(f"Failed to create Language for {lang_code}: {e!s}")
 
 	return created_count
-
-
-@frappe.whitelist()
-def populate_language_manager_table():
-	"""
-	Populates the Language Manager table with all available languages from the Language DocType.
-	First syncs .po files to ensure all languages with translation files are included.
-	Returns updated table data.
-	"""
-	frappe.only_for("System Manager")
-
-	# Sync .po files to Languages first
-	created = sync_po_files_to_languages()
-
-	settings = frappe.get_single("Translator Settings")
-
-	# Clear existing table
-	settings.language_manager_table = []
-
-	# Get all languages sorted by name
-	languages = frappe.get_all(
-		"Language", fields=["name", "language_name", "enabled"], order_by="language_name asc"
-	)
-
-	# Populate table
-	for lang in languages:
-		settings.append(
-			"language_manager_table",
-			{"language_code": lang.name, "language_name": lang.language_name, "enabled": lang.enabled or 0},
-		)
-
-	# Save without triggering on_update hooks
-	settings.flags.ignore_validate = True
-	settings.save(ignore_permissions=True)
-
-	msg = f"Loaded {len(languages)} languages into Language Manager"
-	if created > 0:
-		msg += f" ({created} new language(s) created from .po files)"
-	frappe.msgprint(msg)
-	return settings.language_manager_table
-
-
-@frappe.whitelist()
-def save_language_manager_settings():
-	"""
-	Saves the enabled/disabled status of languages from the Language Manager table
-	back to the Language DocType.
-	"""
-	frappe.only_for("System Manager")
-	settings = frappe.get_single("Translator Settings")
-
-	if not settings.language_manager_table:
-		frappe.throw("Language Manager table is empty. Click 'Load All Languages' first.")
-
-	updated_count = 0
-	for row in settings.language_manager_table:
-		if frappe.db.exists("Language", row.language_code):
-			lang = frappe.get_doc("Language", row.language_code)
-			if lang.enabled != row.enabled:
-				lang.enabled = row.enabled
-				lang.save(ignore_permissions=True)
-				updated_count += 1
-
-	frappe.msgprint(f"✅ Language settings saved! {updated_count} language(s) updated.")
 
 
 @frappe.whitelist()

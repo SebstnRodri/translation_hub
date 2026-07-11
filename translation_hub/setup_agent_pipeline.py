@@ -77,7 +77,6 @@ DIRECTIVES:
 - The term 'against' usually means association between two parties, forcing the use of 'for', 'associated with', 'referring to'.
 -  """
 
-
 	# Industry Jargon (JSON)
 	profile.industry_jargon = """{
   "Invoice": "Fatura",
@@ -145,7 +144,7 @@ DIRECTIVES:
 	profile.save(ignore_permissions=True)
 	frappe.db.commit()
 
-	print(f"   ✓ Profile configurated:")
+	print("   ✓ Profile configurated:")
 	print(f"      - Forbidden Terms: {len(profile.forbidden_terms)}")
 	print(f"      - Preferred Synonyms: {len(profile.preferred_synonyms)}")
 
@@ -154,15 +153,17 @@ def _ensure_language_exists():
 	"""ensure language exists"""
 	for lang_name in ["pt-BR", "Portuguese (Brazil)", "pt"]:
 		if frappe.db.exists("Language", lang_name):
-			return lang_name    
+			return lang_name
 
 	# Create if not exists
-	lang_doc = frappe.get_doc({
-		"doctype": "Language",
-		"language_code": "pt-BR",
-		"language_name": "Portuguese (Brazil)",
-		"enabled": 1
-	})
+	lang_doc = frappe.get_doc(
+		{
+			"doctype": "Language",
+			"language_code": "pt-BR",
+			"language_name": "Portuguese (Brazil)",
+			"enabled": 1,
+		}
+	)
 	lang_doc.insert(ignore_permissions=True)
 	print("   ✓ Idioma pt-BR created")
 	return "pt-BR"
@@ -197,13 +198,16 @@ def ensure_app_exists(app_name):
 	# Verificar se está instalado
 	try:
 		from frappe import get_app_path
+
 		get_app_path(app_name)
-		
-		app = frappe.get_doc({
-			"doctype": "App",
-			"name": app_name,
-			"app_name": app_name,
-		})
+
+		app = frappe.get_doc(
+			{
+				"doctype": "App",
+				"name": app_name,
+				"app_name": app_name,
+			}
+		)
 		app.insert(ignore_permissions=True)
 		print(f"   ✓ App '{app_name}' registered")
 		return True
@@ -226,6 +230,7 @@ def add_monitored_app(settings, app_name):
 
 # Funções auxiliares para uso individual
 
+
 def create_test_job(app_name="erpnext", language="pt-BR"):
 	"""Create a Translation Job for testing."""
 	job_title = f"Agent Pipeline Test - {app_name} {language}"
@@ -234,14 +239,18 @@ def create_test_job(app_name="erpnext", language="pt-BR"):
 		print(f"Job '{job_title}' already exists")
 		return
 
-	job = frappe.get_doc({
-		"doctype": "Translation Job",
-		"title": job_title,
-		"source_app": app_name,
-		"target_language": language,
-		"status": "Pending",
-		"regional_expert_profile": "erpnext_pt-BR" if frappe.db.exists("Regional Expert Profile", "erpnext_pt-BR") else None,
-	})
+	job = frappe.get_doc(
+		{
+			"doctype": "Translation Job",
+			"title": job_title,
+			"source_app": app_name,
+			"target_language": language,
+			"status": "Pending",
+			"regional_expert_profile": "erpnext_pt-BR"
+			if frappe.db.exists("Regional Expert Profile", "erpnext_pt-BR")
+			else None,
+		}
+	)
 	job.insert(ignore_permissions=True)
 	frappe.db.commit()
 	print(f"✓ Translation Job created: {job_title}")

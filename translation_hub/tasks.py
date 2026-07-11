@@ -30,8 +30,13 @@ def execute_translation_job(translation_job_name):
 
 		settings = frappe.get_single("Translator Settings")
 
-		# Sync remote translations if configured
-		if getattr(settings, "sync_before_translate", False) and settings.backup_repo_url:
+		# Sync remote translations if configured on settings and enabled on this job
+		job_sync_enabled = getattr(job, "sync_before_translate", 1)
+		if (
+			job_sync_enabled
+			and getattr(settings, "sync_before_translate", False)
+			and settings.backup_repo_url
+		):
 			try:
 				from translation_hub.core.git_sync_service import GitSyncService
 
@@ -272,7 +277,9 @@ def run_automated_translations():
 
 				# Create and enqueue a new job
 				job = frappe.new_doc("Translation Job")
-				job.title = f"Automated: {monitored_app.source_app} - {target_language} - {frappe.utils.now()}"
+				job.title = (
+					f"Automated: {monitored_app.source_app} - {target_language} - {frappe.utils.now()}"
+				)
 				job.source_app = monitored_app.source_app
 				job.target_language = target_language
 				job.insert(ignore_permissions=True)
@@ -280,7 +287,7 @@ def run_automated_translations():
 		except Exception as e:
 			frappe.log_error(
 				title="Translation Hub App Error",
-				message=f"Falha ao processar o app '{monitored_app.source_app}': {e!s}"
+				message=f"Falha ao processar o app '{monitored_app.source_app}': {e!s}",
 			)
 			continue
 
@@ -463,22 +470,22 @@ def extract_custom_messages(app_name):
 def auto_review_pending_tasks():
 	"""
 	Automatically review pending Translation Tasks.
-	
+
 	For tasks with rejection_reason:
 	1. Generate a new translation using LLM considering the rejection reason
 	2. Evaluate the new translation quality
 	3. If passes threshold, auto-approve and save to database
-	
+
 	This is scheduled to run hourly via Frappe scheduler.
 	"""
 	from translation_hub.translation_hub.doctype.translation_task.translation_task import (
-		evaluate_translation_quality,
 		_save_translation_to_db,
+		evaluate_translation_quality,
 	)
-	
+
 	settings = frappe.get_single("Translator Settings")
 	threshold = settings.quality_threshold or 0.8
-	
+
 	# Get pending tasks that have a rejection reason (user rejected it)
 	pending_tasks = frappe.get_all(
 		"Translation Task",
@@ -488,11 +495,11 @@ def auto_review_pending_tasks():
 		},
 		fields=["name", "source_text", "suggested_translation", "rejection_reason", "target_language"],
 	)
-	
+
 	regenerated_count = 0
 	approved_count = 0
 	failed_count = 0
-	
+
 	for task_data in pending_tasks:
 		try:
 			# Generate new translation based on rejection reason
@@ -501,66 +508,58 @@ def auto_review_pending_tasks():
 				task_data.source_text,
 				task_data.suggested_translation or "",
 				task_data.rejection_reason,
-				task_data.target_language
+				task_data.target_language,
 			)
-			
+
 			if not new_translation:
 				failed_count += 1
 				continue
-			
+
 			regenerated_count += 1
-			
+
 			# Evaluate quality
-			result = evaluate_translation_quality(
-				task_data.source_text,
-				new_translation,
-				threshold
-			)
-			
+			result = evaluate_translation_quality(task_data.source_text, new_translation, threshold)
+
 			# Update task with new translation
 			task = frappe.get_doc("Translation Task", task_data.name)
 			task.suggested_translation = new_translation
 			task.corrected_translation = new_translation
-			
+
 			if result["passed"]:
 				# Auto-approve
 				_save_translation_to_db(task, new_translation)
 				task.status = "Completed"
 				task.save(ignore_permissions=True)
 				approved_count += 1
-				
-				frappe.logger().info(
-					f"Auto-approved task {task_data.name}: score={result['score']:.2f}"
-				)
+
+				frappe.logger().info(f"Auto-approved task {task_data.name}: score={result['score']:.2f}")
 			else:
 				# Still needs review - save the new suggestion
 				task.save(ignore_permissions=True)
-				
+
 				frappe.logger().info(
 					f"Regenerated but not approved task {task_data.name}: score={result['score']:.2f}, issues={result['issues']}"
 				)
-				
+
 		except Exception as e:
 			frappe.log_error(f"Auto-review failed for {task_data.name}: {e}", "Translation Auto Review")
 			failed_count += 1
-	
+
 	frappe.db.commit()
-	
+
 	frappe.logger().info(
 		f"Auto-review completed: regenerated={regenerated_count}, approved={approved_count}, failed={failed_count}"
 	)
-	
-	return {
-		"regenerated": regenerated_count,
-		"approved": approved_count,
-		"failed": failed_count
-	}
+
+	return {"regenerated": regenerated_count, "approved": approved_count, "failed": failed_count}
 
 
-def _generate_corrected_translation(settings, source_text: str, previous_translation: str, rejection_reason: str, target_language: str) -> str | None:
+def _generate_corrected_translation(
+	settings, source_text: str, previous_translation: str, rejection_reason: str, target_language: str
+) -> str | None:
 	"""
 	Generate a corrected translation using LLM based on the rejection reason.
-	
+
 	Returns:
 		The new translation or None if failed
 	"""
@@ -587,19 +586,19 @@ Respond with ONLY the corrected translation, nothing else."""
 
 	try:
 		llm_provider = settings.llm_provider or "Gemini"
-		
+
 		if llm_provider == "Gemini":
 			import google.generativeai as genai
-			
+
 			api_key = settings.get_password("api_key")
 			genai.configure(api_key=api_key)
 			model = genai.GenerativeModel(settings.gemini_model or "gemini-2.0-flash")
 			response = model.generate_content(prompt)
 			return response.text.strip()
-			
+
 		elif llm_provider in ("Groq", "OpenRouter"):
 			from openai import OpenAI
-			
+
 			if llm_provider == "Groq":
 				api_key = settings.get_password("groq_api_key")
 				base_url = "https://api.groq.com/openai/v1"
@@ -608,7 +607,7 @@ Respond with ONLY the corrected translation, nothing else."""
 				api_key = settings.get_password("openrouter_api_key")
 				base_url = "https://openrouter.ai/api/v1"
 				model_name = settings.openrouter_model or "deepseek/deepseek-chat-v3-0324:free"
-			
+
 			client = OpenAI(api_key=api_key, base_url=base_url)
 			response = client.chat.completions.create(
 				model=model_name,
@@ -619,7 +618,7 @@ Respond with ONLY the corrected translation, nothing else."""
 		else:
 			frappe.logger().warning(f"Unknown LLM provider: {llm_provider}")
 			return None
-			
+
 	except Exception as e:
 		frappe.log_error(f"Translation generation failed: {e}", "Translation Auto Review")
 		return None
@@ -632,6 +631,6 @@ def run_auto_review():
 	result = auto_review_pending_tasks()
 	frappe.msgprint(
 		f"Auto-review completed: regenerated={result['regenerated']}, approved={result['approved']}, failed={result['failed']}",
-		title="Auto Review Complete"
+		title="Auto Review Complete",
 	)
 	return result

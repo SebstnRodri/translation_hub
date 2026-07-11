@@ -4,6 +4,7 @@
     "doctype": "DocType",
     "engine": "InnoDB",
     "field_order": [
+        "tab_llm",
         "llm_configuration_section",
         "llm_provider",
         "section_break_gemini",
@@ -20,6 +21,7 @@
         "html_openrouter_help",
         "section_check_connection",
         "test_connection",
+        "tab_behavior",
         "section_translation_behavior",
         "system_prompt",
         "storage_strategy_section",
@@ -30,17 +32,15 @@
         "use_agent_pipeline",
         "quality_threshold",
         "default_regional_expert",
+        "tab_languages",
         "automation_section",
         "enable_automated_translation",
         "frequency",
         "monitored_apps",
+        "auto_cleanup_locales",
         "language_setup_section",
         "default_languages",
-        "language_manager_section",
-        "language_manager_help",
-        "language_manager_table",
-        "sync_languages_button",
-        "save_language_settings",
+        "tab_backup",
         "backup_section",
         "backup_repo_url",
         "backup_branch",
@@ -50,9 +50,14 @@
     ],
     "fields": [
         {
+            "fieldname": "tab_llm",
+            "fieldtype": "Tab Break",
+            "label": "LLM"
+        },
+        {
             "fieldname": "llm_configuration_section",
             "fieldtype": "Section Break",
-            "label": "LLM Selection"
+            "label": "LLM Provider"
         },
         {
             "default": "Gemini",
@@ -145,9 +150,14 @@
             "label": "Test API Connection"
         },
         {
+            "fieldname": "tab_behavior",
+            "fieldtype": "Tab Break",
+            "label": "Behavior"
+        },
+        {
             "fieldname": "section_translation_behavior",
             "fieldtype": "Section Break",
-            "label": "Translation Behavior"
+            "label": "System Prompt"
         },
         {
             "default": "You are an expert software localizer specializing in the Frappe Framework.\nYour mission is to translate user interface strings, messages, and content with high precision.\n\nCore Principles:\n- **Accuracy**: Convey the exact meaning of the source text.\n- **Consistency**: Adhere to standard software terminology.\n- **Safety**: Strictly preserve all Jinja/Python variables (e.g., `{{ name }}`, `{0}`, `%s`) and HTML tags.\n- **Neutrality**: Maintain a professional and neutral tone unless specified otherwise by the Language Guide.\n\nFollow the specific instructions provided in the App Guide and Language Guide below.",
@@ -213,6 +223,11 @@
             "options": "Regional Expert Profile"
         },
         {
+            "fieldname": "tab_languages",
+            "fieldtype": "Tab Break",
+            "label": "Languages & Apps"
+        },
+        {
             "fieldname": "automation_section",
             "fieldtype": "Section Break",
             "label": "Automation"
@@ -238,6 +253,13 @@
             "options": "Monitored App"
         },
         {
+            "default": "0",
+            "fieldname": "auto_cleanup_locales",
+            "fieldtype": "Check",
+            "label": "Auto-cleanup Disabled Languages",
+            "description": "Automatically delete .po files of disabled/unused languages from monitored apps when saving settings."
+        },
+        {
             "fieldname": "language_setup_section",
             "fieldtype": "Section Break",
             "label": "Language Setup"
@@ -250,36 +272,14 @@
             "options": "Translator Language"
         },
         {
-            "fieldname": "language_manager_section",
-            "fieldtype": "Section Break",
-            "label": "Language Manager",
-            "description": "Enable or disable languages for translation"
-        },
-        {
-            "fieldname": "language_manager_help",
-            "fieldtype": "HTML",
-            "options": "<p><strong>Note:</strong> Check the box next to each language you want to enable for translation. Languages must be enabled before they appear in Translation Jobs.</p>"
-        },
-        {
-            "fieldname": "language_manager_table",
-            "fieldtype": "Table",
-            "label": "Available Languages",
-            "options": "Language Setup Item"
-        },
-        {
-            "fieldname": "sync_languages_button",
-            "fieldtype": "Button",
-            "label": "Load All Languages"
-        },
-        {
-            "fieldname": "save_language_settings",
-            "fieldtype": "Button",
-            "label": "Save Language Settings"
+            "fieldname": "tab_backup",
+            "fieldtype": "Tab Break",
+            "label": "Backup"
         },
         {
             "fieldname": "backup_section",
             "fieldtype": "Section Break",
-            "label": "Backup Configuration"
+            "label": "Git Repository"
         },
         {
             "fieldname": "backup_repo_url",
@@ -298,7 +298,7 @@
             "fieldname": "auth_token",
             "fieldtype": "Password",
             "label": "Auth Token (PAT)",
-            "description": "Personal Access Token for authentication"
+            "description": "Personal Access Token for authentication. Never shared — stored encrypted and injected via GIT_ASKPASS."
         },
         {
             "fieldname": "backup_frequency",

@@ -58,7 +58,9 @@ class QualityAgent(BaseAgent):
 		Returns:
 			List of TranslationResult with quality scores and review flags
 		"""
-		self.log_info(f"Evaluating quality for {len(entries)} translations (threshold={self.quality_threshold})")
+		self.log_info(
+			f"Evaluating quality for {len(entries)} translations (threshold={self.quality_threshold})"
+		)
 
 		results = []
 		for entry in entries:
@@ -81,8 +83,19 @@ class QualityAgent(BaseAgent):
 
 		# Ensure translation is a string (LLM may return dict)
 		if isinstance(translation, dict):
-			# Extract translation from dict if present
-			translation = translation.get("translation") or translation.get("translated") or str(translation)
+			lang = getattr(self.config, "language_code", "")
+			val = None
+			for key in [lang, lang.replace("-", "_"), "translation", "translated", "text", "msgstr"]:
+				if translation.get(key):
+					val = str(translation[key])
+					break
+			if not val:
+				source_fields = {"msgid", "context", "occurrences", "flags", "comment"}
+				for key, v in translation.items():
+					if key not in source_fields and v:
+						val = str(v)
+						break
+			translation = val or str(translation)
 		elif not isinstance(translation, str):
 			translation = str(translation) if translation else ""
 
@@ -90,6 +103,7 @@ class QualityAgent(BaseAgent):
 		result = TranslationResult(
 			msgid=entry.msgid,
 			msgstr=translation,
+			msgctxt=entry.msgctxt,
 			quality_score=1.0,
 			needs_human_review=False,
 			review_reasons=[],
@@ -188,7 +202,7 @@ class QualityAgent(BaseAgent):
 	def _check_untranslated(self, source: str, translation: str) -> tuple[str, float, list[str]]:
 		"""
 		Check if translation is same as source (possibly not translated).
-		
+
 		Uses hybrid approach:
 		1. Heuristics for obvious cognates/technical terms
 		2. Trust pipeline consensus (TranslatorAgent + RegionalReviewer approved)
@@ -222,16 +236,20 @@ class QualityAgent(BaseAgent):
 		# 2. Common cognate suffixes (EN -> PT patterns)
 		# Words ending in these are often identical or very similar
 		cognate_suffixes = [
-			"tion", "sion",  # emotion, version
-			"al", "el",  # local, hotel
+			"tion",
+			"sion",  # emotion, version
+			"al",
+			"el",  # local, hotel
 			"ment",  # moment, document
 			"ble",  # possible, visible
 			"ude",  # longitude, latitude
 			"ive",  # active, native
-			"ence", "ance",  # reference, balance
+			"ence",
+			"ance",  # reference, balance
 			"ism",  # capitalism
 			"ist",  # artist
-			"or", "er",  # error, server
+			"or",
+			"er",  # error, server
 		]
 		for suffix in cognate_suffixes:
 			if source_lower.endswith(suffix):
@@ -239,14 +257,56 @@ class QualityAgent(BaseAgent):
 
 		# 3. Common technical/international terms (expanded list)
 		technical_terms = {
-			"email", "e-mail", "data", "status", "menu", "internet",
-			"software", "hardware", "online", "offline", "web", "website",
-			"login", "logout", "password", "username", "admin", "user",
-			"server", "client", "database", "backup", "cache", "proxy",
-			"api", "url", "html", "css", "json", "xml", "http", "https",
-			"pdf", "csv", "excel", "word", "powerpoint", "default",
-			"marketing", "design", "layout", "click", "link", "download",
-			"upload", "dashboard", "widget", "template", "plugin", "script",
+			"email",
+			"e-mail",
+			"data",
+			"status",
+			"menu",
+			"internet",
+			"software",
+			"hardware",
+			"online",
+			"offline",
+			"web",
+			"website",
+			"login",
+			"logout",
+			"password",
+			"username",
+			"admin",
+			"user",
+			"server",
+			"client",
+			"database",
+			"backup",
+			"cache",
+			"proxy",
+			"api",
+			"url",
+			"html",
+			"css",
+			"json",
+			"xml",
+			"http",
+			"https",
+			"pdf",
+			"csv",
+			"excel",
+			"word",
+			"powerpoint",
+			"default",
+			"marketing",
+			"design",
+			"layout",
+			"click",
+			"link",
+			"download",
+			"upload",
+			"dashboard",
+			"widget",
+			"template",
+			"plugin",
+			"script",
 		}
 		# Check if source is a known technical term
 		if source_lower in technical_terms:
@@ -260,4 +320,4 @@ class QualityAgent(BaseAgent):
 		# 5. For longer identical strings, trust the pipeline consensus
 		# If TranslatorAgent translated as-is AND RegionalReviewer approved,
 		# they made an informed decision - don't second-guess
-		return ("untranslated", 0.95, [])  # Slight note, but no penalty
+		return ("untranslated", 0.95, ["Translation is identical to source"])  # Slight note, but no penalty

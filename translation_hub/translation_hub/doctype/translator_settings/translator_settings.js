@@ -215,32 +215,6 @@ frappe.ui.form.on("Translator Settings", {
 			},
 		});
 	},
-
-	sync_languages_button(frm) {
-		frappe.call({
-			method: "translation_hub.translation_hub.doctype.translator_settings.translator_settings.populate_language_manager_table",
-			freeze: true,
-			freeze_message: __("Loading all languages..."),
-			callback: function (r) {
-				if (!r.exc) {
-					frm.reload_doc();
-				}
-			},
-		});
-	},
-
-	save_language_settings(frm) {
-		frappe.call({
-			method: "translation_hub.translation_hub.doctype.translator_settings.translator_settings.save_language_manager_settings",
-			freeze: true,
-			freeze_message: __("Saving language settings..."),
-			callback: function (r) {
-				if (!r.exc) {
-					frm.reload_doc();
-				}
-			},
-		});
-	},
 });
 
 function set_model_options(frm, fieldname, options) {

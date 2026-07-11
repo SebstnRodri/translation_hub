@@ -108,14 +108,16 @@ class TranslationFile:
 	def get_untranslated_entries(self) -> list[polib.POEntry]:
 		"""
 		Filters and returns a list of entries that are untranslated or marked as fuzzy.
-		Each entry is a dictionary containing the msgid and its context.
+		Obsolete entries (#~ lines) are excluded — they are no longer in the source
+		and should never be sent for translation.
 		"""
-		untranslated_entries = [entry for entry in self.pofile if not entry.msgstr or "fuzzy" in entry.flags]
+		untranslated_entries = self.pofile.untranslated_entries() + self.pofile.fuzzy_entries()
 		self.logger.info(f"Found {len(untranslated_entries)} entries to translate.")
 
 		return [
 			{
 				"msgid": entry.msgid,
+				"msgctxt": entry.msgctxt,
 				"context": {
 					"occurrences": entry.occurrences,
 					"comment": entry.comment,
@@ -129,9 +131,17 @@ class TranslationFile:
 	def update_entries(self, translations: list[dict[str, str]]) -> None:
 		"""
 		Updates the current pofile in memory with new translations.
+
+		Uses msgctxt (when present) to disambiguate entries that share the same
+		msgid but belong to different contexts (e.g. "Open Projects" as a DocType
+		label vs. a Number Card title).
 		"""
 		for translated_entry in translations:
-			entry = self.pofile.find(translated_entry["msgid"])
+			msgid = translated_entry["msgid"]
+			msgctxt = translated_entry.get("msgctxt")
+
+			# Prefer context-aware lookup to avoid updating the wrong duplicate
+			entry = self.pofile.find(msgid, msgctxt=msgctxt) if msgctxt else self.pofile.find(msgid)
 			if entry:
 				entry.msgstr = translated_entry["msgstr"]
 				# Clear the 'fuzzy' flag if it was present
@@ -147,9 +157,10 @@ class TranslationFile:
 
 	def final_verification(self):
 		"""
-		Performs a final check to see if any entries are still untranslated.
+		Performs a final check to see if any non-obsolete entries are still untranslated.
+		Obsolete entries (#~ lines) are excluded — they are expected to have no translation.
 		"""
-		final_untranslated = [entry for entry in self.pofile if not entry.msgstr or "fuzzy" in entry.flags]
+		final_untranslated = self.pofile.untranslated_entries() + self.pofile.fuzzy_entries()
 		if final_untranslated:
 			self.logger.warning(
 				"\n[WARNING] Some entries still do not have a translation (msgstr is empty or marked as fuzzy):"
@@ -160,6 +171,7 @@ class TranslationFile:
 					if entry.occurrences
 					else ""
 				)
-				self.logger.warning(f"  - msgid: '{entry.msgid}'{occurrence}")
+				context = f" [ctx: {entry.msgctxt}]" if entry.msgctxt else ""
+				self.logger.warning(f"  - msgid: '{entry.msgid}'{context}{occurrence}")
 		else:
 			self.logger.info("\nAll entries in the .po file have a translation (msgstr is not empty).")

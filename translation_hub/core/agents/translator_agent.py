@@ -175,7 +175,7 @@ Return ONLY a JSON object: {{"translated": "your translation"}}
 			# Handle blocked or empty responses
 			if not response.text:
 				# Check if blocked by safety filters
-				if hasattr(response, 'prompt_feedback') and response.prompt_feedback:
+				if hasattr(response, "prompt_feedback") and response.prompt_feedback:
 					raise ValueError(f"Gemini blocked: {response.prompt_feedback}")
 				raise ValueError("Empty response from Gemini API")
 			return response.text
@@ -184,27 +184,59 @@ Return ONLY a JSON object: {{"translated": "your translation"}}
 		"""Parse the LLM response into a list of translations."""
 		if not response or not response.strip():
 			raise ValueError("Empty response received from LLM")
-		
+
 		cleaned = self._clean_json_response(response)
 		if not cleaned:
 			raise ValueError(f"Failed to extract JSON from response: {response[:100]}")
-		
+
 		parsed = json.loads(cleaned)
 
+		raw_list = []
 		if isinstance(parsed, list):
-			return parsed
+			raw_list = parsed
 		elif isinstance(parsed, dict) and "translations" in parsed:
-			return parsed["translations"]
+			raw_list = parsed["translations"]
 		else:
 			raise ValueError(f"Unexpected response format: {type(parsed)}")
+
+		# Normalize to a list of strings
+		normalized = []
+		lang = getattr(self.config, "language_code", "")
+		for item in raw_list:
+			if isinstance(item, str):
+				normalized.append(item)
+			elif isinstance(item, dict):
+				val = None
+				for key in [lang, lang.replace("-", "_"), "translation", "translated", "msgstr", "text"]:
+					if item.get(key):
+						val = str(item[key])
+						break
+				if not val:
+					source_fields = {"msgid", "context", "occurrences", "flags", "comment"}
+					for key, v in item.items():
+						if key not in source_fields and v:
+							val = str(v)
+							break
+				normalized.append(val or str(item))
+			else:
+				normalized.append(str(item) if item else "")
+		return normalized
 
 	def _parse_single_response(self, response: str) -> str:
 		"""Parse single entry response."""
 		cleaned = self._clean_json_response(response)
 		parsed = json.loads(cleaned)
 
-		if isinstance(parsed, dict) and "translated" in parsed:
-			return parsed["translated"]
+		if isinstance(parsed, dict):
+			lang = getattr(self.config, "language_code", "")
+			for key in [lang, lang.replace("-", "_"), "translated", "translation", "msgstr", "text"]:
+				if parsed.get(key):
+					return str(parsed[key])
+			source_fields = {"msgid", "context", "occurrences", "flags", "comment"}
+			for key, val in parsed.items():
+				if key not in source_fields and val:
+					return str(val)
+			return str(parsed)
 		elif isinstance(parsed, str):
 			return parsed
 		else:
@@ -212,8 +244,16 @@ Return ONLY a JSON object: {{"translated": "your translation"}}
 
 	@staticmethod
 	def _clean_json_response(text: str) -> str:
-		"""Clean markdown code blocks from JSON response."""
+		"""Clean markdown code blocks and reasoning/think blocks from JSON response."""
+		import re
+
 		cleaned = text.strip()
+		# Remove <think>...</think> reasoning blocks from thinking models
+		cleaned = re.sub(r"<think>.*?</think>", "", cleaned, flags=re.DOTALL)
+		if "<think>" in cleaned:
+			cleaned = cleaned.split("<think>")[0]
+
+		cleaned = cleaned.strip()
 		if cleaned.startswith("```json"):
 			cleaned = cleaned[7:]
 		elif cleaned.startswith("```"):

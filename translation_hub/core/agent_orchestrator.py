@@ -102,7 +102,9 @@ class AgentOrchestrator:
 			te = TranslationEntry(
 				msgid=entry.get("msgid", ""),
 				msgstr=entry.get("msgstr", ""),
-				context=entry.get("msgctxt", "") or entry.get("context", ""),
+				msgctxt=entry.get("msgctxt", ""),  # PO msgctxt identifier (preserved through pipeline)
+				context=entry.get("context", "")
+				or entry.get("msgctxt", ""),  # Human-readable context for LLM prompts
 				occurrences=entry.get("occurrences", []),
 				flags=entry.get("flags", []),
 				comment=entry.get("comment", ""),
@@ -156,10 +158,18 @@ def create_review_from_result(result: TranslationResult, source_app: str, langua
 	if not msgid or not msgstr:
 		frappe.log_error(
 			f"Skipped creating Translation Review: empty/whitespace msgid='{result.msgid}' or msgstr='{result.msgstr}'",
-			"Translation Hub - Empty Review"
+			"Translation Hub - Empty Review",
 		)
 		return ""
-	
+
+	# Prevent duplicate Pending reviews for the same string/language/app
+	existing_pending = frappe.db.exists(
+		"Translation Review",
+		{"source_text": msgid, "language": language, "status": "Pending", "source_app": source_app},
+	)
+	if existing_pending:
+		return existing_pending
+
 	try:
 		review = frappe.get_doc(
 			{
@@ -178,12 +188,9 @@ def create_review_from_result(result: TranslationResult, source_app: str, langua
 	except frappe.MandatoryError as e:
 		frappe.log_error(
 			f"Failed to create review (MandatoryError): source_text='{msgid}', suggested_text='{msgstr}'. Error: {e}",
-			"Translation Hub - Review Creation Failed"
+			"Translation Hub - Review Creation Failed",
 		)
 		return ""
 	except Exception as e:
-		frappe.log_error(
-			f"Failed to create review: {e}",
-			"Translation Hub - Review Creation Failed"
-		)
+		frappe.log_error(f"Failed to create review: {e}", "Translation Hub - Review Creation Failed")
 		return ""

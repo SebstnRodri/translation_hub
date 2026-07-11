@@ -21,7 +21,7 @@ def import_custom_translations():
 	"""Import critical translations that don't work via PO files (e.g. Number Cards)."""
 	import json
 	import os
-	
+
 	file_path = os.path.join(os.path.dirname(__file__), "setup", "custom_translations.json")
 	if not os.path.exists(file_path):
 		return
@@ -29,7 +29,7 @@ def import_custom_translations():
 	print("Importing Custom Translations...")
 	with open(file_path) as f:
 		translations = json.load(f)
-		
+
 	count = 0
 	for t in translations:
 		filters = {"source_text": t["source_text"], "language": t["language"]}
@@ -37,7 +37,7 @@ def import_custom_translations():
 			doc = frappe.get_doc(t)
 			doc.insert(ignore_permissions=True)
 			count += 1
-			
+
 	if count > 0:
 		print(f"  ✓ Imported {count} custom translations")
 		frappe.db.commit()
@@ -46,6 +46,7 @@ def import_custom_translations():
 def apply_frappe_patches():
 	"""Apply file patches to Frappe core for translation fixes."""
 	from translation_hub.overrides.file_patches import apply_all_file_patches
+
 	apply_all_file_patches()
 
 
@@ -139,18 +140,18 @@ def _setup_agent_settings():
 
 	# Only set defaults if they haven't been configured yet
 	changed = False
-	
+
 	if hasattr(settings, "use_agent_pipeline"):
 		# Only enable if not explicitly disabled by user
 		if settings.use_agent_pipeline is None:
 			settings.use_agent_pipeline = 1
 			changed = True
-			
+
 		# Only set threshold if not already configured
 		if settings.quality_threshold is None or settings.quality_threshold == 0:
 			settings.quality_threshold = 0.8
 			changed = True
-			
+
 		if changed:
 			settings.save(ignore_permissions=True)
 			print("  ✓ Agent Pipeline defaults configured (threshold: 0.8)")
