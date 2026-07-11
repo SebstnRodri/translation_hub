@@ -5,8 +5,8 @@ frappe.ui.form.on("Translation Review", {
 	refresh(frm) {
 		// Add prominent button to go to Review Center
 		if (frm.doc.status === "Pending" && !frm.doc.__islocal) {
-			// Make form read-only for pending items - edit should be done in Review Center
-			frm.set_df_property("suggested_text", "read_only", 1);
+			// Allow editing the suggested text directly on the form
+			frm.set_df_property("suggested_text", "read_only", 0);
 			frm.set_df_property("status", "read_only", 1);
 
 			// Approve Button
@@ -23,6 +23,46 @@ frappe.ui.form.on("Translation Review", {
 				},
 				"Actions"
 			).addClass("btn-success");
+
+			// Request AI Retranslation Button
+			frm.add_custom_button(
+				__("Request AI Retranslation"),
+				() => {
+					frappe.prompt(
+						[
+							{
+								label: __("Instruction / Feedback for AI"),
+								fieldname: "feedback",
+								fieldtype: "Small Text",
+								reqd: 1,
+							},
+						],
+						(values) => {
+							frappe.call({
+								method: "translation_hub.translation_hub.doctype.translation_review.translation_review.request_ai_retranslation_inline",
+								args: {
+									review_name: frm.doc.name,
+									feedback: values.feedback,
+								},
+								freeze: true,
+								freeze_message: __("Asking AI for a new suggestion..."),
+								callback: (r) => {
+									if (r.message) {
+										frm.reload_doc();
+										frappe.show_alert({
+											message: __("Suggested translation updated by AI"),
+											indicator: "green",
+										});
+									}
+								},
+							});
+						},
+						__("Request AI Retranslation"),
+						__("Request")
+					);
+				},
+				"Actions"
+			);
 
 			// Reject Button
 			frm.add_custom_button(
