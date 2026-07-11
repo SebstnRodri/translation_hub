@@ -206,6 +206,10 @@ function update_counts(frm) {
 }
 
 function run_validation(frm) {
+	if (frm.doc.status !== "Pending") {
+		frm.dashboard.clear_headline_alert();
+		return;
+	}
 	if (!frm.doc.source_text || !frm.doc.suggested_text) return;
 
 	frappe.call({
