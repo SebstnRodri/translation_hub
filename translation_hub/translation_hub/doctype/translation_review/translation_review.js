@@ -4,12 +4,14 @@
 frappe.ui.form.on("Translation Review", {
 	refresh(frm) {
 		// Handle Copy Source click
-		$(frm.wrapper).off("click", ".btn-copy-source").on("click", ".btn-copy-source", (e) => {
-			e.preventDefault();
-			if (frm.doc.status === "Pending") {
-				frm.set_value("suggested_text", frm.doc.source_text);
-			}
-		});
+		$(frm.wrapper)
+			.off("click", ".btn-copy-source")
+			.on("click", ".btn-copy-source", (e) => {
+				e.preventDefault();
+				if (frm.doc.status === "Pending") {
+					frm.set_value("suggested_text", frm.doc.source_text);
+				}
+			});
 
 		if (frm.doc.status === "Pending" && !frm.doc.__islocal) {
 			// Allow editing the suggested text directly on the form
@@ -153,7 +155,7 @@ frappe.ui.form.on("Translation Review", {
 	suggested_text(frm) {
 		update_counts(frm);
 		run_validation(frm);
-	}
+	},
 });
 
 function check_rejection_history(frm) {
@@ -196,11 +198,16 @@ function update_counts(frm) {
 	const source_words = (frm.doc.source_text || "").split(/\s+/).filter(Boolean).length;
 	const trans_words = (frm.doc.suggested_text || "").split(/\s+/).filter(Boolean).length;
 
-	const copy_link = frm.doc.status === "Pending"
-		? `<a href="#" class="btn-copy-source" style="text-decoration: underline; font-weight: bold; cursor: pointer; float: right;">${__("Copy Source")}</a>`
-		: "";
+	const copy_link =
+		frm.doc.status === "Pending"
+			? `<a href="#" class="btn-copy-source" style="text-decoration: underline; font-weight: bold; cursor: pointer; float: right;">${__(
+					"Copy Source"
+			  )}</a>`
+			: "";
 
-	const description = `${__("Characters")}: ${trans_len} (${__("Source")}: ${source_len}) | ${__("Words")}: ${trans_words} (${__("Source")}: ${source_words}) ${copy_link}`;
+	const description = `${__("Characters")}: ${trans_len} (${__("Source")}: ${source_len}) | ${__(
+		"Words"
+	)}: ${trans_words} (${__("Source")}: ${source_words}) ${copy_link}`;
 
 	frm.set_df_property("suggested_text", "description", description);
 }
@@ -216,7 +223,7 @@ function run_validation(frm) {
 		method: "translation_hub.translation_hub.doctype.translation_review.translation_review.validate_translation_text",
 		args: {
 			source_text: frm.doc.source_text,
-			target_text: frm.doc.suggested_text
+			target_text: frm.doc.suggested_text,
 		},
 		callback: (r) => {
 			if (r.message) {
@@ -225,7 +232,7 @@ function run_validation(frm) {
 					let alertHtml = `<div style="text-align: left;">`;
 					alertHtml += `<strong>⚠️ ${__("Translation Quality Warnings:")}</strong>`;
 					alertHtml += `<ul style="margin-top: 5px; margin-bottom: 0; padding-left: 20px;">`;
-					warnings.forEach(w => {
+					warnings.forEach((w) => {
 						alertHtml += `<li>${__(w)}</li>`;
 					});
 					alertHtml += `</ul></div>`;
@@ -234,6 +241,6 @@ function run_validation(frm) {
 					frm.dashboard.clear_headline_alert();
 				}
 			}
-		}
+		},
 	});
 }

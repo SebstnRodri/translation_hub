@@ -660,7 +660,7 @@ def validate_translation_text(source_text: str, target_text: str) -> dict:
 
 	config = TranslationConfig(
 		api_key="test-api-key",  # Mock Config
-		language_code="pt-BR"
+		language_code="pt-BR",
 	)
 	agent = QualityAgent(config)
 
@@ -672,17 +672,14 @@ def validate_translation_text(source_text: str, target_text: str) -> dict:
 		agent._check_html_tags(source_text, target_text),
 		agent._check_length_ratio(source_text, target_text),
 		agent._check_empty_translation(source_text, target_text),
-		agent._check_untranslated(source_text, target_text)
+		agent._check_untranslated(source_text, target_text),
 	]
 
-	for check_name, score, reasons in check_results:
+	for _check_name, score, reasons in check_results:
 		if score < 1.0 and reasons:
 			warnings.extend(reasons)
 
-	return {
-		"warnings": warnings,
-		"is_valid": len(warnings) == 0
-	}
+	return {"warnings": warnings, "is_valid": len(warnings) == 0}
 
 
 @frappe.whitelist()

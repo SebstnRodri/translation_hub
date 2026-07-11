@@ -111,9 +111,7 @@ class TranslationFile:
 		Obsolete entries (#~ lines) are excluded — they are no longer in the source
 		and should never be sent for translation.
 		"""
-		untranslated_entries = (
-			self.pofile.untranslated_entries() + self.pofile.fuzzy_entries()
-		)
+		untranslated_entries = self.pofile.untranslated_entries() + self.pofile.fuzzy_entries()
 		self.logger.info(f"Found {len(untranslated_entries)} entries to translate.")
 
 		return [
@@ -162,9 +160,7 @@ class TranslationFile:
 		Performs a final check to see if any non-obsolete entries are still untranslated.
 		Obsolete entries (#~ lines) are excluded — they are expected to have no translation.
 		"""
-		final_untranslated = (
-			self.pofile.untranslated_entries() + self.pofile.fuzzy_entries()
-		)
+		final_untranslated = self.pofile.untranslated_entries() + self.pofile.fuzzy_entries()
 		if final_untranslated:
 			self.logger.warning(
 				"\n[WARNING] Some entries still do not have a translation (msgstr is empty or marked as fuzzy):"

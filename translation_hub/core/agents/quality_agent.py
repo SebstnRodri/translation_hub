@@ -58,7 +58,9 @@ class QualityAgent(BaseAgent):
 		Returns:
 			List of TranslationResult with quality scores and review flags
 		"""
-		self.log_info(f"Evaluating quality for {len(entries)} translations (threshold={self.quality_threshold})")
+		self.log_info(
+			f"Evaluating quality for {len(entries)} translations (threshold={self.quality_threshold})"
+		)
 
 		results = []
 		for entry in entries:
@@ -84,7 +86,7 @@ class QualityAgent(BaseAgent):
 			lang = getattr(self.config, "language_code", "")
 			val = None
 			for key in [lang, lang.replace("-", "_"), "translation", "translated", "text", "msgstr"]:
-				if key in translation and translation[key]:
+				if translation.get(key):
 					val = str(translation[key])
 					break
 			if not val:
@@ -200,7 +202,7 @@ class QualityAgent(BaseAgent):
 	def _check_untranslated(self, source: str, translation: str) -> tuple[str, float, list[str]]:
 		"""
 		Check if translation is same as source (possibly not translated).
-		
+
 		Uses hybrid approach:
 		1. Heuristics for obvious cognates/technical terms
 		2. Trust pipeline consensus (TranslatorAgent + RegionalReviewer approved)
@@ -234,16 +236,20 @@ class QualityAgent(BaseAgent):
 		# 2. Common cognate suffixes (EN -> PT patterns)
 		# Words ending in these are often identical or very similar
 		cognate_suffixes = [
-			"tion", "sion",  # emotion, version
-			"al", "el",  # local, hotel
+			"tion",
+			"sion",  # emotion, version
+			"al",
+			"el",  # local, hotel
 			"ment",  # moment, document
 			"ble",  # possible, visible
 			"ude",  # longitude, latitude
 			"ive",  # active, native
-			"ence", "ance",  # reference, balance
+			"ence",
+			"ance",  # reference, balance
 			"ism",  # capitalism
 			"ist",  # artist
-			"or", "er",  # error, server
+			"or",
+			"er",  # error, server
 		]
 		for suffix in cognate_suffixes:
 			if source_lower.endswith(suffix):
@@ -251,14 +257,56 @@ class QualityAgent(BaseAgent):
 
 		# 3. Common technical/international terms (expanded list)
 		technical_terms = {
-			"email", "e-mail", "data", "status", "menu", "internet",
-			"software", "hardware", "online", "offline", "web", "website",
-			"login", "logout", "password", "username", "admin", "user",
-			"server", "client", "database", "backup", "cache", "proxy",
-			"api", "url", "html", "css", "json", "xml", "http", "https",
-			"pdf", "csv", "excel", "word", "powerpoint", "default",
-			"marketing", "design", "layout", "click", "link", "download",
-			"upload", "dashboard", "widget", "template", "plugin", "script",
+			"email",
+			"e-mail",
+			"data",
+			"status",
+			"menu",
+			"internet",
+			"software",
+			"hardware",
+			"online",
+			"offline",
+			"web",
+			"website",
+			"login",
+			"logout",
+			"password",
+			"username",
+			"admin",
+			"user",
+			"server",
+			"client",
+			"database",
+			"backup",
+			"cache",
+			"proxy",
+			"api",
+			"url",
+			"html",
+			"css",
+			"json",
+			"xml",
+			"http",
+			"https",
+			"pdf",
+			"csv",
+			"excel",
+			"word",
+			"powerpoint",
+			"default",
+			"marketing",
+			"design",
+			"layout",
+			"click",
+			"link",
+			"download",
+			"upload",
+			"dashboard",
+			"widget",
+			"template",
+			"plugin",
+			"script",
 		}
 		# Check if source is a known technical term
 		if source_lower in technical_terms:

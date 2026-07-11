@@ -33,7 +33,7 @@ class RegionalReviewerAgent(BaseAgent):
 	def _load_profile_context(self) -> dict[str, Any]:
 		"""Load context from Regional Expert Profile."""
 		self.log_info(f"Loading profile context for: '{self.regional_profile}'")
-		
+
 		if not self.regional_profile:
 			self.log_info("No regional profile configured, skipping")
 			return {}
@@ -205,7 +205,15 @@ If no changes needed, return the original translation.
 
 	def _parse_response(self, response: str, expected_count: int) -> list[str]:
 		"""Parse the LLM response into a list of reviewed translations."""
+		import re
+
 		cleaned = response.strip()
+		# Remove <think>...</think> reasoning blocks from thinking models
+		cleaned = re.sub(r"<think>.*?</think>", "", cleaned, flags=re.DOTALL)
+		if "<think>" in cleaned:
+			cleaned = cleaned.split("<think>")[0]
+		cleaned = cleaned.strip()
+
 		if cleaned.startswith("```json"):
 			cleaned = cleaned[7:]
 		elif cleaned.startswith("```"):
