@@ -39,11 +39,6 @@
         "monitored_apps",
         "language_setup_section",
         "default_languages",
-        "language_manager_section",
-        "language_manager_help",
-        "language_manager_table",
-        "sync_languages_button",
-        "save_language_settings",
         "tab_backup",
         "backup_section",
         "backup_repo_url",
@@ -267,32 +262,6 @@
             "fieldtype": "Table",
             "label": "Default Languages",
             "options": "Translator Language"
-        },
-        {
-            "fieldname": "language_manager_section",
-            "fieldtype": "Section Break",
-            "label": "Language Manager"
-        },
-        {
-            "fieldname": "language_manager_help",
-            "fieldtype": "HTML",
-            "options": "<p><strong>Note:</strong> Check the box next to each language you wish to enable for translation. Languages must be enabled before appearing in Translation Jobs.</p>"
-        },
-        {
-            "fieldname": "language_manager_table",
-            "fieldtype": "Table",
-            "label": "Available Languages",
-            "options": "Language Setup Item"
-        },
-        {
-            "fieldname": "sync_languages_button",
-            "fieldtype": "Button",
-            "label": "Load All Languages"
-        },
-        {
-            "fieldname": "save_language_settings",
-            "fieldtype": "Button",
-            "label": "Save Language Settings"
         },
         {
             "fieldname": "tab_backup",
