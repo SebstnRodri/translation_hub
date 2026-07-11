@@ -86,6 +86,9 @@ class TranslatorSettings(Document):
 
 	def on_update(self):
 		self.sync_languages()
+		# Clean up disabled language locale directories if configured
+		if getattr(self, "auto_cleanup_locales", False):
+			cleanup_locale_directories()
 		# Trigger automated translations if enabled
 		if self.enable_automated_translation:
 			frappe.enqueue("translation_hub.tasks.run_automated_translations", queue="long")

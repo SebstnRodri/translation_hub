@@ -37,6 +37,7 @@
         "enable_automated_translation",
         "frequency",
         "monitored_apps",
+        "auto_cleanup_locales",
         "language_setup_section",
         "default_languages",
         "tab_backup",
@@ -250,6 +251,13 @@
             "fieldtype": "Table",
             "label": "Monitored Apps",
             "options": "Monitored App"
+        },
+        {
+            "default": "0",
+            "fieldname": "auto_cleanup_locales",
+            "fieldtype": "Check",
+            "label": "Auto-cleanup Disabled Languages",
+            "description": "Automatically delete .po files of disabled/unused languages from monitored apps when saving settings."
         },
         {
             "fieldname": "language_setup_section",
