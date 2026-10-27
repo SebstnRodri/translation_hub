@@ -92,7 +92,7 @@ class AgentOrchestrator:
 			self._log_error(f"Pipeline failed: {e}")
 			self._save_pipeline_state(translation_entries, str(e))
 			raise PipelineFailedError(
-				f"Agent pipeline failed at an intermediate step. " f"State saved for inspection. Error: {e}"
+				f"Agent pipeline failed at an intermediate step. State saved for inspection. Error: {e}"
 			)
 
 	def _convert_entries(self, entries: list[dict]) -> list[TranslationEntry]:

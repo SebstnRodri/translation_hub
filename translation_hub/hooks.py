@@ -30,7 +30,7 @@ add_to_apps_screen = [
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/translation_hub/css/translation_hub.css"
-# app_include_js = "/assets/translation_hub/js/translation_hub.js"
+app_include_js = "/assets/translation_hub/js/translation_hub.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/translation_hub/css/translation_hub.css"
