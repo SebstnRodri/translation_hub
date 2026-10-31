@@ -422,11 +422,15 @@ def cleanup_locale_directories(apps=None):
 def extract_custom_messages(app_name):
 	"""
 	Scans the app directory for dashboard artifacts (Number Card, Workspace)
-	that behave like standard doctypes but are not automatically picked up.
+	and SPA frontends (.ts, .tsx files like banking/) that are not picked up
+	by Frappe's legacy get_messages_for_app.
 	"""
 	import json
 	import os
 	from glob import glob
+	from pathlib import Path
+
+	from frappe.gettext.extractors.utils import extract_messages_from_code
 
 	app_path = get_app_path(app_name)
 	messages = []
@@ -456,13 +460,31 @@ def extract_custom_messages(app_name):
 				msgid = data.get(field)
 				if msgid and isinstance(msgid, str):
 					# Format: (path, msgid, context, line)
-					# Path should be relative to bench root usually, but get_messages returns relative to app?
-					# Actually get_messages returns path relative to bench dir usually
 					rel_path = os.path.relpath(file_path, frappe.get_app_path("frappe", ".."))
 					messages.append((rel_path, msgid, context, 0))
 
 			except Exception:
 				continue
+
+	# Scan for SPA frontends / TypeScript files (.ts, .tsx) across app repository root
+	try:
+		app_root = (
+			Path(app_path).parent if (Path(app_path).parent / "pyproject.toml").exists() else Path(app_path)
+		)
+		for ext in ("*.ts", "*.tsx"):
+			for file_path in app_root.glob(f"**/{ext}"):
+				if any(ignored in file_path.parts for ignored in ("node_modules", ".git", "dist", "build")):
+					continue
+				try:
+					content = file_path.read_text(encoding="utf-8")
+					rel_path = str(file_path.relative_to(app_root))
+					for lineno, message, context in extract_messages_from_code(content):
+						if message:
+							messages.append((rel_path, message, context, lineno))
+				except Exception:
+					continue
+	except Exception:
+		pass
 
 	return messages
 
