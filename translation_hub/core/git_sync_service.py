@@ -32,10 +32,7 @@ class GitSyncService:
 
 		# Write a minimal askpass script to a secure temp file.
 		# Git calls this script with a prompt string; we always return the token.
-		askpass_content = (
-			"#!/bin/sh\n"
-			f"echo '{self.token}'\n"
-		)
+		askpass_content = f"#!/bin/sh\necho '{self.token}'\n"
 		# mkstemp gives us a file descriptor with 0o600 permissions by default
 		fd, askpass_path = tempfile.mkstemp(prefix="th_askpass_", suffix=".sh")
 		try:
@@ -54,9 +51,7 @@ class GitSyncService:
 
 		full_args = ["git", *args]
 		try:
-			result = subprocess.run(
-				full_args, cwd=cwd, check=True, capture_output=True, text=True, env=env
-			)
+			result = subprocess.run(full_args, cwd=cwd, check=True, capture_output=True, text=True, env=env)
 			return result.stdout.strip()
 		except subprocess.CalledProcessError as e:
 			sterr_safe = e.stderr  # stderr from git never contains the token (askpass hides it)
@@ -112,18 +107,14 @@ class GitSyncService:
 		if "develop" in version:
 			return "develop"
 		# Always use major version for consistency
-		major_version = version.split('.')[0]
+		major_version = version.split(".")[0]
 		return f"version-{major_version}"
 
 	def _get_enabled_language_codes(self):
 		"""
 		Returns a set of enabled language codes in .po file format (e.g., pt_BR).
 		"""
-		enabled_langs = frappe.get_all(
-			"Language",
-			filters={"enabled": 1},
-			fields=["name"]
-		)
+		enabled_langs = frappe.get_all("Language", filters={"enabled": 1}, fields=["name"])
 		# Convert to .po filename format: pt-BR -> pt_BR
 		return {lang.name.replace("-", "_") for lang in enabled_langs}
 
@@ -311,27 +302,25 @@ class GitSyncService:
 							if entry.msgid and entry.msgstr:
 								# Check if translation exists
 								existing = frappe.db.exists(
-									"Translation",
-									{"source_text": entry.msgid, "language": lang_db}
+									"Translation", {"source_text": entry.msgid, "language": lang_db}
 								)
 
 								if existing:
 									# Update existing
 									frappe.db.set_value(
-										"Translation",
-										existing,
-										"translated_text",
-										entry.msgstr
+										"Translation", existing, "translated_text", entry.msgstr
 									)
 								else:
 									# Create new
-									frappe.get_doc({
-										"doctype": "Translation",
-										"source_text": entry.msgid,
-										"language": lang_db,
-										"translated_text": entry.msgstr,
-										"contributed": 0
-									}).insert(ignore_permissions=True)
+									frappe.get_doc(
+										{
+											"doctype": "Translation",
+											"source_text": entry.msgid,
+											"language": lang_db,
+											"translated_text": entry.msgstr,
+											"contributed": 0,
+										}
+									).insert(ignore_permissions=True)
 
 								imported_count += 1
 

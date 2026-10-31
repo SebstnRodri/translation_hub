@@ -5,6 +5,11 @@ All notable changes to Translation Hub will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2026-10-31
+
+### Fixed
+- **SPA & TypeScript Extraction**: Extended `extract_custom_messages` in `tasks.py` to scan `.ts` and `.tsx` files in app repository roots (such as ERPNext's `banking/` module), allowing Translation Hub to detect and extract strings from modern React/TypeScript frontends.
+
 ## [1.6.1] - 2024-12-14
 
 ### Fixed

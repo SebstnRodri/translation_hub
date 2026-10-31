@@ -60,4 +60,67 @@ def maintenance(context, fix_jobs, fix_langs, clear_cache, run_all):
 		frappe.destroy()
 
 
-commands = [setup_languages, maintenance]
+@click.command("compile-ecosystem-translations")
+@click.option("--locale", default="pt_BR", help="Target locale to compile (e.g. pt_BR)")
+@click.option("--apps", default=None, help="Comma-separated list of apps (default: all supported apps)")
+@click.option("--force", is_flag=True, default=True, help="Force recompilation even if MO file is newer")
+@click.option(
+	"--clear-cache", is_flag=True, default=False, help="Clear translation cache in Redis after compiling"
+)
+@pass_context
+def compile_ecosystem_translations(context, locale, apps, force, clear_cache):
+	"""Compile gettext PO files into MO binaries in sites/assets/locale for all ecosystem apps."""
+	site = context.sites[0] if context.sites else None
+	if site:
+		frappe.init(site=site)
+		frappe.connect()
+
+	try:
+		from translation_hub.core.locale_compiler import LocaleCompiler
+
+		apps_list = [a.strip() for a in apps.split(",") if a.strip()] if apps else None
+		compiler = LocaleCompiler()
+		report = compiler.compile_ecosystem(apps=apps_list, locale=locale, force=force)
+
+		click.secho(f"\nTranslation Compilation Report [{locale}]:", fg="cyan", bold=True)
+		for item in report.compiled:
+			click.secho(f"  ✓ {item.app:<20} -> {item.mo_path} ({item.size_bytes} bytes)", fg="green")
+		for item in report.skipped:
+			click.secho(f"  - {item.app:<20} (skipped: {item.reason})", fg="yellow")
+		for item in report.errors:
+			click.secho(f"  ✗ {item.app:<20} ERROR: {item.error}", fg="red", bold=True)
+
+		click.echo(
+			f"\nSummary: {report.total_compiled} compiled, "
+			f"{report.total_skipped} skipped, {report.total_errors} errors."
+		)
+
+		if clear_cache:
+			cleared = compiler.invalidate_cache(site_name=site)
+			click.secho(f"✓ Cache cleared for sites: {', '.join(cleared)}", fg="green")
+
+	finally:
+		if site:
+			frappe.destroy()
+
+
+@click.command("invalidate-translation-cache")
+@click.option("--all-sites", is_flag=True, default=False, help="Invalidate cache across all sites in bench")
+@pass_context
+def invalidate_translation_cache_cmd(context, all_sites):
+	"""Invalidate translation cache in Redis (merged_translations & bootinfo)."""
+	site = context.sites[0] if (context.sites and not all_sites) else None
+	from translation_hub.core.locale_compiler import invalidate_translation_cache
+
+	cleared = invalidate_translation_cache(site_name=site if not all_sites else None)
+	click.secho(
+		f"✓ Translation cache cleared for: {', '.join(cleared) if cleared else 'no sites'}", fg="green"
+	)
+
+
+commands = [
+	setup_languages,
+	maintenance,
+	compile_ecosystem_translations,
+	invalidate_translation_cache_cmd,
+]

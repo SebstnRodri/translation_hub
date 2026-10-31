@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-09 12:39\n"
-"PO-Revision-Date: 2026-06-15 18:07\n"
+"PO-Revision-Date: 2026-07-20 03:15\n"
 "Last-Translator: Translation Hub <ai@translationhub.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -37,14 +37,7 @@ msgid ""
 "href='https://console.groq.com/keys' target='_blank'>Get one here</a>.</div>"
 msgstr ""
 
-#: DocType: Translator Settings:0
-msgid ""
-"<p><strong>Note:</strong> Check the box next to each language you want to "
-"enable for translation. Languages must be enabled before they appear in "
-"Translation Jobs.</p>"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:82
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:133
 msgid ""
 "A new Translation Review has been created with AI suggestion based on your "
 "feedback: {0}"
@@ -71,7 +64,7 @@ msgstr ""
 msgid "Accounting"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:93
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:144
 msgid "Actions"
 msgstr ""
 
@@ -109,7 +102,7 @@ msgstr ""
 msgid "App Title"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:14
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:23
 msgid "Approve"
 msgstr ""
 
@@ -127,7 +120,11 @@ msgstr ""
 msgid "Ask AI to suggest a new translation considering the rejection reason"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:74
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:57
+msgid "Asking AI for a new suggestion..."
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:125
 msgid "Asking AI for a new translation with feedback context..."
 msgstr ""
 
@@ -148,11 +145,21 @@ msgid "Auth Token (PAT)"
 msgstr ""
 
 #: DocType: Translator Settings:0
+msgid "Auto-cleanup Disabled Languages"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid ""
+"Automatically delete .po files of disabled/unused languages from monitored "
+"apps when saving settings."
+msgstr ""
+
+#: DocType: Translator Settings:0
 msgid "Automation"
 msgstr ""
 
 #: DocType: Translator Settings:0
-msgid "Available Languages"
+msgid "Backup"
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:89
@@ -163,7 +170,7 @@ msgstr ""
 msgid "Backup Branch"
 msgstr ""
 
-#: DocType: Translator Settings:0
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:84
 msgid "Backup Configuration"
 msgstr ""
 
@@ -191,6 +198,10 @@ msgstr ""
 msgid "Base Term"
 msgstr ""
 
+#: DocType: Translator Settings:0
+msgid "Behavior"
+msgstr ""
+
 #: DocType: App:0
 msgid "Brief description of the app's purpose for the translator."
 msgstr ""
@@ -205,6 +216,10 @@ msgstr ""
 
 #: DocType: Translation Job:0
 msgid "Cancelled"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:208
+msgid "Characters"
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:128
@@ -253,6 +268,10 @@ msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review_list.js:159
 msgid "Context for AI (Optional)"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:203
+msgid "Copy Source"
 msgstr ""
 
 #: DocType: Translation Learning:0
@@ -372,10 +391,6 @@ msgstr ""
 msgid "Enable Automated Translation"
 msgstr ""
 
-#: DocType: Translator Settings:0
-msgid "Enable or disable languages for translation"
-msgstr ""
-
 #: DocType: Language Setup Item:0
 msgid "Enabled"
 msgstr ""
@@ -485,6 +500,10 @@ msgstr ""
 msgid "Gemini Settings"
 msgstr ""
 
+#: DocType: Translator Settings:0
+msgid "Git Repository"
+msgstr ""
+
 #: DocType: Translation Task:0
 msgid "Global Translator"
 msgstr ""
@@ -559,6 +578,10 @@ msgstr ""
 msgid "Installed App"
 msgstr ""
 
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:43
+msgid "Instruction / Feedback for AI"
+msgstr ""
+
 #: DocType: Localization Profile:0
 msgid "Is Active"
 msgstr ""
@@ -579,11 +602,11 @@ msgid "Keyboard Shortcuts"
 msgstr ""
 
 #: DocType: Translator Settings:0
-msgid "LLM Provider"
+msgid "LLM"
 msgstr ""
 
 #: DocType: Translator Settings:0
-msgid "LLM Selection"
+msgid "LLM Provider"
 msgstr ""
 
 #: DocType: Regulatory Standard:0
@@ -598,7 +621,7 @@ msgstr ""
 msgid "Language Code"
 msgstr ""
 
-#: DocType: Translator Settings:0
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:134
 msgid "Language Manager"
 msgstr ""
 
@@ -612,6 +635,10 @@ msgstr ""
 
 #: DocType: Language Setup Item:0
 msgid "Language Setup Item"
+msgstr ""
+
+#: DocType: Translator Settings:0
+msgid "Languages & Apps"
 msgstr ""
 
 #: DocType: Term Rejection Pattern:0
@@ -628,14 +655,6 @@ msgstr ""
 
 #: DocType: Translation Learning:0
 msgid "Learning Type"
-msgstr ""
-
-#: DocType: Translator Settings:0
-msgid "Load All Languages"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:223
-msgid "Loading all languages..."
 msgstr ""
 
 #: DocType: Localization Profile:0
@@ -701,7 +720,7 @@ msgstr ""
 msgid "Neutral"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:80
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:131
 msgid "New Review Created"
 msgstr ""
 
@@ -761,8 +780,14 @@ msgstr ""
 msgid "Pending"
 msgstr ""
 
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:109
+msgid "Pending Review"
+msgstr ""
+
 #: DocType: Translator Settings:0
-msgid "Personal Access Token for authentication"
+msgid ""
+"Personal Access Token for authentication. Never shared — stored encrypted "
+"and injected via GIT_ASKPASS."
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:23
@@ -825,6 +850,12 @@ msgid ""
 "translation job."
 msgstr ""
 
+#: DocType: Translation Job:0
+msgid ""
+"Pull existing translations from the backup repository before starting this "
+"translation job."
+msgstr ""
+
 #: DocType: Translator Settings:0
 msgid "Quality Threshold"
 msgstr ""
@@ -878,11 +909,11 @@ msgstr ""
 msgid "Regulatory Standards"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:29
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:78
 msgid "Reject"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:50
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:99
 msgid "Reject Translation"
 msgstr ""
 
@@ -890,7 +921,7 @@ msgstr ""
 msgid "Rejected"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:118
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:177
 msgid "Rejected {0} times (Last: {1})"
 msgstr ""
 
@@ -908,6 +939,14 @@ msgstr ""
 
 #: DocType: Translation Task:0
 msgid "Related Review"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:70
+msgid "Request"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:38
+msgid "Request AI Retranslation"
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:71
@@ -934,7 +973,7 @@ msgstr ""
 msgid "Retranslation Failed"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:66
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:117
 msgid "Retry with AI"
 msgstr ""
 
@@ -958,16 +997,12 @@ msgstr ""
 msgid "Reviews created: {0}"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:56
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:58
 msgid "Row #{0}:"
 msgstr ""
 
 #: DocType: Context Rule:0
 msgid "Rule Type"
-msgstr ""
-
-#: DocType: Translator Settings:0
-msgid "Save Language Settings"
 msgstr ""
 
 #: DocType: Translation Task:0
@@ -976,10 +1011,6 @@ msgstr ""
 
 #: DocType: Translator Settings:0
 msgid "Save to .po File"
-msgstr ""
-
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.js:236
-msgid "Saving language settings..."
 msgstr ""
 
 #: apps/translation_hub/translation_hub/translation_hub/doctype/translation_task/translation_task.js:41
@@ -1020,6 +1051,10 @@ msgstr ""
 
 #: DocType: Localization Profile:0
 msgid "Setup"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:208
+msgid "Source"
 msgstr ""
 
 #: DocType: Monitored App:0
@@ -1090,6 +1125,14 @@ msgstr ""
 
 #: DocType: Translation Review:0
 msgid "Suggested Translation"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:62
+msgid "Suggested translation updated by AI"
+msgstr ""
+
+#: DocType: Translation Job:0
+msgid "Sync Remote Translations"
 msgstr ""
 
 #: DocType: Translator Settings:0
@@ -1225,12 +1268,8 @@ msgstr ""
 msgid "Translation"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:19
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:28
 msgid "Translation Approved"
-msgstr ""
-
-#: DocType: Translator Settings:0
-msgid "Translation Behavior"
 msgstr ""
 
 #: DocType: App:0
@@ -1261,7 +1300,11 @@ msgstr ""
 msgid "Translation Learning"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:45
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:233
+msgid "Translation Quality Warnings:"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:94
 msgid "Translation Rejected"
 msgstr ""
 
@@ -1329,6 +1372,10 @@ msgstr ""
 
 #: DocType: Context Rule:0
 msgid "When to Apply (Context)"
+msgstr ""
+
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:208
+msgid "Words"
 msgstr ""
 
 #: DocType: Regional Expert Profile:0
@@ -1427,11 +1474,11 @@ msgstr ""
 msgid "zh-TW"
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:61
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translator_settings/translator_settings.py:63
 msgid "{0} {1} cannot be \"{2}\". It should be one of \"{3}\""
 msgstr ""
 
-#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:125
+#: apps/translation_hub/translation_hub/translation_hub/doctype/translation_review/translation_review.js:183
 msgid ""
 "⚠️ Warning: This term has been rejected {0} times previously. Please verify "
 "carefully."

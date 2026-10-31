@@ -17,7 +17,7 @@ class TranslatorSettings(Document):
 			if self.quality_threshold < 0.0 or self.quality_threshold > 1.0:
 				frappe.throw(
 					frappe._(
-						"Quality Threshold must be between 0.0 and 1.0. " "Got {0}. Did you mean {1}?"
+						"Quality Threshold must be between 0.0 and 1.0. Got {0}. Did you mean {1}?"
 					).format(
 						self.quality_threshold,
 						self.quality_threshold / 10 if self.quality_threshold <= 10 else 0.8,

@@ -133,6 +133,43 @@ frappe.ui.form.on("Translator Settings", {
 			},
 			__("Language Manager")
 		);
+
+		// Botão para Publicar Traduções nos Assets Globais (ADR 0034)
+		frm.add_custom_button(
+			__("Publicar Traduções nos Assets"),
+			function () {
+				frappe.confirm(
+					__(
+						"Deseja compilar e publicar os arquivos binários (.mo) de tradução nos assets para todos os inquilinos SaaS?"
+					),
+					function () {
+						frappe.call({
+							method: "translation_hub.api.locale_compiler_api.publish_ecosystem_translations",
+							args: {
+								locale: "pt_BR",
+								force: true,
+								invalidate_cache: true,
+							},
+							freeze: true,
+							freeze_message: __("Compilando e publicando traduções globais (.mo)..."),
+							callback: function (r) {
+								if (!r.exc && r.message) {
+									frappe.msgprint({
+										title: __("Traduções Publicadas"),
+										indicator: "green",
+										message: __(
+											"Traduções compiladas com sucesso!<br>Total de apps compilados: <b>{0}</b>",
+											[r.message.total_compiled]
+										),
+									});
+								}
+							},
+						});
+					}
+				);
+			},
+			__("Distribuição Global")
+		);
 	},
 
 	llm_provider(frm) {

@@ -2,7 +2,7 @@ app_name = "translation_hub"
 app_title = "Translation Hub"
 app_publisher = "Sebastian Rodrigues"
 app_description = "AI-Powered Translation Agent for Frappe Apps"
-app_version = "2.0.0-rc1"
+app_version = "2.0.1"
 app_email = "sebstn@outlook.com.br"
 app_license = "mit"
 
@@ -30,7 +30,7 @@ add_to_apps_screen = [
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/translation_hub/css/translation_hub.css"
-# app_include_js = "/assets/translation_hub/js/translation_hub.js"
+app_include_js = "/assets/translation_hub/js/translation_hub.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/translation_hub/css/translation_hub.css"
